@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="569c7cdc-154a-4137-b5a7-caa8f3600b6e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for AUTHENTICATION_SPEC to table USER1 as table does not exist or column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="USER1" columnName="AUTHENTICATION_SPEC"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7102: Add support for PBKDF2 password encryption</comment>
+        <!-- Add the 'AUTHENTICATION_SPEC' column'. -->
+        <addColumn tableName="USER1">
+            <column name="AUTHENTICATION_SPEC" type="VARCHAR(254)" remarks="The authentication algorithm parameters"/>
+        </addColumn>
+        <!-- Set the authentication spec of existing users to 'Crypto:DES'. -->
+        <update tableName="USER1">
+            <column name="AUTHENTICATION_SPEC" value="Crypto:DES"/>
+            <where>AUTHENTICATION_SPEC is null</where>
+        </update>
+        <!-- Need explicit rollback since there is an 'update' operation. -->
+        <rollback>
+            <dropColumn tableName="USER1" columnName="AUTHENTICATION_SPEC"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog> 

@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field">
+
+    <class name="minestar.mine.domain.minemodel.underground.drawpoint.DrawPointStatus"
+           table="DP_STATUS"
+           dynamic-update="true">
+
+        <meta attribute="description">A standard description of the status of a draw point.</meta>
+        <meta attribute="lookupExpr">code</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="id"
+                  type="java.lang.Integer"
+                  column="ID"
+                  not-null="true">
+            <meta attribute="description">The unique, system-assigned identifier for this status.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+        </property>
+
+        <property name="active"
+                  type="java.lang.Boolean"
+                  column="IS_ACTIVE"
+                  not-null="true">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">
+                Whether this status is active or archived.
+                (This flag is '1' if it is active and '0' if archived.)
+            </meta>
+        </property>
+
+        <property name="code"
+                  type="java.lang.String"
+                  not-null="true">
+            <meta attribute="description">The short, coded textual representation of this status.</meta>
+        </property>
+
+        <property name="description"
+                  type="java.lang.String">
+            <meta attribute="description">The longer, more descriptive text for this status.</meta>
+        </property>
+
+        <property name="closed"
+                  type="java.lang.Boolean"
+                  column="CLOSED">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">
+                Whether this status indicates that a draw point is temporarily closed.
+                (This flag is '1' if it represents a temporarily closed draw point and '0' if it does not.)
+            </meta>
+        </property>
+
+        <property name="hungUp"
+                  type="java.lang.Boolean"
+                  column="HUNGUP">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">
+                Whether this status indicates that a draw point is hung up.
+                (This flag is '1' if it represents a hung up draw point and '0' if it does not.)
+            </meta>
+        </property>
+
+        <property name="wetMuck"
+                  type="java.lang.Boolean"
+                  column="WET_MUCK">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">
+                Whether the status indicates that a draw point has wet muck conditions.
+                (This flag is '1' if it represents wet muck conditions and '0' if it does not.)
+            </meta>
+        </property>
+
+        <property name="displayColorRed"
+                  column="DISPLAY_COLOR_RED"
+                  type="java.lang.Integer">
+            <meta attribute="description">The red value of the background color used to represent this status.</meta>
+        </property>
+
+        <property name="displayColorGreen"
+                  column="DISPLAY_COLOR_GREEN"
+                  type="java.lang.Integer">
+            <meta attribute="description">The green value of the background color used to represent this status.</meta>
+        </property>
+
+        <property name="displayColorBlue"
+                  column="DISPLAY_COLOR_Blue"
+                  type="java.lang.Integer">
+            <meta attribute="description">The blue value of the background color used to represent this status.</meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

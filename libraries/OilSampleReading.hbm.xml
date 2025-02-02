@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.health.domain.data" schema="historical">
+
+    <class name="OilSampleReading" table="OIL_SAMPLE_READING">
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=IDX_OSR_EXTERNAL_ID_UNIQ
+            unique=true
+            columns=EXTERNAL_ID
+            tablespace=MW_IDXENT
+        </meta>   
+        
+		<meta attribute="description">Record of an oil sample reading (lab results) for an oil sample.</meta>        
+
+        <id name="id" column="ID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+		<property name="externalId" column="EXTERNAL_ID" length="32">
+			<meta attribute="description">
+				ID received from external system (ie. Oil Commander) during import of record 				
+			</meta>        
+		</property>
+		
+		<many-to-one name="oilSample" column="OIL_SAMPLE_FK" not-null="true">
+			<meta attribute="alias">parentOID</meta>			
+			<meta attribute="description">
+				The oil sample for which this reading applies 				
+			</meta>        
+		</many-to-one> 	
+
+        <property name="PQIndex" column="pq_index">
+			<meta attribute="unitType">index</meta>        
+        	
+        </property>
+        
+        <property name="aluminium" column="aluminium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of aluminium found in sample 				
+			</meta>        
+        </property>
+        
+        <property name="barium" column="barium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of barium found in sample 				
+			</meta>                
+        </property>
+        
+        <property name="cadmium" column="cadmium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of cadmium found in sample 				
+			</meta>                
+        </property>
+        
+        <property name="calcium" column="calcium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of calcium found in sample 				
+			</meta>                
+        </property>
+        
+        <property name="chromium" column="chromium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of chromium found in sample 				
+			</meta>                
+        </property>
+        
+        <property name="copper" column="copper">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of copper found in sample 				
+			</meta>                
+        </property>
+                          
+        <property name="iron" column="iron">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of iron found in sample 				
+			</meta>      
+		</property>
+                       
+        <property name="lead" column="lead">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of lead found in sample 				
+			</meta>      
+        </property>
+        
+        <property name="tin" column="tin">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of tin found in sample 				
+			</meta>      
+        </property>
+        
+        <property name="nickel" column="nickel">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of nickel found in sample 				
+			</meta>      
+        </property>
+             
+        <property name="silicon" column="silicon">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of silicon found in sample 				
+			</meta>      
+        </property>
+                        
+        <property name="sodium" column="sodium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of sodium found in sample 				
+			</meta>      
+        </property>
+        
+        <property name="potassium" column="potassium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of potassium found in sample 				
+			</meta>      
+        </property>
+                        
+        <property name="molybdenuum" column="molybdenuum">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of molybdenuum found in sample 				
+			</meta>      
+        </property>
+        
+        <property name="boron" column="boron">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of boron found in sample 				
+			</meta>              
+        </property>
+        
+        <property name="magnesium" column="magnesium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of magnesium found in sample 				
+			</meta>              
+        </property>
+                        
+        <property name="zinc" column="zinc">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of zinc found in sample 				
+			</meta>              
+        </property>
+        
+        <property name="phosphorus" column="phosphorus">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of phosphorus found in sample 				
+			</meta>              
+        </property>
+               
+        <property name="silver" column="silver">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of silver found in sample 				
+			</meta>              
+        </property>
+        
+        <property name="manganese" column="manganese">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of manganese found in sample 				
+			</meta>              
+        </property>
+                        
+        <property name="vandium" column="vandium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of vandium found in sample 				
+			</meta>              
+        </property>
+        
+        <property name="titanium" column="titanium">
+			<meta attribute="unitType">parts per parts</meta>        
+			<meta attribute="description">
+				Particles per million of titanium found in sample 				
+			</meta>              
+        </property>       
+
+   
+        <property name="water" column="water">
+			<meta attribute="description">
+				Water present indicator 				
+			</meta>              
+        </property>
+        
+        <property name="waterPercentage" column="Water_Percentage">
+			<meta attribute="unitType">ratio</meta>        
+			<meta attribute="description">
+				Percentage of water contained in oil sample 				
+			</meta>                      
+        </property>                
+        
+        <property name="fuel" column="fuel">
+			<meta attribute="description">
+				Fuel present indicator 				
+			</meta>              
+        </property>
+        
+        <property name="fuelPercentage" column="Fuel_Percentage">
+			<meta attribute="unitType">ratio</meta>        
+			<meta attribute="description">
+				Percentage of fuel contained in oil sample 				
+			</meta>              
+        </property>       
+         
+        <property name="viscosityAt40C" column="Viscosity_At_40C">
+			<meta attribute="unitType">viscosity</meta>        
+			<meta attribute="description">
+				Viscosity of oil sample at 40 C degrees 				
+			</meta>              
+        </property>
+
+        <property name="soot" column="soot">
+			<meta attribute="unitType">unitless</meta>        
+        </property>
+                        
+        <property name="oxidation" column="oxidation">
+			<meta attribute="unitType">unitless</meta>        
+        </property>
+        
+        <property name="nitration" column="nitration">
+			<meta attribute="unitType">unitless</meta>        
+        </property>
+               
+        <property name="sulfer" column="sulfer">
+			<meta attribute="unitType">unitless</meta>        
+        </property>                
+
+        <property name="totalBaseNumber" column="Total_Base_Number">
+			<meta attribute="unitType">total base number</meta>        
+			<meta attribute="description">
+				Total Base Number of oil sample. Total Base Number (TBN) is a measure of a lubricant's reserve alkalinity. It is measured in milligrams of potassium hydroxide per gram (mg KOH/g). 				
+			</meta>                      	
+        </property>
+        
+        <property name="totalAcidNumber" column="Total_Acid_Number">
+			<meta attribute="unitType">total acid number</meta>        
+			<meta attribute="description">
+				Total Acid Number of oil sample. Total Acid Number (TAN) (or "neutralization number" or "acid value" or "acidity") is measured in milligrams of potassium hydroxide per gram (mg KOH/g). 				
+			</meta>                      	
+        </property>       
+    
+	</class>
+
+</hibernate-mapping>

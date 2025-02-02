@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+
+<!-- MODIFICATION HISTORY
+     20011107 John Farrell       Extracted from Java classes
+-->
+
+<!-- Classdefs for materials -->
+
+<classdefs>
+
+    <classdef name="minestar.machinetracking.domain.MaterialMix" keyproperty="name">
+
+        <propertydef name="name">
+            <validationdef name="required" type="shared"/>
+            <!--<description>The name of the material mix.</description>-->
+        </propertydef>
+
+        <propertydef name="description">
+            <!--<description>A description of the material mix.</description>-->
+        </propertydef>
+
+        <propertydef name="mixMaterials" label="">
+            <uidef widget="ordered" custom="{setOrderArrows=Boolean(false)}"/>
+            <!--<description>A list of all materials in the mix.</description>-->
+        </propertydef>
+
+        <propertydef name="OID" access="readonly">
+                <typedef><type code="long"/></typedef>
+                <uidef visiblewhen="false"/>
+                <description>The object identifier of the entity, unique within its manager.</description>
+			</propertydef>
+
+        <validationgroup name="Name Check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+
+    </classdef>
+
+</classdefs>

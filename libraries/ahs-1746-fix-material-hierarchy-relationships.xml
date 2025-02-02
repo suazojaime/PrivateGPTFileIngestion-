@@ -1,0 +1,115 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="a72ac0fe-fd98-427b-a449-2efddda0ef54" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for MATERIAL_NAME of table MATERIAL as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="MATERIAL_NAME" tableName="MATERIAL"/>
+        </preConditions>
+        <comment>AHS-1746: DropIndex MATERIAL_NAME from MATERIAL (NAME)</comment>
+        <dropIndex tableName="MATERIAL" indexName="MATERIAL_NAME"/>
+        <rollback>
+            <createIndex unique="true" tablespace="MW_IDXENT" tableName="MATERIAL" indexName="MATERIAL_NAME">
+                <column name="NAME"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+    <changeSet id="4b0c6c87-7827-4337-b429-a25aed4cbcf4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for NAME of table MATERIAL as column does not exist or is already not-null." onFail="MARK_RAN">
+            <columnExists tableName="MATERIAL" columnName="NAME"/>
+            <ext:columnIsNullable tableName="MATERIAL" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-1746: AlterColumn MATERIAL.NAME - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="NAME" defaultNullValue="" columnDataType="VARCHAR(254)" tableName="MATERIAL"/>
+    </changeSet>
+    <changeSet id="4e734905-8c3a-4289-bce7-89bc92e59181" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for MATERIAL_NAME to table MATERIAL as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="MATERIAL"/>
+            <not>
+                <indexExists indexName="MATERIAL_NAME" tableName="MATERIAL"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1746: CreateUniqueIndex MATERIAL_NAME on MATERIAL (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="MATERIAL_NAME" tableName="MATERIAL">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="a72ac0fe-fd98-427b-a449-2efddda0ef56" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for MATERIALGROUP_1R of table MATERIAL_GROUP as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="MATERIALGROUP_1R" tableName="MATERIAL_GROUP"/>
+        </preConditions>
+        <comment>AHS-1746: DropIndex MATERIALGROUP_1R from MATERIAL_GROUP (NAME,MATERIAL_GROUP_OID)</comment>
+        <dropIndex tableName="MATERIAL_GROUP" indexName="MATERIALGROUP_1R"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" tableName="MATERIAL_GROUP" indexName="MATERIALGROUP_1R">
+                <column name="NAME"/>
+                <column name="MATERIAL_GROUP_OID"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+    <changeSet id="0117fbb8-1e68-4b1c-b72d-8df66d53f97c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for NAME of table MATERIAL_GROUP as column does not exist or is already not-null." onFail="MARK_RAN">
+            <columnExists tableName="MATERIAL_GROUP" columnName="NAME"/>
+            <ext:columnIsNullable tableName="MATERIAL_GROUP" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-1746: AlterColumn MATERIAL_GROUP.NAME - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="NAME" defaultNullValue="" columnDataType="VARCHAR(254)" tableName="MATERIAL_GROUP"/>
+    </changeSet>
+    <changeSet id="4e734905-8c3a-4289-bce7-89bc92e59183" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for MATERIALGROUP_NAME to table MATERIAL_GROUP as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="MATERIAL_GROUP"/>
+            <not>
+                <indexExists indexName="MATERIALGROUP_NAME" tableName="MATERIAL_GROUP"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1746: CreateUniqueIndex MATERIALGROUP_NAME on MATERIAL_GROUP (NAME,PARENT_GROUP_OID)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="MATERIALGROUP_NAME" tableName="MATERIAL_GROUP">
+            <column name="NAME"/>
+            <column name="PARENT_GROUP_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="ce57be2d-666a-46c0-9d91-29a25f2025ea" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for MATERIAL_GROUP_ELEMENT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="MATERIAL_GROUP_ELEMENT"/>
+        </preConditions>
+        <comment>AHS-1746: DropTable MATERIAL_GROUP_ELEMENT</comment>
+        <dropTable tableName="MATERIAL_GROUP_ELEMENT"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="The material group elements" tableName="MATERIAL_GROUP_ELEMENT">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="MATERIAL_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="OID,MATERIAL_OID" constraintName="MATERIAL_GROUP_ELEMENT_PK" tablespace="MW_IDXENT" tableName="MATERIAL_GROUP_ELEMENT"/>
+            <sql>INSERT INTO MATERIAL_GROUP_ELEMENT (OID, MATERIAL_OID) SELECT MATERIALGROUP, MATERIAL_OID FROM MATERIAL WHERE MATERIALGROUP IS NOT NULL</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="c91ecc44-a4fe-41b2-a61e-2cd525442b06" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for MATERIAL_GROUP_SUBDIR as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="MATERIAL_GROUP_SUBDIR"/>
+        </preConditions>
+        <comment>AHS-1746: DropTable MATERIAL_GROUP_SUBDIR</comment>
+        <dropTable tableName="MATERIAL_GROUP_SUBDIR"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="The material group subdirectories" tableName="MATERIAL_GROUP_SUBDIR">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="MATERIAL_GROUP_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="OID,MATERIAL_GROUP_OID" constraintName="MATERIAL_GROUP_SUBDIR_PK" tablespace="MW_IDXENT" tableName="MATERIAL_GROUP_SUBDIR"/>
+            <sql>INSERT INTO MATERIAL_GROUP_SUBDIR (OID, MATERIAL_GROUP_OID) SELECT PARENT_GROUP_OID, MATERIAL_GROUP_OID FROM MATERIAL_GROUP WHERE PARENT_GROUP_OID IS NOT NULL</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

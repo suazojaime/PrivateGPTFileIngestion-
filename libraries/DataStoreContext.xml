@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       ">
+
+    <!-- The System DataStores are those given to the checkDataStores tool and will be created in they do not exist-->
+    <util:set id="systemDataStores">
+        <ref bean="modelDataStore"/>
+        <ref bean="timeseriesDataStore"/>
+        <ref bean="historicalDataStore"/>
+        <ref bean="summaryDataStore"/>
+        <ref bean="pitmodelDataStore"/>
+        <ref bean="gisDataStore"/>
+        <ref bean="templateDataStore"/>
+        <ref bean="reportingDataStore"/>
+        <ref bean="aquilaDataStore"/>
+        <ref bean="caesDataStore"/>
+        <ref bean="boauditDataStore"/>
+    </util:set>
+
+    <!-- The Application DataStores are those processed by default by makeDataStores, unless a "-db=<dsName>" override is used -->
+    <util:set id="applicationDataStores">
+        <ref bean="modelDataStore"/>
+        <ref bean="timeseriesDataStore"/>
+        <ref bean="historicalDataStore"/>
+        <ref bean="summaryDataStore"/>
+        <ref bean="pitmodelDataStore"/>
+    </util:set>
+
+    <util:set id="reportingDataStores">
+        <ref bean="cfgDataStore"/>
+        <ref bean="dvlDataStore"/>
+        <ref bean="dwhDataStore"/>
+        <ref bean="dclDataStore"/>
+
+    </util:set>
+
+     <!-- The main datastores config bean -->
+    <bean name="dataStores" class="com.mincom.util.deployment.DatastoresConfigBean"
+          p:systemDataStores-ref="systemDataStores"
+          p:applicationDataStores-ref="applicationDataStores"
+          p:reportingDataStores-ref="reportingDataStores"
+          p:adminDataStores-ref="adminDataStore"
+            >
+        <property name="aquilaDBUsed" value="${_AQUILADB_USED}"/>
+        <property name="caesDBUsed" value="${_CAESDB_USED}"/>
+    </bean>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- The standard datastore definitions -->
+    <!-- model, historical, summary, pitmodel, perfmodel, template, reporting -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+    <bean name="defaultMineStarDataStore" parent="${dataStoreType}DataStoreConfig"/>
+
+    <bean name="adminDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${adminUsername}"/>
+        <property name="password" value="${adminPassword}"/>
+        <property name="schema" value="${adminSchema}"/>
+    </bean>
+
+    <bean name="modelDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${modelUsername}"/>
+        <property name="password" value="${modelPassword}"/>
+        <property name="schema" value="${modelSchema}"/>
+    </bean>
+
+
+    <bean name="timeseriesDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${timeseriesUsername}"/>
+        <property name="password" value="${timeseriesPassword}"/>
+        <property name="schema" value="${timeseriesSchema}"/>
+    </bean>
+
+    <bean name="historicalDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${historicalUsername}"/>
+        <property name="password" value="${historicalPassword}"/>
+        <property name="schema" value="${historicalSchema}"/>
+    </bean>
+
+    <bean name="summaryDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${summaryUsername}"/>
+        <property name="password" value="${summaryPassword}"/>
+        <property name="schema" value="${summarySchema}"/>
+    </bean>
+
+    <bean name="templateDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${templateUsername}"/>
+        <property name="password" value="${templatePassword}"/>
+        <property name="schema" value="${templateSchema}"/>
+    </bean>
+
+    <bean name="pitmodelDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${pitmodelUsername}"/>
+        <property name="password" value="${pitmodelPassword}"/>
+        <property name="schema" value="${pitmodelSchema}"/>
+    </bean>
+
+    <bean name="gisDataStore" parent="postgisDataStoreConfig" lazy-init="true">
+        <property name="username" value="${postgis.username}"/>
+        <property name="password" value="${postgis.password}"/>
+        <property name="schema" value="${postgis.schema}"/>
+    </bean>
+
+    <bean name="reportingDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${reportingUsername}"/>
+        <property name="password" value="${reportingPassword}"/>
+        <property name="schema" value="${reportingSchema}"/>
+        <property name="instanceName" value="${reportingInstanceName}"/>
+    </bean>
+
+    <bean name="caesDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${caesUsername}"/>
+        <property name="password" value="${caesPassword}"/>
+        <property name="schema" value="${caesSchema}"/>
+        <property name="instanceName" value="${caesInstanceName}"/>
+    </bean>
+
+    <bean name="aquilaDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${aquilaUsername}"/>
+        <property name="password" value="${aquilaPassword}"/>
+        <property name="schema" value="${aquilaSchema}"/>
+        <property name="instanceName" value="${aquilaInstanceName}"/>
+    </bean>
+
+    <bean name="boauditDataStore" parent="defaultMineStarDataStore" lazy-init="true">
+        <property name="username" value="${boauditUsername}"/>
+        <property name="password" value="${boauditPassword}"/>
+        <property name="schema" value="${boauditSchema}"/>
+        <property name="instanceName" value="${boauditInstanceName}"/>
+    </bean>
+
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <!-- Reporting datastore definitions -->
+    <!-- cfg,dvl,dwh and dcl -->
+    <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+    <bean name="reportingWarehouseDataStore" parent="${dataStoreType}WarehouseDataStoreConfig"/>
+
+    <bean name="cfgDataStore" parent="reportingWarehouseDataStore" lazy-init="true">
+                <property name="username" value="${cfgUsername}"/>
+                <property name="password" value="${cfgPassword}"/>
+                <property name="schema" value="${cfgSchema}"/>
+                <property name="instanceName" value="${cfgInstanceName}"/>
+    </bean>
+
+    <bean name="dvlDataStore" parent="reportingWarehouseDataStore" lazy-init="true">
+                    <property name="username" value="${dvlUsername}"/>
+                    <property name="password" value="${dvlPassword}"/>
+                    <property name="schema" value="${dvlSchema}"/>
+                    <property name="instanceName" value="${dvlInstanceName}"/>
+    </bean>
+
+    <!--<bean name="stgDataStore" parent="reportingWarehouseDataStore" lazy-init="true">
+                        <property name="username" value="${stgUsername}"/>
+                        <property name="password" value="${stgPassword}"/>
+                        <property name="schema" value="${stgSchema}"/>
+                        <property name="instanceName" value="${stgInstanceName}"/>
+    </bean>-->
+
+    <bean name="dwhDataStore" parent="reportingWarehouseDataStore" lazy-init="true">
+                        <property name="username" value="${dwhUsername}"/>
+                        <property name="password" value="${dwhPassword}"/>
+                        <property name="schema" value="${dwhSchema}"/>
+                        <property name="instanceName" value="${dwhInstanceName}"/>
+    </bean>
+
+    <bean name="dclDataStore" parent="reportingWarehouseDataStore" lazy-init="true">
+                        <property name="username" value="${dclUsername}"/>
+                        <property name="password" value="${dclPassword}"/>
+                        <property name="schema" value="${dclSchema}"/>
+                        <property name="instanceName" value="${dclInstanceName}"/>
+    </bean>
+
+    <!-- Custom datastore definitions -->
+    <!-- ie other than MineStar FleetCommander model, historical, summary etc -->
+
+    <!-- example datastore definition -->
+    <!-- defaults to instanceName1 on MineStar database server -->
+    <!--
+        <bean name="convergenceDataStore" parent="oracleDataStoreConfig" lazy-init="true">
+            <property name="username" value="username"/>
+            <property name="password" value="password"/>
+        </bean>
+    -->
+</beans>

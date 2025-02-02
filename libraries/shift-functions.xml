@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="da7131f3-88d7-4c0c-ad58-d523ff75fe29" author="MineStar" dbms="postgresql" runOnChange="true">
+        <comment>AHS-9999: CreateFunction shiftkey</comment>
+        <sqlFile path="db/changelog/functions/postgresql/shiftkey.sql" endDelimiter="GO" stripComments="true"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="bcdd897b-bd77-4496-9678-9723d032f4f0" author="MineStar" dbms="postgresql" runOnChange="true">
+        <comment>AHS-9999: CreateFunction shiftkey_utc</comment>
+        <sqlFile path="db/changelog/functions/postgresql/shiftkey_utc.sql" endDelimiter="GO" stripComments="true"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="aa7bcb4c-0610-40b2-a23c-687ec57e59b7" author="MineStar" dbms="postgresql" runOnChange="true">
+        <comment>AHS-9999: CreateFunction shiftseg</comment>
+        <sqlFile path="db/changelog/functions/postgresql/shiftseg.sql" endDelimiter="GO" stripComments="true"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

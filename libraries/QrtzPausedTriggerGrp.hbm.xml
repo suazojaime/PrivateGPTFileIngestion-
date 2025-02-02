@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class
+            name="minestar.external.domain.QrtzPausedTriggerGrp"
+            table="QRTZ_PAUSED_TRIGGER_GRPS"
+    >
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">The Quartz paused trigger group.</meta>
+
+        <id
+                name="triggerGroup"
+                type="java.lang.String"
+                column="TRIGGER_GROUP"
+        >
+            <meta attribute="description">The trigger group</meta>
+            <generator class="assigned"/>
+        </id>
+        <property name="schedName" type="java.lang.String">
+            <meta attribute="description">The Scheduler name.</meta>
+            <column name="SCHED_NAME" length="120" not-null="true" default="Sched1" />
+        </property>
+
+        <!-- associations -->
+
+    </class>
+</hibernate-mapping>

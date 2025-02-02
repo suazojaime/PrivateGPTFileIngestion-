@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="OracleProcessSubRep"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="2"
+		 rightMargin="5"
+		 topMargin="2"
+		 bottomMargin="2"
+		 whenNoDataType="AllSectionsNoDetail"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<parameter name="SERVICENAME" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="MONITORSEQUENCE" isForPrompting="true" class="java.lang.Integer"/>
+	<parameter name="MONITORTYPE" isForPrompting="true" class="java.lang.String"/>
+	<queryString><![CDATA[Select OSUser, Terminal, Program, LogonTime, STATUS, ServiceName, MonitorSequence, MonitorType from OracleProcess 
+ Where ServiceName = $P{SERVICENAME}
+    And MonitorSequence = $P{MONITORSEQUENCE}
+   And MonitorType = $P{MONITORTYPE}
+ Order By LogonTIme Desc]]></queryString>
+	<field name="OSUSER" class="java.lang.String"/>
+	<field name="TERMINAL" class="java.lang.String"/>
+	<field name="PROGRAM" class="java.lang.String"/>
+	<field name="LOGONTIME" class="java.sql.Timestamp"/>
+	<field name="STATUS" class="java.lang.String"/>
+	<field name="SERVICENAME" class="java.lang.String"/>
+	<field name="MONITORSEQUENCE" class="java.lang.Integer"/>
+	<field name="MONITORTYPE" class="java.lang.String"/>
+		<background>
+			<band height="0">
+			</band>
+		</background>
+		<title>
+			<band height="0">
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0">
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="38">
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="65"
+						y="2"
+						width="166"
+						height="16"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-BoldOblique" size="12" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Oracle Instance Connections</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="3"
+						y="22"
+						width="51"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>User@Host</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="109"
+						y="22"
+						width="38"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Program</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="219"
+						y="22"
+						width="52"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Logon Time</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="282"
+						y="22"
+						width="31"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Status</text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="11">
+				<rectangle>
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="317"
+						height="11"
+						forecolor="#000000"
+						backcolor="#FFAF00"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false">
+							<printWhenExpression><![CDATA[new Boolean(($V{REPORT_COUNT}.longValue() % 2 != 0))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch" pen="None" fill="Solid" />
+				</rectangle>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="3"
+						y="1"
+						width="91"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{OSUSER} + "@" + $F{TERMINAL}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="97"
+						y="1"
+						width="119"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String">$F{PROGRAM}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="274"
+						y="1"
+						width="42"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String">$F{STATUS}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd-MMM HH:mm" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="219"
+						y="1"
+						width="52"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.sql.Timestamp">$F{LOGONTIME}</textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0">
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0">
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0">
+			</band>
+		</summary>
+</jasperReport>

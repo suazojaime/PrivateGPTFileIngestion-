@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="8a62daf0-3474-4612-86de-ec4c0c3c475e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CURRENT_MODE to table PRODUCTION_EVENT as table does not exist or column already exists." onFail="MARK_RAN">
+
+            <tableExists tableName="PRODUCTION_EVENT"/>
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="CURRENT_MODE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3176: AddColumn PRODUCTION_EVENT.CURRENT_MODE</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="CURRENT_MODE" type="INT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="a38219d0-1d9d-47fa-92db-ff61d0cb7ad2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DIG_REASON to table PRODUCTION_EVENT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PRODUCTION_EVENT"/>
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="DIG_REASON"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3176: AddColumn PRODUCTION_EVENT.DIG_REASON</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="DIG_REASON" type="INT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="a4557b6f-02bf-4269-9b81-d5c3fb788e6a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SOURCE_BLOCK_OID to table PRODUCTION_EVENT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PRODUCTION_EVENT"/>
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="SOURCE_BLOCK_OID"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3176: AddColumn PRODUCTION_EVENT.SOURCE_BLOCK_OID</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="SOURCE_BLOCK_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

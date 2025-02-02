@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="43040b6d-61a4-4b16-94a5-832fdceec402" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PAYLOAD_UPDATE_SOURCE to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="PAYLOAD_UPDATE_SOURCE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6358 : AddColumn MACHINE_IN_PIT.PAYLOAD_UPDATE_SOURCE</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="PAYLOAD_UPDATE_SOURCE" type="VARCHAR(255)" remarks="The source of the payload value."/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

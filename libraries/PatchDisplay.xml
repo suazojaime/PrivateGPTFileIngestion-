@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+    <classdef name="PatchDisplay" >
+        <propertydef name="dataSets" label="">
+            <typedef><javaclass name="java.util.Set"/></typedef>
+            <uidef widget="servicePacks" />
+        </propertydef>
+    </classdef>
+
+    <!--
+    <classdef name="PatchDisplay" >
+        <propertydef name="dataSets" label="">
+            <typedef><javaclass name="java.util.Set"/></typedef>
+            <uidef
+                widget="collection"
+                custom='{widget.model="list:patches:Patches", valueMode="itemDetail", groupFormat="radio", groupSelected="None",
+                groupLabel="Service Pack", itemFormat="table", itemLabel="Updates", navigationPaneSize="-1",
+                infoPosition="bottom", infoButtonSet="view", itemButtonSet="view", itemProperties="detailsTime,id,contact,applied",
+                itemColClasses="applied:java.lang.Boolean", setMaximiseHeight="true", infoIsData="true",
+                itemColWidths="detailsTime:50,id:150,contact=150,applied:20"}'
+                />
+        </propertydef>
+    </classdef>
+-->
+
+    <classdef name="Update" >
+        <propertygroup name="General">
+            <propertydef name="applied">
+                <typedef><type code="boolean" /></typedef>
+                <description>Whether the update is turned on.</description>
+            </propertydef>
+            <propertydef name="shortDescription" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <uidef widget="textArea" custom='{rows=5,columns=30,linewrap=true}'/>
+                <description>Short description of the update.</description>
+            </propertydef>
+            <propertydef name="description" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <uidef widget="textArea" custom='{rows=5,columns=30,linewrap=true}'/>
+                <description>Description of the update.</description>
+            </propertydef>
+            <propertydef name="key" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <uidef visiblewhen='false'/>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="Details">
+            <propertydef name="contact" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <description>Who to contact for further information.</description>
+            </propertydef>
+            <propertydef name="scope" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <description>What the update affects.</description>
+            </propertydef>
+            <propertydef name="obsoletes" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <description>Any updates obsoleted by this one.</description>
+            </propertydef>
+            <propertydef name="related" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <description>Related bugs and updates.</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="Installation">
+            <uigroupdef mode="tab"/>
+            <propertydef name="risks" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <description>Risks of installing this update.</description>
+            </propertydef>
+            <propertydef name="installation" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <uidef widget="textArea" custom='{rows=5,columns=30,linewrap=true}'/>
+                <description>Installation process.</description>
+            </propertydef>
+            <propertydef name="restart" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <description>What needs to be restarted.</description>
+            </propertydef>
+            <propertydef name="validation" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <uidef widget="textArea" custom='{rows=5,columns=30,linewrap=true}'/>
+                <description>How to tell whether the update worked.</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="Source Details">
+            <uigroupdef mode="tab"/>
+            <propertydef name="sourceFile" access="readonly">
+                <typedef><type code="string" /></typedef>
+                <description>The file the update comes from.</description>
+            </propertydef>
+            <propertydef name="detailsMachine" label="The machine the patch was built on" access="readonly">
+                <typedef><type code="string"/></typedef>
+            </propertydef>
+            <propertydef name="detailsTime" label="The time the patch was built" access="readonly">
+                <typedef><type code="string"/></typedef>
+            </propertydef>
+            <propertydef name="detailsUser" label="The user who built the patch" access="readonly">
+                <typedef><type code="string"/></typedef>
+            </propertydef>
+        </propertygroup>
+    </classdef>
+
+</classdefs>

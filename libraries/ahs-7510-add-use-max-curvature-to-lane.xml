@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="09165d43-d2ef-4de5-a60d-052b3d56eaa7" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for USE_MAX_CURVATURE to table LANE as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="LANE"/>
+            <not>
+                <columnExists tableName="LANE" columnName="USE_MAX_CURVATURE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7510: AddColumn LANE.USE_MAX_CURVATURE</comment>
+        <addColumn tableName="LANE">
+            <column name="USE_MAX_CURVATURE" type="BOOLEAN"
+                    remarks="The lanes can be traversed using a maximum curvature turn"/>
+        </addColumn>
+        <sql>UPDATE LANE SET USE_MAX_CURVATURE = 0</sql>
+        <addNotNullConstraint tableName="LANE" columnName="USE_MAX_CURVATURE" columnDataType="BOOLEAN"/>
+        <rollback>
+            <dropColumn tableName="LANE" columnName="USE_MAX_CURVATURE"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

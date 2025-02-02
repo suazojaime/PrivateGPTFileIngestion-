@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="95c97649-1b2c-4232-b376-094fef7840d9" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for AUTO_RECOVERY_SCRIPT to table PLAN_MODEL as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="AUTO_RECOVERY_SCRIPT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2219: AddColumn PLAN_MODEL.AUTO_RECOVERY_SCRIPT</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="AUTO_RECOVERY_SCRIPT" type="BIGINT"
+                    remarks="The script that will be used to automatically attempt recovery if the truck fails to put its body down at a highwall dump."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="57622340-3c34-4fbe-84ef-c56c6cf95d79" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_MODEL_AUTO_RECOVERY_SC_FK to table PLAN_MODEL as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <tableExists tableName="SERVER_SCRIPT"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_MODEL" foreignKeyName="PLAN_MODEL_AUTO_RECOVERY_SC_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2219: AddForeignKeyConstraint PLAN_MODEL_AUTO_RECOVERY_SC_FK to PLAN_MODEL (AUTO_RECOVERY_SCRIPT)</comment>
+        <sql>UPDATE PLAN_MODEL SET AUTO_RECOVERY_SCRIPT = NULL WHERE AUTO_RECOVERY_SCRIPT IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SERVER_SCRIPT WHERE SERVER_SCRIPT.SERVER_SCRIPT_OID = PLAN_MODEL.AUTO_RECOVERY_SCRIPT)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_MODEL" baseColumnNames="AUTO_RECOVERY_SCRIPT" constraintName="PLAN_MODEL_AUTO_RECOVERY_SC_FK" referencedTableName="SERVER_SCRIPT" referencedColumnNames="SERVER_SCRIPT_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_MODEL" constraintName="PLAN_MODEL_AUTO_RECOVERY_SC_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

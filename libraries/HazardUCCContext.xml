@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- must have this -->
+    <bean id="hazardUCCImpl" class="minestar.mine.uifacade.hazard.impl.HazardUCCImpl" lazy-init="true">
+        <property name="hazardLayoutService" ref="hazardLayoutServiceImpl"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerHazardUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Hazard UCC"/>
+        <constructor-arg value="minestar.mine.uifacade.hazard.HazardUCCFacade"/>
+        <constructor-arg ref="hazardUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="hazardUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="hazardUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="hazardUCC"/>
+        <property name="service" ref="hazardUCCProxy"/>
+        <property name="serviceInterface" value="minestar.mine.uifacade.hazard.HazardUCCFacade"/>
+    </bean>
+
+</beans>

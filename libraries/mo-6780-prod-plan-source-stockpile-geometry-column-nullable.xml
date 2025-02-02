@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="4301e1ab-c6d4-4db0-8d97-d2e3a1589c9f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_SOURCE_STOCKPILE.GEOMETRY as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="GEOMETRY"/>
+        </preConditions>
+        <comment>MO-6780: DropNotNullConstraint from PROD_PLAN_SOURCE_STOCKPILE.GEOMETRY</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="GEOMETRY" columnDataType="NVARCHAR(4000)"/>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

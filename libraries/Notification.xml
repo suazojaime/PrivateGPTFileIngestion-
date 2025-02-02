@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="notificationConfig" class="com.mincom.util.event.NotificationConfig">
+        <property name="encryptionEnabled" value="${notification.encryption.enabled}"/>
+        <property name="maxEventBytes" value="${notification.max.event.bytes}"/>
+        <property name="fastConsumerTime" value="${notification.fast.consumer.time}"/>
+        <property name="slowConsumerTime" value="${notification.slow.consumer.time}"/>
+    </bean>
+
+    <!-- The "notification" bean for MineTracking is created in PubsubImpl.xml -->
+    <beans profile="!minetracking">
+        <bean id="notification" class="com.mincom.util.event.NotificationClientImpl"
+              lazy-init="true" init-method="start" destroy-method="stop" depends-on="notificationConfig">
+            <constructor-arg name="remoteHost" value="${_HOME}"/>
+            <constructor-arg name="remotePort" value="${MSTAR_NOTIFICATION_PORT}"/>
+        </bean>
+    </beans>
+
+</beans>

@@ -1,0 +1,43 @@
+<!-- $Id: CycleConditionDefinition.xml,v 1.1 2004-08-16 07:43:40 andrewc Exp $ -->
+<!--************************************************************************-->
+<!--   Conditions to be used for state transitions                          -->
+<!--   name is a unique name for the condition to be used in transition     -->
+<!--   definitions as found in CycleStateConfig.xml.                        -->
+<!--                                                                        -->
+<!--   on is a list of space separated logical events that make the         -->
+<!--   condition true                                                       -->
+<!--   off is a list of space separated logical events that make the        -->
+<!--   condition false                                                      -->
+<!--************************************************************************-->
+
+<StateConditionDefinition>
+
+    <StateCondition
+        name = "atSource"
+        on   = "Enter.Source Enter.Loader"
+        off  = "Exit.Source Exit.Loader Enter.Beacon"
+    />
+
+    <StateCondition
+        name = "atSink"
+        on   = "Enter.Sink "
+        off  = "Exit.Sink Exit.Dump Enter.Beacon"
+    />
+
+    <StateCondition
+        name = "atShop"
+        on   = "Enter.Shop "
+        off  = "Exit.Shop Enter.Beacon"
+    />
+
+    <StateCondition
+        name = "isLoaded"
+        on   = "Set.Loaded "
+        off  = "Set.Empty "
+    />
+    <StateCondition
+        name = "isEmpty"
+        on   = "Set.Empty "
+        off  = "Set.Loaded "
+    />
+</StateConditionDefinition>

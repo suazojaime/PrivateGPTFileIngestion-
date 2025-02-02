@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+  <changeSet id="7e1edb3e-0fe4-44ca-86b2-001bb987debb" author="MineStar" failOnError="false">
+	  <preConditions onFailMessage="Ignored AddNotNullConstraint for MACHINE.USECLASSPAYLOAD as column does not exist or is already not-nullable" onFail="MARK_RAN">
+		 <ext:columnIsNullable tableName="MACHINE" columnName="USECLASSPAYLOAD"/>
+	  </preConditions>
+	  <comment>FLT:3858: AddNotNullConstraint to MACHINE.USECLASSPAYLOAD</comment>
+	  <addNotNullConstraint columnName="USECLASSPAYLOAD" columnDataType="BOOLEAN" defaultNullValue="1" tableName="MACHINE"/>
+  </changeSet>
+  <changeSet id="602cd544-b269-4527-84b2-89e609b7e745" author="MineStar" failOnError="false">
+	  <preConditions onFailMessage="Ignored AddDefaultValue for MACHINE.USECLASSPAYLOAD as column does not exist" onFail="MARK_RAN">
+		  <columnExists tableName="MACHINE" columnName="USECLASSPAYLOAD"/>
+	  </preConditions>
+	  <comment>FLT:3858: AddDefaultValue '1' to MACHINE.USECLASSPAYLOAD</comment>
+	  <addDefaultValue columnName="USECLASSPAYLOAD" columnDataType="BOOLEAN" defaultValueBoolean="true" tableName="MACHINE"/>
+  </changeSet>
+</databaseChangeLog>

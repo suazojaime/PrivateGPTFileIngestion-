@@ -1,0 +1,2 @@
+$ Installer Type =0 
+$ Wash Files =*.exe;*.dll;*.bat;*.dat;*.txt;*.log;*.ttf;*.ttc;temp\*.*;config\*.* 

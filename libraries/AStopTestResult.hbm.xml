@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+  <class name="minestar.mine.domain.minemodel.astop.AStopTestResultImpl"
+         table="ASTOP_TEST_RESULT"
+         dynamic-update="true"
+         proxy="minestar.mine.domain.minemodel.astop.AStopTestResult">
+
+    <meta attribute="table">
+      tablespace=MW_ENT
+    </meta>
+    <meta attribute="primary-key">
+      tablespace=MW_IDXENT
+    </meta>
+
+    <meta attribute="description">Records AStop test results.</meta>
+
+    <id name="OID"
+        type="java.lang.Long"
+        column="OID">
+      <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+    </id>
+
+    <property
+        name="autStopID"
+        type="java.lang.Long"
+        column="AUT_STOP_ID">
+    </property>
+
+    <property
+        name="testTime"
+        type="TimestampType"
+        >
+        <meta attribute="view-localtime">true</meta>         
+        <meta attribute="utc-description">The test utc time.</meta>
+        <meta attribute="description">The test time.</meta>
+		<column name="TEST_TIME_UTC"/>
+    </property>
+
+
+    <property
+        name="testStationName"
+        type="java.lang.String"
+        column="TEST_STATION_NAME">
+      <meta attribute="description">The Name of the A-Stop test station.</meta>
+    </property>
+
+    <property
+        name="transmitterCommandResult"
+        type="java.lang.Long"
+        column="TX_COMMAND_RESULT">
+      <meta attribute="description">The result of the A-Stop device stop command.</meta>
+    </property>
+
+    <property
+        name="signalResult"
+        type="java.lang.Long"
+        column="SIGNAL_RESULT">
+      <meta attribute="description">The A-Stop device's wireless signal strength.</meta>
+    </property>
+
+    <property
+        name="batteryResult"
+        type="java.lang.Long"
+        column="BATTERY_RESULT">
+      <meta attribute="description">The A-Stop device's battery voltage.</meta>
+    </property>
+
+    <property
+        name="pass"
+        type="java.lang.Boolean"
+        column="PASS">
+      <meta attribute="description">Whether the A-Stop device has passed  wireless signal strength.</meta>
+    </property>
+  </class>
+</hibernate-mapping>

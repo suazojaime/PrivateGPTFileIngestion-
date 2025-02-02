@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+                   objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+
+    <changeSet id="8355fcac-9333-4b0e-9c3c-2437c8b09813" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored Add column hierarchy to table gis_gradeblocks as table does not exist or column exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_gradeblocks"/>
+            <not>
+                <columnExists tableName="gis_gradeblocks" columnName="hierarchy"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8039: Add column direct_tip_processor to gis_gradeblocks</comment>
+        <addColumn tableName="gis_gradeblocks">
+            <column name="hierarchy" type="VARCHAR"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="9a69944c-6f51-4704-a5e1-0eb36dc76ecb" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for FDC_DGRADES as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="FDC_DGRADES"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5667: CreateTable FDC_DGRADES</comment>
+        <createTable tablespace="MW_ENT" remarks="The details of the discrete grades to set in the draw point's grade block at the start of a future draw card's period." tableName="FDC_DGRADES">
+            <column name="FDCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRADE_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRADE_VALUE" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="FDCE_OID,GRADE_NAME" constraintName="FDC_DGRADES_PK" tablespace="MW_IDXENT" tableName="FDC_DGRADES"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="d2bcd65c-35ec-4519-bf07-039ed2ab3cd1" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for FDC_GRADES as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="FDC_GRADES"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5667: CreateTable FDC_GRADES</comment>
+        <renameTable oldTableName="FUTURE_DRAW_CARD_GRADES" newTableName="FDC_GRADES"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="2ca21d6d-6ccf-4124-94b1-953b4a62884d" author="MineStar"  context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for FUTURE_DRAW_CARD_GRADES_PK of table FDC_GRADES as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="FUTURE_DRAW_CARD_GRADES_PK" tableName="FDC_GRADES"/>
+        </preConditions>
+        <comment>FUG-5667: DropPrimaryKey FUTURE_DRAW_CARD_GRADES_PK from FDC_GRADES (FDCE_OID,GRADE_NAME)</comment>
+        <dropPrimaryKey constraintName="FUTURE_DRAW_CARD_GRADES_PK" tableName="FDC_GRADES"/>
+        <rollback>
+            <addPrimaryKey columnNames="FDCE_OID,GRADE_NAME" constraintName="FUTURE_DRAW_CARD_GRADES_PK" tableName="FDC_GRADES"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="771c9adb-d91f-4f5d-8658-ccc7461168ad" author="MineStar"  context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for FDC_GRADES_PK to table FDC_GRADES as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="FDC_GRADES"/>
+            <not>
+                <primaryKeyExists primaryKeyName="FDC_GRADES_PK" tableName="FDC_GRADES"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5667: AddPrimaryKey FDC_GRADES_PK to FDC_GRADES (FDCE_OID,GRADE_NAME)</comment>
+        <sql dbms="oracle">DELETE FROM FDC_GRADES WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY FDCE_OID, GRADE_NAME ORDER BY ROWID) RN FROM FDC_GRADES) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY FDCE_OID, GRADE_NAME ORDER BY %%physloc%%) AS ROW_NUM FROM FDC_GRADES) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="FDCE_OID,GRADE_NAME" constraintName="FDC_GRADES_PK" tablespace="MW_IDXENT" tableName="FDC_GRADES"/>
+        <rollback>
+            <dropPrimaryKey constraintName="FDC_GRADES_PK" tableName="FDC_GRADES"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="c677e1be-b03f-4c0e-ab0f-60b06d2d3e94" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for FUTURE_DRAW_CARD_DISCRETE_GRADES as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="FUTURE_DRAW_CARD_DISCRETE_GRADES"/>
+        </preConditions>
+        <comment>FUG-5667: DropTable FUTURE_DRAW_CARD_DISCRETE_GRADES</comment>
+        <dropTable tableName="FUTURE_DRAW_CARD_DISCRETE_GRADES"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="9ddf9a8b-f5e8-4284-9972-35a8b59c7ce3" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for FDC_DGRADES_FDCE_OID_FK to table FDC_DGRADES as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="FDC_DGRADES" columnName="FDCE_OID"/>
+            <columnExists tableName="FDC_ENTRY" columnName="FDCE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="FDC_DGRADES" foreignKeyName="FDC_DGRADES_FDCE_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5667: AddForeignKeyConstraint FDC_DGRADES_FDCE_OID_FK to FDC_DGRADES (FDCE_OID)</comment>
+        <sql>DELETE FROM FDC_DGRADES WHERE FDCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM FDC_ENTRY WHERE FDC_ENTRY.FDCE_OID = FDC_DGRADES.FDCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="FDC_DGRADES" baseColumnNames="FDCE_OID" constraintName="FDC_DGRADES_FDCE_OID_FK" referencedTableName="FDC_ENTRY" referencedColumnNames="FDCE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="FDC_DGRADES" constraintName="FDC_DGRADES_FDCE_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6311e654-da7b-495e-b127-c406ff95c69d" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for FDC_GRADES_FDCE_OID_FK to table FDC_GRADES as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="FDC_GRADES" columnName="FDCE_OID"/>
+            <columnExists tableName="FDC_ENTRY" columnName="FDCE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="FDC_GRADES" foreignKeyName="FDC_GRADES_FDCE_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5667: AddForeignKeyConstraint FDC_GRADES_FDCE_OID_FK to FDC_GRADES (FDCE_OID)</comment>
+        <sql>DELETE FROM FDC_GRADES WHERE FDCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM FDC_ENTRY WHERE FDC_ENTRY.FDCE_OID = FDC_GRADES.FDCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="FDC_GRADES" baseColumnNames="FDCE_OID" constraintName="FDC_GRADES_FDCE_OID_FK" referencedTableName="FDC_ENTRY" referencedColumnNames="FDCE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="FDC_GRADES" constraintName="FDC_GRADES_FDCE_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a6150254-7248-4930-b924-cec84bf52e66" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LHD_ASSIGNMENT_CONTEXT to table ASSIGNMENT_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="ASSIGNMENT_EVENT" columnName="LHD_ASSIGNMENT_CONTEXT"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4199: AddColumn ASSIGNMENT_CONTEXT to table ASSIGNMENT_EVENT</comment>
+        <addColumn tableName="ASSIGNMENT_EVENT">
+            <column name="LHD_ASSIGNMENT_CONTEXT" type="CLOB" remarks="Underground LHD assignment context"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

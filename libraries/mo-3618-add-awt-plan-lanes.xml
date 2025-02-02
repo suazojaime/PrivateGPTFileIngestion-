@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="aff10545-039e-451c-a46b-61660ffb7e8e" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PLAN_LANE_INFO_AWT_WATERING as table already exists."
+                       onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PLAN_LANE_INFO_AWT_WATERING"/>
+            </not>
+        </preConditions>
+        <comment>MO-3618: CreateTable PLAN_LANE_INFO_AWT_WATERING</comment>
+        <createTable remarks="The lanes that allow an AWT to water the dynamic area"
+                     tableName="PLAN_LANE_INFO_AWT_WATERING">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LANE_NR" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LANE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="PLAN_OID,LANE_NR" constraintName="PLAN_LANE_INFO_AWT_WATERING_PK"
+                       tableName="PLAN_LANE_INFO_AWT_WATERING"/>
+    </changeSet>
+
+    <changeSet id="67314790-d6c6-4579-9697-af08471e5c77" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PLAN_LANE_INFO_AWT_UTURN as table already exists."
+                       onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PLAN_LANE_INFO_AWT_UTURN"/>
+            </not>
+        </preConditions>
+        <comment>MO-3618: CreateTable PLAN_LANE_INFO_AWT_UTURN</comment>
+        <createTable remarks="The lanes that allow an AWT to perform a u-turn" tableName="PLAN_LANE_INFO_AWT_UTURN">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LANE_NR" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LANE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="PLAN_OID,LANE_NR" constraintName="PLAN_LANE_INFO_AWT_UTURN_PK"
+                       tableName="PLAN_LANE_INFO_AWT_UTURN"/>
+    </changeSet>
+
+    <changeSet id="3dbfd8d0-9a31-4098-b3de-3096fa650882" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_AWT_UTURN_FK1 to table PLAN_LANE_INFO_AWT_UTURN as (1) the source or referenced column does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <columnExists tableName="PLAN_LANE_INFO_AWT_UTURN" columnName="LANE_OID"/>
+            <columnExists tableName="LANE" columnName="LANE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_AWT_UTURN"
+                                            foreignKeyName="PLAN_LANE_INFO_AWT_UTURN_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3618: AddForeignKeyConstraint PLAN_LANE_INFO_AWT_UTURN_FK1 to PLAN_LANE_INFO_AWT_UTURN (LANE_OID)</comment>
+        <sql>
+            DELETE FROM PLAN_LANE_INFO_AWT_UTURN
+            WHERE LANE_OID IS NOT NULL
+            AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_AWT_UTURN.LANE_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_AWT_UTURN" baseColumnNames="LANE_OID"
+                                 constraintName="PLAN_LANE_INFO_AWT_UTURN_FK1" referencedTableName="LANE"
+                                 referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_AWT_UTURN"
+                                      constraintName="PLAN_LANE_INFO_AWT_UTURN_FK1"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="5980d5c1-1513-4a47-baf8-7629a54ce2e0" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_AWT_UTURN_FK2 to table PLAN_LANE_INFO_AWT_UTURN as (1) the source or referenced column does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <columnExists tableName="PLAN_LANE_INFO_AWT_UTURN" columnName="PLAN_OID"/>
+            <columnExists tableName="PLAN_LANE_INFO" columnName="PLAN_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_AWT_UTURN"
+                                            foreignKeyName="PLAN_LANE_INFO_AWT_UTURN_FK2"/>
+            </not>
+        </preConditions>
+        <comment>MO-3618: AddForeignKeyConstraint PLAN_LANE_INFO_AWT_UTURN_FK2 to PLAN_LANE_INFO_AWT_UTURN (PLAN_OID)</comment>
+        <sql>
+            DELETE FROM PLAN_LANE_INFO_AWT_UTURN
+            WHERE PLAN_OID IS NOT NULL
+            AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_AWT_UTURN.PLAN_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_AWT_UTURN" baseColumnNames="PLAN_OID"
+                                 constraintName="PLAN_LANE_INFO_AWT_UTURN_FK2" referencedTableName="PLAN_LANE_INFO"
+                                 referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_AWT_UTURN"
+                                      constraintName="PLAN_LANE_INFO_AWT_UTURN_FK2"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="43597db4-32c3-42dc-b5ea-18d75177d737" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_AWT_WATERIN_FK1 to table PLAN_LANE_INFO_AWT_WATERING as (1) the source or referenced column does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <columnExists tableName="PLAN_LANE_INFO_AWT_WATERING" columnName="LANE_OID"/>
+            <columnExists tableName="LANE" columnName="LANE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_AWT_WATERING"
+                                            foreignKeyName="PLAN_LANE_INFO_AWT_WATERIN_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3618: AddForeignKeyConstraint PLAN_LANE_INFO_AWT_WATERIN_FK1 to PLAN_LANE_INFO_AWT_WATERING (LANE_OID)</comment>
+        <sql>
+            DELETE FROM PLAN_LANE_INFO_AWT_WATERING
+            WHERE LANE_OID IS NOT NULL
+            AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_AWT_WATERING.LANE_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_AWT_WATERING" baseColumnNames="LANE_OID"
+                                 constraintName="PLAN_LANE_INFO_AWT_WATERIN_FK1" referencedTableName="LANE"
+                                 referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_AWT_WATERING"
+                                      constraintName="PLAN_LANE_INFO_AWT_WATERIN_FK1"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6bbf5863-e0b9-48d7-b0d3-939844bdc394" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_AWT_WATERIN_FK2 to table PLAN_LANE_INFO_AWT_WATERING as (1) the source or referenced column does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <columnExists tableName="PLAN_LANE_INFO_AWT_WATERING" columnName="PLAN_OID"/>
+            <columnExists tableName="PLAN_LANE_INFO" columnName="PLAN_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_AWT_WATERING"
+                                            foreignKeyName="PLAN_LANE_INFO_AWT_WATERIN_FK2"/>
+            </not>
+        </preConditions>
+        <comment>MO-3618: AddForeignKeyConstraint PLAN_LANE_INFO_AWT_WATERIN_FK2 to PLAN_LANE_INFO_AWT_WATERING (PLAN_OID)</comment>
+        <sql>
+            DELETE FROM PLAN_LANE_INFO_AWT_WATERING
+            WHERE PLAN_OID IS NOT NULL
+            AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_AWT_WATERING.PLAN_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_AWT_WATERING" baseColumnNames="PLAN_OID"
+                                 constraintName="PLAN_LANE_INFO_AWT_WATERIN_FK2" referencedTableName="PLAN_LANE_INFO"
+                                 referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_AWT_WATERING"
+                                      constraintName="PLAN_LANE_INFO_AWT_WATERIN_FK2"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

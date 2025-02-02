@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="56847a55-25ba-482f-b1f6-981a973ac2e4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ACTIVEDESTINATIONBLEND to table CYCLE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE"/>
+            <not>
+                <columnExists tableName="CYCLE" columnName="ACTIVEDESTINATIONBLEND"/>
+            </not>
+        </preConditions>
+        <comment>{FLT-4486}: AddColumn CYCLE.ACTIVEDESTINATIONBLEND</comment>
+        <addColumn tableName="CYCLE">
+            <column name="ACTIVEDESTINATIONBLEND" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="bed0a4a9-43dd-481f-b5ee-4025a4954bea" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored Create Index for table CYCLE, index ACTIVEDESTBLEND_FK as it already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="ACTIVEDESTBLEND_FK" columnNames="ACTIVEDESTINATIONBLEND"/>
+            </not>
+        </preConditions>
+        <comment>{FLT-4486}: Add index CYCLE.ACTIVEDESTBLEND_FK</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="CYCLE" indexName="ACTIVEDESTBLEND_FK">
+            <column name="ACTIVEDESTINATIONBLEND"/>
+        </createIndex>
+        <rollback>
+            <dropIndex tableName="CYCLE" indexName="ACTIVEDESTBLEND_FK"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

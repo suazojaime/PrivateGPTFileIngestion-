@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+<changeSet id="c2bf5631-b2f6-4e85-8f75-a3071faba754" author="MineStar" failOnError="false">
+    <preConditions onFailMessage="Ignored AddColumn for AODV_DETECTED to table PERCEPTION_VERIFICATION_STATS as table does not exist or column already exists." onFail="MARK_RAN">
+        <tableExists tableName="PERCEPTION_VERIFICATION_STATS"/>
+        <not>
+            <columnExists tableName="PERCEPTION_VERIFICATION_STATS" columnName="AODV_DETECTED"/>
+        </not>
+    </preConditions>
+    <comment>MO-10266: AddColumn PERCEPTION_VERIFICATION_STATS.AODV_DETECTED</comment>
+    <addColumn tableName="PERCEPTION_VERIFICATION_STATS">
+        <column name="AODV_DETECTED" type="BOOLEAN" remarks="True if the AODV target detection was successful."/>
+    </addColumn>
+</changeSet>
+</databaseChangeLog>

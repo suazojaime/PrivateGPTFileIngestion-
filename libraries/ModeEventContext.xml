@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2021 Caterpillar -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+
+    <bean id="modeEventHandler" class="minestar.autonomy.service.mode.event.ModeEventHandlerImpl"
+          lazy-init="true">
+        <constructor-arg name="machineModeService" ref="machineModeServiceImpl"/>
+    </bean>
+
+    <bean id="generateMachineModeEvent"
+          class="minestar.autonomy.service.mode.event.controller.GenerateMachineModeEvent">
+        <property name="modeEventHandler" ref="modeEventHandler"/>
+    </bean>
+
+    <bean id="recordMachineModeChangeImpl" class="minestar.mode.shared.control.RecordMachineModeChangeImpl" init-method="init">
+        <property name="machineModeChangeService" ref="machineModeChangeServiceImpl" />
+        <property name="notification" ref="notification"/>
+    </bean>
+
+</beans>

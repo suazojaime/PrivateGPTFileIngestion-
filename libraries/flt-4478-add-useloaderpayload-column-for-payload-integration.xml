@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+   <changeSet id="78994b8f-8eb3-4172-b6db-9875fde8b662" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for USELOADERPAYLOAD to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="USELOADERPAYLOAD"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4478: AddColumn MACHINE.USELOADERPAYLOAD</comment>
+        <addColumn tableName="MACHINE">
+            <column name="USELOADERPAYLOAD" type="BOOLEAN" defaultValueBoolean="false" remarks="Specifies whether to use loader payload or truck payload for cycles.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="5032c125-a901-4473-9013-1d937ab9b710" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for USELOADERPAYLOAD to table MACHINECLASS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <columnExists tableName="MACHINECLASS" columnName="USELOADERPAYLOAD"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4478: AddColumn MACHINECLASS.USELOADERPAYLOAD</comment>
+        <addColumn tableName="MACHINECLASS">
+            <column name="USELOADERPAYLOAD" type="BOOLEAN" defaultValueBoolean="false" remarks="Specifies either to use loader payload or truck payload for cycles.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

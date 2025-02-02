@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <class name="minestar.planmanagement.domain.v2.ProdPlanVariation" table="PROD_PLAN_VARIATION">
+        <meta attribute="index">
+            name=PROD_PLAN_VARIATION_PLAN_OID
+            unique=false
+            columns=PLAN_OID
+        </meta>
+        <meta attribute="description">Store production task details</meta>
+
+        <id name="oid" type="java.lang.Long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        
+        <property name="createdTime" type="minestar.platform.persistence.HibernateUTCInstantType" column="CREATED_DATE_UTC" not-null="true">
+            <meta attribute="utc-description">The creation timestamp of the task</meta>
+            <meta attribute="description">Task creation timestamp</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="lastUpdatedTime" type="minestar.platform.persistence.HibernateUTCInstantType" column="UPDATED_DATE_UTC" not-null="true">
+            <meta attribute="utc-description">The update timestamp of the task</meta>
+            <meta attribute="description">Task updated timestamp</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+
+        <many-to-one name="equipmentRef"
+                     column="EQUIPMENT_OID"
+                     not-found="ignore"
+                     class="minestar.pitlink.domain.machine.MachineReference">
+            <meta attribute="alias">equipment</meta>
+        </many-to-one>
+        <many-to-one name="sourceRef"
+                     class="minestar.mine.domain.material.GradeBlockReference"
+                     column="SOURCE_OID"
+                     not-found="ignore">
+            <meta attribute="alias">gradeBlock</meta>
+        </many-to-one>
+        <many-to-one name="materialRef" 
+                     column="MATERIAL_OID"
+                     not-found="ignore"
+                     class="minestar.machinetracking.domain.MaterialReference">
+            <meta attribute="alias">material</meta>
+        </many-to-one>        
+        <many-to-one name="dumpRef"
+                     column="DUMP_OID"
+                     not-found="ignore"
+                     class="minestar.pitlink.domain.machine.MachineReference">
+            <meta attribute="alias">processor</meta>
+        </many-to-one>
+
+        <property name="actualMass" column="ACTUAL_MASS">
+            <meta attribute="unitType">mass</meta>
+            <meta attribute="description">Actual Mass</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+                <param name="nullable">false</param>
+            </type>
+        </property>
+        <property name="actualVolume" column="ACTUAL_VOLUME">
+            <meta attribute="unitType">volume</meta>
+            <meta attribute="description">Actual Volume</meta>
+            <type name="quantity">
+                <param name="unitType">volume</param>
+                <param name="nullable">false</param>
+            </type>
+        </property>
+        
+        <property name="notes" column="NOTES" length="65536"/>
+        
+    </class>
+
+</hibernate-mapping>

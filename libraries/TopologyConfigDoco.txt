@@ -1,0 +1,189 @@
+###############################################################################
+#####                                                                     #####
+#####                                                                     #####
+#####                                                                     #####
+#####      Defaults defined in com.mincom.base.log.topology.Topology      #####
+#####                                                                     #####
+#####                                                                     #####
+#####                                                                     #####
+###############################################################################
+
+# log.message.on=true
+# log.message.format=${level(message)}: {${timestamp} }{${message.resource} }{[${class(short)}] }{Thread ${thread}}{\nSTACKTRACE: ${stacktrace}}{\nTHROWABLE: ${throwable}}
+# log.message.console=true
+# log.message.file=false
+# log.message.file.spec=file("message.out")
+# log.message.decorate.thread=true
+# log.message.decorate.timestamp=true
+# log.message.decorate.jvmname=false
+# log.message.decorate.inetaddress=false
+# log.message.decorate.host=false
+# log.trace.on=true
+# log.trace.format={${message.resource} }{[${class(short)}] }{\nSTACKTRACE: ${stacktrace}}{\nTHROWABLE: ${throwable}}
+# log.trace.decorate.thread=true
+# log.trace.decorate.timestamp=false
+# log.trace.decorate.jvmname=false
+# log.trace.decorate.inetaddress=false
+# log.trace.decorate.host=false
+# log.trace.pf.package.filter.capture.mode=true
+# log.trace.pf.package.filter.on=true
+# log.trace.pf.package.filter.trace=true
+
+###############################################################################
+#####                                                                     #####
+#####                                                                     #####
+#####                                                                     #####
+#####                          EXAMPLE SETTINGS                           #####
+#####                                                                     #####
+#####                                                                     #####
+#####                                                                     #####
+###############################################################################
+
+###
+###
+### Understanding a bit about the topology (from the diagram)
+### before playing with these helps.
+###
+###
+
+#
+# Turn tracing on.  This permits trace events to flow through the trace
+# entry node in the logging topology.  If you have this set to "true" and
+# are not seeing any trace output check the "package filter" is also
+# configured to allow trace events through.
+#
+# log.trace.on=false
+
+#
+# Setting the capture mode to true provides backward compatibility with
+# Mincom's trace event capture (the default for this value is false).
+#
+# log.trace.pf.package.filter.capture.mode=true
+
+#
+# Catch all message events of level 0 or above and send them to a file
+# "com.mincom" in the default base directory.
+#
+# log.trace.pf.com.mincom=(file())
+
+###
+###
+### The following shows examples of how you might configure the package
+### filter (of which there is one in the trace portion of the logging
+### topology);
+###
+###
+
+#
+# The package filter associates "sinks" with "package names".  Currently
+# two types of "sink" can be specified:
+#
+#     - Console
+#     - File
+#
+# For a given log event a lookup is done to see which packages in the
+# package hierarchy match (ie com.mincom.util matches com, com.mincom
+# and com.mincom.util).  "Sinks" defined for each of these packages
+# are then added to the log events destination list (duplicates are
+# merged).  Once complete the log event is sent to all of these
+# destinations.
+#
+# The syntax for console definitions is:
+#
+#      <package-name>=specs
+#      specs        := sinkspec [, sinkspec]
+#      sinkspec     := "(" [level ,] [traceType,] sink ")"
+#      sink         := console | file
+#      console      := "console" "(" [consolepipe] ")"
+#      file         := "file" "(" [filenamespec] ")"
+#      filenamespec := filename [, resetspec]
+#      resetspec    := resetperiod [, resetformat]
+#      resetperiod  := 12hourly | daily | weekly | hourly | monthly
+#      resetformat  := "Java date format" [, "resettime"]
+#      filename     := """ &lt;string&gt; """
+#      consolepipe  := "OUT" | "ERR"
+#      level        := <integer>
+#      filename     := """ <string> """
+#      traceType    := """traceMask [|traceMask]"""
+#      traceMask    := entry | exit | instance | callback | performance | object_create | object_delete
+#
+#      Examples include:
+#
+#          log.trace.pf.com.mincom=(1,"entry|performance",console())
+#          log.trace.pf.com.mincom.base=(10,console(OUT))
+#          log.trace.pf.com.mincom.base.resource=(5,console(OUT)),(10,file())
+#          log.trace.pf.com.mincom.test=(console(OUT))
+#          log.trace.pf.com.mincom=(console(ERR))
+#          log.trace.pf.org.mincom.util=(file())
+#          log.trace.pf.org.mincom.base=(10, file("/tmp/base.trace"))
+#          log.trace.pf.org.mincom.test=(file("/tmp/test.trace"))
+#          log.trace.pf.org.mincom=(console(1))
+#
+#
+# The package filter creates log "sinks" for defined packages "on demand".
+
+
+
+#
+# Is this filter "activated"?  If false then this filter will NOT allow
+# any trace events through.
+#
+# log.trace.pf.package.filter.on=true
+
+
+
+#
+# Is this filter acting on "trace" or "message" log events.  The package
+# filter needs to be told this because the level associated with log events
+# acts in differening ways for the "trace" and "message" log events.
+#
+# log.trace.pf.package.filter.trace=true
+
+
+###
+###
+### Package definitions...
+###
+###
+
+#
+# This is the specifier for the "ROOT" package.
+#
+#   In this example "console()" indicates we want any trace events
+#   to be sent to the standard OUTPUT "console" log sink. All packages are
+#   included.
+#
+# log.trace.pf.package.filter.root=(console()),(file())
+
+#
+# All trace events with a level 4 or less originating from the
+# "com.mincom.integ.cat" package (or descendents of the package) are sent to
+# the standard OUTPUT "console".
+#
+# log.trace.pf.com.mincom.integ.cat=(5,console())
+
+#
+# There are two sinks defined below for the "com.mincom" package.
+#
+#    - All trace events with a level 10 or less originating from the
+#      "com.mincom" package are logged to the standard OUTPUT
+#      console.
+#
+#    - All trace events with a level 10 or less originating from the
+#      "com.mincom" package are logged to the
+#      ${MSTAR_TRACE}/com.mincom.base.resource file sink.
+#
+# log.trace.pf.com.mincom=(10,console(OUT)),(10,file())
+#
+# All trace events originating from the "com.mincom.base.ser" package are
+# logged to the ${MSTAR_TRACE}/com.mincom.base.ser file
+# sink.
+#
+# log.trace.pf.com.mincom.base.ser=(file())
+
+#
+# All trace events originating from the "com.mincom.base.debug" package are
+# logged to the ${MSTAR_TRACE}/debug.bits file sink.
+#
+# log.trace.pf.com.mincom.base.debug=(file("debug.bits"))
+

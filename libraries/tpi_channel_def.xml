@@ -1,0 +1,435 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE ChannelDefinitions [
+<!ELEMENT ChannelDefinitions (ChannelDefinition)+>
+<!ELEMENT ChannelDefinition (DisplayDefinition)*>
+<!ATTLIST ChannelDefinition
+schema CDATA #REQUIRED
+id CDATA #REQUIRED
+description CDATA #REQUIRED
+component CDATA #REQUIRED
+unit CDATA #IMPLIED
+unitType CDATA #IMPLIED
+sign CDATA #REQUIRED
+scale CDATA #REQUIRED
+offset CDATA #REQUIRED
+byteSize CDATA #REQUIRED
+minmax CDATA #REQUIRED
+>
+<!ELEMENT DisplayDefinition EMPTY>
+<!ATTLIST DisplayDefinition
+channelValue CDATA #IMPLIED
+altValue CDATA #IMPLIED
+displayString CDATA #IMPLIED
+>
+]>
+<!--
+$Revision: 1.3 $
+Version: 3.0.31
+-->
+<ChannelDefinitions>
+  <ChannelDefinition schema="CENSE" id="98" description="Oil Level" component="0" unit="percent" unitType="ratio" scale="0.4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="111" description="Coolant Level" component="0" unit="percent" unitType="ratio" scale="0.4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="109" description="Coolant Pressure" component="0" unit="kilopascal" unitType="pressure" scale="2" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="110" description="Coolant Temperature" component="0" unit="celsius" unitType="temperature" scale="1" offset="-40" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="157" description="Fuel Rail Pressure" component="0" unit="megapascal" unitType="pressure" scale="0.0039" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1029" description="Average Fuel Consumption" component="0" unit="litres per hour" unitType="flow" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="183" description="Instantaneous Fuel Consumption" component="0" unit="litres per hour" unitType="flow" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1264" description="Blowby Pressure" component="0" unit="kilopascal" unitType="pressure" scale="0.05" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="190" description="Engine Speed" component="0" unit="revolutions per minute" unitType="angular velocity" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1015" description="Average Load Factor" component="0" unit="percent" unitType="ratio" scale="0.4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="524288" description="Instantaneous Load Factor" component="0" unit="percent" unitType="ratio" scale="0.4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1242" description="BHp" component="0" unit="kilowatt" unitType="power" scale="0.5" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1136" description="ECM Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="247" description="Total Engine Hours" component="0" unit="hour" unitType="duration" scale="0.05" offset="0" sign="0" byteSize="4" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1193" description="Hours to Rebuild" component="0" unit="hour" unitType="duration" scale="0.05" offset="0" sign="0" byteSize="4" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="235" description="Engine Idle Hours" component="0" unit="hour" unitType="duration" scale="0.05" offset="0" sign="0" byteSize="4" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="524289" description="Hours since Oil Change" component="0" unit="hour" unitType="duration" scale="0.05" offset="0" sign="0" byteSize="4" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="524290" description="Hours since Air Filter Change" component="0" unit="hour" unitType="duration" scale="0.05" offset="0" sign="0" byteSize="4" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="524291" description="Hours since Coolant Filter Change" component="0" unit="hour" unitType="duration" scale="0.05" offset="0" sign="0" byteSize="4" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="524292" description="Hours since Coolant Change" component="0" unit="hour" unitType="duration" scale="0.05" offset="0" sign="0" byteSize="4" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1208" description="Pre Lube Oil Filter Pressure" component="0" unit="kilopascal" unitType="pressure" scale="4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="524293" description="Post Lube Oil Filter Pressure" component="0" unit="kilopascal" unitType="pressure" scale="4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="175" description="Lube Oil Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1172" description="Compressor Inlet Air Temp LB" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1173" description="Compressor Inlet Air Temp RB" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="108" description="Ambient Air Pressure" component="0" unit="kilopascal" unitType="pressure" scale="0.5" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="105" description="Intake Manifold Temperature LF" component="0" unit="celsius" unitType="temperature" scale="1" offset="-40" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1131" description="Intake Manifold Temperature LR" component="0" unit="celsius" unitType="temperature" scale="1" offset="-40" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1132" description="Intake Manifold Temperature RF" component="0" unit="celsius" unitType="temperature" scale="1" offset="-40" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1133" description="Intake Manifold Temperature RR" component="0" unit="celsius" unitType="temperature" scale="1" offset="-40" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="102" description="Intake Manifold Pressure LB" component="0" unit="kilopascal" unitType="pressure" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1129" description="Intake Manifold Pressure RB" component="0" unit="kilopascal" unitType="pressure" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="107" description="Intake Restriction LB" component="0" unit="kilopascal" unitType="pressure" scale="0.05" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="524294" description="Intake Restriction RB" component="0" unit="kilopascal" unitType="pressure" scale="0.05" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1137" description="#1 LB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1138" description="#2 LB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1139" description="#3 LB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1140" description="#4 LB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1141" description="#5 LB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1142" description="#6 LB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1143" description="#7 LB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1144" description="#8 LB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1145" description="#1 RB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1146" description="#2 RB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1147" description="#3 RB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1148" description="#4 RB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1149" description="#5 RB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1150" description="#6 RB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1151" description="#7 RB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="1152" description="#8 RB Exh Port Temperature" component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="CENSE" id="99" description="Oil Filter Differential Pressure" component="0" unit="kilopascal" unitType="pressure" scale="0.5" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="84" description="Truck_Speed" component="0" unit="kilometres per hour" unitType="speed" scale="0.0039" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="190" description="Engine_Speed" component="0" unit="revolutions per minute" unitType="angular velocity" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="1639" description="Clng_Blower_Spd" component="0" unit="revolutions per minute" unitType="angular velocity" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="91" description="Accel_Pedal" component="0" unit="percent" unitType="ratio" scale="0.4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="1085" description="Rtrd_Spd_Ctrl" component="0" unit="percent" unitType="ratio" scale="1" offset="-125" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="172" description="Clng_Air_Temp" component="0" unit="celsius" unitType="temperature" scale="1" offset="-40" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="108" description="Baro_Pressure" component="0" unit="kilopascal" unitType="pressure" scale="0.5" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="168" description="Pot_Ref" component="0" unit="volt" unitType="potential difference" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="158" description="Control_Batt" component="0" unit="volt" unitType="potential difference" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="TCI" id="444" description="Crank_Batt" component="0" unit="volt" unitType="potential difference" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="167" description="Alternator Output Voltage " component="0" unit="volt" unitType="potential difference" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="898" description="Commanded Engine Speed " component="0" unit="revolutions per minute" unitType="angular velocity" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="1085" description="Retard Pedal Input Request " component="0" unit="percent" unitType="ratio" scale="1" offset="-125" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524544" description="Motor 1 Armature Current " component="0" unit="ampere" unitType="electrical current" scale="1" offset="-125" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="115" description="Alternator Field Current " component="0" unit="ampere" unitType="electrical current" scale="1" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524545" description="Select Retard Speed " component="0" unit="kilometres per hour" unitType="speed" scale="0.0039" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524546" description="Motor 2 Armature Current " component="0" unit="ampere" unitType="electrical current" scale="1" offset="-125" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524547" description="Alternator Field Command " component="0" unitType="unitless" scale="1" offset="-1" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524548" description="Trolley Line Voltage " component="0" unit="volt" unitType="potential difference" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524549" description="Motor Field Current " component="0" unit="ampere" unitType="electrical current" scale="1" offset="-125" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524550" description="Trolley Line Current " component="0" unit="ampere" unitType="electrical current" scale="1" offset="-125" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524551" description="Power Output to Wheelmotors " component="0" unit="kilowatt" unitType="power" scale="0.5" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524552" description="Trolley Leakage Current " component="0" unit="ampere" unitType="electrical current" scale="0.00005" offset="-1600" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524553" description="Motor 2 Armature Voltage" component="0" unit="volt" unitType="potential difference" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="168" description="Battery Voltage " component="0" unit="volt" unitType="potential difference" scale="0.05" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="190" description="Engine Speed " component="0" unit="revolutions per minute" unitType="angular velocity" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="91" description="Accel Pedal Input Request " component="0" unit="percent" unitType="ratio" scale="0.4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524554" description="Motor 1 Speed" component="0" unit="kilometres per hour" unitType="speed" scale="0.0039" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="101" description="Engine Crankcase Pressure " component="0" unit="kilopascal" unitType="pressure" scale="0.0078125" offset="-250" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524555" description="Motor 1 Speed (RPM) " component="0" unit="revolutions per minute" unitType="angular velocity" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524556" description="Ground Fault Current " component="0" unit="ampere" unitType="electrical current" scale="1" offset="-125" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524557" description="Motor 2 Speed " component="0" unit="kilometres per hour" unitType="speed" scale="0.0039" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="109" description="Engine Coolant Pressure " component="0" unit="kilopascal" unitType="pressure" scale="2" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524558" description="Motor 2 Speed (RPM) " component="0" unit="revolutions per minute" unitType="angular velocity" scale="0.125" offset="0" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524559" description="Motor 1 Temperature " component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="100" description="Engine Oil Pressure " component="0" unit="kilopascal" unitType="pressure" scale="4" offset="0" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524560" description="N/A" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="524561" description="Motor 2 Temperature " component="0" unit="celsius" unitType="temperature" scale="0.03125" offset="-273" sign="0" byteSize="2" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="110" description="Engine Coolant Temperature " component="0" unit="celsius" unitType="temperature" scale="1" offset="-40" sign="0" byteSize="1" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525056" description="2dd first_search" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525057" description="2dd last_search" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525058" description="2dd local_reset" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525059" description="accel inhibit" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525060" description="accel pedal switch" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525061" description="blower pressure switch" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525062" description="dump override switch" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525063" description="dump body up switch" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525064" description="engine shutdown" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525065" description="engine service" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525066" description="failed diode" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525067" description="sel switch in forward" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525068" description="idle switch" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525069" description="load weight" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525070" description="data store switch" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525071" description="sel switch in reverse" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525072" description="retard pedal switch" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525073" description="RSC enabled" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525074" description="key switch closed" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525075" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525076" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525077" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525078" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525079" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+  <ChannelDefinition schema="STATEX" id="525080" description="d1 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525081" description="d2 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525082" description="t1 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525083" description="t2 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525084" description="fs1 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525085" description="fs2 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525086" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525087" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+  <ChannelDefinition schema="STATEX" id="525088" description="rc1 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525089" description="rc2 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525090" description="rc3 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525091" description="rc4 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525092" description="rc5 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525093" description="rc6 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525094" description="rc7 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525095" description="tc1 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525096" description="tc2 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525097" description="dtst contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525098" description="dtsd contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525099" description="gic contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525100" description="speed reduction switch 1" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525101" description="speed reduction switch 2" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525102" description="speed reduction switch 3" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525103" description="speed reduction switch 4" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525104" description="dtms (0=diesel, 1=trolley)" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525105" description="rc8 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525106" description="rc9 contactor feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525107" description="leakage current test switch" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525108" description="parei3" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525109" description="left pantograph warning" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525110" description="right pantograph warning" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525111" description="pantograph drop relay feedback" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525112" description="afse enable" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525113" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+  <ChannelDefinition schema="STATEX" id="525114" description="failed diode light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525115" description="ground fault light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525116" description="low idle solenoid" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525117" description="mfse enable" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525118" description="overspeed light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525119" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+  <ChannelDefinition schema="STATEX" id="525120" description="retard cab light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525121" description="sys fault light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525122" description="throttle solenoid" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525123" description="parking brake solenoid" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525124" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525125" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525126" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+  <ChannelDefinition schema="STATEX" id="525127" description="blower fault light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525128" description="control power relay driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525129" description="engine shutdown light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525130" description="engine service light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525131" description="reverser forward coil driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525132" description="gf contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525133" description="p2 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525134" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525135" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+  <ChannelDefinition schema="STATEX" id="525136" description="rp8 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525137" description="rp9 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525138" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+  <ChannelDefinition schema="STATEX" id="525139" description="oem speed event" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525140" description="gfr contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525141" description="motor overtemp driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525142" description="mf contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525143" description="p1 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525144" description="tc1 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525145" description="trolley power light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525146" description="diesel power light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525147" description="tc11 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525148" description="max speed light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525149" description="tc2 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525150" description="tc21 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525151" description="rc8 contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525152" description="trolley fault light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525153" description="trolley ready light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525154" description="high speed light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525155" description="medium speed light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525156" description="low speed light" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525157" description="POV1 driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525158" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+  <ChannelDefinition schema="STATEX" id="525159" description="gic contactor driver" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+  <ChannelDefinition schema="STATEX" id="525160" description="trolley assist" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition>
+<!--   <ChannelDefinition schema="STATEX" id="525161" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525162" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525163" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525164" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525165" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525166" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+<!--   <ChannelDefinition schema="STATEX" id="525167" description="spare" component="0" unitType="unitless" scale="1" offset="0" sign="0" byteSize="0" minmax="0" >
+  </ChannelDefinition> -->
+    
+</ChannelDefinitions>

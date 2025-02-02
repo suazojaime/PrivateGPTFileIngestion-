@@ -1,0 +1,25 @@
+<wfs:CreateStoredQuery service='WFS' version='2.0.0' xmlns:wfs='http://www.opengis.net/wfs/2.0'
+                       xmlns:fes='http://www.opengis.net/fes/2.0' xmlns:#WORKSPACE#='http://#WORKSPACE#'>
+    <wfs:StoredQueryDefinition id='MannedLanesDeletedSince'>
+        <wfs:Parameter name='updateVersion' type='xsd:integer'/>
+        <wfs:QueryExpressionText
+                returnFeatureTypes='#WORKSPACE#:#PREFIX#_LANES_ARCHIVE'
+                language='urn:ogc:def:queryLanguage:OGC-WFS::WFS_QueryExpression'
+                isPrivate='false'>
+            <wfs:Query typeNames='#WORKSPACE#:#PREFIX#_LANES_ARCHIVE'>
+                <fes:Filter>
+                    <fes:And>
+                        <fes:PropertyIsGreaterThan>
+                            <fes:ValueReference>MODEL_UPDATE_VERSION</fes:ValueReference>
+                            <fes:Literal>${updateVersion}</fes:Literal>
+                        </fes:PropertyIsGreaterThan>
+                        <fes:PropertyIsEqualTo>
+                            <fes:ValueReference>HAS_EVER_BEEN_MANNED</fes:ValueReference>
+                            <fes:Literal>1</fes:Literal>
+                        </fes:PropertyIsEqualTo>
+                    </fes:And>
+                </fes:Filter>
+            </wfs:Query>
+        </wfs:QueryExpressionText>
+    </wfs:StoredQueryDefinition>
+</wfs:CreateStoredQuery>

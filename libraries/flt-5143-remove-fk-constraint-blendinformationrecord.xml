@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="57fbc1a4-b418-4e3a-a4ce-6e2a001e2340" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for BLND_INF_REC_CYC_OID_FK of table BLEND_INFORMATION_RECORD as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="BLEND_INFORMATION_RECORD" foreignKeyName="BLND_INF_REC_CYC_OID_FK"/>
+        </preConditions>
+        <comment>FLT-5143: DropForeignKeyConstraint BLND_INF_REC_CYC_OID_FK from BLEND_INFORMATION_RECORD (CYCLE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="BLEND_INFORMATION_RECORD" constraintName="BLND_INF_REC_CYC_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="BLEND_INFORMATION_RECORD" baseColumnNames="CYCLE_OID" constraintName="BLND_INF_REC_CYC_OID_FK" referencedTableName="CYCLE" referencedColumnNames="CYCLE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

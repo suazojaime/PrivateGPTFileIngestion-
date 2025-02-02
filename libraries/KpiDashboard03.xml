@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:widget="http://www.minestar.au.cat.com/namespace/widget"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.minestar.au.cat.com/namespace/widget http://www.minestar.au.cat.com/namespace/widget.xsd
+       ">
+
+    <!--A page containing a vertical bar chart showing the tons mined per hour for the shift-->
+    <widget:guiGroup id="totalTons" title="Total Tonnes Mined" orientation="vertical">
+        <widget:componentRef ref="lhdTonsMinedPerHourInShiftBarChart"/>
+        <widget:componentRef ref="truckTonsMinedPerHourInShiftBarChart"/>
+        <widget:componentRef ref="lhdTonsMinedPerHourAgainstTarget"/>
+        <widget:componentRef ref="truckTonsMinedPerHourAgainstTarget"/>
+    </widget:guiGroup>
+
+</beans>

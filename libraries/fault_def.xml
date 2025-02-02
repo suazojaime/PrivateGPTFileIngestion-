@@ -1,0 +1,985 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE FaultDefinitions [
+<!ELEMENT FaultDefinitions (FaultDefinition)+>
+<!ELEMENT FaultDefinition EMPTY>
+<!ATTLIST FaultDefinition
+schema CDATA #REQUIRED
+sequenceNumber CDATA #REQUIRED
+fmi CDATA #REQUIRED
+cid CDATA #REQUIRED
+fault CDATA #REQUIRED
+>
+]>
+<!--
+$Revision: $
+Version: 10.0.1
+-->
+<FaultDefinitions>
+    <FaultDefinition schema="VIMS" sequenceNumber="0" fmi="0" cid="0" fault="Other"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="41" fault="a. Any sensor powered by this 8-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="41" fault="b. Any sensor powered by this 8-Volt circuit may work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="41" fault="c. Any sensor powered by this 8-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="41" fault="a. Any sensor powered by this 8-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="41" fault="b. Any sensor powered by this 8-Volt circuit may work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="41" fault="c. Any sensor powered by this 8-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="41" fault="a. Any sensor powered by this 8-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="41" fault="b. Any sensor powered by this 8-Volt circuit may work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="41" fault="c. Any sensor powered by this 8-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="75" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="75" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="75" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="75" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="75" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="75" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="75" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="75" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="75" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="96" fault="a. Fuel gauge always shows full."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="96" fault="b. Fuel gauge may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="96" fault="c. Fuel gauge may work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="96" fault="a. Fuel gauge always shows empty."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="96" fault="b. Fuel gauge may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="96" fault="c. Fuel gauge may work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="96" fault="a. Fuel gauge always shows empty."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="96" fault="b. Fuel gauge may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="96" fault="c. Fuel gauge may work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="100" fault="a. Engine oil pressure always shows a minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="100" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="100" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="100" fault="a. Engine oil pressure may not work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="100" fault="b. Engine oil pressure may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="100" fault="c. Engine oil pressure may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="100" fault="a. Engine oil pressure may not work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="100" fault="b. Engine oil pressure may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="100" fault="c. Engine oil pressure may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="110" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="110" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="110" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="110" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="110" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="110" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="110" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="110" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="110" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="127" fault="a. Transmission oil pressure always shows a minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="127" fault="b. Correct transmission oil pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="127" fault="c. Transmission oil pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="127" fault="a. Transmission oil pressure may not work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="127" fault="b. Transmission oil pressure may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="127" fault="c. Transmission oil pressure may appear to be normal."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="127" fault="a. Transmission oil pressure may not work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="127" fault="b. Transmission oil pressure may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="127" fault="c. Transmission oil pressure may appear to be normal."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="171" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="171" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="171" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="171" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="171" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="171" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="171" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="171" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="171" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="177" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="177" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="177" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="177" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="177" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="177" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="177" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="177" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="177" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="190" fault="a. Engine speed shows erratic or not at all."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="190" fault="b. Engine speed is normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="190" fault="a. Engine speed shows erratic or not at all."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="190" fault="b. Engine speed is normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="190" fault="a. Engine speed shows erratic or not at all."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="190" fault="b. Engine speed is normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="190" fault="a. Engine speed shows erratic or not at all."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="190" fault="b. Engine speed is normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="190" fault="a. Engine speed shows erratic or not at all."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="190" fault="b. Engine speed is normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="248" fault="a. Gauges may be erratic."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="248" fault="b. Unexplained Events may appear."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="248" fault="c. One or more ECMs cannot communicate on Cat data link."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="248" fault="a. Gauges may be erratic."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="248" fault="b. Unexplained Events may appear."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="248" fault="c. One or more ECMs cannot communicate on Cat data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="248" fault="a. Gauges may be erratic."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="248" fault="b. Unexplained Events may appear."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="248" fault="c. One or more ECMs cannot communicate on Cat data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="262" fault="a. Any sensor powered by this 5-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="262" fault="b. Any sensor powered by this 5-Volt circuit may  work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="262" fault="c. Any sensor powered by this 5-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="262" fault="a. Any sensor powered by this 5-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="262" fault="b. Any sensor powered by this 5-Volt circuit may  work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="262" fault="c. Any sensor powered by this 5-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="262" fault="a. Any sensor powered by this 5-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="262" fault="b. Any sensor powered by this 5-Volt circuit may  work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="262" fault="c. Any sensor powered by this 5-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="263" fault="a. Any sensor powered by this 8-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="263" fault="b. Any sensor powered by this 8-Volt circuit may  work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="263" fault="c. Any sensor powered by this 8-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="263" fault="a. Any sensor powered by this 8-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="263" fault="b. Any sensor powered by this 8-Volt circuit may  work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="263" fault="c. Any sensor powered by this 8-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="263" fault="a. Any sensor powered by this 8-Volt circuit may not work.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="263" fault="b. Any sensor powered by this 8-Volt circuit may  work intermittently.  Look for other CIDs to confirm."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="263" fault="c. Any sensor powered by this 8-Volt circuit may appear to work now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="1" cid="267" fault="a. VIMS requested engine shutdown engine speed dropped below 400 RPM then came back to life."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="1" cid="267" fault="b. Next key ON after VIMS requested shutdown."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="267" fault="a. VIMS requested engine shutdown engine speed dropped below 400 RPM then came back to life."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="267" fault="b. Next key ON after VIMS requested shutdown."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="271" fault="a. Alarm continuously on."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="271" fault="b. Alarm may not operate during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="271" fault="c. Alarm may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="271" fault="a. Alarm may not operate during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="271" fault="b. Alarm sounds weak (not loud enough)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="271" fault="c. Alarm may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="271" fault="d. Alarm may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="271" fault="a. Alarm may not operate during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="271" fault="b. Alarm sounds weak (not loud enough)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="271" fault="c. Alarm may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="271" fault="d. Alarm may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="271" fault="e. Alarm may have incorrect sound (pitch)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="279" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="279" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="279" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="279" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="279" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="279" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="279" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="279" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="279" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="280" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="280" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="280" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="280" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="280" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="280" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="280" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="280" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="280" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="295" fault="a. Cannot communicate with Large Hydraulic Excavator (HEX) Electronic Control Module (ECM) on Cat data link."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="295" fault="b. Unexplained Events related to HEX ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="295" fault="a. Cannot communicate with Large Hydraulic Excavator (HEX) electronic control module (ECM) on CAT data link."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="295" fault="b. Unexplained events related to ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="295" fault="a. Cannot communicate with Large Hydraulic Excavator (HEX) Electronic Control Module (ECM) on Cat data link."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="295" fault="b. Unexplained events related to ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="295" fault="a. Cannot communicate with Large Hydraulic Excavator (HEX) Electronic Control Module(ECM) on Cat data link."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="295" fault="b. Unexplained Events related to ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="295" fault="c. ECM responds but not to all requested parameters."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="296" fault="a. Unexplained events are logged against this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="296" fault="b. Main module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="296" fault="c. Transmission control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="296" fault="a. No VIMS operation related to this control will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="296" fault="b. Main module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="296" fault="c. Transmission control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="296" fault="a. No VIMS operation related to this control will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="296" fault="b. Main module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="296" fault="c. Transmission control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="296" fault="a. No VIMS operation related to this control will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="296" fault="b. Main Module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="296" fault="c. Transmission ECM responds but not to all requested parameters."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="296" fault="d. Transmission control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="324" fault="a. Lamp continuously on."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="324" fault="b. Lamp may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="324" fault="c. Lamp may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="324" fault="a. Lamp may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="324" fault="b. Lamp works but is dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="324" fault="c. Lamp may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="324" fault="d. Lamp may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="324" fault="a. Lamp may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="324" fault="b. Lamp works but is dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="324" fault="c. Lamp may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="324" fault="d. Lamp may appear too bright."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="324" fault="e. Lamp may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="341" fault="a. No hyd. control valve warm up oil flow. Implement control valve may be sticky and could result in jerky or erratic"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="341" fault="implement control especially with a cold startup."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="341" fault="b. Implement control may be jerky or erratic until sometime after a cold startup."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="341" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="341" fault="a. Full, uncontrolled control valve warm up oil flow.  Implement control may feel &quot;mushy&quot;, difficult to control or, appear low on"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="341" fault="power."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="341" fault="b. Implement control may feel &quot;mushy&quot; or difficult to control or, appear low on power sometimes (intermittent)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="341" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="341" fault="a. Full, uncontrolled control valve warm up oil flow.  Implement control may feel &quot;mushy&quot;, difficult to control or, appear low on"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="341" fault="power."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="341" fault="b. Implement control may feel &quot;mushy&quot; or difficult to control or, appear low on power sometimes (intermittent)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="341" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="341" fault="a. Any combination of results listed for FMI-03, 05, or 06."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="0" cid="350" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="0" cid="350" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="0" cid="350" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="1" cid="350" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="1" cid="350" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="1" cid="350" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="350" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="350" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="350" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="350" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="350" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="350" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="350" fault="a. Payload errors/faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="350" fault="b. Cannot calibrate payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="350" fault="c. Intermittent payload errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="350" fault="a. Payload errors/faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="350" fault="b. Cannot calibrate payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="350" fault="c. Intermittent payload errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="350" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="350" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="350" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="350" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="350" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="350" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="13" cid="350" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="13" cid="350" fault="b. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="0" cid="351" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="0" cid="351" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="0" cid="351" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="1" cid="351" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="1" cid="351" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="1" cid="351" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="351" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="351" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="351" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="351" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="351" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="351" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="351" fault="a. Payload errors/faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="351" fault="b. Cannot calibrate payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="351" fault="c. Intermittent payload errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="351" fault="a. Payload errors/faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="351" fault="b. Cannot calibrate payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="351" fault="c. Intermittent payload errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="351" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="351" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="351" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="351" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="351" fault="b. Cannot Calibrate Payload."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="351" fault="c. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="13" cid="351" fault="a. Payload Errors/Faults."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="13" cid="351" fault="b. Intermittent Payload Errors."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="364" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="364" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="364" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="364" fault="d. System event appears for this sensor."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="364" fault="a.  Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="364" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="364" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="364" fault="d. System event appears for this sensor."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="364" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="364" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="364" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="364" fault="d. System event appears for this sensor."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="371" fault="a. Forward warning horn blows continuously."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="371" fault="b. Forward warning horn blows intermittently when not requested."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="371" fault="c. System event for this fault is shown."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="371" fault="d. Horns may not blow at all."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="371" fault="a. Forward warning horn blows continuously."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="371" fault="b. Forward warning horn blows intermittently when not requested."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="371" fault="c. System event for this fault is shown."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="371" fault="d. Horns may not blow at all."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="371" fault="a. Horn may not blow or blows intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="371" fault="b. Horn circuit blows fuses."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="371" fault="c. Horn blows normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="371" fault="a. Horn may not blow."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="371" fault="b. Horn may blow or blows intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="371" fault="c. Horn blows normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="378" fault="a. Autolube pumps until lube canister is empty."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="378" fault="b. Autolube may not work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="378" fault="c. Autolube may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="378" fault="a. Autolube may not work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="378" fault="b. Autolube may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="378" fault="c. Autolube may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="378" fault="a. Autolube may not work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="378" fault="b. Autolube may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="378" fault="c. Autolube may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="378" fault="a. Autolube may not work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="378" fault="b. Autolube may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="378" fault="c. Autolube may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="379" fault="a. Autolube pressure always shows a minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="379" fault="b. Autolube pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="379" fault="c. Autolube pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="379" fault="a.  Autolube pressure always shows a maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="379" fault="b. Autolube pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="379" fault="c. Autolube pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="379" fault="a.  Autolube pressure always shows a maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="379" fault="b. Autolube pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="379" fault="c. Autolube pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="379" fault="a. Autolube pressure always shows a maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="379" fault="b. Autolube pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="379" fault="c. Autolube pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="425" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="425" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="425" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="425" fault="a. Pressure always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="425" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="425" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="425" fault="a. Pressure always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="425" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="425" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="426" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="426" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="426" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="426" fault="a. Pressure always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="426" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="426" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="426" fault="a. Pressure always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="426" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="426" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="427" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="427" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="427" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="427" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="427" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="427" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="427" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="427" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="427" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="428" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="428" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="428" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="428" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="428" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="428" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="428" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="428" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="428" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="429" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="429" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="429" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="429" fault="d. Machine may not steer or steer as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="429" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="429" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="429" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="429" fault="d. Machine may not steer or steer as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="429" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="429" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="429" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="429" fault="d. Machine may not steer or steer as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="430" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="430" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="430" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="430" fault="d. Machine may not steer or steer as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="430" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="430" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="430" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="430" fault="d. Machine may not steer or steer as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="430" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="430" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="430" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="430" fault="d. Machine may not steer or steer as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="434" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="434" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="434" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="434" fault="d. Hydraulics may not function or function as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="434" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="434" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="434" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="434" fault="d. Hydraulics may not function or function as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="434" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="434" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="434" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="434" fault="d. Hydraulics may not function or function as expected."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="436" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="436" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="436" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="436" fault="d. Machine may not move or move smoothly."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="436" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="436" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="436" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="436" fault="d. Machine may not move or move smoothly."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="436" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="436" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="436" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="436" fault="d. Machine may not move or move smoothly."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="438" fault="a. No hyd. control valve warm up oil flow. Implement control valve may be sticky and could result in jerky or erratic"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="438" fault="implement control especially with a cold startup."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="438" fault="b. Implement control may be jerky or erratic until sometime after a cold startup."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="438" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="438" fault="a. Full, uncontrolled control valve warm up oil flow. Implement control may feel &quot;mushy&quot;, difficult to control or, appear low on"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="438" fault="power."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="438" fault="b. Implement control may feel &quot;mushy&quot; or difficult to control or, appear low on power sometimes (intermittent)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="438" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="438" fault="a. Full, uncontrolled control valve warm up oil flow.  Implement control may feel &quot;mushy&quot;, difficult to control or, appear low on"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="438" fault="power."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="438" fault="b. Implement control may feel &quot;mushy&quot; or difficult to control or, appear low on power sometimes (intermittent)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="438" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="438" fault="a. Any combination of results listed for FMI-03, 05, or 06."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="439" fault="a. No hyd. control valve warm up oil flow. Implement control valve may be sticky and could result in jerky or erratic"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="439" fault="implement control especially with a cold startup."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="439" fault="b. Implement control may be jerky or erratic until sometime after a cold startup."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="439" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="439" fault="a. Full, uncontrolled control valve warm up oil flow.  Implement control may feel &quot;mushy&quot;, difficult to control or, appear low on"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="439" fault="power."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="439" fault="b. Implement control may feel &quot;mushy&quot; or difficult to control or, appear low on power sometimes (intermittent)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="439" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="439" fault="a. Full, uncontrolled control valve warm up oil flow.  Implement control may feel &quot;mushy&quot;, difficult to control or, appear low on"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="439" fault="power."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="439" fault="b. Implement control may feel &quot;mushy&quot; or difficult to control or, appear low on power sometimes (intermittent)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="439" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="439" fault="a. Any combination of results listed for FMI-03, 05, or 06."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="440" fault="a. No hyd. control valve warm up oil flow. Implement control valve may be sticky and could result in jerky or erratic"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="440" fault="implement control especially with a cold startup."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="440" fault="b. Implement control may be jerky or erratic until sometime after a cold startup."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="440" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="440" fault="a. Full, uncontrolled control valve warm up oil flow.  Implement control may feel &quot;mushy&quot;, difficult to control or, appear low on"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="440" fault="power."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="440" fault="b. Implement control may feel &quot;mushy&quot; or difficult to control or, appear low on power sometimes (intermittent)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="440" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="440" fault="a. Full, uncontrolled control valve warm up oil flow.  Implement control may feel &quot;mushy&quot;, difficult to control or, appear low on"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="440" fault="power."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="440" fault="b. Implement control may feel &quot;mushy&quot; or difficult to control or, appear low on power sometimes (intermittent)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="440" fault="c. Implement control may appear to be normal (smooth) now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="440" fault="a. Any combination of results listed for FMI-03, 05, or 06."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="457" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="457" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="457" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="457" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="457" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="457" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="457" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="457" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="457" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="458" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="458" fault="b. Correct Payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="458" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="458" fault="d. System event appears for this sensor."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="458" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="458" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="458" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="458" fault="d. System event appears for this sensor."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="458" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="458" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="458" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="458" fault="d. System event appears for this sensor."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="533" fault="a. Unexplained events are logged against this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="533" fault="b. Main module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="533" fault="c. Auto retarder control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="533" fault="a. No VIMS operation related to this control will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="533" fault="b. Main module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="533" fault="c. Auto retarder control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="533" fault="a. No VIMS operation related to this control will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="533" fault="b. Main module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="533" fault="c. Auto retarder control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="0" cid="541" fault="a. Unexplained faults for this pressure channel."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="0" cid="541" fault="b. This pressure seems normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="541" fault="a. Unexplained faults for this pressure channel."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="541" fault="b. This pressure seems normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="541" fault="a. Differential pressure always shows a minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="541" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="541" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="562" fault="a. Intermittent communication, VIMS with Caterpillar Monitoring System for rear axle filtering and cooling."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="562" fault="b. Unexplained events may show against this ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="562" fault="c. Check CDL (Data Link) circuits for open/shorts."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="562" fault="a. Intermittent communication, VIMS with Caterpillar Monitoring System for rear axle filtering and cooling."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="562" fault="b. Unexplained events may show against this ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="562" fault="c. Check CDL (Data Link) circuits for open/shorts."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="562" fault="a. Intermittent communication, VIMS with Caterpillar Monitoring System for rear axle filtering and cooling."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="562" fault="b. Unexplained events may show against this ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="562" fault="c. Check CDL (Data Link) circuits for open/shorts."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="590" fault="a. VIMS is having trouble communicating with this control over the CAT data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="590" fault="b. Unexplained events may show against this ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="590" fault="a. VIMS is having trouble communicating with the engine control over the CAT data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="590" fault="b. Unexplained events may be logged against this ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="590" fault="c. Engine control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="590" fault="a. VIMS is having trouble communicating with the engine control over the CAT data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="590" fault="b. Unexplained events may be logged against this ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="590" fault="a. VIMS is having trouble communicating with the engine control over the CAT data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="590" fault="b. Unexplained events may be logged against this ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="590" fault="c. Engine ECM responds but not to all requested parameters."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="590" fault="d. Engine control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="596" fault="a. VIMS is having trouble communicating with this control over the CAT data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="596" fault="b. Unexplained events may show against implement control module."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="596" fault="a. No VIMS operation related to this control will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="596" fault="b. Main Module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="596" fault="c. Implement control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="596" fault="a. VIMS is having trouble communicating with the implement control over the CAT data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="596" fault="b. Unexplained events may be logged against this ECM."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="596" fault="a. No VIMS operation related to this control will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="596" fault="b. Main module cannot communicate with this control."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="596" fault="c. ECM responds but not to all requested parameters."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="596" fault="d. Implement control appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="600" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="600" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="600" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="600" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="600" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="600" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="600" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="600" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="600" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="600" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="600" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="600" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="650" fault="a. Harness Code was correct at power-up but became faulty during operation.  VIMS will operate normally until machine is"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="650" fault="powered down."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="650" fault="b. Power-up with this fault present should cause CID 801."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="654" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="654" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="654" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="654" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="654" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="654" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="654" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="654" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="654" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="655" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="655" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="655" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="655" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="655" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="655" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="655" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="655" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="655" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="656" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="656" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="656" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="656" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="656" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="656" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="656" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="656" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="656" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="657" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="657" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="657" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="657" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="657" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="657" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="657" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="657" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="657" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="658" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="658" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="658" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="658" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="658" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="658" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="658" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="658" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="658" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="658" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="658" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="658" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="659" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="659" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="659" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="659" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="659" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="659" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="659" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="659" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="659" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="659" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="659" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="659" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="0" cid="672" fault="a. Torque converter may not lock-up during load/carry."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="0" cid="672" fault="b. Torque converter lock-up corrected now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="1" cid="672" fault="a. Torque converter may not lock-up during load/carry."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="1" cid="672" fault="b. Torque converter lock-up corrected now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="672" fault="a. Torque converter may not lock-up during load/carry."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="672" fault="b. Torque converter lock-up corrected now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="672" fault="a. Torque converter may not lock-up during load/carry."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="672" fault="b. Torque converter lock-up corrected now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="672" fault="a. Torque converter may not lock-up during load/carry."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="672" fault="b. Torque converter lock-up corrected now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="672" fault="a. Torque converter may not lock-up during load/carry."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="672" fault="b. Torque converter lock-up corrected now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="703" fault="a. Door may show open/close when it is the opposite."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="703" fault="a. Door may show open/close when it is the opposite."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="703" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="703" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="703" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="800" fault="a. VIMS seems dead or does not operate."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="800" fault="b. Key On &quot;self test&quot; intermittent or does not run at all."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="800" fault="c. Key On gauges jump to mid-scale then sweep to zero and stay at zero."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="800" fault="a. No VIMS operations will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="800" fault="b. Main module cannot communicate with I/M #1."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="800" fault="c. Main module appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="800" fault="One or all of listed Events will display for 35 seconds:"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="800" fault="a. General actuator configuration error."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="800" fault="b. Pseudo channel configuration error."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="800" fault="c. Resettable cumulative configuration error."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="5" fmi="11" cid="800" fault="d. Cumulative configuration error."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="6" fmi="11" cid="800" fault="e. Conditions configuration error."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="800" fault="a. VIMS erased all stored data because of unusual conditions relating to the electrical system."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="800" fault="b. Event is active at &quot;Key On&quot; for 35 seconds."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="800" fault="c. Main module responds but does not have all necessary parameters."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="801" fault="a. Intermittent operation for all parameters related to I/M #1."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="801" fault="b. All parameters for I/M #1 appear to function normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="801" fault="a. No VIMS operation related to I/M #1 will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="801" fault="b. Main module cannot communicate with I/M #1."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="801" fault="c. I/M #1 appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="801" fault="a. VIMS is having trouble communicating with the I/M #1 over the CAT data link (CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="801" fault="b. Unexplained events may be logged against I/M #1."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="801" fault="c. VIMS may not appear to be online or show activity on display modules."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="801" fault="d. It is likely that no malfunction is apparent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="801" fault="a. No VIMS operation related to I/M #1 will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="801" fault="b. Main module cannot communicate with I/M #1."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="801" fault="c. I/M #1 responds but not to all requested parameters."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="801" fault="d. I/M #1 appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="802" fault="a. Intermittent operation for all parameters related to I/M #2."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="802" fault="b. All parameters for I/M #2 appear to function normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="802" fault="a. No VIMS operation related to I/M #2 will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="802" fault="b. Main Module cannot communicate with I/M #2."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="802" fault="c. I/M #2 appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="802" fault="a. VIMS is having trouble communicating with the I/M #2 over the Cat Data Link(CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="802" fault="b. Unexplained Events may be logged against I/M #2."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="802" fault="c. VIMS may not be alive or show activity on display modules."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="802" fault="d. It is likely that no malfunction is apparent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="802" fault="a. No VIMS operation related to I/M #2 will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="802" fault="b. Main Module cannot communicate with I/M #2."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="802" fault="c. I/M #2 responds but not to all requested parameters."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="802" fault="d. I/M #2 appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="803" fault="a. Intermittent operation for all parameters related to I/M #3."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="803" fault="b. All parameters for I/M #3 appear to function normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="803" fault="a. No VIMS operation related to I/M #3will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="803" fault="b. Main Module cannot communicate with I/M #3."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="803" fault="c. I/M #3 appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="803" fault="a. VIMS is having trouble communicating with the I/M #3 over the Cat Data Link(CDL)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="803" fault="b. Unexplained Events may be logged against I/M #3."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="803" fault="c. VIMS may not be alive or show activity on display modules."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="803" fault="d. It is likely that no malfunction is apparent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="803" fault="a. No VIMS operation related to I/M #3 will work."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="803" fault="b. Main Module cannot communicate with I/M #3."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="803" fault="c. I/M #3 responds but not to all required parameters."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="803" fault="d. I/M #3 appears to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="809" fault="a. Tach, speedometer or actual gear indicator does not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="809" fault="b. Tach, speedometer or actual gear indicator may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="809" fault="c. Tach, speedometer and actual gear indicator appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="809" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="809" fault="a. Tach, speedometer or actual gear indicator does not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="809" fault="b. Tach, speedometer or actual gear indicator may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="809" fault="c. Tach, speedometer and actual gear indicator appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="809" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="810" fault="a. Tach, speedometer or actual gear indicator does not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="810" fault="b. Tach, speedometer or actual gear indicator may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="810" fault="c. Tach, speedometer and actual gear indicator appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="810" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="810" fault="a. Tach, speedometer or actual gear indicator does not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="810" fault="b. Tach, speedometer or actual gear indicator may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="810" fault="c. Tach, speedometer and actual gear indicator appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="810" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="811" fault="a. One or more gages do not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="811" fault="b. One or more gages are erratic during self-test or during operation."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="811" fault="c. All gages may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="811" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="811" fault="a. One or more gages do not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="811" fault="b. One or more gages are erratic during self-test or during operation."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="811" fault="c. All gages may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="811" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="812" fault="a. One or more gages do not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="812" fault="b. One or more gages are erratic during self-test or during operation."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="812" fault="c. All gages may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="812" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="812" fault="a. One or more gages do not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="812" fault="b. One or more gages are erratic during self-test or during operation."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="812" fault="c. All gages may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="812" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="813" fault="a. One or more gages do not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="813" fault="b. One or more gages are erratic during self-test or during operation."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="813" fault="c. All gages may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="813" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="813" fault="a. One or more gages do not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="813" fault="b. One or more gages are erratic during self-test or during operation."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="813" fault="c. All gages may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="813" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="814" fault="a. One or more gages do not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="814" fault="b. One or more gages are erratic during self-test or during operation."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="814" fault="c. All gages may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="814" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="814" fault="a. One or more gages do not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="814" fault="b. One or more gages are erratic during self-test or during operation."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="814" fault="c. All gages may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="814" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="815" fault="a. Any part of Message Center module does not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="815" fault="b. Any part of Message Center module is erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="815" fault="c. All parts of Message Center Module may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="815" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="815" fault="a. Any part of Message Center module does not respond to operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="815" fault="b. Any part of Message Center module is erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="815" fault="c. All parts of Message Center Module may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="815" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="816" fault="a. Any part of Message Center module does not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="816" fault="b. Any part of Message Center module is erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="816" fault="c. All parts of Message Center Module may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="816" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="816" fault="a. Any part of Message Center module does not respond to operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="816" fault="b. Any part of Message Center module is erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="816" fault="c. All parts of Message Center Module may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="816" fault="Note: Backlighting is not part of this procedure."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="817" fault="a. Loss of stored data for downloading resulting from loss of +Battery to main module (contact 1) AND failure of the 3V"/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="817" fault="lithium backup battery."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="817" fault="b. Loss of real time clock data."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="817" fault="c. Event Active for 35 seconds at Key On (Ver 3.0 Hardware)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="817" fault="a. Operator warning: BACKUP BATTERY ERROR."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="817" fault="b. Loss of real time clock data if the key switch is turned off before stored data can be downloaded."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="817" fault="c. Loss of stored Main Module data if disconnect switch is opened before data is downloaded."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="819" fault="a. Any or all display component modules may not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="819" fault="b. Any or all display component modules may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="819" fault="c. All display component modules(s) may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="819" fault="a. Any or all display component modules may not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="819" fault="b. Any or all display component modules may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="819" fault="c. All display component modules(s) may appear work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="819" fault="a. Any or all display component modules may not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="819" fault="b. Any or all display component modules may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="819" fault="c. All display component modules(s) may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="819" fault="a. Any or all display component modules may not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="819" fault="b. Any or all display component modules may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="819" fault="c. All display component modules(s) may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="820" fault="a. Message center may not show entries from keypad."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="820" fault="b. Message center may work erratically to entries from keypad."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="820" fault="c. Keypad may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="820" fault="a. Message center may not show entries from keypad."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="820" fault="b. Message center may work erratically to entries from keypad."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="820" fault="c. Keypad may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="820" fault="a. Message center may not show entries from keypad."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="820" fault="b. Message center may work erratically to entries from keypad."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="820" fault="c. Keypad may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="820" fault="a. Message center may not show entries from keypad."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="820" fault="b. Message center may show erratically to entries from keypad."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="820" fault="c. Keypad may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="821" fault="a. Any or all display component module(s) may not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="821" fault="b. Any or all display component module(s) may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="821" fault="c. All display component modules(s) may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="821" fault="a. Any or all display component module(s) may not work during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="821" fault="b. Any or all display component module(s) may be erratic during operation or self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="821" fault="c. All display component modules(s) may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="822" fault="a. LCD backlighting in message center or speedo/tach may not work (dead)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="822" fault="b. LCD backlighting in message center or speedo/tach may not dim with headlight use."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="822" fault="c. LCD backlighting for message center or speedo/tach may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="822" fault="a. LCD backlighting in message center or speedo/tach may not work (dead)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="822" fault="b. LCD backlighting in message center or speedo/tach may not dim with headlight use."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="822" fault="c. LCD backlighting for message center or speedo/tach may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="822" fault="a. LCD backlighting in message center or speedo/tach may not work (dead)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="822" fault="b. LCD backlighting in message center or speedo/tach may not dim with headlight use."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="822" fault="c. LCD backlighting for message center or speedo/tach may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="822" fault="d. LCD backlighting for message center or speedo/tach may be very bright constantly."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="823" fault="a. Lamp always on."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="823" fault="b. Lamp may not work (dead)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="823" fault="a. Lamp may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="823" fault="b. Lamp works but is dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="823" fault="c. Lamp may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="823" fault="d. Lamp may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="823" fault="a. Lamp may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="823" fault="b. Lamp works but is dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="823" fault="c. Lamp may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="823" fault="d. Lamp may appear too bright."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="823" fault="e. Lamp may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="824" fault="a. Both lamps always on."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="824" fault="b. One or both lamps may not work (dead)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="824" fault="a. Lamp may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="824" fault="b. Lamps work but are dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="824" fault="c. Lamps may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="824" fault="d. Lamps may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="824" fault="a. Both lamps may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="824" fault="b. Lamps work but are dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="824" fault="c. Lamps may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="824" fault="d. Lamps may appear too bright."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="824" fault="e. Lamps may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="824" fault="a. Lamp may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="824" fault="b. Lamps work but are dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="824" fault="c. Lamps may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="824" fault="d. Lamps may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="825" fault="a. Both lamps always on."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="825" fault="b. Lamp may not work (dead)."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="825" fault="a. Lamps may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="825" fault="b. Lamps work but are dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="825" fault="c. Lamps may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="825" fault="d. Lamps may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="825" fault="a. Both lamps may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="825" fault="b. Lamps works but are dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="825" fault="c. Lamps may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="825" fault="d. Lamps may appear too bright."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="825" fault="e. Lamps may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="825" fault="a. Lamp may not turn on during self-test."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="825" fault="b. Lamps work but are dim."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="825" fault="c. Lamps may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="825" fault="d. Lamps may appear to work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="826" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="826" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="826" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="826" fault="a.  Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="826" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="826" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="826" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="826" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="826" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="826" fault="a. Any combination of results listed for FMI-03, FMI-04 or FMI-06."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="827" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="827" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="827" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="827" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="827" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="827" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="827" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="827" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="827" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="827" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="827" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="827" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="828" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="828" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="828" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="828" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="828" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="828" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="828" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="828" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="828" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="828" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="828" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="828" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="829" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="829" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="829" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="829" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="829" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="829" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="829" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="829" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="829" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="830" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="830" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="830" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="830" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="830" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="830" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="830" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="830" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="830" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="833" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="833" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="833" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="833" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="833" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="833" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="833" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="833" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="833" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="835" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="835" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="835" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="835" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="835" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="835" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="835" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="835" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="835" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="838" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="838" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="838" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="838" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="838" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="838" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="838" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="838" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="838" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="838" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="838" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="838" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="839" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="839" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="839" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="839" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="839" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="839" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="839" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="839" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="839" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="839" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="839" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="839" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="840" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="840" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="840" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="840" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="840" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="840" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="840" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="840" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="840" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="841" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="841" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="841" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="841" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="841" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="841" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="841" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="841" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="841" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="841" fault="a. Payload may appear incorrect."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="841" fault="b. Correct payload may appear intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="841" fault="c. Payload may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="849" fault="a. Pressure gauge always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="849" fault="b. Pressure gauge may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="849" fault="c. Pressure gauge may work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="849" fault="a.  Pressure gauge always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="849" fault="b. Pressure gauge may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="849" fault="c. Pressure gauge may work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="849" fault="a. Pressure gauge always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="849" fault="b. Pressure gauge may work intermittently."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="849" fault="c. Pressure gauge may work normally now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="851" fault="a. Pressure always shows minimum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="851" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="851" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="851" fault="a. Pressure always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="851" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="851" fault="c. Pressure may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="851" fault="a. Pressure always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="851" fault="b. Correct pressure may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="851" fault="c. Pressure may appear to be normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="852" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="852" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="852" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="852" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="852" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="852" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="852" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="852" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="852" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="852" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="852" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="852" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="853" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="853" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="853" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="853" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="853" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="853" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="853" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="853" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="853" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="853" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="853" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="853" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="854" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="854" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="854" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="854" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="854" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="854" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="854" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="854" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="854" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="854" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="854" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="854" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="855" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="855" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="855" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="855" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="855" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="855" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="855" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="855" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="855" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="855" fault="a. Temperature always shows maximum."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="855" fault="b. Correct temperature may be intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="855" fault="c. Temperature may appear normal now."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="890" fault="a. No broadcast(telemetry) of VIMS data."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="890" fault="b. Broadcast of Data is intermittent."/>
+    <FaultDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="890" fault="c. Broadcast is working now."/>
+</FaultDefinitions>
+

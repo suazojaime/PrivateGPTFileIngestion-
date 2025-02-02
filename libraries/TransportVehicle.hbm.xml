@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class
+        name="minestar.assignment.domain.TransportVehicle"
+        table="TRANSPORTVEHICLE"
+        >
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A transport vehicle used for shift changes</meta>
+
+        <id name="OID" type="long" column="TRANSPORTVEHICLE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="name" type="string" column="NAME" length="254" not-null="true">
+            <meta attribute="description">The name of the transport vehicle.</meta>
+        </property>
+
+        <property name="description" type="string" column="DESCRIPTION" length="254">
+            <meta attribute="description">A description of the transport vehicle.</meta>
+        </property>
+
+        <property name="seats" type="int" column="SEATS" not-null="true">
+            <meta attribute="description">The number of operator seats in the transport vehicle.</meta>
+        </property>
+
+        <property name="dedicatedDriver" type="boolean" column="DEDICATEDDRIVER" not-null="true">
+            <meta attribute="description">Whether the vehicle has a driver, otherwise a passenger is required to drive.</meta>
+        </property>
+
+        <property name="excludeFromTransAllocation" type="boolean" column="EXCLUDEFROMTRANSALLOCATION" not-null="true">
+            <meta attribute="description">When selected, this vehicle is excluded from automatic transport allocations.</meta>
+        </property>
+
+        <many-to-one name="shiftChangeGroup" class="minestar.assignment.domain.AssGroupReference" column="SHIFTCHANGEGROUP">
+            <meta attribute="choices">service(minestar.mine.application.AssGroupCollectionProvider):shiftChangeGroups</meta>
+            <meta attribute="description">The Shift Change group that this Transport Vehicle belongs to.</meta>
+        </many-to-one>
+
+        <set name="machineRun" table="TRANSPORT_RUN_MACHINE">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">The Shift Change group that this Transport Vehicle belongs to.</meta>
+            <meta attribute="choices">shiftchange:TieDownLoadingTools</meta>
+            <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineImpl</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID"/>
+        </set>
+
+        <set name="locationRun" table="TRANSPORT_RUN_LOCATION">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The list of loading tools that define the run for this transport vehicle.</meta>
+            <meta attribute="choices">shiftchange:TieDownLocations</meta>
+            <meta attribute="view-reference">minestar.mine.domain.minemodel.LocationImpl</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.mine.domain.minemodel.LocationReference" column="LOCATION_OID"/>
+        </set>
+
+    </class>
+
+    <class name="minestar.assignment.domain.TransportVehicleReference" table="TRANSPORTVEHICLE" mutable="false" lazy="false">
+
+        <meta attribute="alias" inherit="false">TRANSPORTVEHICLE_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a transport vehicle.</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <id name="OID" type="long" column="TRANSPORTVEHICLE_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

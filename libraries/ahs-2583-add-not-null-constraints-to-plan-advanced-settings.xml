@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="759ec79c-4429-45bd-85f0-f269d81c1b7e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for OVERRIDE_DEFAULT_TRAFFIC of table PLAN_MODEL as column does not exist or column is already not nullable" onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="OVERRIDE_DEFAULT_TRAFFIC"/>
+            <ext:columnIsNullable tableName="PLAN_MODEL" columnName="OVERRIDE_DEFAULT_TRAFFIC"/>
+        </preConditions>
+        <comment>AHS-2583: AlterColumn PLAN_MODEL.OVERRIDE_DEFAULT_TRAFFIC - nullability changed from true to false - defaultValue changed from 'null' to '0'</comment>
+        <addDefaultValue columnName="OVERRIDE_DEFAULT_TRAFFIC" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="PLAN_MODEL"/>
+        <addNotNullConstraint columnName="OVERRIDE_DEFAULT_TRAFFIC" defaultNullValue="0" columnDataType="BOOLEAN" tableName="PLAN_MODEL"/>
+    </changeSet>
+    <changeSet id="3de0c5cb-65e8-4e94-9ff4-09c95cd05b67" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for OVERRIDE_DEFAULT_PLANNING of table PLAN_MODEL as column does not exist or column is already not nullable" onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="OVERRIDE_DEFAULT_PLANNING"/>
+            <ext:columnIsNullable tableName="PLAN_MODEL" columnName="OVERRIDE_DEFAULT_PLANNING"/>
+        </preConditions>
+        <comment>AHS-2583: AlterColumn PLAN_MODEL.OVERRIDE_DEFAULT_PLANNING - nullability changed from true to false - defaultValue changed from 'null' to '0'</comment>
+        <addDefaultValue columnName="OVERRIDE_DEFAULT_PLANNING" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="PLAN_MODEL"/>
+        <addNotNullConstraint columnName="OVERRIDE_DEFAULT_PLANNING" defaultNullValue="0" columnDataType="BOOLEAN" tableName="PLAN_MODEL"/>
+    </changeSet>
+</databaseChangeLog>

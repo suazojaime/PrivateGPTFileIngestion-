@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="7749ca70-7306-4127-9d51-5e34efa985db" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for AUTO_BUCKET_ENABLED to table LOAD_GOAL as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="LOAD_GOAL"/>
+            <not>
+                <columnExists tableName="LOAD_GOAL" columnName="AUTO_BUCKET_ENABLED"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4344: AddColumn LOAD_GOAL.AUTO_BUCKET_ENABLED</comment>
+        <addColumn tableName="LOAD_GOAL">
+            <column name="AUTO_BUCKET_ENABLED" type="BOOLEAN"
+                    remarks="Whether auto bucket position is enabled for this load goal"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

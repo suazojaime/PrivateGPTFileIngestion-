@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE onboardKPIWindows SYSTEM "onboardKPIs.dtd">
+
+<onboardKPIWindows>
+<!--
+    <onboardKPIWindow name="truckAverageEfhForShift" window="1" color="3" noLabel="false">
+        <source name="truckAverageEfhForShift"/>
+        <machineClass name="CAT789B"/>
+    </onboardKPIWindow>
+    <onboardKPIWindow name="truckAverageEfhForShift" window="1" color="3" noLabel="false">
+        <source name="truckAverageEfhForShift"/>
+        <machineClass name="CAT793D"/>
+    </onboardKPIWindow>
+-->
+
+<!--
+    <onboardKPIWindow name="shovelTonsPerOperHour" window="4" color="4" displayPercent="true" displayTarget="true">
+        <source name="shovelTonsPerOperHour"/>
+        <machineCategory name="Shovel Classes" target="100"/>
+    </onboardKPIWindow>
+
+    <onboardKPIWindow name="truckUseOfAvailability" window="4" color="4" displayPercent="true" displayTarget="true">
+        <source name="truckUseOfAvailability"/>
+        <machineCategory name="Loader Classes" target="100"/>
+    </onboardKPIWindow>
+    <onboardKPIWindow name="loaderTonsPerOperHour" window="5" color="4" displayPercent="true" displayTarget="true">
+        <source name="loaderTonsPerOperHour"/>
+        <machineCategory name="Loader Classes" target="100"/>
+    </onboardKPIWindow>
+
+    <onboardKPIWindow name="tons per hour" window="4" color="3" displayPercent="false" displayTarget="true">
+        <source name="truckTonsPerOperHour" minBetween="120"/>
+        <machineCategory name="Truck Classes" target="30"/>
+    </onboardKPIWindow>
+    <onboardKPIWindow name="shift" window="5" color="4" displayPercent="true" displayTarget="true">
+        <source name="totalForShift" minBetween="60"/>
+        <machineCategory name="Truck Classes" target="100"/>
+    </onboardKPIWindow>
+-->
+
+<!-- This is bad - uses the same window as the previous KPI -->
+    <!--
+    <onboardKPIWindow name="shiftcopy" window="5" color="4" displayPercent="true" displayTarget="true">
+        <source name="totalForShift" minBetween="60"/>
+        <machineCategory name="Truck Classes" target="100"/>
+    </onboardKPIWindow>
+-->
+
+<!-- This is bad - the source is not valid -->
+    <!--
+    <onboardKPIWindow name="badSource" window="6" color="4" displayPercent="true" displayTarget="true">
+        <source name="somethingSilly" minBetween="60"/>
+        <machineCategory name="Truck Classes" target="100"/>
+    </onboardKPIWindow>
+-->
+
+    <!-- This is bad - the minBetween is not valid -->
+<!--
+    <onboardKPIWindow name="badMinBetween" window="6" color="4" displayPercent="true" displayTarget="true">
+        <source name="totalForShift" minBetween="abc"/>
+        <machineCategory name="Truck Classes" target="100"/>
+    </onboardKPIWindow>
+-->
+
+    <!-- This is bad - the color is not valid -->
+<!--
+    <onboardKPIWindow name="badColor" window="6" color="four" displayPercent="true" displayTarget="true">
+        <source name="totalForShift" minBetween="60"/>
+        <machineCategory name="Truck Classes" target="100"/>
+    </onboardKPIWindow>
+-->
+
+    <!-- This is bad - the target is not valid -->
+<!--
+    <onboardKPIWindow name="badTarget" window="6" color="4" displayPercent="true" displayTarget="true">
+        <source name="totalForShift" minBetween="60"/>
+        <machineCategory name="Truck Classes" target="target"/>
+    </onboardKPIWindow>
+-->
+
+    <!-- This is bad - the machine category is not valid -->
+<!--
+    <onboardKPIWindow name="badCategory" window="6" color="4" displayPercent="true" displayTarget="true">
+        <source name="totalForShift" minBetween="60"/>
+        <machineCategory name="Not A Machine Category" target="100"/>
+    </onboardKPIWindow>
+-->
+
+    <!-- This is bad - the configuration is not valid -->
+<!--
+    <onboardKPIWindow name="badConfiguration" window="6" color="4" displayPercent="true" displayTarget="true">
+        <source name="totalForShift" minBetween="60"/>
+        <machineCategory name="Not A Configuration" target="100"/>
+    </onboardKPIWindow>
+-->
+
+    <!-- This is bad - the machine class is not valid -->
+<!--
+    <onboardKPIWindow name="badClass" window="6" color="4" displayPercent="true" displayTarget="true">
+        <source name="totalForShift" minBetween="60"/>
+        <machineCategory name="Not A Machine Class" target="100"/>
+    </onboardKPIWindow>
+-->
+</onboardKPIWindows>

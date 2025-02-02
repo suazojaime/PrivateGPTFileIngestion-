@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.production.domain.drawcard.FutureDrawCardImpl"
+           proxy="minestar.production.domain.drawcard.FutureDrawCard"
+           table="FUTURE_DRAW_CARD"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">FUTUREDRAWCARD</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">A draw card for a period in the future.</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="FDC_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="createdDate" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the cycle was last updated.</meta>
+            <meta attribute="description">The utc time the cycle was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="CREATED_DATE_UTC"/>
+        </property>
+
+        <property name="lastModified" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the cycle was last updated.</meta>
+            <meta attribute="description">The utc time the cycle was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="LAST_MODIFIED_UTC"/>
+        </property>
+
+        <property name="drawCardDate"
+                  type="java.util.Date"
+                  column="DRAW_CARD_DATE"
+                  not-null="true">
+            <meta attribute="description">The date that the information in this draw card will apply to.</meta>
+        </property>
+
+        <property name="shiftType"
+                  column="SHIFT_TYPE">
+            <meta attribute="description">
+                A reference to a planned shift that the information in this draw card will apply to.
+                (Not applicable if this draw card is for the entire day.)
+            </meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.platform.persistence.calendar.ShiftType</param>
+            </type>
+        </property>
+
+        <map name="importedFileData" table="FDC_IMPORTED_FILE_DATA" lazy="false" cascade="all-delete-orphan">
+            <meta attribute="index-alias">importedFileName</meta>
+            <meta attribute="description">
+                The details of the CSV files that were imported for draw cards for periods in the future.
+            </meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="FDC_OID"/>
+            <index column="IMPORTED_FILE_NAME" type="java.lang.String"/>
+            <element column="IMPORTED_DATE_UTC" type="TimestampType"/>
+        </map>
+
+        <map name="areaData" lazy="false" inverse="true" cascade="all-delete-orphan">
+            <meta attribute="description">The entries in this draw card grouped by underground area.</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="FDC_OID"/>
+            <map-key-many-to-many class="minestar.mine.domain.minemodel.underground.area.UndergroundAreaReference"
+                                  column="AREA"/>
+            <one-to-many class="minestar.production.domain.drawcard.FutureDrawCardEntryList"/>
+        </map>
+    </class>
+
+    <class name="minestar.production.domain.drawcard.FutureDrawCardEntryList"
+           table="FDC_ENTRY_LIST"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">FUTUREDRAWCARDENTRYLIST</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">
+            A list of entries in a draw card for a future period that are for draw points within the same underground
+            area.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="FDCL_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one name="parent"
+                     column="FDC_OID"
+                     class="minestar.production.domain.drawcard.FutureDrawCardImpl"
+                     not-null="true">
+            <meta attribute="description">
+                A reference to the draw card (MSMODEL.FUTURE_DRAW_CARD) that contains this entry list.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="area"
+                     class="minestar.mine.domain.minemodel.underground.area.UndergroundAreaReference"
+                     column="AREA"
+                     not-null="true">
+            <meta attribute="description">
+                A reference to the underground area (MSMODEL.UNDERGROUND_AREA) that the draw points belong to.
+            </meta>
+        </many-to-one>
+
+        <map name="entryMap" lazy="false" inverse="true" cascade="all-delete-orphan">
+
+            <meta attribute="description">The entries for draw points within the underground area.</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="FDCL_OID"/>
+            <map-key-many-to-many class="minestar.mine.domain.minemodel.underground.drawpoint.DrawPointReference"
+                                  column="DRAW_POINT"/>
+            <one-to-many class="minestar.production.domain.drawcard.FutureDrawCardEntry"/>
+        </map>
+    </class>
+
+    <class name="minestar.production.domain.drawcard.FutureDrawCardEntry"
+           table="FDC_ENTRY"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">FUTUREDRAWCARDENTRY</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">An entry for a draw point in a draw card for a future period.</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="FDCE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one name="parent"
+                     column="FDCL_OID"
+                     class="minestar.production.domain.drawcard.FutureDrawCardEntryList"
+                     not-null="true">
+            <meta attribute="description">
+                A reference to the entry list (MSMODEL.FDC_ENTRY_LIST) in the draw card that contains this entry.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="drawPoint"
+                     column="DRAW_POINT"
+                     class="minestar.mine.domain.minemodel.underground.drawpoint.DrawPointReference"
+                     not-null="true">
+            <meta attribute="description">
+                A reference to the draw point (MSMODEL.DRAW_POINT) that this entry will apply to.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="drawPointStatus"
+                     column="DP_STATUS"
+                     class="minestar.mine.domain.minemodel.underground.drawpoint.DrawPointStatus"
+                     lazy="false">
+            <meta attribute="description">
+                A reference to the status (MSMODEL.DP_STATUS) used to set the fragmentation and moisture
+                values in the draw point's discrete grades at the start of the draw card's period.
+            </meta>
+        </many-to-one>
+
+        <property name="target"
+                  column="TARGET_TONS">
+            <meta attribute="description">The amount of ore that should be taken from the draw point.</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+            </type>
+        </property>
+
+        <property name="extras"
+                  column="EXTRA_TONS">
+            <meta attribute="description">
+                The amount of ore that can be taken from the draw point above the target.
+            </meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+            </type>
+        </property>
+
+        <property name="caveOptimisationIndex"
+                  column="CO_INDEX"
+                  type="java.lang.Integer">
+            <meta attribute="description">The line number of the draw point's entry in the draw card CSV file.</meta>
+        </property>
+
+        <property name="sortIndex"
+                  column="SORT_INDEX"
+                  type="java.lang.Integer">
+            <meta attribute="description">The sort index for the draw point used to match pairs for TOPE sorting.</meta>
+        </property>
+
+        <map name="continuousGrades" table="FDC_GRADES" cascade="all-delete-orphan" lazy="false">
+
+            <meta attribute="element-unitType">ratio</meta>
+            <meta attribute="alias">grade_name</meta>
+            <meta attribute="description">
+                The details of the grades to set in the draw point's grade block at the start of a future draw card's
+                period.
+            </meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="FDCE_OID"/>
+            <map-key column="GRADE_NAME" type="java.lang.String"/>
+            <element column="GRADE_QUALITY">
+                <type name="quantity">
+                    <param name="unitType">ratio</param>
+                </type>
+            </element>
+        </map>
+
+        <map name="discreteGrades" table="FDC_DGRADES" cascade="all-delete-orphan" lazy="false">
+            <meta attribute="alias">dgrade_name</meta>
+            <meta attribute="description">
+                The details of the discrete grades to set in the draw point's grade block at the start of a future draw card's
+                period.
+            </meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="FDCE_OID"/>
+            <map-key column="GRADE_NAME" type="java.lang.String"/>
+            <element type="java.lang.String" length="255" column="GRADE_VALUE"/>
+        </map>
+
+    </class>
+
+</hibernate-mapping>

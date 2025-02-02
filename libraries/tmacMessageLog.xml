@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+<!-- $Id: tmacMessageLog.xml,v 1.1 2007-03-07 03:19:57 darrylc Exp $ -->
+
+<circuit>
+    <sources>
+        <source name="adminEvents" class="minestar.platform.service.event.LeanEventNode">
+                <var name="filter">administrationFieldEvents</var>
+        </source>
+    </sources>
+    <nodes>
+        <node name="bufferedNode" class="com.mincom.env.integ.connection.BufferedNode" />
+        <node name="messageLogRetriever" class="com.mincom.integ.field.nodes.MessageLogDownLoadNode">
+        </node>
+   </nodes>
+    <sinks>
+    </sinks>
+    <connections>
+        <connect source="adminEvents" sink="bufferedNode" />
+        <connect source="bufferedNode" sink="messageLogRetriever" />
+    </connections>
+</circuit>

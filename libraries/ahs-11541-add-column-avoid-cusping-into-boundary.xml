@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="ca60a501-c7ca-4433-83c0-53321dc1daeb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for AVOID_CUSPING_INTO_BOUNDARY to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="AVOID_CUSPING_INTO_BOUNDARY"/>
+            </not>
+        </preConditions>
+        <comment>AHS-11541: AddColumn PLAN_MODEL.AVOID_CUSPING_INTO_BOUNDARY</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="AVOID_CUSPING_INTO_BOUNDARY" type="BOOLEAN" defaultValueBoolean="false"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
+

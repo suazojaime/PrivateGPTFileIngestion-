@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="49f1bddd-2cec-4d6e-ac1e-6f252a1d38c4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for VERSION to table PROD_PLAN_TASK as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK" columnName="VERSION"/>
+            </not>
+        </preConditions>
+        <comment>MO-6183: AddColumn PROD_PLAN_TASK.VERSION</comment>
+        <addColumn tableName="PROD_PLAN_TASK">
+            <column name="VERSION" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

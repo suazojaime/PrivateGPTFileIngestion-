@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="7119adf1-3dd4-4dea-8220-0ff39b58de8c" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for CYCLE_SUBTYPE to table CYCLE as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="CYCLE"/>
+            <not>
+                <columnExists tableName="CYCLE" columnName="CYCLE_SUBTYPE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3247: AddColumn CYCLE.CYCLE_SUBTYPE</comment>
+        <addColumn tableName="CYCLE">
+            <column name="CYCLE_SUBTYPE" type="NUMBER(5)"/>
+        </addColumn>
+    </changeSet>
+
+    <!-- CYCLE_SUBTYPE must have an enumerated value from LoaderCycleMode -->
+    <changeSet id="17d1f5cc-dfe1-4969-837f-1d3b9a54b8d0" author="MineStar" failOnError="false">
+        <comment>FLT-3247: Add CYCLE_SUBTYPE check constraint</comment>
+        <sql>UPDATE CYCLE SET CYCLE_SUBTYPE = NULL WHERE CYCLE_SUBTYPE IS NOT NULL AND CYCLE_SUBTYPE NOT IN (10,20,30,40,50)</sql>
+        <sql>ALTER TABLE CYCLE DROP CONSTRAINT IF EXISTS CYCLE_SUBTYPE_CHECK</sql>
+        <sql>ALTER TABLE CYCLE ADD CONSTRAINT CYCLE_SUBTYPE_CHECK CHECK (CYCLE_SUBTYPE IN (10,20,30,40,50))</sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

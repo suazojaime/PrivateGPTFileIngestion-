@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="87fce874-f2b9-4dc5-a14d-c86936aa6249" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for HISTOGRAM_DETAILS_HEALTH_LO_FK of table HISTOGRAM_DETAILS as foreignKey does not exist." onFail="MARK_RAN">
+        	<dbms type="oracle" />
+            <foreignKeyConstraintExists foreignKeyTableName="HISTOGRAM_DETAILS" foreignKeyName="HISTOGRAM_DETAILS_HEALTH_LO_FK"/>
+            <sqlCheck expectedResult="0">
+               select count(1) from all_constraints where constraint_name= 'HISTOGRAM_DETAILS_HEALTH_LO_FK' and delete_rule = 'CASCADE';
+            </sqlCheck>
+        </preConditions>
+        <comment>HLT-122 DropForeignKeyConstraint HISTOGRAM_DETAILS_HEALTH_LO_FK from HISTOGRAM_DETAILS (HEALTH_LOG_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="HISTOGRAM_DETAILS" constraintName="HISTOGRAM_DETAILS_HEALTH_LO_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="HISTOGRAM_DETAILS" baseColumnNames="HEALTH_LOG_OID" constraintName="HISTOGRAM_DETAILS_HEALTH_LO_FK" referencedTableName="HEALTH_LOG" referencedColumnNames="OID" onDelete="CASCADE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="554f0d11-63f7-40b6-a1e9-7560ee05836b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for HISTOGRAM_VIMS3_DETAILS_FK1 of table HISTOGRAM_VIMS3_DETAILS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="HISTOGRAM_VIMS3_DETAILS" foreignKeyName="HISTOGRAM_VIMS3_DETAILS_FK1"/>
+        </preConditions>
+        <comment>HLT-122 DropForeignKeyConstraint HISTOGRAM_VIMS3_DETAILS_FK1 from HISTOGRAM_VIMS3_DETAILS (HEALTH_LOG_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="HISTOGRAM_VIMS3_DETAILS" constraintName="HISTOGRAM_VIMS3_DETAILS_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="HISTOGRAM_VIMS3_DETAILS" baseColumnNames="HEALTH_LOG_OID" constraintName="HISTOGRAM_VIMS3_DETAILS_FK1" referencedTableName="HEALTH_LOG" referencedColumnNames="OID" onDelete="CASCADE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="1440a762-72ae-4f8c-b300-3a4b51a5ffe4" author="MineStar" context="Health/Health_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for HISTOGRAM_DETAILS_HEALTH_LO_FK to table HISTOGRAM_DETAILS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="HISTOGRAM_DETAILS"/>
+            <tableExists tableName="HEALTH_LOG"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="HISTOGRAM_DETAILS" foreignKeyName="HISTOGRAM_DETAILS_HEALTH_LO_FK"/>
+            </not>
+        </preConditions>
+        <comment>HLT-122 AddForeignKeyConstraint HISTOGRAM_DETAILS_HEALTH_LO_FK to HISTOGRAM_DETAILS (HEALTH_LOG_OID)</comment>
+        <sql>DELETE FROM HISTOGRAM_DETAILS WHERE HEALTH_LOG_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM HEALTH_LOG WHERE HEALTH_LOG.OID = HISTOGRAM_DETAILS.HEALTH_LOG_OID)</sql>
+        <addForeignKeyConstraint baseTableName="HISTOGRAM_DETAILS" baseColumnNames="HEALTH_LOG_OID" constraintName="HISTOGRAM_DETAILS_HEALTH_LO_FK" referencedTableName="HEALTH_LOG" referencedColumnNames="OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="HISTOGRAM_DETAILS" constraintName="HISTOGRAM_DETAILS_HEALTH_LO_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="f958004d-52e0-4203-9f1e-946c799f941b" author="MineStar" context="Health/Health_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for HISTOGRAM_VIMS3_DETAILS_FK1 to table HISTOGRAM_VIMS3_DETAILS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="HISTOGRAM_VIMS3_DETAILS"/>
+            <tableExists tableName="HEALTH_LOG"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="HISTOGRAM_VIMS3_DETAILS" foreignKeyName="HISTOGRAM_VIMS3_DETAILS_FK1"/>
+            </not>
+        </preConditions>
+        <comment>HLT-122 AddForeignKeyConstraint HISTOGRAM_VIMS3_DETAILS_FK1 to HISTOGRAM_VIMS3_DETAILS (HEALTH_LOG_OID)</comment>
+        <sql>DELETE FROM HISTOGRAM_VIMS3_DETAILS WHERE HEALTH_LOG_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM HEALTH_LOG WHERE HEALTH_LOG.OID = HISTOGRAM_VIMS3_DETAILS.HEALTH_LOG_OID)</sql>
+        <addForeignKeyConstraint baseTableName="HISTOGRAM_VIMS3_DETAILS" baseColumnNames="HEALTH_LOG_OID" constraintName="HISTOGRAM_VIMS3_DETAILS_FK1" referencedTableName="HEALTH_LOG" referencedColumnNames="OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="HISTOGRAM_VIMS3_DETAILS" constraintName="HISTOGRAM_VIMS3_DETAILS_FK1"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

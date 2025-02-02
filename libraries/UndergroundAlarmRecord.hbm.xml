@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.production.domain.drawcard.UndergroundAlarmRecord"
+           table="NON_COMPLIANT"
+           dynamic-update="true">
+
+        <meta attribute="description">A historical record of a non-compliance alarm being raised.</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="historical"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="alarmDate"
+                  type="TimestampType"
+                  column="ALARM_DATE_UTC"
+                  not-null="true">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="description">The timestamp of when the alarm was raised.</meta>
+            <meta attribute="utc-description">The UTC timestamp of when the alarm was raised.</meta>
+        </property>
+
+        <property name="alarmType"
+                  type="java.lang.String"
+                  column="ALARM_TYPE"
+                  length="254">
+            <meta attribute="description">The type of alarm that was raised.</meta>
+        </property>
+
+        <property name="machineName"
+                  type="java.lang.String"
+                  column="MACHINE_NAME"
+                  length="254">
+            <meta attribute="description">The name of the machine involved.</meta>
+        </property>
+
+        <property name="operatorName"
+                  type="java.lang.String"
+                  column="OPERATOR_NAME"
+                  length="254">
+            <meta attribute="description">
+                The name of the person operating the machine at the time of the incident.
+            </meta>
+        </property>
+    </class>
+
+</hibernate-mapping>

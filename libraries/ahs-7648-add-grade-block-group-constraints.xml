@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="82dad6fd-5d3d-4c8b-a683-493754acda74" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for GRADEBLOCKGROUP_1R of table GRADEBLOCK_GROUP as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="GRADEBLOCKGROUP_1R" tableName="GRADEBLOCK_GROUP"/>
+        </preConditions>
+        <comment>AHS-7648: DropIndex GRADEBLOCKGROUP_1R from GRADEBLOCK_GROUP (NAME,GRADEBLOCK_GROUP_OID)</comment>
+        <dropIndex tableName="GRADEBLOCK_GROUP" indexName="GRADEBLOCKGROUP_1R"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" tableName="GRADEBLOCK_GROUP" indexName="GRADEBLOCKGROUP_1R">
+                <column name="NAME"/>
+                <column name="GRADEBLOCK_GROUP_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="9e2fd2ab-9638-4919-a2f2-4ec210d516bf" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for GRADEBLOCK_GROUP.NAME as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="GRADEBLOCK_GROUP" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-7648: AddNotNullConstraint to GRADEBLOCK_GROUP.NAME</comment>
+        <addNotNullConstraint columnName="NAME" columnDataType="VARCHAR(254)" tableName="GRADEBLOCK_GROUP"/>
+    </changeSet>
+
+    <changeSet id="359e15b5-2e94-4dc0-ac4d-685919ca7f3e" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for GRADEBLOCK_GROUP.MODEL_UPDATE_VERSION as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="GRADEBLOCK_GROUP" columnName="MODEL_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-7648: DropDefaultValue '0' from GRADEBLOCK_GROUP.MODEL_UPDATE_VERSION</comment>
+        <dropDefaultValue columnName="MODEL_UPDATE_VERSION" columnDataType="BIGINT" tableName="GRADEBLOCK_GROUP"/>
+        <rollback>
+            <addDefaultValue columnName="MODEL_UPDATE_VERSION" columnDataType="BIGINT" defaultValueNumeric="0" tableName="GRADEBLOCK_GROUP"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="24c24060-c3e9-4020-906f-d2ef936546bb" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for GRADEBLOCK_GROUP.TERRAIN_SYNC_OK as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK"/>
+        </preConditions>
+        <comment>AHS-7648: DropDefaultValue '0' from GRADEBLOCK_GROUP.TERRAIN_SYNC_OK</comment>
+        <dropDefaultValue columnName="TERRAIN_SYNC_OK" columnDataType="BOOLEAN" tableName="GRADEBLOCK_GROUP"/>
+        <rollback>
+            <addDefaultValue columnName="TERRAIN_SYNC_OK" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="GRADEBLOCK_GROUP"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="c5bd0a02-7eb8-4efa-a954-050b6d3a60f0" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for GRADEBLOCK_GROUP.STOCKPILE as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="GRADEBLOCK_GROUP" columnName="STOCKPILE"/>
+        </preConditions>
+        <comment>AHS-7648: AddNotNullConstraint to GRADEBLOCK_GROUP.STOCKPILE</comment>
+        <sql>UPDATE GRADEBLOCK_GROUP SET STOCKPILE = 0 WHERE STOCKPILE IS NULL</sql>
+        <addNotNullConstraint columnName="STOCKPILE" columnDataType="BOOLEAN" tableName="GRADEBLOCK_GROUP"/>
+        <rollback>
+            <dropNotNullConstraint tableName="GRADEBLOCK_GROUP" columnName="STOCKPILE" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="4aa8f2de-3a85-415e-88ba-f12d6c3c1aa5" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for MATERIAL.MATERIALGROUP as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="MATERIAL" columnName="MATERIALGROUP"/>
+        </preConditions>
+        <comment>AHS-7648: AddNotNullConstraint to MATERIAL.MATERIALGROUP</comment>
+        <addNotNullConstraint columnName="MATERIALGROUP" columnDataType="BIGINT" tableName="MATERIAL"/>
+    </changeSet>
+
+</databaseChangeLog>

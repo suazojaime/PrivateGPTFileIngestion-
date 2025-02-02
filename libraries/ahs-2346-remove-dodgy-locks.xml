@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="de2cca62-1cc1-4f1e-9ca1-02af4e216eb0" author="MineStar" failOnError="false">
+        <comment>AHS-2346: Remove locks that don't reference an entity.</comment>
+        <sql>
+delete from GENERIC_USER_LOCKS
+      where OID in (select LOCK_OID from LOCKING
+                     where (DISCRIMINATOR_ID = 'MachineLockImpl' and (MACHINE is null or not exists (select 'x' from MACHINE where MACHINE.MACHINE_OID = LOCKING.MACHINE)))
+                        or (DISCRIMINATOR_ID = 'LaneLockImpl' and (LANE is null or not exists (select 'x' from LANE where LANE.LANE_OID = LOCKING.LANE)))
+                        or (DISCRIMINATOR_ID = 'AreaLockImpl' and (ZONE is null or not exists (select 'x' from ZONE where ZONE.ZONE_OID = LOCKING.ZONE))));
+        </sql>
+        <sql>
+delete from LOCKING
+      where (DISCRIMINATOR_ID = 'MachineLockImpl' and (MACHINE is null or not exists (select 'x' from MACHINE where MACHINE.MACHINE_OID = LOCKING.MACHINE)))
+         or (DISCRIMINATOR_ID = 'LaneLockImpl' and (LANE is null or not exists (select 'x' from LANE where LANE.LANE_OID = LOCKING.LANE)))
+         or (DISCRIMINATOR_ID = 'AreaLockImpl' and (ZONE is null or not exists (select 'x' from ZONE where ZONE.ZONE_OID = LOCKING.ZONE)));
+        </sql>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="879ce6b7-27a2-413d-aa06-148ec6a28929" author="MineStar" dbms="oracle" failOnError="false">
+        <preConditions onFailMessage="Ignored add AddConstraint for LOCKING_MACHINE_CHECK as constraint already exists." onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from USER_CONSTRAINTS where CONSTRAINT_NAME = 'LOCKING_MACHINE_CHECK'</sqlCheck>
+        </preConditions>
+        <comment>AHS-2346: AddConstraint LOCKING_MACHINE_CHECK</comment>
+        <sql>
+            alter table LOCKING
+         add constraint LOCKING_MACHINE_CHECK
+                  check ((DISCRIMINATOR_ID = 'MachineLockImpl' and MACHINE is not null)
+                      or (DISCRIMINATOR_ID &lt;&gt; 'MachineLockImpl' and MACHINE is null));
+        </sql>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="bbd402a0-39c7-4e05-b18c-9c4110192a85" author="MineStar" dbms="oracle" failOnError="false">
+        <preConditions onFailMessage="Ignored AddConstraint for LANE_LOCK_CHECK as constraint already exists." onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from USER_CONSTRAINTS where CONSTRAINT_NAME = 'LOCKING_LANE_CHECK'</sqlCheck>
+        </preConditions>
+        <comment>AHS-2346: AddConstraint LOCKING_LANE_CHECK</comment>
+        <sql>
+            alter table LOCKING
+         add constraint LOCKING_LANE_CHECK
+                  check ((DISCRIMINATOR_ID = 'LaneLockImpl' and LANE is not null)
+                      or (DISCRIMINATOR_ID &lt;&gt; 'LaneLockImpl' and LANE is null));
+        </sql>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="57405f61-e5af-4609-94da-550b6a6b46f9" author="MineStar" dbms="oracle" failOnError="false">
+        <preConditions onFailMessage="Ignored AddConstraint for LOCKING_ZONE_CHECK as constraint already exists." onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from USER_CONSTRAINTS where CONSTRAINT_NAME = 'LOCKING_ZONE_CHECK'</sqlCheck>
+        </preConditions>
+        <comment>AHS-2346: AddConstraint LOCKING_ZONE_CHECK</comment>
+        <sql>
+            alter table LOCKING
+         add constraint LOCKING_ZONE_CHECK
+                  check ((DISCRIMINATOR_ID = 'AreaLockImpl' and ZONE is not null)
+                      or (DISCRIMINATOR_ID &lt;&gt; 'AreaLockImpl' and ZONE is null));
+        </sql>
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>

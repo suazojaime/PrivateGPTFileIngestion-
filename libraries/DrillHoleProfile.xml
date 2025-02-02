@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<!-- $Id: DrillHoleProfile.xml,v 1.4 2005-11-11 05:59:45 johnf Exp $ -->
+<!--
+
+    $Log: not supported by cvs2svn $
+    Revision 1.3  2005/02/17 00:18:25  ianb
+    support for units and default value in hbm files
+
+    Revision 1.2  2004/07/27 05:05:29  andrewc
+    Put cvs comments in proper place
+
+    Revision 1.1  2004/07/27 04:04:24  andrewc
+    Gem metadata for DrillHoleProfile
+
+
+-->
+<classdefs>
+    <classdef name="minestar.production.domain.cycle.DrillHoleProfile">
+        <propertydef name="sliceStart">
+            <description>The time the hole profile was taken at</description>
+        </propertydef>
+        <propertydef name="sliceDepth">
+            <description>The depth the hole profile was taken at</description>
+        </propertydef>
+        <propertydef name="avgRPM">
+            <description>Average revolutions per minute</description>
+        </propertydef>
+        <propertydef name="weightOnBit">
+            <description>Weight on bit</description>
+        </propertydef>
+        <propertydef name="torque">
+            <description>Torque</description>
+        </propertydef>
+        <propertydef name="rop">
+            <description>Rate of penetration</description>
+        </propertydef>
+        <propertydef name="airPressure">
+            <description>Air pressure</description>
+        </propertydef>
+        <propertydef name="vibration">
+            <description>Vibration</description>
+        </propertydef>
+        <propertydef name="bi">
+            <description>Blastability index</description>
+        </propertydef>
+        <propertydef name="rockType">
+            <description>Rock type</description>
+        </propertydef>
+    </classdef>
+</classdefs>

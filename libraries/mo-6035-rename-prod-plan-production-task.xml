@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <!-- Rename PROD_PLAN_PRODUCTION to PROD_PLAN_VARIATION -->
+    <changeSet id="c9695d78-a408-4295-9dd3-e61d2094f291" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropIndex for JOB_OID_1 of table PROD_PLAN_TASK_PRODUCTION as index does not exist."
+                onFail="MARK_RAN">
+            <indexExists indexName="JOB_OID_1" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+        </preConditions>
+        <comment>MO-6035: DropIndex JOB_OID_1 from PROD_PLAN_TASK_PRODUCTION (JOB_OID)</comment>
+        <dropIndex tableName="PROD_PLAN_TASK_PRODUCTION" indexName="JOB_OID_1"/>
+        <rollback>
+            <createIndex unique="false" tableName="PROD_PLAN_TASK_PRODUCTION" indexName="JOB_OID_1">
+                <column name="JOB_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="10b11fd1-cace-4808-812b-e5ba5217f52e" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for JOB_OID of table PROD_PLAN_TASK_PRODUCTION as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK_PRODUCTION" columnName="JOB_OID"/>
+        </preConditions>
+        <comment>MO-6035: DropColumn PROD_PLAN_TASK_PRODUCTION.JOB_OID</comment>
+        <dropColumn columnName="JOB_OID" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_TASK_PRODUCTION">
+                <column name="JOB_OID" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="424e3a3a-fca5-4325-9943-3f4984cbbfbd" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for TARGET_TOTAL_MASS of table PROD_PLAN_TASK_PRODUCTION as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK_PRODUCTION" columnName="TARGET_TOTAL_MASS"/>
+        </preConditions>
+        <comment>MO-6035: DropColumn PROD_PLAN_TASK_PRODUCTION.TARGET_TOTAL_MASS</comment>
+        <dropColumn columnName="TARGET_TOTAL_MASS" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_TASK_PRODUCTION">
+                <column name="TARGET_TOTAL_MASS" type="DOUBLE"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="57f343ec-b20f-459d-9bbe-ca035d5a8f80" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for TARGET_TOTAL_VOLUME of table PROD_PLAN_TASK_PRODUCTION as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK_PRODUCTION" columnName="TARGET_TOTAL_VOLUME"/>
+        </preConditions>
+        <comment>MO-6035: DropColumn PROD_PLAN_TASK_PRODUCTION.TARGET_TOTAL_VOLUME</comment>
+        <dropColumn columnName="TARGET_TOTAL_VOLUME" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_TASK_PRODUCTION">
+                <column name="TARGET_TOTAL_VOLUME" type="DOUBLE"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="a804c8f1-64e2-4f4c-ac99-e45abeb44bd0" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for PROD_PLAN_TASK_PRODUCTION.USER_ADDED as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="PROD_PLAN_TASK_PRODUCTION" columnName="USER_ADDED"/>
+        </preConditions>
+        <comment>MO-6035: DropDefaultValue '0' from PROD_PLAN_TASK_PRODUCTION.USER_ADDED</comment>
+        <dropDefaultValue columnName="USER_ADDED" columnDataType="BOOLEAN" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+        <rollback>
+            <addDefaultValue columnName="USER_ADDED" columnDataType="BOOLEAN" defaultValueBoolean="false"
+                             tableName="PROD_PLAN_TASK_PRODUCTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="c6531ee0-7505-48ec-899e-fb465661a494" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for USER_ADDED of table PROD_PLAN_TASK_PRODUCTION as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK_PRODUCTION" columnName="USER_ADDED"/>
+        </preConditions>
+        <comment>MO-6035: DropColumn PROD_PLAN_TASK_PRODUCTION.USER_ADDED</comment>
+        <dropColumn columnName="USER_ADDED" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_TASK_PRODUCTION">
+                <column name="USER_ADDED" type="BOOLEAN"/>
+            </addColumn>
+            <sql>UPDATE PROD_PLAN_TASK_PRODUCTION SET USER_ADDED = 0</sql>
+            <addNotNullConstraint tableName="PROD_PLAN_TASK_PRODUCTION" columnName="USER_ADDED" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="0d5d87ae-05c4-4c49-873d-29ee43c29cce" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameTable for PROD_PLAN_TASK_PRODUCTION as table does not exist."
+                       onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_PRODUCTION"/>
+        </preConditions>
+        <comment>MO-6035: RenameTable PROD_PLAN_TASK_PRODUCTION</comment>
+        <renameTable oldTableName="PROD_PLAN_TASK_PRODUCTION" newTableName="PROD_PLAN_VARIATION"/>
+    </changeSet>
+    <changeSet id="22bb29c4-fc30-435c-91e6-0c9404ade716" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropPrimaryKey for PROD_PLAN_TASK_PRODUCTION_PK of table PROD_PLAN_VARIATION as primaryKey does not exist."
+                onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="PROD_PLAN_TASK_PRODUCTION_PK" tableName="PROD_PLAN_VARIATION"/>
+        </preConditions>
+        <comment>MO-6035: DropPrimaryKey PROD_PLAN_TASK_PRODUCTION_PK from PROD_PLAN_VARIATION (OID)</comment>
+        <dropPrimaryKey constraintName="PROD_PLAN_TASK_PRODUCTION_PK" tableName="PROD_PLAN_VARIATION"/>
+        <rollback>
+            <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_TASK_PRODUCTION_PK"
+                           tableName="PROD_PLAN_VARIATION"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="a7bc01ec-52cd-4ccb-bf2f-d12db5021f4a" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddPrimaryKey for PROD_PLAN_VARIATION_PK to table PROD_PLAN_VARIATION as table does not exist or primaryKey already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_VARIATION"/>
+            <not>
+                <primaryKeyExists primaryKeyName="PROD_PLAN_VARIATION_PK" tableName="PROD_PLAN_VARIATION"/>
+            </not>
+        </preConditions>
+        <comment>MO-6035: AddPrimaryKey PROD_PLAN_VARIATION_PK to PROD_PLAN_VARIATION (OID)</comment>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_VARIATION_PK" tableName="PROD_PLAN_VARIATION"/>
+        <rollback>
+            <dropPrimaryKey constraintName="PROD_PLAN_VARIATION_PK" tableName="PROD_PLAN_VARIATION"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="4bc9d05d-a429-4f05-a74c-83e54d690ee1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for PLAN_OID_1 of table PROD_PLAN_VARIATION as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="PLAN_OID_1" tableName="PROD_PLAN_VARIATION"/>
+        </preConditions>
+        <comment>MO-6035: DropIndex PLAN_OID_1 from PROD_PLAN_VARIATION (PLAN_OID)</comment>
+        <dropIndex tableName="PROD_PLAN_VARIATION" indexName="PLAN_OID_1"/>
+        <rollback>
+            <createIndex unique="false" indexName="PLAN_OID_1" tableName="PROD_PLAN_VARIATION">
+                <column name="PLAN_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="dfe3ff35-9bb6-4739-9d33-619ba537d3cb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for PROD_PLAN_VARIATION.PLAN_OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="PROD_PLAN_VARIATION" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-6035: AddNotNullConstraint to PROD_PLAN_VARIATION.PLAN_OID</comment>
+        <sql>UPDATE PROD_PLAN_VARIATION SET PLAN_OID = 0 WHERE PLAN_OID IS NULL</sql>
+        <addNotNullConstraint columnName="PLAN_OID" columnDataType="BIGINT" tableName="PROD_PLAN_VARIATION"/>
+        <rollback>
+            <dropNotNullConstraint tableName="PROD_PLAN_VARIATION" columnName="PLAN_OID" columnDataType="BIGINT"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="e06bebf2-0cd7-40df-9ed7-f6b0a8da18e9" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_VARIATION_PLAN_OI_FK to table PROD_PLAN_VARIATION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_VARIATION" columnName="PLAN_OID"/>
+            <columnExists tableName="PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_VARIATION" foreignKeyName="PROD_PLAN_VARIATION_PLAN_OI_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-6035: AddForeignKeyConstraint PROD_PLAN_VARIATION_PLAN_OI_FK to PROD_PLAN_VARIATION (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_VARIATION WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN WHERE PROD_PLAN.OID = PROD_PLAN_VARIATION.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_VARIATION" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_VARIATION_PLAN_OI_FK" referencedTableName="PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_VARIATION" constraintName="PROD_PLAN_VARIATION_PLAN_OI_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="8d8d710c-773a-4bdc-aaf5-182a4e6e3e70" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PROD_PLAN_VARIATION_PLAN_OID to table PROD_PLAN_VARIATION as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_VARIATION"/>
+            <not>
+                <indexExists indexName="PROD_PLAN_VARIATION_PLAN_OID" tableName="PROD_PLAN_VARIATION"/>
+            </not>
+        </preConditions>
+        <comment>MO-6035: CreateIndex PROD_PLAN_VARIATION_PLAN_OID on PROD_PLAN_VARIATION (PLAN_OID)</comment>
+        <createIndex unique="false" indexName="PROD_PLAN_VARIATION_PLAN_OID" tableName="PROD_PLAN_VARIATION">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

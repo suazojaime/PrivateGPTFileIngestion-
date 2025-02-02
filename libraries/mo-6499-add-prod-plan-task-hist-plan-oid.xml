@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="976c15a5-7f16-4d0e-af76-8064e9375532" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PLAN_OID to table PROD_PLAN_TASK_HIST as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_HIST"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK_HIST" columnName="PLAN_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-6499: AddColumn PROD_PLAN_TASK_HIST.PLAN_OID</comment>
+        <addColumn tableName="PROD_PLAN_TASK_HIST">
+            <column name="PLAN_OID" type="BIGINT" remarks="Internal OID that identifies a plan"/>
+        </addColumn>
+        <!-- Populate the PLAN_OID column from the JSON data in TASK_CONTENT -->
+        <customChange class="minestar.db.customchange.MigrateProdPlanTaskHistPlanOID"/>
+        <rollback>
+            <dropColumn tableName="PROD_PLAN_TASK_HIST" columnName="PLAN_OID"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a2e16602-2e61-404c-a5af-3e6e24fe8ec5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PROD_PLAN_TASK_HIST_PLAN_OID to table PROD_PLAN_TASK_HIST as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_HIST"/>
+            <not>
+                <indexExists indexName="PROD_PLAN_TASK_HIST_PLAN_OID" tableName="PROD_PLAN_TASK_HIST"/>
+            </not>
+        </preConditions>
+        <comment>MO-6499: CreateIndex PROD_PLAN_TASK_HIST_PLAN_OID on PROD_PLAN_TASK_HIST (PLAN_OID)</comment>
+        <createIndex unique="false" indexName="PROD_PLAN_TASK_HIST_PLAN_OID" tableName="PROD_PLAN_TASK_HIST">
+            <column name="PLAN_OID"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

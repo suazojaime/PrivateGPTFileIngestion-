@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE kpiDefinitions SYSTEM "KpiValues.dtd">
+<!--
+Revision History:
+$Log: not supported by cvs2svn $
+-->
+
+<kpiDefinitions>
+
+    <kpiDefinition name="tonsMined" >
+        <kpiValue name="primeForShift" id="1" unit="tonne" unitType="mass" />
+        <kpiValue name="rehandleForShift" id="2" unit="tonne" unitType="mass" />
+    </kpiDefinition>
+
+</kpiDefinitions>

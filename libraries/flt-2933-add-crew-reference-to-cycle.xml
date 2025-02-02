@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="f8308815-a407-4352-ac70-8cf312e39d5e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ATTRIBUTEDCREW to table CYCLE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE"/>
+            <not>
+                <columnExists tableName="CYCLE" columnName="ATTRIBUTEDCREW"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddColumn CYCLE.ATTRIBUTEDCREW</comment>
+        <addColumn tableName="CYCLE">
+            <column name="ATTRIBUTEDCREW" type="BIGINT" remarks="The crew which is recorded as executing this cycle for reporting purposes."/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

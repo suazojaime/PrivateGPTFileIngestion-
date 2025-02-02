@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!-- Copyright (c) 2017, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+
+
+<classdefs>
+    <classdef name="minestar.platform.domain.alarm.Alarm">
+        <implclass name="minestar.platform.domain.alarm.Alarm$Builder"/>
+        <beanclass name="minestar.platform.domain.alarm.Alarm$Builder"/>
+
+        <propertydef name="alarmTypeName">
+            <uidef enabledwhen="false" updateable="false"/>
+            <description>The name of this alarm.</description>
+        </propertydef>
+        <propertydef name="localizedMessage" label="Message">
+            <typedef>
+                <type code="string"/>
+            </typedef>
+            <uidef enabledwhen="false" updateable="false"/>
+            <description>A free form description of the alarm.</description>
+        </propertydef>
+
+        <propertygroup name="General" label="General">
+            <uigroupdef mode="tab"/>
+
+            <propertygroup name="PriorityGroup" label="">
+                <uigroupdef mode="plain" layout="horizontal"/>
+                <propertydef name="priorityCode">
+                    <typedef>
+                        <type code="byte" choices='choice:alarmPriority'/>
+                    </typedef>
+                    <uidef widget="radio" custom="{wrapCount:10}" enabledwhen="false" updateable="false"/>
+                    <defaultvalue class="java.lang.Byte">2</defaultvalue>
+                    <description>Priority indicates how important it is to action this alarm.</description>
+                </propertydef>
+                <propertydef name="severityCode">
+                    <typedef>
+                        <type code="byte" choices='choice:alarmSeverity'/>
+                    </typedef>
+                    <uidef widget="radio" custom="{wrapCount:10}" visiblewhen="false"/>
+                    <defaultvalue class="java.lang.Byte">2</defaultvalue>
+                    <description>The impact of this type of alarm on the system.</description>
+                </propertydef>
+            </propertygroup>
+        </propertygroup>
+
+        <propertygroup name="Details" label="Details">
+            <uigroupdef mode="tab"/>
+            <propertydef name="operatorName">
+                <uidef widget="text" enabledwhen="false" updateable="false"/>
+                <description>The machine operator or office user who created this alarm.</description>
+            </propertydef>
+
+            <propertydef name="ackTypeCode" label="Acknowledgement Type">
+                <typedef>
+                    <type code="byte" choices='choice:alarmAckType'/>
+                </typedef>
+                <uidef enabledwhen="false" updateable="false"/>
+                <defaultvalue class="java.lang.Byte">0</defaultvalue>
+                <description>The type of acknowledgement that was received for this alarm.</description>
+            </propertydef>
+
+            <propertydef name="sourceTypeCode">
+                <typedef>
+                    <type code="byte" choices='choice:alarmSourceType'/>
+                </typedef>
+                <uidef enabledwhen="false" updateable="false"/>
+                <description>The type of source of this alarm.</description>
+            </propertydef>
+
+            <propertydef name="sourceName" label="Source">
+                <uidef enabledwhen="false" updateable="false"/>
+                <description>The source of this alarm.</description>
+            </propertydef>
+
+            <propertydef name="occurrenceCount" label="Occurrence Count">
+                <uidef enabledwhen="false" updateable="false"/>
+                <!--<defaultvalue class="java.lang.Integer">1</defaultvalue>-->
+                <description>A count of how many times this alarm occurred for this source while
+                    this alarm is/was active.
+                </description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="History" label="History">
+            <uigroupdef mode="tab"/>
+            <propertydef name="startTime">
+                <uidef enabledwhen="false" updateable="false"/>
+                <description>The time that this alarm started.</description>
+            </propertydef>
+            <propertydef name="lastOccurrenceTime">
+                <uidef enabledwhen="false" updateable="false"/>
+                <description>The last time that this alarm occurred.</description>
+            </propertydef>
+            <propertydef name="ackTime" label="Acknowledge Time">
+                <uidef enabledwhen="false" updateable="false"/>
+                <description>Time when the alarm was acknowledged</description>
+            </propertydef>
+            <propertydef name="endTime">
+                <uidef enabledwhen="false" updateable="false"/>
+                <description>The time that the alarm ended.</description>
+            </propertydef>
+        </propertygroup>
+
+        <!--<propertygroup name="Comment" label="Comment">-->
+            <!--<uigroupdef mode="tab"/>-->
+            <!--<propertydef name="comment">-->
+                <!--<uidef widget="textArea" custom='{rows=5,columns=30,linewrap=true}'/>-->
+                <!--<description>An optional comment to be associated with this alarm.</description>-->
+            <!--</propertydef>-->
+        <!--</propertygroup>-->
+
+    </classdef>
+
+</classdefs>

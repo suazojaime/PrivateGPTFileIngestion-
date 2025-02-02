@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<machineClassExport categoryName="Truck Classes">
+    <machineClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="truckClassImpl">
+        <OID>258374057</OID>
+        <active>true</active>
+        <name>930E</name>
+        <manufacturer>Komatsu</manufacturer>
+        <description>930E</description>
+        <useFuel>true</useFuel>
+        <fuelCapacity magnitude="4.242" unit="cubic metres" unitType="liquid volume"/>
+        <classCategoryRef>Truck Classes</classCategoryRef>
+        <minimumRefuelAmount magnitude="0.0" unit="cubic metres" unitType="liquid volume"/>
+        <refuelLevel magnitude="0.5" unit="cubic metres" unitType="liquid volume"/>
+        <criticalFuelLevel magnitude="0.3" unit="cubic metres" unitType="liquid volume"/>
+        <expectedDuratnBetweenRefuels magnitude="0.0" unit="second" unitType="duration"/>
+        <idleFuelBurnRate magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+        <workingFuelBurnRate magnitude="3.4722222222222215E-5" unit="cubic metres per second" unitType="fuel burn per time"/>
+        <fuelBurnAlgorithm>NOMINAL</fuelBurnAlgorithm>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <healthPlatform>70</healthPlatform>
+        <activityFuelBurnRates>
+            <entry>
+                <key>
+                    <OID>178300002</OID>
+                    <name>WaitForLoad</name>
+                    <id>20</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>210000000</OID>
+                    <name>WaitForDump</name>
+                    <id>30</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010015</OID>
+                    <name>Travelling.Empty</name>
+                    <id>2</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010014</OID>
+                    <name>Travelling.Full</name>
+                    <id>1</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010021</OID>
+                    <name>Queuing.At.Sink</name>
+                    <id>8</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010020</OID>
+                    <name>Travel.Full.At.Source</name>
+                    <id>7</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010023</OID>
+                    <name>NOT_DETERMINED</name>
+                    <id>10</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010022</OID>
+                    <name>Spotting.At.Sink</name>
+                    <id>9</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010017</OID>
+                    <name>Travel.Empty.At.Source</name>
+                    <id>4</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010016</OID>
+                    <name>Dumping</name>
+                    <id>3</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010019</OID>
+                    <name>Spotting.At.Source</name>
+                    <id>6</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010018</OID>
+                    <name>Queuing.At.Source</name>
+                    <id>5</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+            <entry>
+                <key>
+                    <OID>165010024</OID>
+                    <name>Loading</name>
+                    <id>11</id>
+                </key>
+                <value magnitude="0.0" unit="cubic metres per second" unitType="fuel burn per time"/>
+            </entry>
+        </activityFuelBurnRates>
+        <fuelType>Diesel</fuelType>
+        <onboardHardwareInfo>
+            <onboardPlatformCode>5</onboardPlatformCode>
+            <operatorInterface>2</operatorInterface>
+            <cameras>false</cameras>
+            <camerasAndRadar>false</camerasAndRadar>
+            <proximityAwareness>false</proximityAwareness>
+        </onboardHardwareInfo>
+        <capabilities>4</capabilities>
+        <allowAllMaterials>true</allowAllMaterials>
+        <ignoreVimsFuelSensor>false</ignoreVimsFuelSensor>
+        <maximumSpeed magnitude="22.222222224000003" unit="metres per second" unitType="speed"/>
+        <bodyWeight magnitude="0.0" unit="kilogram" unitType="mass"/>
+        <chassisWeight magnitude="0.0" unit="kilogram" unitType="mass"/>
+        <dumpHeight magnitude="0.0" unit="metre" unitType="length"/>
+        <frontDistributionEmpty magnitude="50.0" unit="percent" unitType="ratio"/>
+        <frontDistributionLoaded magnitude="0.0" unit="percent" unitType="ratio"/>
+        <frontTyreTread magnitude="0.0" unit="metre" unitType="length"/>
+        <grossVehicleWeight magnitude="0.0" unit="kilogram" unitType="mass"/>
+        <heapedCapacity magnitude="176.0" unit="cubic metres" unitType="volume"/>
+        <heightToRockGuardRail magnitude="0.0" unit="metre" unitType="length"/>
+        <loadingHeight magnitude="0.0" unit="metre" unitType="length"/>
+        <maxPayload magnitude="348000.0" unit="kilogram" unitType="mass"/>
+        <maxSpeedLoaded magnitude="16.666666668" unit="metres per second" unitType="speed"/>
+        <nominalPayload magnitude="290000.0" unit="kilogram" unitType="mass"/>
+        <overLoad magnitude="319000.0" unit="kilogram" unitType="mass"/>
+        <payloadAccuracy magnitude="0.0" unit="percent" unitType="ratio"/>
+        <payloadWithStdLinWeight magnitude="0.0" unit="kilogram" unitType="mass"/>
+        <prodManSysMod magnitude="0.0" unit="kilogram" unitType="mass"/>
+        <rearDistributionEmpty magnitude="50.0" unit="percent" unitType="ratio"/>
+        <rearDistributionLoaded magnitude="0.0" unit="percent" unitType="ratio"/>
+        <standardLinearWeight magnitude="0.0" unit="kilogram" unitType="mass"/>
+        <struckCapacity magnitude="127.0" unit="cubic metres" unitType="volume"/>
+        <underLoad magnitude="261000.0" unit="kilogram" unitType="mass"/>
+        <wheelBase magnitude="0.0" unit="metre" unitType="length"/>
+        <avgSpeedLoaded magnitude="11.111111112000001" unit="metres per second" unitType="speed"/>
+        <avgSpeedEmpty magnitude="11.111111112000001" unit="metres per second" unitType="speed"/>
+        <tkphLowestRate magnitude="0.0" unit="kilogram metre per second" unitType="mass speed"/>
+        <tkphMaxPercent magnitude="90.0" unit="percent" unitType="ratio"/>
+        <refuelWindow magnitude="3600.0" unit="second" unitType="duration"/>
+        <refuelLoadState>EMPTY</refuelLoadState>
+        <travelEmptyFuelBurnRate magnitude="0.0" unit="cubic metres per metre" unitType="fuel burn per distance"/>
+        <travelFullFuelBurnRate magnitude="0.0" unit="cubic metres per metre" unitType="fuel burn per distance"/>
+        <truckEngine numCylinders="0" bore="0.0" stroke="0.0" displacement="0.0" flywheelPower="0.0" grossPower="0.0" ratedRPM="0.0"/>
+        <nomPayloadMap/>
+        <efhSpec/>
+        <gradeBlockUpdatable>false</gradeBlockUpdatable>
+        <pathPlanningVehicleConfig>930</pathPlanningVehicleConfig>
+        <pathPlanningAdditionalWidth magnitude="0.0" unit="metre" unitType="length"/>
+    </machineClass>
+    <machineType>
+        <id>88</id>
+        <externalMachine>false</externalMachine>
+        <routeOperatorMessages>false</routeOperatorMessages>
+        <routeAllMessages>false</routeAllMessages>
+        <canBeTowed>false</canBeTowed>
+        <ignoreHeading>false</ignoreHeading>
+        <infrastructure>false</infrastructure>
+        <useBodyRadius>false</useBodyRadius>
+        <useAvoidanceRadius>false</useAvoidanceRadius>
+        <isSrvrProxExempt>false</isSrvrProxExempt>
+        <isAvoidProxExempt>true</isAvoidProxExempt>
+        <bodyWidth magnitude="8.97" unit="metre" unitType="length"/>
+        <bodyLength magnitude="15.8" unit="metre" unitType="length"/>
+        <bodyRadius magnitude="0.0" unit="metre" unitType="length"/>
+        <avoidanceWidth magnitude="9.97" unit="metre" unitType="length"/>
+        <avoidanceLength magnitude="16.8" unit="metre" unitType="length"/>
+        <avoidanceRadius magnitude="0.0" unit="metre" unitType="length"/>
+        <gpsOffset x="4.63" y="4.485" z="0.0"/>
+        <gpsAntenna x="4.63" y="4.485" z="0.0"/>
+        <pathRegionScalar>2.0</pathRegionScalar>
+        <pathRegionExtension>5.0</pathRegionExtension>
+        <maxAcceleration magnitude="1.5" unit="metres per second squared" unitType="acceleration"/>
+        <maxDeceleration magnitude="3.0" unit="metres per second squared" unitType="acceleration"/>
+        <maxForwardSpeed magnitude="17.5000000014" unit="metres per second" unitType="speed"/>
+        <maxReverseSpeed magnitude="5.0000000004" unit="metres per second" unitType="speed"/>
+        <minTurningRadius magnitude="16.5" unit="metre" unitType="length"/>
+        <machineLength magnitude="15.8" unit="metre" unitType="length"/>
+        <machineWidth magnitude="8.97" unit="metre" unitType="length"/>
+        <categoryId>13</categoryId>
+        <centreOfAvoidanceArea x="7.9" y="4.485" z="0.0"/>
+        <centreOfBodyArea x="7.9" y="4.485" z="0.0"/>
+        <lanePlanningAvoidanceRadius magnitude="0.0" unit="metre" unitType="length"/>
+    </machineType>
+</machineClassExport>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="ef7a0076-b56b-4c8f-bc1d-4b76cd717c70" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_IN_PIT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_IN_PIT"/>
+            </not>
+        </preConditions>
+        <comment>Base 4.1 CreateTable MACHINE_IN_PIT</comment>
+        <sql dbms="oracle">ALTER SESSION SET NLS_LENGTH_SEMANTICS = 'CHAR'</sql>
+        <createTable tablespace="MW_ENT" remarks="The in pit machine definition." tableName="MACHINE_IN_PIT">
+            <column name="MACHINE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CLASS_NAME" type="VARCHAR(255)"/>
+            <column name="STATUS" type="SMALLINT" remarks="A numerical representation of the state."/>
+            <column name="STATUS_LAST_UPDATED_UTC" type="DATETIME2" remarks="The time when the status was last updated."/>
+            <column name="SOFT_STATE" type="INT" remarks="The last known soft state value."/>
+            <column name="LOCATION_OID" type="BIGINT" remarks="The current location."/>
+            <column name="LOCATION_LAST_UPDATED_UTC" type="DATETIME2" remarks="The time when the location was last updated."/>
+            <column name="WAYPOINT_OID" type="BIGINT" remarks="The last waypoint entered."/>
+            <column name="WAYPOINT_LAST_UPDATED_UTC" type="DATETIME2" remarks="The time when the beacon was last updated."/>
+            <column name="TIME_AT_WAYPOINT_UTC" type="DATETIME2" remarks="The time when this machine entered the last waypoint. ZERO means that this value is unknown."/>
+            <column name="CURRENT_OPERATOR_OID" type="BIGINT" remarks="The current operator."/>
+            <column name="CURR_OPERATOR_LAST_UPDATED_UTC" type="DATETIME2" remarks="The time when the current operator was last updated."/>
+            <column name="TIME_TILL_REFUEL" type="DOUBLE" remarks="Operating time till estimated fuel level reaches the refuel amount."/>
+            <column name="TIME_TILL_CRIT_REFUEL" type="DOUBLE" remarks="Operating time till estimated fuel level reaches the critical amount."/>
+            <column name="JOBCODE_OID" type="BIGINT" remarks="The last known JobCode."/>
+            <column name="JOB_CODE_LAST_UPDATED_UTC" type="DATETIME2" remarks="The time when the job code was last updated."/>
+            <column name="MATERIAL_OID" type="BIGINT" remarks="The material that this machine is currently operating with."/>
+            <column name="MATERIAL_LAST_UPDATED_UTC" type="DATETIME2" remarks="The time when the material was last updated."/>
+            <column name="MATERIAL_DETERMINATION" type="INT" remarks="How the material was determined."/>
+            <column name="LAST_POSITION_REPORT_DATE_UTC" type="DATETIME2" remarks="The time when the position report was last updated."/>
+            <column name="X" type="DOUBLE" remarks="The last known location of the machine."/>
+            <column name="Y" type="DOUBLE" remarks="The last known location of the machine."/>
+            <column name="Z" type="DOUBLE" remarks="The last known location of the machine."/>
+            <column name="POSITION_ACCURACY" type="DOUBLE" remarks="The reported accuracy of the position."/>
+            <column name="MACHINE_SHUTDOWN" type="BOOLEAN" remarks="When true, the machine has been shut down."/>
+            <column name="NOT_IN_USE" type="BOOLEAN" remarks="When true, the machine has been marked as not currently in use and will be ignored by autonomous machines."/>
+            <column name="MSTATE_DISCRIMINATOR" type="VARCHAR(3)"/>
+            <column name="MSTATE_LOADSTATUS" type="TINYINT"/>
+            <column name="MSTATE_MANUALOVERRIDE" type="BOOLEAN"/>
+            <column name="MSTATE_OLDLOADSTATUS" type="TINYINT"/>
+            <column name="MSTATE_OLDSTATE" type="TINYINT"/>
+            <column name="MSTATE_STATE" type="TINYINT"/>
+            <column name="FIELD_BAD_GPS" type="BOOLEAN" remarks="When true we have detected a maintenance event specifying that the GPS is not operating."/>
+            <column name="SERVICE_MACHINE_OID" type="BIGINT" remarks="The Machine where this machine will be serviced when it reaches its destination."/>
+            <column name="LAST_LOADER_OID" type="BIGINT" remarks="The last loading tool this machine was loaded at."/>
+            <column name="LAST_PROCESSOR_OID" type="BIGINT" remarks="The last processor this machine dumped at."/>
+            <column name="TIME_COMMENCED_SERVICE_UTC" type="DATETIME2" remarks="The time when this machine last commenced service."/>
+            <column name="TIME_COMPLETED_SERVICE_UTC" type="DATETIME2" remarks="The time when this machine last completed service."/>
+            <column name="SERVICE_INFO_LAST_UPDATED_UTC" type="DATETIME2" remarks="The time when the service info for this machine was last updated."/>
+            <column name="SPEED" type="DOUBLE" remarks="The current speed of the machine."/>
+            <column name="HEADING" type="DOUBLE" remarks="The current heading of the machine."/>
+            <column name="FREEDESTPERCENT" type="DOUBLE" remarks="The precent of destinations available for assignment"/>
+            <column name="FREEGRPDESTPERCENT" type="DOUBLE" remarks="The precent of group destinations available for assignment"/>
+            <column name="LOADED" type="BOOLEAN" remarks="When true this truck is full, otherwise it is empty."/>
+            <column name="CURRENT_PAYLOAD" type="DOUBLE" remarks="The current payload in this load"/>
+            <column name="CURR_PAYLOAD_LAST_UPDATED_UTC" type="DATETIME2" remarks="The last payload update time"/>
+            <column name="LAST_PAYLOAD" type="DOUBLE" remarks="The last payload in this load"/>
+            <column name="LAST_MATERIAL_OID" type="BIGINT" remarks="The last material that was in this truck."/>
+            <column name="LAST_GRADE_BLOCK_OID" type="BIGINT" remarks="The last mining block that was in the truck."/>
+            <column name="CURRENT_GRADE_BLOCK_OID" type="BIGINT" remarks="The current minestar mining block for this load"/>
+            <column name="CUR_GRADE_BLK_LAST_UPDATED_UTC" type="DATETIME2" remarks="The last grade block update time"/>
+            <column name="GRADE_BLOCK_DETERMINATION" type="INT" remarks="How minestar determined the mining block for this load"/>
+            <column name="GRADE_BLOCK_OID" type="BIGINT" remarks="The current/default minestar mining block"/>
+            <column name="GRADE_BLOCK_GROUP_OID" type="BIGINT" remarks="The current bench for this LT"/>
+            <column name="LAST_LOADED_GRADE_BLOCK_OID" type="BIGINT" remarks="The last loaded minestar mining block."/>
+            <column name="MGEM_MODE" type="VARCHAR(255)" remarks="The operation control mode of MineGem machines."/>
+            <column name="MGEM_MODE_MSG_TIME_UTC" type="DATETIME2" remarks="The date and time that the MineGem machine last sent a ModeStatus message"/>
+            <column name="LADAR_HEALTH_STATUS" type="VARCHAR(255)" remarks="The dirtiness level of LADARs."/>
+            <column name="LAST_DRAW_POINT_OID" type="BIGINT" remarks="Reference to the last draw point that the LHD took a load from."/>
+            <column name="LAST_ORE_PASS_OID" type="BIGINT" remarks="Reference to the last ore pass that the LHD dumped."/>
+            <column name="LAST_SERVICE_AMOUNT" type="DOUBLE" remarks="The amount of material that the last truck dumped."/>
+            <column name="LAST_SRV_AMT_LAST_UPDATED_UTC" type="DATETIME2" remarks="The time that the service amount was updated."/>
+            <column name="LAST_SERVICE_START_UTC" type="DATETIME2" remarks="The time that the last truck started dumping."/>
+            <column name="LAST_SRV_STRT_LAST_UPDATED_UTC" type="DATETIME2" remarks="The update time for the last service start."/>
+        </createTable>
+        <addPrimaryKey columnNames="MACHINE_OID" constraintName="MACHINE_IN_PIT_PK" tablespace="MW_IDXENT" tableName="MACHINE_IN_PIT"/>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="fb707f55-1318-4cf2-a1b3-bf4dd309ffe2" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_IN_PIT_GB_LIST as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_IN_PIT_GB_LIST"/>
+            </not>
+        </preConditions>
+        <comment>Base 4.1 CreateTable MACHINE_IN_PIT_GB_LIST</comment>
+        <createTable tablespace="MW_ENT" remarks="The list of minestar mining blocks active for this LT" tableName="MACHINE_IN_PIT_GB_LIST">
+            <column name="MACHINE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRADE_BLOCK_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="MACHINE_OID,GRADE_BLOCK_OID" constraintName="MACHINE_IN_PIT_GB_LIST_PK" tablespace="MW_IDXENT" tableName="MACHINE_IN_PIT_GB_LIST"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="471a5be2-575a-45ec-9cf7-7982aa8aca51" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_IN_PIT_GB_LIST_MACH_FK to table MACHINE_IN_PIT_GB_LIST as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT_GB_LIST"/>
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_IN_PIT_GB_LIST" foreignKeyName="MACHINE_IN_PIT_GB_LIST_MACH_FK"/>
+            </not>
+        </preConditions>
+        <comment>Base 4.1 AddForeignKeyConstraint MACHINE_IN_PIT_GB_LIST_MACH_FK to MACHINE_IN_PIT_GB_LIST (MACHINE_OID)</comment>
+        <sql>DELETE FROM MACHINE_IN_PIT_GB_LIST WHERE MACHINE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE_IN_PIT WHERE MACHINE_IN_PIT.MACHINE_OID = MACHINE_IN_PIT_GB_LIST.MACHINE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_IN_PIT_GB_LIST" baseColumnNames="MACHINE_OID" constraintName="MACHINE_IN_PIT_GB_LIST_MACH_FK" referencedTableName="MACHINE_IN_PIT" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_IN_PIT_GB_LIST" constraintName="MACHINE_IN_PIT_GB_LIST_MACH_FK"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

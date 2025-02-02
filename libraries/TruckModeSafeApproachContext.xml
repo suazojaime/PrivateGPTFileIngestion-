@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2013, Caterpillar, Brisbane Australia. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+        
+    <bean id="truckSafeToApproachService" 
+          class="minestar.mode.truck.safeapproach.TruckSafeToApproachService">
+        <property name="safeToApproachEnter" ref="safeToApproachEnter"/>
+        <property name="safeToApproachLeave" ref="safeToApproachLeave"/>
+    </bean>
+    
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="safeToApproachServiceImpl"/>
+        <property name="targetMethod"><value>addDelegate</value></property>
+        <property name="arguments">
+            <list>
+                <ref bean="truckSafeToApproachService"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="safeToApproachEnter"
+          class="minestar.mode.truck.safeapproach.controller.SafeToApproachEnter">
+        <property name="modeMessageService" ref="truckModeFieldSender"/>
+    </bean>
+    
+    <bean id="safeToApproachLeave"
+          class="minestar.mode.truck.safeapproach.controller.SafeToApproachLeave">
+        <property name="modeMessageService" ref="truckModeFieldSender"/>
+    </bean>
+    
+</beans>

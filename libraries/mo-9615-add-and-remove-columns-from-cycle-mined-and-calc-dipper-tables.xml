@@ -1,0 +1,1071 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="5ec7bcd8-102f-473e-b1a8-ae374be1e893" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE0_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE0_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE0_UNITNAME</comment>
+        <dropColumn columnName="GRADE0_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE0_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="70829936-c263-4b50-9ad2-5cddf22f2fb4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE0_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE0_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE0_UNITTYPE</comment>
+        <dropColumn columnName="GRADE0_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE0_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="31c1d2e7-eded-412f-ba1b-e704252b5b02" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE1_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE1_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE1_UNITNAME</comment>
+        <dropColumn columnName="GRADE1_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE1_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="aab60113-5fc6-4b9c-8f41-d8d1c4b1acc5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE1_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE1_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE1_UNITTYPE</comment>
+        <dropColumn columnName="GRADE1_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE1_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="357e8883-f769-4cf1-91f8-eb4577cafed8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE2_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE2_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE2_UNITNAME</comment>
+        <dropColumn columnName="GRADE2_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE2_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="edac4d2b-60d4-48b0-96ba-f895213714e2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE2_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE2_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE2_UNITTYPE</comment>
+        <dropColumn columnName="GRADE2_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE2_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="0eb03d2c-9c34-4682-a011-0bed33da19bb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE3_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE3_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE3_UNITNAME</comment>
+        <dropColumn columnName="GRADE3_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE3_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="32868964-9f56-473b-ab5e-0e5ff581eb68" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE3_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE3_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE3_UNITTYPE</comment>
+        <dropColumn columnName="GRADE3_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE3_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="39819e4d-77a0-466c-970b-9bb6caea1c7f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE4_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE4_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE4_UNITNAME</comment>
+        <dropColumn columnName="GRADE4_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE4_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="530ca73a-9fc1-4393-b029-45a94aaa7c5a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE4_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE4_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE4_UNITTYPE</comment>
+        <dropColumn columnName="GRADE4_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE4_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="328c6607-0a02-49bc-a4e6-8c7bccdcbf5e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE5_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE5_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE5_UNITNAME</comment>
+        <dropColumn columnName="GRADE5_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE5_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="2d874974-9356-43e4-905a-25c4c53bfa61" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE5_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE5_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE5_UNITTYPE</comment>
+        <dropColumn columnName="GRADE5_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE5_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="121112dd-3a7c-45c7-892e-4de945599e15" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE6_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE6_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE6_UNITNAME</comment>
+        <dropColumn columnName="GRADE6_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE6_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="80cd33e5-1e72-4036-a005-f84e27c8c442" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE6_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE6_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE6_UNITTYPE</comment>
+        <dropColumn columnName="GRADE6_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE6_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="7dcbffc7-8b67-49b0-abfc-922f25405e6c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE7_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE7_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE7_UNITNAME</comment>
+        <dropColumn columnName="GRADE7_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE7_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="afcb6705-0df4-4a84-8437-36401d4a3066" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE7_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE7_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE7_UNITTYPE</comment>
+        <dropColumn columnName="GRADE7_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE7_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="53838614-036e-4a4a-9697-6150d81b0f9f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE8_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE8_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE8_UNITNAME</comment>
+        <dropColumn columnName="GRADE8_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE8_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="867e004d-1c6d-458d-a788-68c9cdba5cf2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE8_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE8_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE8_UNITTYPE</comment>
+        <dropColumn columnName="GRADE8_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE8_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="4cd097bf-9a3d-4ccf-bb1d-448b36f092e0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE9_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE9_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE9_UNITNAME</comment>
+        <dropColumn columnName="GRADE9_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE9_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="4c3e469d-c655-4c2e-8acf-286816827186" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE9_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE9_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE9_UNITTYPE</comment>
+        <dropColumn columnName="GRADE9_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE9_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="a861d7fa-6b4a-478c-92a0-d0903f9ec2b9" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE10_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE10_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE10_UNITNAME</comment>
+        <dropColumn columnName="GRADE10_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE10_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="c450e039-585a-4e81-a576-68ddf59ce1be" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE10_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE10_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE10_UNITTYPE</comment>
+        <dropColumn columnName="GRADE10_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE10_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="82ec143c-54b7-4405-ae46-19d1e639fcab" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE11_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE11_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE11_UNITNAME</comment>
+        <dropColumn columnName="GRADE11_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE11_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="e48430f9-f373-4975-a5b3-953d62a63352" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE11_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE11_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE11_UNITTYPE</comment>
+        <dropColumn columnName="GRADE11_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE11_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="b13ebca1-545f-41e0-88f8-ca4ce532bba7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE12_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE12_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE12_UNITNAME</comment>
+        <dropColumn columnName="GRADE12_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE12_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="fc7970a0-8468-41c1-9a21-6f530bb022df" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE12_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE12_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE12_UNITTYPE</comment>
+        <dropColumn columnName="GRADE12_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE12_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="37f00c34-8524-4673-9ff8-98788369d3bb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE13_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE13_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE13_UNITNAME</comment>
+        <dropColumn columnName="GRADE13_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE13_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="7d0b9026-5e1b-46e4-90ab-6e7cbc578d91" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE13_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE13_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE13_UNITTYPE</comment>
+        <dropColumn columnName="GRADE13_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE13_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="5abf882e-95ce-4bb9-8ba5-d1c3deb685a6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE14_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE14_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE14_UNITNAME</comment>
+        <dropColumn columnName="GRADE14_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE14_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="3ad24a86-36e5-46f0-af8f-c067d48568c2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE14_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE14_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE14_UNITTYPE</comment>
+        <dropColumn columnName="GRADE14_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE14_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="2ef24c87-7467-4ea9-97db-aa72ce224b8e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE15_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE15_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE15_UNITNAME</comment>
+        <dropColumn columnName="GRADE15_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE15_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="56b98a93-6647-4be2-b889-e98862063171" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE15_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE15_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE15_UNITTYPE</comment>
+        <dropColumn columnName="GRADE15_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE15_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="d2ad1d28-0f4d-49e0-b2f0-915119f36a62" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE16_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE16_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE16_UNITNAME</comment>
+        <dropColumn columnName="GRADE16_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE16_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="29e4e19b-a17d-4a55-b415-247274459be1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE16_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE16_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE16_UNITTYPE</comment>
+        <dropColumn columnName="GRADE16_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE16_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="33cfc692-1d5d-4e3a-b026-db68d94d0240" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE17_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE17_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE17_UNITNAME</comment>
+        <dropColumn columnName="GRADE17_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE17_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="bc81c4e3-69cf-4d9b-9262-65498735df67" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE17_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE17_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE17_UNITTYPE</comment>
+        <dropColumn columnName="GRADE17_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE17_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="552fd2aa-0b60-4d64-a84e-916e8ff33b1b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE18_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE18_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE18_UNITNAME</comment>
+        <dropColumn columnName="GRADE18_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE18_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="ab809f29-9a5c-4801-9b36-85a300c504fb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE18_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE18_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE18_UNITTYPE</comment>
+        <dropColumn columnName="GRADE18_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE18_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="df655f35-a65b-4cf2-9200-cb13011a0179" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE19_UNITNAME of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE19_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE19_UNITNAME</comment>
+        <dropColumn columnName="GRADE19_UNITNAME" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE19_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="edbff0f9-9b58-42c4-a668-774e270cae6c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE19_UNITTYPE of table CYCLE_CALC_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_CALC_DIPPER" columnName="GRADE19_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_CALC_DIPPER.GRADE19_UNITTYPE</comment>
+        <dropColumn columnName="GRADE19_UNITTYPE" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_CALC_DIPPER">
+                <column name="GRADE19_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="768953d1-4b98-4d24-8543-b7a3aac5ff46" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DIPPER_REASON to table CYCLE_CALC_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_CALC_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_CALC_DIPPER" columnName="DIPPER_REASON"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_CALC_DIPPER.DIPPER_REASON</comment>
+        <addColumn tableName="CYCLE_CALC_DIPPER">
+            <column name="DIPPER_REASON" type="VARCHAR(254)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="0005dd95-5e55-42fb-8f95-bca93bafe59d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MATERIAL_OID to table CYCLE_CALC_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_CALC_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_CALC_DIPPER" columnName="MATERIAL_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_CALC_DIPPER.MATERIAL_OID</comment>
+        <addColumn tableName="CYCLE_CALC_DIPPER">
+            <column name="MATERIAL_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="7741225e-325e-471d-843f-b02cf75e9405" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DIPPER_ATTRIBUTES to table CYCLE_CALC_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_CALC_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_CALC_DIPPER" columnName="DIPPER_ATTRIBUTES"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_CALC_DIPPER.DIPPER_ATTRIBUTES</comment>
+        <addColumn tableName="CYCLE_CALC_DIPPER">
+            <column name="DIPPER_ATTRIBUTES" type="VARCHAR(4000)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="08120ecc-1e15-426b-b623-bd49b02eb7b5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for XCOORD_DIG to table CYCLE_CALC_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_CALC_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_CALC_DIPPER" columnName="XCOORD_DIG"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_CALC_DIPPER.XCOORD_DIG</comment>
+        <addColumn tableName="CYCLE_CALC_DIPPER">
+            <column name="XCOORD_DIG" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="05585c93-4ac1-4b63-804a-aa861a48354e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for YCOORD_DIG to table CYCLE_CALC_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_CALC_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_CALC_DIPPER" columnName="YCOORD_DIG"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_CALC_DIPPER.YCOORD_DIG</comment>
+        <addColumn tableName="CYCLE_CALC_DIPPER">
+            <column name="YCOORD_DIG" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="4841a4c9-55ca-478c-852f-c6f5a6639c7b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ZCOORD_DIG to table CYCLE_CALC_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_CALC_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_CALC_DIPPER" columnName="ZCOORD_DIG"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_CALC_DIPPER.ZCOORD_DIG</comment>
+        <addColumn tableName="CYCLE_CALC_DIPPER">
+            <column name="ZCOORD_DIG" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3bcaab5d-bc40-4ec5-9d80-f1dec5758651" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE0_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE0_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE0_UNITNAME</comment>
+        <dropColumn columnName="GRADE0_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE0_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="d9d2ffd1-4e01-46fb-a0e6-623f85bb4c80" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE0_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE0_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE0_UNITTYPE</comment>
+        <dropColumn columnName="GRADE0_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE0_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="48a7772f-7e02-4520-b023-b30ecf79c8b0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE1_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE1_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE1_UNITNAME</comment>
+        <dropColumn columnName="GRADE1_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE1_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="a7418a8d-75cd-40cd-bde7-091c3da563a3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE1_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE1_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE1_UNITTYPE</comment>
+        <dropColumn columnName="GRADE1_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE1_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="10c6efe6-6a39-4831-a9ec-b132131dd943" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE2_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE2_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE2_UNITNAME</comment>
+        <dropColumn columnName="GRADE2_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE2_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="41949908-09e2-4169-813c-fffcaca9b024" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE2_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE2_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE2_UNITTYPE</comment>
+        <dropColumn columnName="GRADE2_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE2_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="1bb2f64a-c482-4c31-b14e-bb913010e587" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE3_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE3_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE3_UNITNAME</comment>
+        <dropColumn columnName="GRADE3_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE3_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="f508aacf-341e-4580-a52a-55c09c42f2bd" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE3_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE3_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE3_UNITTYPE</comment>
+        <dropColumn columnName="GRADE3_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE3_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="3750a57e-9a8a-4e2b-845f-9c6b3a9232f8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE4_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE4_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE4_UNITNAME</comment>
+        <dropColumn columnName="GRADE4_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE4_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="88d1e5ae-c9d6-4104-8c6c-e25646cab5ed" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE4_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE4_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE4_UNITTYPE</comment>
+        <dropColumn columnName="GRADE4_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE4_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="b638878a-69c4-42b4-8eb7-4578c8c68212" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE5_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE5_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE5_UNITNAME</comment>
+        <dropColumn columnName="GRADE5_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE5_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="95b2da57-f4e0-462b-b1fe-0be3271f71b0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE5_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE5_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE5_UNITTYPE</comment>
+        <dropColumn columnName="GRADE5_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE5_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="1778908b-9fe4-4dce-a823-e35c881bfbfd" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE6_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE6_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE6_UNITNAME</comment>
+        <dropColumn columnName="GRADE6_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE6_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="23cd517d-ed5c-4e71-8383-f461a5ea684c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE6_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE6_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE6_UNITTYPE</comment>
+        <dropColumn columnName="GRADE6_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE6_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="06c35f1b-ac3a-4ef6-bd52-9c042be260d7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE7_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE7_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE7_UNITNAME</comment>
+        <dropColumn columnName="GRADE7_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE7_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="2c04c81f-f325-418f-be5f-9232317e0f63" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE7_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE7_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE7_UNITTYPE</comment>
+        <dropColumn columnName="GRADE7_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE7_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="5e5a19d4-979a-473d-82ce-7eb7ada3681a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE8_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE8_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE8_UNITNAME</comment>
+        <dropColumn columnName="GRADE8_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE8_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="4488828f-aa90-4e46-9a43-0f66e609ee1b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE8_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE8_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE8_UNITTYPE</comment>
+        <dropColumn columnName="GRADE8_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE8_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="69aa26a7-d9af-4459-948c-f90d0fb1be71" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE9_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE9_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE9_UNITNAME</comment>
+        <dropColumn columnName="GRADE9_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE9_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="ec98d2e0-566b-4bd8-84e6-df13c3c8c9aa" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE9_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE9_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE9_UNITTYPE</comment>
+        <dropColumn columnName="GRADE9_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE9_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="759dc369-1a8e-45e7-ac71-0da619f06d6f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE10_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE10_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE10_UNITNAME</comment>
+        <dropColumn columnName="GRADE10_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE10_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="2af9db3b-5597-4de6-a546-cb2bc68a86b4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE10_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE10_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE10_UNITTYPE</comment>
+        <dropColumn columnName="GRADE10_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE10_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="dfdf50f2-77f9-46c5-8913-6b945986df50" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE11_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE11_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE11_UNITNAME</comment>
+        <dropColumn columnName="GRADE11_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE11_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="eeb27ca9-0c69-40f8-8789-6e5771414760" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE11_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE11_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE11_UNITTYPE</comment>
+        <dropColumn columnName="GRADE11_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE11_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="160aed2a-04cd-4ea6-86ad-a1993afff3cc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE12_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE12_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE12_UNITNAME</comment>
+        <dropColumn columnName="GRADE12_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE12_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="17f01570-e467-4986-a7c9-989754239436" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE12_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE12_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE12_UNITTYPE</comment>
+        <dropColumn columnName="GRADE12_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE12_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="3ddfd84a-a6f1-4c62-8fd5-5905fcccb4e9" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE13_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE13_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE13_UNITNAME</comment>
+        <dropColumn columnName="GRADE13_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE13_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="eb1d2e2f-66cf-483d-a02c-c90491604387" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE13_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE13_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE13_UNITTYPE</comment>
+        <dropColumn columnName="GRADE13_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE13_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="08012a54-c111-408a-ad45-23c0689e2d4d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE14_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE14_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE14_UNITNAME</comment>
+        <dropColumn columnName="GRADE14_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE14_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="255e5997-3d97-43a1-843d-eefb960dd196" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE14_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE14_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE14_UNITTYPE</comment>
+        <dropColumn columnName="GRADE14_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE14_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="aa8846c2-09ac-4267-916e-7d1c746c595e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE15_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE15_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE15_UNITNAME</comment>
+        <dropColumn columnName="GRADE15_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE15_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="c2ecb31a-9c54-42c7-9b48-c8c1353e1fbd" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE15_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE15_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE15_UNITTYPE</comment>
+        <dropColumn columnName="GRADE15_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE15_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="6ef7acfb-aad8-4aca-bf58-0303404c12e4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE16_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE16_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE16_UNITNAME</comment>
+        <dropColumn columnName="GRADE16_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE16_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="4e35db17-bca8-47db-8ffd-26c591da7ecf" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE16_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE16_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE16_UNITTYPE</comment>
+        <dropColumn columnName="GRADE16_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE16_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="c47f888f-d8d4-4437-b183-b70e03716881" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE17_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE17_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE17_UNITNAME</comment>
+        <dropColumn columnName="GRADE17_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE17_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="ce5964c6-ab03-4c96-b563-14870090d381" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE17_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE17_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE17_UNITTYPE</comment>
+        <dropColumn columnName="GRADE17_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE17_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="5697158b-ed93-43d9-8c15-30badef771cb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE18_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE18_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE18_UNITNAME</comment>
+        <dropColumn columnName="GRADE18_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE18_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="da8cce01-dfca-4d6b-bc91-61513133ac7f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE18_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE18_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE18_UNITTYPE</comment>
+        <dropColumn columnName="GRADE18_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE18_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="88d65152-ae3c-4440-a667-0187135c40c4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE19_UNITNAME of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE19_UNITNAME"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE19_UNITNAME</comment>
+        <dropColumn columnName="GRADE19_UNITNAME" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE19_UNITNAME" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="e5afbaa5-8a22-46bc-a16a-56593a906b89" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for GRADE19_UNITTYPE of table CYCLE_MINED_DIPPER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="CYCLE_MINED_DIPPER" columnName="GRADE19_UNITTYPE"/>
+        </preConditions>
+        <comment>MO-9615: DropColumn CYCLE_MINED_DIPPER.GRADE19_UNITTYPE</comment>
+        <dropColumn columnName="GRADE19_UNITTYPE" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <addColumn tableName="CYCLE_MINED_DIPPER">
+                <column name="GRADE19_UNITTYPE" type="NVARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="c9a23201-11db-4a7f-8058-5d78903cb35c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CAES_FLAG to table CYCLE_MINED_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_MINED_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_MINED_DIPPER" columnName="CAES_FLAG"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_MINED_DIPPER.CAES_FLAG</comment>
+        <addColumn tableName="CYCLE_MINED_DIPPER">
+            <column name="CAES_FLAG" type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="da69c048-6cbe-4198-b59d-d383a79e6f4e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DIPPER_REASON to table CYCLE_MINED_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_MINED_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_MINED_DIPPER" columnName="DIPPER_REASON"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_MINED_DIPPER.DIPPER_REASON</comment>
+        <addColumn tableName="CYCLE_MINED_DIPPER">
+            <column name="DIPPER_REASON" type="VARCHAR(254)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="0727db04-035a-4de2-afc5-8d223a613666" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MATERIAL_OID to table CYCLE_MINED_DIPPER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_MINED_DIPPER"/>
+            <not>
+                <columnExists tableName="CYCLE_MINED_DIPPER" columnName="MATERIAL_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-9615: AddColumn CYCLE_MINED_DIPPER.MATERIAL_OID</comment>
+        <addColumn tableName="CYCLE_MINED_DIPPER">
+            <column name="MATERIAL_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

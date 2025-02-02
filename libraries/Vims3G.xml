@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!-- Copyright (c) 2018, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+	<!-- Jobs for downloading VIMS files from legacy VIMS3 which is no longer in use. This is now deprecated and only accessible in Expert Mode. -->
+    <classdef name="VIMS 3G Health File Download">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>DownloadVims3GFiles</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vims3GOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Files will only be downloaded from included machines</description>
+            </propertydef>
+            <propertydef name="fileList" label="">
+                <typedef>
+                    <javaclass name="java.util.List"/>
+                </typedef>
+                <uidef widget="onboardFileDownload" custom='vims3GHealthOnly="true"'/>
+                <description>Selected file types will be downloaded</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="extendedOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="onceOnly" label="Download once">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Download at most one copy of each file for each machine into the unprocessed directory</description>
+            </propertydef>
+            <propertydef name="ftp.username" label="Username">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <!--<uidef visiblewhen="false"/>-->
+                <defaultvalue class="java.lang.String">secret</defaultvalue>
+            </propertydef>
+            <propertydef name="ftp.password" label="Password">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <!--<uidef visiblewhen="false"/>-->
+                <defaultvalue class="java.lang.String">squirrel</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="download" label="Downloaded Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">download</defaultvalue>
+                <description>Subdirectory for raw downloaded files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="executorOptions">
+            <propertydef name="executorName" access="readonly">
+                <defaultvalue>VIMS3GJobService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+            <propertydef name="retryWaitSeconds" label="Delay between attempts">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Download VIMS 3G health files from a VIMS 3g enabled machine.
+        </description>
+    </classdef>
+
+    <classdef name="VIMS 3G Production File Download">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>DownloadVims3GFiles</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vims3GOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Files will only be downloaded from included machines</description>
+            </propertydef>
+            <propertydef name="resetAfterDownload" label="Reset after Download?" >
+                <typedef>
+                    <type code="boolean" />
+                </typedef>
+            </propertydef>
+            <propertydef name="fileType">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef visiblewhen="false"/>
+                <defaultvalue class="java.lang.String">.PA_</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="extendedOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="onceOnly" label="Download once">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Download at most one copy of each file for each machine into the unprocessed directory</description>
+            </propertydef>
+            <propertydef name="ftp.username" label="Username">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <!--<uidef visiblewhen="false"/>-->
+                <defaultvalue class="java.lang.String">secret</defaultvalue>
+            </propertydef>
+            <propertydef name="ftp.password" label="Password">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <!--<uidef visiblewhen="false"/>-->
+                <defaultvalue class="java.lang.String">squirrel</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="download" label="Downloaded Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">download</defaultvalue>
+                <description>Subdirectory for raw downloaded files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="executorOptions">
+            <propertydef name="executorName" access="readonly">
+                <defaultvalue>VIMS3GJobService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+            <propertydef name="retryWaitSeconds" label="Delay between attempts">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Download VIMS 3G production files from a VIMS 3G enabled machine.
+        </description>
+    </classdef>
+
+</classdefs>

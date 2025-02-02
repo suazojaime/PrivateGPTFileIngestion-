@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b6e3c3aa-fbc5-498d-9419-3b3a2d707a1c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MOVED_PAYLOAD to table PRODUCTION_EVENT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PRODUCTION_EVENT"/>
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="MOVED_PAYLOAD"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1621: AddColumn PRODUCTION_EVENT.MOVED_PAYLOAD</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="MOVED_PAYLOAD" type="DOUBLE" remarks="The moved payload value associated with the event"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

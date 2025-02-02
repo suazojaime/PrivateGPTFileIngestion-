@@ -1,0 +1,633 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.administration.domain.event.AdministrationEvent"
+           table="ADMIN_EVENT">
+
+        <meta attribute="index">
+            name=ADMIN_EVENT_1
+            columns=CLASS_ID, EVENT_OID, MACHINE_OID, TIMESTAMP_UTC DESC
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=ADMIN_EVENT_2
+            columns=CLASS_ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=ADMIN_EVENT_1R
+            columns=TIMESTAMP_UTC DESC, CLASS_ID, MACHINE_OID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=ADMIN_EVENT_TIME_NAME_MACHINE
+            columns=SOURCE_TIMESTAMP_UTC, NAME, MACHINE_OID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">An administration event</meta>
+
+        <!-- Start BaseEventProperties.xml -->
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="viewproperty-machineClassOID" inherit="false">
+            type=string
+            description=The machine class OID, of the entity source, when the entity source is a machine.
+            expression=lookupResource.baseEvent.machineClassOID.query
+        </meta>
+        <meta attribute="viewproperty-machineClass_N" inherit="false">
+            type=string
+            description=The machine class name, of the entity source, when the entity source is a machine.
+            expression=lookupResource.baseEvent.machineClass_N.query
+        </meta>
+        <meta attribute="viewproperty-interpolatedSMU" inherit="false">
+            type=float
+            description=The SMU as determined by the SMU Interpolation Service.   To be used when SMU value is not available directly from the event.
+            unitType=service meter hours
+            expression=lookupResource.baseEvent.interpolatedSMU.query
+        </meta>
+
+        <cache usage="nonstrict-read-write" region="eventInstances" />
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="EVENT_OID"
+                >
+            <meta attribute="description">The object identifier of the entity, unique within its manager.</meta>
+            <generator class="com.mincom.env.base.persistence.TableHiLoGenerator"/>
+        </id>
+
+        <discriminator column="CLASS_ID" not-null="false" length="254"/>
+
+        <property
+                name="name"
+                type="java.lang.String"
+                column="NAME"
+                length="254"
+                not-null="true"
+                >
+            <meta attribute="description">The name of the event.</meta>
+        </property>
+        <property
+                name="eventSource"
+                type="java.lang.String"
+                column="EVENTSOURCE"
+                length="254"
+                >
+            <meta attribute="description">The object the event came from.</meta>
+        </property>
+
+        <property
+                name="acknowledged"
+                type="java.lang.Boolean"
+                column="ACKNOWLEDGED"
+                >
+            <meta attribute="description">Whether the event has been acknowledged yet.</meta>
+            <meta attribute="choices" inherit="false">choice:booleanValue</meta>
+        </property>
+        <many-to-one
+                name="machineRef"
+                column="MACHINE_OID"
+                not-null="true"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                >
+            <meta attribute="alias">machine</meta>
+            <meta attribute="description">The entity the event came from.</meta>
+        </many-to-one>
+        <property
+                name="arrivalTime"
+                type="TimestampType"
+                column="ARRIVAL_TIME_UTC"
+                >
+            <meta attribute="utc-description">The utc time the event arrived in the office.</meta>
+            <meta attribute="description">The time the event arrived in the office.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        <property
+                name="timestamp"
+                type="TimestampType"
+                >
+            <meta attribute="utc-description">The utc time the event was created.</meta>
+            <meta attribute="description">The time the event was created.</meta>
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="TIMESTAMP_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+        <property
+                name="sourceTimestamp"
+                type="TimestampType"
+                >
+            <meta attribute="utc-description">The utc time the original source of the event says the event was created.</meta>
+            <meta attribute="description">The time the original source of the event says the event was created.</meta>
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="SOURCE_TIMESTAMP_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+        <property
+                name="smu"
+                column="SMU"
+                >
+            <meta attribute="description">The smu of the event.</meta>
+            <meta attribute="unitType">service meter hours</meta>
+            <type name="quantity">
+                <param name="unitType">service meter hours</param>
+            </type>
+        </property>
+        <property
+                name="priority"
+                type="java.lang.String"
+                column="PRIORITY"
+                length="254"
+                >
+            <meta attribute="description">The priority of the event</meta>
+        </property>
+        <property
+                name="description"
+                type="java.lang.String"
+                column="DESCRIPTION"
+                length="508"
+                >
+            <meta attribute="description">A description of the event in the reporting locale.</meta>
+        </property>
+        <property
+                name="englishDescription"
+                type="java.lang.String"
+                column="ENGLISH_DESCRIPTION"
+                length="254"
+                >
+            <meta attribute="description">A description of the event in English. Used for debugging by MineStar support staff.</meta>
+        </property>
+        <property
+                name="type"
+                type="java.lang.String"
+                column="TYPE"
+                length="254"
+                >
+            <meta attribute="description">The type of event</meta>
+        </property>
+        <many-to-one
+                name="acknowledger"
+                column="ACKNOWLEDGER_OID"
+                class="minestar.machinetracking.domain.PersonReference"
+                not-found="ignore"
+                >
+            <meta attribute="description">The entity which acknowledged the event.</meta>
+        </many-to-one>
+        <property
+                name="flags"
+                type="java.lang.Long"
+                column="FLAGS"
+                access="field"
+                >
+            <meta attribute="description">Extra flags.</meta>
+        </property>
+        <many-to-one
+                name="entityDestination"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="DESTINATION_OID"
+                not-found="ignore"
+                >
+            <meta attribute="description">Unused</meta>
+        </many-to-one>
+        <property
+                name="nodePublicationTime"
+                type="TimestampType"
+                column="NODE_PUBLICATION_TIME_UTC"
+                >
+            <meta attribute="utc-description">The node publication utc time for the event</meta>
+            <meta attribute="description">The node publication time for the event</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        <property
+                name="speed"
+                column="SPEED"
+                >
+            <meta attribute="description">The speed value associated with the event.</meta>
+            <meta attribute="unitType">speed</meta>
+            <type name="quantity">
+                <param name="unitType">speed</param>
+            </type>
+        </property>
+        <property
+                name="payload"
+                column="PAYLOAD"
+                >
+            <meta attribute="description">The payload value associated with the event.</meta>
+            <meta attribute="unitType">mass</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+            </type>
+        </property>
+        <many-to-one
+                name="operator"
+                column="OPERATOR"
+                class="minestar.machinetracking.domain.PersonReference"
+                not-found="ignore"
+                >
+            <meta attribute="description">The equipment operator associated with the event.</meta>
+        </many-to-one>
+
+        <component name="location">
+            <meta attribute="description">The equipment location information associated with the event.</meta>
+            <property
+                    name="timestamp"
+                    type="TimestampType"
+                    column ="LOCATION_TIMESTAMP_UTC"
+                    >
+                <meta attribute="view-localtime">true</meta>
+                <meta attribute="utc-description">The location utc timestamp</meta>
+                <meta attribute="description">The location timestamp</meta>
+            </property>
+            <property
+                    name="accuracy" column="LOCATION_ACCURACY"
+                    >
+            </property>
+            <property
+                    name="heading" column="LOCATION_HEADING"
+                    >
+                <meta attribute="unitType">plane angle</meta>
+                <type name="quantity">
+                    <param name="unitType">plane angle</param>
+                </type>
+            </property>
+            <component
+                    name="LLE"
+                    >
+                <property name="latitude" column="LOCATION_LATITUDE" access="field">
+                    <meta attribute="unitType">plane angle</meta>
+                    <type name="quantity">
+                        <param name="unitType">plane angle</param>
+                    </type>
+                </property>
+                <property name="longitude" column="LOCATION_LONGITUDE" access="field">
+                    <meta attribute="unitType">plane angle</meta>
+                    <type name="quantity">
+                        <param name="unitType">plane angle</param>
+                    </type>
+                </property>
+                <property name="elevation" column="LOCATION_ELEVATION" access="field">
+                    <meta attribute="unitType">length</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+            </component>
+
+            <property
+                    name="XYZ"
+                    type="XYZCoordinate"
+                    >
+                <meta attribute="export-nested" inherit="false">true</meta>
+                <column name="LOCATION_X"/>
+                <column name="LOCATION_Y"/>
+                <column name="LOCATION_Z"/>
+            </property>
+
+        </component>
+
+        <component name="state" class="minestar.domain.model.MachineState" access="field">
+            <meta attribute="description">The equipment state information associated with the event.</meta>
+            <property name="manualOverride" type="boolean" column="STATE_MANUAL_OVERRIDE" access="field">
+                <meta attribute="description">Is a manual override in effect</meta>
+            </property>
+            <property name="loadStatus" type="minestar.domain.model.persistence.MachineLoadStatusUserType" column="STATE_LOADSTATUS" access="field">
+                <meta attribute="description">The current load status.</meta>
+                <meta attribute="choices" inherit="false">choice:truckCombinedStatus</meta>
+            </property>
+            <property name="oldLoadStatus" type="minestar.domain.model.persistence.MachineLoadStatusUserType" column="STATE_OLD_LOADSTATUS" access="field">
+                <meta attribute="description">The previous load status.</meta>
+                <meta attribute="choices" inherit="false">choice:truckCombinedStatus</meta>
+            </property>
+            <property name="oldStatus" type="minestar.domain.model.persistence.MachineStatusUserType" column="OLD_MACHINE_STATE" access="field">
+                <meta attribute="alias">oldState</meta>
+                <meta attribute="description">The previous machine status.</meta>
+                <meta attribute="choices" inherit="false">choice:truckStatus</meta>
+            </property>
+            <property name="status" type="minestar.domain.model.persistence.MachineStatusUserType" column="MACHINE_STATE" access="field">
+                <meta attribute="alias">state</meta>
+                <meta attribute="description">The current machine status.</meta>
+                <meta attribute="choices" inherit="false">choice:truckStatus</meta>
+            </property>
+        </component>
+        <!-- End BaseEventProperties.xml -->
+
+        <subclass name="minestar.administration.domain.event.TmacPingEvent" discriminator-value="TmacPing">
+        	<meta attribute="description">A TMAC ping administration event</meta>
+        </subclass>
+        <subclass name="minestar.administration.domain.event.TimeSyncErrorEvent" discriminator-value="TimeSyncError">
+        	<meta attribute="description">A time sync administration event</meta>
+            <property
+                    name="delta"
+                    type="java.lang.Long"
+                    column="DELTA"
+                    >
+                <meta attribute="description">The delta associated with event.</meta>
+                <meta attribute="unitType" inherit="false">time</meta>
+            </property>
+        </subclass>
+        <subclass name="minestar.administration.domain.event.TpiLogFileReadyEvent" discriminator-value="TpiLogFileReady">
+        	<meta attribute="description">A TPI log file ready administration event</meta>
+            <property
+                    name="logConfigId"
+                    type="java.lang.Integer"
+                    column="LOG_CONFIG_ID"
+                    >
+                <meta attribute="unitType" inherit="false">unitless</meta>
+                <meta attribute="description">The log configuration ID</meta>
+            </property>
+        </subclass>
+        <subclass name="minestar.administration.domain.event.CoordinateErrorEvent" discriminator-value="CoordinateError">
+        	<meta attribute="description">A coordinate error administration event</meta>
+            <property
+                    name="messageName"
+                    type="java.lang.String"
+                    column="MESSAGE_NAME"
+                    length="254"
+                    >
+                <meta attribute="description">The message name associated with the event.</meta>
+            </property>
+        </subclass>
+        <subclass name="minestar.administration.domain.event.ClockInquiryEvent" discriminator-value="ClockInquiry">
+        	<meta attribute="description">A clock inquiry administration event</meta>
+            <property
+                    name="rtc"
+                    type="java.lang.Long"
+                    column="RTC"
+                    >
+                <meta attribute="description">The RTC associated with the event.</meta>
+            </property>
+            <property
+                    name="tzBias"
+                    type="java.lang.Integer"
+                    column="TZ_BIAS"
+                    >
+                <meta attribute="description">The tzBias associated with the event.</meta>
+            </property>
+            <property
+                    name="tzDaylightBias"
+                    type="java.lang.Integer"
+                    column="TZDAYLIGHT_BIAS"
+                    >
+                <meta attribute="description">The tzDaylightBias associated with the event.</meta>
+            </property>
+            <property
+                    name="tzDaylightDate"
+                    type="java.lang.Long"
+                    column="TZDAYLIGHT_DATE"
+                    >
+                <meta attribute="description">The tzDaylightDate associated with the event.</meta>
+            </property>
+            <property
+                    name="tzDaylightName"
+                    type="java.lang.String"
+                    column="TZDAYLIGHT_NAME"
+                    length="254"
+                    >
+                <meta attribute="description">The tzDaylightName associated with the event.</meta>
+            </property>
+            <property
+                    name="tzStandardBias"
+                    type="java.lang.Integer"
+                    column="TZSTANDARD_BIAS"
+                    >
+                <meta attribute="description">The tzStandardBias associated with the event.</meta>
+            </property>
+            <property
+                    name="tzStandardDate"
+                    type="java.lang.Long"
+                    column="TZSTANDARDDATE"
+                    >
+                <meta attribute="description">The tzStandardDate associated with the event.</meta>
+            </property>
+            <property
+                    name="tzStandardName"
+                    type="java.lang.String"
+                    column="TZSTANDARDNAME"
+                    length="254"
+                    >
+                <meta attribute="description">The tzStandardName associated with the event.</meta>
+            </property>
+        </subclass>
+        <subclass name="minestar.administration.domain.event.FileAdminEvent" discriminator-value="File" abstract="true">
+         	<meta attribute="description">A file administration event</meta>
+            <property
+                    name="faFilename"
+                    type="java.lang.String"
+                    column="FILE_NAME"
+                    length="254"
+                    >
+                <meta attribute="description">The faFilename associated with the event.</meta>
+            </property>
+            <property
+                    name="faUsage"
+                    type="java.lang.Short"
+                    column="FILE_USAGE"
+                    >
+                <meta attribute="description">The faUsage associated with the event.</meta>
+                <meta attribute="choices" inherit="false">choice:fileUsage</meta>
+            </property>
+            <property
+                    name="faVersion"
+                    type="java.lang.Integer"
+                    column="FILE_VERSION"
+                    >
+                <meta attribute="description">The faVersion associated with the event.</meta>
+            </property>
+            <property
+                    name="faType"
+                    type="java.lang.Short"
+                    column="FILE_TYPE"
+                    >
+                <meta attribute="description">The faType associated with the event.</meta>
+                <meta attribute="choices" inherit="false">choice:fileType</meta>
+            </property>
+
+            <subclass name="minestar.administration.domain.event.FileActionEvent" discriminator-value="FileAction">
+         	    <meta attribute="description">A file action administration event</meta>
+                <many-to-one
+                        name="faMachine"
+                        column="FILE_MACHINE_OID"
+                        class="minestar.pitlink.domain.machine.MachineReference"
+                        >
+                    <meta attribute="description">The faMachine associated with the event.</meta>
+                </many-to-one>
+                <property
+                        name="faAction"
+                        type="java.lang.Short"
+                        column="FILE_ACTION"
+                        >
+                    <meta attribute="description">The faAction associated with the event.</meta>
+                    <meta attribute="choices" inherit="false">choice:fileAction</meta>
+                </property>
+            </subclass>
+            <subclass name="minestar.administration.domain.event.FileStatusEvent" discriminator-value="FileStatus">
+        		<meta attribute="description">A file status administration event</meta>
+                <property
+                        name="statusMsg"
+                        type="java.lang.String"
+                        column="STATUS_MSG"
+                        length="254"
+                        >
+                    <meta attribute="description">The status message associated with the event.</meta>
+                </property>
+                <property
+                        name="fsStatus"
+                        type="java.lang.Short"
+                        column="STATUS"
+                        >
+                    <meta attribute="description">The fsStatus associated with the event.</meta>
+                    <meta attribute="choices" inherit="false">choice:fileStatus</meta>
+                </property>
+            </subclass>
+        </subclass>
+
+        <subclass name="minestar.administration.domain.event.MachineOperatorEvent" discriminator-value="MachineOperator">
+        	<meta attribute="description">A machine operator administration event</meta>
+            <property
+                    name="operation"
+                    type="java.lang.Integer"
+                    column="OPERATION"
+                    >
+                <meta attribute="description">The operation associated with this event.</meta>
+                <meta attribute="choices" inherit="false">choice:eqmtOperStatus</meta>
+            </property>
+            <property
+                name="operationDescription"
+                type="java.lang.String"
+                column="OPERATION_DESCRIPTION"
+                length="254"
+            >
+                <meta attribute="description">The operation description associated with this event.</meta>
+            </property>
+        </subclass>
+
+        <subclass name="minestar.administration.domain.event.MachineStartup2Event"
+                  discriminator-value="MachineStartup2">
+        	<meta attribute="description">A machine startup administration event</meta>
+            <property
+                    name="service"
+                    type="java.lang.Integer"
+                    column="SERVICE"
+                    >
+                <meta attribute="description">The service value associated with this event.</meta>
+            </property>
+            <property
+                    name="softwareVersion"
+                    type="java.lang.String"
+                    column="SOFTWARE_VERSION"
+                    length="254"
+                    >
+                <meta attribute="description">The software version value associated with the event.</meta>
+            </property>
+            <map name="fileInfo"
+                 lazy = "true"
+                 table="MACHINE_FILE_INFO"
+                 cascade="all-delete-orphan"
+                    >
+                <meta attribute="description">>The file info value associated with the event.</meta>
+                <meta attribute="collection-table">
+                    tablespace=MW_OBJ
+                </meta>
+                <meta attribute="collection-primary-key">
+                    tablespace=MW_IDXOBJ
+                </meta>
+                <meta attribute="index-alias">fileType</meta>
+                <key column="OID" foreign-key="none"/>
+                <index type="java.lang.Integer" column="ID"/>
+                <composite-element class="minestar.administration.domain.event.OnboardFileInfo">
+                    <property name="size" column="FILE_SIZE">
+                    	<meta attribute="description">>The file size info value associated with the event.</meta>
+                    </property>
+                    <property name="version" column="FILE_VERSION">
+                    	<meta attribute="description">>The file version info value associated with the event.</meta>
+                    </property>
+                </composite-element>
+            </map>
+
+            <many-to-one
+                    name="delayClass"
+                    column="DELAY_CLASS_OID"
+                    class="minestar.production.domain.DelayClassReference"
+                    access="field"
+                    >
+                <meta attribute="description">The delay associated with the event.</meta>
+            </many-to-one>
+            <property
+                    name="delayDuration"
+                    column="DELAY_DURATION"
+                    >
+                <meta attribute="description">The delay duration associated with the event.</meta>
+                <meta attribute="unitType">duration</meta>
+                <type name="quantity">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+        </subclass>
+
+        <subclass name="minestar.administration.domain.event.MachineStartup3Event"
+                  discriminator-value="MachineStartup3">
+            <meta attribute="description">A machine startup administration event</meta>
+        </subclass>
+
+        <subclass name="minestar.administration.domain.event.MachineShutdownEvent"
+                  discriminator-value="MachineShutdown">
+        	<meta attribute="description">A machine shutdown administration event</meta>
+            <many-to-one
+                    name="beacon"
+                    column="BEACON_OID"
+                    class="minestar.mine.domain.minemodel.WaypointReference"
+                    lazy="false"
+                    access="field"
+                    >
+                <meta attribute="description">The OID of the waypoint associated with the event.</meta>
+            </many-to-one>
+            <property
+                    name="beaconVersion"
+                    type="java.lang.Integer"
+                    column="BEACON_VERSION"
+                    >
+                <meta attribute="description">The waypoint version value associated with the event.</meta>
+                <meta attribute="alias" inherit="false">waypointVersion</meta>
+            </property>
+        </subclass>
+
+        <subclass name="minestar.administration.domain.event.SendChecklistEvent"
+                  discriminator-value="SendChecklist">
+        	<meta attribute="description">A send checklist administration event</meta>
+            <property
+                    name="fileVersion"
+                    type="java.lang.Integer"
+                    column="FILE_VERSION"
+                    >
+                <meta attribute="description">The version of the onboard checklist file.</meta>
+            </property>
+            <set
+                name="results"
+                cascade="all"
+            >
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    tablespace=MW_IDXENT
+                </meta>
+                
+                <key>
+                    <column name="EVENT_OID" />
+                </key>
+                <one-to-many class="minestar.pitlink.domain.safety.SafetyCheckResult" not-found="ignore"/>
+            </set>
+        </subclass>
+
+    </class>
+</hibernate-mapping>

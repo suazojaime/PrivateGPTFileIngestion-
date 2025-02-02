@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="age" class="minestar.geometry.wcs.AgeCoverage" lazy-init="true">
+        <property name="surface" ref="surface"/>
+    </bean>
+
+    <bean id="elevation" class="minestar.geometry.wcs.ElevationCoverage" lazy-init="true">
+        <property name="surface" ref="surface"/>
+    </bean>
+
+    <bean id="tin" class="minestar.geometry.wcs.TinCoverage" lazy-init="true">
+        <property name="surface" ref="topologyServiceImpl"/>
+    </bean>
+
+    <bean id="coverageServiceImpl" class="minestar.geometry.wcs.CoverageServiceImpl" lazy-init="true"/>
+
+    <bean id="registerCoverageServiceImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Coverage Service"/>
+        <constructor-arg value="minestar.geometry.wcs.CoverageService"/>
+        <constructor-arg ref="coverageServiceImpl"/>
+    </bean>
+
+    <bean id="dxfRasterizerImpl" class="minestar.geometry.surface.DxfRasterizerImpl" lazy-init="true"/>
+
+    <bean id="registerDxfRasterizerImplImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Dxf Rasterizer"/>
+        <constructor-arg value="minestar.geometry.surface.DxfRasterizer"/>
+        <constructor-arg ref="dxfRasterizerImpl"/>
+    </bean>
+
+</beans>

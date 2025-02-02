@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+                   objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+
+    <changeSet id="214a1f3b-2742-4806-ae1c-0470b1be41e6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored Add column hazard_type_id to table gis_hazards as table does not exist or column exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_hazards"/>
+            <not>
+                <columnExists tableName="gis_hazards" columnName="hazard_type_id"/>
+            </not>
+        </preConditions>
+        <comment>FLT-9813: Add column hazard_type_id to gis_hazards</comment>
+        <addColumn tableName="gis_hazards">
+            <column name="hazard_type_id" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

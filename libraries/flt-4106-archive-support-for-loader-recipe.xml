@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="0c47dbfe-a97e-4890-8a05-b67ff3ac722d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_ACTIVE to table LOADER_RECIPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOADER_RECIPE"/>
+            <not>
+                <columnExists tableName="LOADER_RECIPE" columnName="IS_ACTIVE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4106: AddColumn for IS_ACTIVE to table LOADER_RECIPE</comment>
+        <addColumn tableName="LOADER_RECIPE">
+            <column name="IS_ACTIVE" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

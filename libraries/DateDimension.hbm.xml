@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="summary">
+
+    <!-- The following are modified at runtime:
+        class@name (generated bean name overwrites)
+        class@table (dimension name appended)
+    -->
+    <class
+        name="minestar.production.domain.Dimension"
+        table=""
+        lazy="false"
+        schema="summary"
+        >
+        <meta attribute="noMetadata" inherit="false">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=xxx
+            columns=yyy
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <id
+            name="OID"
+            type="java.lang.Long"
+            column="OID"
+            >
+            <generator
+                class="com.mincom.env.base.persistence.IDGenerator" />
+        </id>
+
+        <property
+            name="sourceEntityOID"
+            type="java.lang.Long"
+            column="SOURCE_ENTITY"
+            not-null="true"/>
+
+        <property
+            name="updated"
+            type="TimestampType"
+            column="UPDATED_UTC"
+            >
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The updated utc timestamp</meta>
+            <meta attribute="description">The updated timestamp</meta>
+        </property>
+
+        <property
+            name="shiftStartTime"
+            type="TimestampType"
+            >
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="index-alias">SHIFTSTARTTIME_UTC</meta>
+            <meta attribute="utc-description">The start utc time of the shift.</meta>
+            <meta attribute="description">The start time of the shift</meta>
+            <column name="SHIFTSTARTTIME_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+        
+        <property
+            name="shiftEndTime"
+            type="TimestampType"
+            >
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="index-alias">SHIFTENDTIME_UTC</meta>
+            <meta attribute="utc-description">The end utc time of the shift.</meta>
+            <meta attribute="description">The end time of the shift</meta>
+            <column name="SHIFTENDTIME_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+
+     
+
+        <!-- Dynamic <property>s filled in at runtime -->
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="summary">
+
+    <!-- The table name below will be prepended with the tablePrefix from the kpisummaries XML configuration -->
+    <class name="minestar.production.persistence.kpisummaries.RealtimeKpiMetadataPersistenceBean"
+           table="REALTIMEKPI_METADATA"
+           schema="summary">
+
+        <meta attribute="noMetadata" inherit="false">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <id name="name" column="NAME" type="string" length="80">
+            <generator class="assigned" />
+        </id>
+
+        <property name="numDimensions" column="NUMDIMENSIONS" type="integer" not-null="true"/>
+
+        <property name="dimensionName1" column="DIMENSIONNAME1" type="string" length="80" />
+        <property name="dimensionName2" column="DIMENSIONNAME2" type="string" length="80" />
+        <property name="dimensionName3" column="DIMENSIONNAME3" type="string" length="80" />
+        <property name="dimensionName4" column="DIMENSIONNAME4" type="string" length="80" />
+        <property name="dimensionName5" column="DIMENSIONNAME5" type="string" length="80" />
+    </class>
+</hibernate-mapping>

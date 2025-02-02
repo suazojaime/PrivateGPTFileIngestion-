@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="5f646acb-e187-4108-9483-ce85094b19e8" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_CLASS_MEASURE_TIME as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_CLASS_MEASURE_TIME"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: CreateTable MACHINE_CLASS_MEASURE_TIME</comment>
+        <createTable tablespace="MW_ENT" remarks="The measure time at a scale for a specific machine class" tableName="MACHINE_CLASS_MEASURE_TIME">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MEASURE_TIME" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,MACHINE_CLASS_OID" constraintName="MACHINE_CLASS_MEASURE_TIME_PK" tablespace="MW_IDXENT" tableName="MACHINE_CLASS_MEASURE_TIME"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="MACHINE_CLASS_MEASURE_TIME_12U" tableName="MACHINE_CLASS_MEASURE_TIME">
+            <column name="OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="7438b453-a327-4fa1-b327-4907d59a53f3" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored CreateTable for SCALE_MEASURABLE_CLASS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SCALE_MEASURABLE_CLASS"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: CreateTable SCALE_MEASURABLE_CLASS</comment>
+        <createTable tablespace="MW_ENT" remarks="The machine classes which can be measured at the scale" tableName="SCALE_MEASURABLE_CLASS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,MACHINE_CLASS_OID" constraintName="SCALE_MEASURABLE_CLASS_PK" tablespace="MW_IDXENT" tableName="SCALE_MEASURABLE_CLASS"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="aa0642ff-2f4a-4446-8fbc-47245f3221e7" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_CLASS_MEASURE_TIME_FK1 to table MACHINE_CLASS_MEASURE_TIME as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_CLASS_MEASURE_TIME"/>
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_CLASS_MEASURE_TIME" foreignKeyName="MACHINE_CLASS_MEASURE_TIME_FK1"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddForeignKeyConstraint MACHINE_CLASS_MEASURE_TIME_FK1 to MACHINE_CLASS_MEASURE_TIME (OID)</comment>
+        <sql>DELETE FROM MACHINE_CLASS_MEASURE_TIME WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = MACHINE_CLASS_MEASURE_TIME.OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_CLASS_MEASURE_TIME" baseColumnNames="OID" constraintName="MACHINE_CLASS_MEASURE_TIME_FK1" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_CLASS_MEASURE_TIME" constraintName="MACHINE_CLASS_MEASURE_TIME_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="bd1f2f32-216d-43e2-9ed1-341fd252b939" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_CLASS_MEASURE_TIME_FK2 to table MACHINE_CLASS_MEASURE_TIME as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_CLASS_MEASURE_TIME"/>
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_CLASS_MEASURE_TIME" foreignKeyName="MACHINE_CLASS_MEASURE_TIME_FK2"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddForeignKeyConstraint MACHINE_CLASS_MEASURE_TIME_FK2 to MACHINE_CLASS_MEASURE_TIME (MACHINE_CLASS_OID)</comment>
+        <sql>DELETE FROM MACHINE_CLASS_MEASURE_TIME WHERE MACHINE_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = MACHINE_CLASS_MEASURE_TIME.MACHINE_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_CLASS_MEASURE_TIME" baseColumnNames="MACHINE_CLASS_OID" constraintName="MACHINE_CLASS_MEASURE_TIME_FK2" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_CLASS_MEASURE_TIME" constraintName="MACHINE_CLASS_MEASURE_TIME_FK2"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="34d12594-642f-47e9-8beb-0e9240cc6866" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SCALE_MEASURABLE_CLASS_OID_FK to table SCALE_MEASURABLE_CLASS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SCALE_MEASURABLE_CLASS"/>
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SCALE_MEASURABLE_CLASS" foreignKeyName="SCALE_MEASURABLE_CLASS_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddForeignKeyConstraint SCALE_MEASURABLE_CLASS_OID_FK to SCALE_MEASURABLE_CLASS (OID)</comment>
+        <sql>DELETE FROM SCALE_MEASURABLE_CLASS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = SCALE_MEASURABLE_CLASS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="SCALE_MEASURABLE_CLASS" baseColumnNames="OID" constraintName="SCALE_MEASURABLE_CLASS_OID_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SCALE_MEASURABLE_CLASS" constraintName="SCALE_MEASURABLE_CLASS_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="349a3220-a6c4-46bf-abb8-1b9bb10fd2a7" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SCALE_MEASURABLE_CLASS_MACH_FK to table SCALE_MEASURABLE_CLASS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SCALE_MEASURABLE_CLASS"/>
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SCALE_MEASURABLE_CLASS" foreignKeyName="SCALE_MEASURABLE_CLASS_MACH_FK"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddForeignKeyConstraint SCALE_MEASURABLE_CLASS_MACH_FK to SCALE_MEASURABLE_CLASS (MACHINE_CLASS_OID)</comment>
+        <sql>DELETE FROM SCALE_MEASURABLE_CLASS WHERE MACHINE_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = SCALE_MEASURABLE_CLASS.MACHINE_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SCALE_MEASURABLE_CLASS" baseColumnNames="MACHINE_CLASS_OID" constraintName="SCALE_MEASURABLE_CLASS_MACH_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SCALE_MEASURABLE_CLASS" constraintName="SCALE_MEASURABLE_CLASS_MACH_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

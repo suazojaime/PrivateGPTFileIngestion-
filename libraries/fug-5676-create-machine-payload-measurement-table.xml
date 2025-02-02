@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="2a4f8377-de73-45f9-a688-131792cded74" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_PAYLOAD_MEASUREMENT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_PAYLOAD_MEASUREMENT"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5676: CreateTable MACHINE_PAYLOAD_MEASUREMENT</comment>
+        <createTable tablespace="MW_ENT" remarks="A payload measurement." tableName="MACHINE_PAYLOAD_MEASUREMENT">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CYCLE_OID" type="BIGINT"/>
+            <column name="SOURCE_SYSTEM" type="TINYINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VALUE" type="DOUBLE" remarks="The payload measurement"/>
+            <column name="CONFIDENCE" type="DOUBLE" remarks="The payload confidence"/>
+            <column name="TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="MACHINE_PAYLOAD_MEASUREMENT_PK" tablespace="MW_IDXENT" tableName="MACHINE_PAYLOAD_MEASUREMENT"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="MACHINE_PAYLOAD_MEASUREMENT" indexName="MACHINE_PAYLOAD_MEASUREMENT_I1">
+            <column name="CYCLE_OID"/>
+        </createIndex>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="MACHINE_PAYLOAD_MEASUREMENT" indexName="MACHINE_PAYLOAD_MEASUREMENT_I2">
+            <column name="MACHINE_OID"/>
+            <column name="SOURCE_SYSTEM"/>
+            <column name="TIMESTAMP_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="7d1eb56f-beb2-45a7-a760-c91d4b753e85" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_PAYLOAD_MEASUREMEN_FK1 to table MACHINE_PAYLOAD_MEASUREMENT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_PAYLOAD_MEASUREMENT" columnName="CYCLE_OID"/>
+            <columnExists tableName="CYCLE" columnName="CYCLE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_PAYLOAD_MEASUREMENT" foreignKeyName="MACHINE_PAYLOAD_MEASUREMEN_FK1"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5676: AddForeignKeyConstraint MACHINE_PAYLOAD_MEASUREMEN_FK1 to MACHINE_PAYLOAD_MEASUREMENT (CYCLE_OID)</comment>
+        <sql>UPDATE MACHINE_PAYLOAD_MEASUREMENT SET CYCLE_OID = NULL WHERE CYCLE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM CYCLE WHERE CYCLE.CYCLE_OID = MACHINE_PAYLOAD_MEASUREMENT.CYCLE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_PAYLOAD_MEASUREMENT" baseColumnNames="CYCLE_OID" constraintName="MACHINE_PAYLOAD_MEASUREMEN_FK1" referencedTableName="CYCLE" referencedColumnNames="CYCLE_OID" onDelete="SET NULL"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_PAYLOAD_MEASUREMENT" constraintName="MACHINE_PAYLOAD_MEASUREMEN_FK1"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

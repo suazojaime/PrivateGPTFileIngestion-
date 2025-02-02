@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a9e9abd8-ca26-4514-a1f0-e5899fe382e5" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for ORE_PASS_ROCK_BREAKER_FK of table ORE_PASS as foreignKey does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_ROCK_BREAKER_FK"/>
+        </preConditions>
+        <comment>FUG-1663: DropForeignKeyConstraint ORE_PASS_ROCK_BREAKER_FK from ORE_PASS (ROCK_BREAKER)</comment>
+        <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_ROCK_BREAKER_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="ORE_PASS" baseColumnNames="ROCK_BREAKER" constraintName="ORE_PASS_ROCK_BREAKER_FK" referencedTableName="UG_ROCK_BREAKER" referencedColumnNames="ROCK_BREAKER_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="86d5b23d-1c88-4bde-bbe0-8907ab09d9d1" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ROCK_BREAKER of table ORE_PASS as column does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <columnExists tableName="ORE_PASS" columnName="ROCK_BREAKER"/>
+        </preConditions>
+        <comment>FUG-1663: DropColumn ORE_PASS.ROCK_BREAKER</comment>
+        <dropColumn columnName="ROCK_BREAKER" tableName="ORE_PASS"/>
+        <rollback>
+            <addColumn tableName="ORE_PASS">
+                <column name="ROCK_BREAKER" type="BIGINT" remarks="A reference to the rock breaker (MSMODEL.MACHINE) that is located at this ore pass."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="fc2faadc-37b6-46fa-8d66-33aeb3c918b8" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ORE_PASS to table UG_ROCK_BREAKER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="UG_ROCK_BREAKER"/>
+            <not>
+                <columnExists tableName="UG_ROCK_BREAKER" columnName="ORE_PASS"/>
+            </not>
+        </preConditions>
+        <comment>FUG-1663: AddColumn UG_ROCK_BREAKER.ORE_PASS</comment>
+        <addColumn tableName="UG_ROCK_BREAKER">
+            <column name="ORE_PASS" type="BIGINT" remarks="A reference to the ore pass (MSMODEL.ORE_PASS) that the rock breaker is currently attached to."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="UG_ROCK_BREAKER" columnName="ORE_PASS"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="42660053-3060-40eb-987a-30d9d82b2556" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for UG_ROCK_BREAKER_ORE_PASS_FK to table UG_ROCK_BREAKER as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="UG_ROCK_BREAKER"/>
+            <tableExists tableName="ORE_PASS"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="UG_ROCK_BREAKER" foreignKeyName="UG_ROCK_BREAKER_ORE_PASS_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-1663: AddForeignKeyConstraint UG_ROCK_BREAKER_ORE_PASS_FK to UG_ROCK_BREAKER (ORE_PASS)</comment>
+        <sql>UPDATE UG_ROCK_BREAKER SET ORE_PASS = NULL WHERE ORE_PASS IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM ORE_PASS WHERE ORE_PASS.OREPASS_OID = UG_ROCK_BREAKER.ORE_PASS)</sql>
+        <addForeignKeyConstraint baseTableName="UG_ROCK_BREAKER" baseColumnNames="ORE_PASS" constraintName="UG_ROCK_BREAKER_ORE_PASS_FK" referencedTableName="ORE_PASS" referencedColumnNames="OREPASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="UG_ROCK_BREAKER" constraintName="UG_ROCK_BREAKER_ORE_PASS_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

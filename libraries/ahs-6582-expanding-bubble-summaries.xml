@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="5085d6ba-f834-4789-a601-218eb0b1fe30" 
+               author="MineStar" 
+               context="Machine_Tracking/Machine_Tracking_Management" 
+               failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for EXPANDING_BUBBLE_SUMMARY as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="EXPANDING_BUBBLE_SUMMARY"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6582: CreateTable EXPANDING_BUBBLE_SUMMARY</comment>
+        <createTable tablespace="MW_ENT" remarks="A summary record of an expanding bubble event." tableName="EXPANDING_BUBBLE_SUMMARY">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE" type="BIGINT" remarks="A reference to the machine (MSMODEL.MACHINE).">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIVE_REASON" type="VARCHAR(255)" remarks="The reason why the bubble occurred.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIVE_TIME" type="DATETIME2" remarks="The time the event became active.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INACTIVE_REASON" type="VARCHAR(255)" remarks="The reason why the bubble stopped.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INACTIVE_TIME" type="DATETIME2" remarks="The time the event became inactive.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CATEGORY" type="VARCHAR(255)" remarks="True category of the bubble.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="HEADING" type="DOUBLE" remarks="The heading at the time of the last good position."/>
+            <column name="LAST_POSITION_REPORT_DATE_UTC" type="DATETIME2" remarks="The time when the position report was last updated."/>
+            <column name="X" type="DOUBLE" remarks="The last known location of the machine."/>
+            <column name="Y" type="DOUBLE" remarks="The last known location of the machine."/>
+            <column name="Z" type="DOUBLE" remarks="The last known location of the machine."/>
+            <column name="POSITION_ACCURACY" type="DOUBLE" remarks="The reported accuracy of the position."/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="EXPANDING_BUBBLE_SUMMARY_PK" tablespace="MW_IDXENT" tableName="EXPANDING_BUBBLE_SUMMARY"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="EXPANDING_BUBBLE_SUMM_IDX1" tableName="EXPANDING_BUBBLE_SUMMARY">
+            <column name="MACHINE"/>
+            <column name="ACTIVE_TIME"/>
+            <column name="INACTIVE_TIME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="f2486146-5309-4301-9b79-1bbb2f884acb"
+               author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MACHINE_NAME to table EXPANDING_BUBBLE_SUMMARY as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="EXPANDING_BUBBLE_SUMMARY"/>
+            <not>
+                <columnExists tableName="EXPANDING_BUBBLE_SUMMARY" columnName="MACHINE_NAME"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6582 : AddColumn EXPANDING_BUBBLE_SUMMARY.MACHINE_NAME</comment>
+        <addColumn tableName="EXPANDING_BUBBLE_SUMMARY">
+            <column name="MACHINE_NAME" type="VARCHAR(255)" remarks="The name of the machine reporting the expanding bubble event.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn columnName="MACHINE_NAME" tableName="EXPANDING_BUBBLE_SUMMARY"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

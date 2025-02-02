@@ -1,0 +1,324 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.LaneImpl"
+           table="LANE"
+           dynamic-update="true"
+           proxy="minestar.mine.domain.minemodel.Lane">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=LANE_1
+            unique=true
+            columns=ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A mine model lane.</meta>
+
+        <cache usage="read-write" region="model-versioned"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="LANE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <version name="version" access="field">
+              <meta attribute="description">The version number for optimistic locking</meta>
+        </version>
+
+        <property
+                name="id"
+                type="java.lang.Long"
+                column="ID"
+                not-null="true"
+                >
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="description">An automatically generated unique ID value for this lane.</meta>
+        </property>
+
+        <property
+                name="revision"
+                type="java.lang.Long"
+                column="REVISION"
+                not-null="true"
+                >
+            <meta attribute="description">The lane revision for use with synchronizing onboard files</meta>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  type="long">
+            <meta attribute="description">The mine model update version when the lane was created/modified.</meta>
+            <column name="MODEL_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property name="layerUpdateVersion"
+                  type="long">
+            <meta attribute="description">The layer update version when the lane was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property
+                name="active"
+                type="boolean"
+                column="IS_ACTIVE"
+                not-null="true"
+                >
+                <meta attribute="defaultValue">true</meta>
+                <meta attribute="description">Is this lane active</meta>
+        </property>
+
+        <property name="editable"
+                  type="boolean">
+            <meta attribute="description">Is this lane editable?</meta>
+            <column name="EDITABLE" not-null="true" default="1"/>
+        </property>
+
+        <property name="type"
+                  type="minestar.domain.model.persistence.LaneTypeUserType"
+                  column="TYPE"
+                  not-null="true">
+            <meta attribute="defaultValue">'HAULAGE'</meta>
+            <meta attribute="description">The type of this lane.</meta>
+        </property>
+
+        <property name="autonomous"
+                  type="boolean">
+            <meta attribute="description">Lane used for autonomous traffic.</meta>
+            <column name="AUTONOMOUS" not-null="true" default="1"/>
+        </property>
+
+        <property name="manned"
+                  type="boolean">
+            <meta attribute="description">Lane used for manned traffic.</meta>
+            <column name="MANNED" not-null="true" default="0"/>
+        </property>
+
+        <property name="hasEverBeenManned"
+                  type="boolean">
+            <meta attribute="description">Lane was once used for manned traffic.</meta>
+            <column name="HAS_EVER_BEEN_MANNED" not-null="true" default="0"/>
+        </property>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="NAME"
+                  not-null="false">
+            <meta attribute="description">A user supplied identifier for this lane.</meta>
+        </property>
+
+        <property name="speedLimit" column="SPEED_LIMIT">
+            <meta attribute="description">The speed limit for any machine that travels on this lane
+            </meta>
+            <meta attribute="unitType">speed</meta>
+            <type name="quantity">
+                <param name="unitType">speed</param>
+            </type>
+        </property>
+
+        <property name="useForwardGear"
+                  type="boolean"
+                  column="DEFAULT_TRAVEL_FORWARD"
+                  not-null="true" >
+                <meta attribute="defaultValue">true</meta>
+                <meta attribute="description">Should a machine traversing this lane be in a forward gear (as opposed to reverse gear)?</meta>
+        </property>
+
+        <property name="useLeftTurnSignal"
+                  type="boolean"
+                  column="USE_LEFT_TURN_SIGNAL"
+                  not-null="true">
+                <meta attribute="defaultValue">false</meta>
+                <meta attribute="description">Should a machine use turn signals when traversing lane</meta>
+        </property>
+
+        <property name="useRightTurnSignal"
+                  type="boolean"
+                  column="USE_RIGHT_TURN_SIGNAL"
+                  not-null="true">
+                <meta attribute="defaultValue">false</meta>
+                <meta attribute="description">Should a machine use turn signals when traversing lane</meta>
+        </property>
+
+        <property name="stagingPoint" type="StagingPoint">
+            <meta attribute="description">The staging point for this lane.</meta>
+            <column name="ENTRY_X"/>
+            <column name="ENTRY_Y"/>
+            <column name="ENTRY_Z"/>
+            <column name="ENTRY_HEADING"/>
+            <column name="ENTRY_POSITION_TOL"/>
+            <column name="ENTRY_HEADING_TOL"/>
+            <column name="ENTRY_REF_POINT"/>
+            <column name="ENTRY_ENTER_FWD"/>
+            <column name="ENTRY_EXIT_FWD"/>
+            <column name="ENTRY_EDITABLE"/>
+            <column name="ENTRY_CUSP_PREFERENCE" />
+        </property>
+
+        <property name="overhangLaneStart"
+                  type="boolean"
+                  column="OVERHANG_LANE_START"
+                  not-null="true">
+                <meta attribute="defaultValue">false</meta>
+                <meta attribute="description">Is the machine's body allowed to overhang the start of this lane?</meta>
+        </property>
+
+        <property name="overhangLaneEnd"
+                  type="boolean"
+                  column="OVERHANG_LANE_END"
+                  not-null="true">
+                <meta attribute="defaultValue">false</meta>
+                <meta attribute="description">Is the machine's body allowed to overhang the end of this lane?</meta>
+        </property>
+
+        <property name="uncertainSurfaceLaneStart"
+                  type="boolean"
+                  column="UNCERTAIN_SURFACE_LANE_START"
+                  not-null="true">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">Does this lane start with uncertain z values?</meta>
+        </property>
+
+        <property name="uncertainSurfaceLaneEnd"
+                  type="boolean"
+                  column="UNCERTAIN_SURFACE_LANE_END"
+                  not-null="true">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">Does this lane end with uncertain z values?</meta>
+        </property>
+
+        <property name="dynamicallyManaged"
+                  type="boolean"
+                  column="DYNAMIC_GEN"
+                  not-null="true">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">Is this lane managed dynamically?</meta>
+        </property>
+
+        <property name="useMaxCurvature"
+                  type="boolean"
+                  column="USE_MAX_CURVATURE"
+                  not-null="true">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">The lanes can be traversed using a maximum curvature turn</meta>
+        </property>
+
+        <property name="createdDate"
+                  type="TimestampType"
+                  column="CREATED_DATE_UTC">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The lane creation utc timestamp.</meta>
+            <meta attribute="description">The lane creation timestamp</meta>
+        </property>
+
+        <property name="lastUpdatedDate"
+                  type="TimestampType"
+                  column="LAST_UPDATED_DATE_UTC">
+        <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The lane updated utc timestamp.</meta>
+            <meta attribute="description">The lane updated timestamp</meta>
+        </property>
+
+        <list name="leftEdgePoints" table="LANE_LEFT_POINT" fetch="select" batch-size="100">
+           <meta attribute="collection-table">
+               tablespace=MW_ENT
+           </meta>
+           <meta attribute="collection-primary-key">
+               tablespace=MW_IDXENT
+           </meta>
+           <meta attribute="description">List of lane points</meta>
+
+           <key column="LANE_OID" not-null="true"/>
+           <list-index column="POINT_NR"/>
+           <element type="minestar.platform.persistence.HibernateXYZCoordinateType" not-null="true">
+               <column name="X" not-null="true"/>
+               <column name="Y" not-null="true"/>
+               <column name="Z" not-null="true"/>
+           </element>
+        </list>
+
+        <list name="rightEdgePoints" table="LANE_RIGHT_POINT" fetch="select" batch-size="100">
+           <meta attribute="collection-table">
+               tablespace=MW_ENT
+           </meta>
+           <meta attribute="collection-primary-key">
+               tablespace=MW_IDXENT
+           </meta>
+           <meta attribute="description">List of lane points</meta>
+
+           <key column="LANE_OID" not-null="true"/>
+           <list-index column="POINT_NR"/>
+           <element type="minestar.platform.persistence.HibernateXYZCoordinateType" not-null="true">
+               <column name="X" not-null="true"/>
+               <column name="Y" not-null="true"/>
+               <column name="Z" not-null="true"/>
+           </element>
+        </list>
+
+        <list name="preferredPathPoints" table="LANE_PATH_POINT" fetch="select" batch-size="100">
+           <meta attribute="collection-table">
+               tablespace=MW_ENT
+           </meta>
+           <meta attribute="collection-primary-key">
+               tablespace=MW_IDXENT
+           </meta>
+           <meta attribute="description">List of lane points</meta>
+
+           <key column="LANE_OID" not-null="true"/>
+           <list-index column="POINT_NR"/>
+           <element type="minestar.platform.persistence.HibernateXYZCoordinateType" not-null="true">
+               <column name="X" not-null="true"/>
+               <column name="Y" not-null="true"/>
+               <column name="Z" not-null="true"/>
+           </element>
+       </list>
+
+        <list name="includedMachineTypes" table="LANE_MACHINE_CLASS_IN" lazy="false" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">Machine classes included in the lane.</meta>
+            <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+            <key column="LANE_OID" not-null="true"/>
+            <list-index column="SORT_ORDER"/>
+            <many-to-many column="MACHINECLASS_OID" class="minestar.pitlink.domain.machine.MachineClassReference" lazy="false"/>
+        </list>
+
+    </class>
+
+    <!-- ****************************************************************************** -->
+    <!-- LaneReference -->
+    <!-- ****************************************************************************** -->
+    <class name="minestar.mine.domain.minemodel.LaneReference"
+           table="LANE"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">LANE_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a lane</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="LANE_OID"/>
+        <property name="id" type="long" column="ID" not-null="true"/>
+        <property name="name" type="string" column="NAME"/>
+    </class>
+
+</hibernate-mapping>
+
+

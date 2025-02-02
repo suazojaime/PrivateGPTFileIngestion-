@@ -1,0 +1,2964 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<onboardConfigurations
+        xmlns="http://www.minestar.cat.com/xsd/onboardconfig"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.minestar.cat.com/xsd/onboardconfig http://www.minestar.cat.com/xsd/onboardconfig.xsd">
+
+    <!-- ================================================================= -->
+    <!-- Articulated Truck -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>ArticulatedTruck</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>GPS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>TPMS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>VIMS</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>GPS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>TPMS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>VIMS</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Autonomous</name>
+            <license>Command</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Command</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>WFSC</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>WFSC</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Cable Shovel -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>CableShovel</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Compactor -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>Compactor</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>None</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>None</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Dragline -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>Dragline</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Dragline</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Dragline</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Drill -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>Drill</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Drilling</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Drilling</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Fuel Truck -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>FuelTruck</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Fuel and Lube</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Fuel and Lube</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Tablet</name>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Grader -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>Grader</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Motor Grader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Motor Grader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Haul Truck -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>HaulTruck</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>GPS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>TPMS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>VIMS</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>GPS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>TPMS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>VIMS</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Autonomous</name>
+            <license>Command</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Command</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>WFSC</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>WFSC</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Hydraulic Shovel -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>HydraulicShovel</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Infrastructure -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>Infrastructure</machineCategoryName>
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Light Vehicle -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>LightVehicle</machineCategoryName>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Light Vehicle</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Light Vehicle</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Tablet</name>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>V2XBeacon</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>WFSC</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>WFSC</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+      </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Other No Heading -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>OtherNoHeading</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>GPS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>TPMS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>VIMS</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>GPS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>TPMS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>VIMS</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Other With Heading -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>OtherWithHeading</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>GPS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>TPMS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>VIMS</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>GPS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>TPMS</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>VIMS</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Autonomous</name>
+            <license>Command</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Command</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Scraper -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>Scraper</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Scraper</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Scraper</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Soil Compactor -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>SoilCompactor</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>None</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>None</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Surface Miner -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>SurfaceMiner</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>None</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>None</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Terrain Leveler -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>TerrainLeveler</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Scraper</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Scraper</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Track Dozer -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>TrackDozer</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Track Excavator -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>TrackExcavator</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Track Loader -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>TrackLoader</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Tractor -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>Tractor</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Underground LHD -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>UndergroundLhd</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Underground</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>UndergroundLhd</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Underground Truck -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>UndergroundTruck</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Underground</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>UndergroundTruck</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Water Truck -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>WaterTruck</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Water Truck</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Water Truck</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Autonomous</name>
+            <license>WaterTruck</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Command for Watering</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Wheel Dozer -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>WheelDozer</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Command</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Wheel Dozer</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Command</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Wheel Dozer</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Wheel Excavator -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>WheelExcavator</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Wheel Loader -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>WheelLoader</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Wheel Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Wheel Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+  
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Inpit Crusher -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>InpitCrusher</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+
+    </onboardConfiguration>
+
+    <!-- ================================================================= -->
+    <!-- Rope Shovel with 3D position reporting -->
+    <!-- ================================================================= -->
+
+    <onboardConfiguration>
+        <machineCategoryName>RopeShovel</machineCategoryName>
+
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on CMPD 3</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Prod Loader</name>
+            </customConfiguration>
+            <customConfiguration>
+                <name>Misc Loader</name>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Detect</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Detect on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Detect</name>
+                <onboardPlatform>Detect on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Fleet on G407</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G610</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>Navigator</name>
+            <license>Command</license>
+            <license>Detect</license>
+            <license>Fleet</license>
+            <license>Health</license>
+            <license>Terrain</license>
+            <camerasSelectable>false</camerasSelectable>
+            <radarSelectable>false</radarSelectable>
+            <proximityAwarenessSelectable>false</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Terrain for Grading and Loading 4.1</defaultOnboardPlatform>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>CMPD</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+        <operatorInterfaceConfiguration>
+            <name>G407</name>
+            <license>Command</license>
+            <camerasSelectable>true</camerasSelectable>
+            <radarSelectable>true</radarSelectable>
+            <proximityAwarenessSelectable>true</proximityAwarenessSelectable>
+            <defaultOnboardPlatform>Auxiliary Panel for Light Vehicles on G407</defaultOnboardPlatform>
+            <customConfiguration>
+                <name>Aux Panel</name>
+                <onboardPlatform>Auxiliary Panel for Light Vehicles on G407</onboardPlatform>
+            </customConfiguration>
+        </operatorInterfaceConfiguration>
+
+    </onboardConfiguration>
+
+
+
+</onboardConfigurations>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="ffa51dff-7a7a-405a-b5b7-e78e6e4cff3c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for MACHINE_DIMENSION_DIMENSION_FK of table MACHINE_DIMENSION as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="MACHINE_DIMENSION" foreignKeyName="MACHINE_DIMENSION_DIMENSION_FK"/>
+        </preConditions>
+        <comment>AHS-7789: DropForeignKeyConstraint MACHINE_DIMENSION_DIMENSION_FK from MACHINE_DIMENSION (DIMENSION_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="MACHINE_DIMENSION" constraintName="MACHINE_DIMENSION_DIMENSION_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="MACHINE_DIMENSION" baseColumnNames="DIMENSION_OID" constraintName="MACHINE_DIMENSION_DIMENSION_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="0a44a822-a49d-4688-b935-ab318e893ec1" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_DIMENSION_DIMENSION_FK to table MACHINE_DIMENSION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_DIMENSION" columnName="DIMENSION_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_DIMENSION" foreignKeyName="MACHINE_DIMENSION_DIMENSION_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7789: AddForeignKeyConstraint MACHINE_DIMENSION_DIMENSION_FK to MACHINE_DIMENSION (DIMENSION_OID)</comment>
+        <sql>DELETE FROM MACHINE_DIMENSION WHERE DIMENSION_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = MACHINE_DIMENSION.DIMENSION_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_DIMENSION" baseColumnNames="DIMENSION_OID" constraintName="MACHINE_DIMENSION_DIMENSION_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_DIMENSION" constraintName="MACHINE_DIMENSION_DIMENSION_FK"/>
+        </rollback>
+    </changeSet>
+    
+</databaseChangeLog>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Unsecured RMI services used by Terrain -->
+
+    <!-- Create a separate RMI registry on a different port than the standard MineStar Bus, using the default RMISocketFactory -->
+    <bean id="terrainRmiRegistry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean">
+        <property name="port" value="${MINESTAR_TERRAIN_RMI_PORT}"/>
+        <property name="alwaysCreate" value="true"/>
+    </bean>
+
+    <bean id="terrainRmiServiceExporter" class="org.springframework.remoting.rmi.RmiServiceExporter" abstract="true">
+        <property name="registry" ref="terrainRmiRegistry"/>
+    </bean>
+
+    <!-- UserService -->
+    <bean id="userServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="userServiceImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="terrainRmiServiceExporter">
+        <property name="serviceName" value="/ServiceProvider/UserService/User_Service"/>
+        <property name="service" ref="userServiceProxy"/>
+        <property name="serviceInterface" value="minestar.platform.service.user.UserService"/>
+    </bean>
+
+    <!-- SettingsService -->
+    <bean parent="terrainRmiServiceExporter">
+        <property name="serviceName" value="settingsServiceImpl"/>
+        <property name="service" ref="settingsServiceProxy"/>
+        <property name="serviceInterface" value="minestar.platform.service.settings.SettingsService"/>
+    </bean>
+
+    <!-- SharedLayerUCC -->
+    <bean parent="terrainRmiServiceExporter">
+        <property name="serviceName" value="sharedLayerUCC"/>
+        <property name="service" ref="sharedLayerUCCProxy"/>
+        <property name="serviceInterface" value="minestar.mine.uifacade.layer.SharedLayerUCCFacade"/>
+    </bean>
+
+</beans>

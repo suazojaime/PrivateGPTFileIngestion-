@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.autonomy.service.lane.travel.time.LaneTravelInfo"
+           table="LANE_TRAVEL_DATA"
+           dynamic-update="true">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">Information about travel along a lane.</meta>
+        <cache usage="read-write" region="model"/>
+
+        <id name="laneOID" type="long" column="LANE_OID">
+            <meta attribute="description">The lane that this travel information is about.</meta>
+            <generator class="assigned"/>
+        </id>
+
+        <property name="flatLength" column="FLAT_LENGTH" not-null="false">
+            <meta attribute="description">Length of lane when projected into 2d view.</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property name="length" column="LENGTH" not-null="false">
+            <meta attribute="description">Length of lane.</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property name="totalRise" column="TOTAL_RISE" not-null="false">
+            <meta attribute="description">Total of all rises along lane, excluding any fall.</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property name="totalFall" column="TOTAL_FALL" not-null="false">
+            <meta attribute="description">Total of all falls along lane, excluding any rises.</meta>
+            <type name="quantity">
+                <param name="unitType">depth</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <map name="machineClassTravelInfo" table="CLASS_LANE_TRAVEL_DATA" cascade="all-delete-orphan" lazy="false">
+            <meta attribute="description">Information about a machine class travel along a lane.</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+                columns=LANE_OID,MACHINE_CLASS_OID
+            </meta>
+            <meta attribute="element-alias"/>
+
+            <key column="LANE_OID" not-null="true"/>
+            <map-key column="MACHINE_CLASS_OID" type="long"/>
+            <composite-element class="minestar.autonomy.service.lane.travel.time.MachineClassTravelInfo">
+                <property name="machineClassOID" type="long" formula="MACHINE_CLASS_OID" not-null="true">
+                    <meta attribute="description">The machine class this specific travel information is about.</meta>
+                </property>
+
+                <property name="allowLoaded" type="boolean" column="ALLOW_LOADED" not-null="true">
+                    <meta attribute="defaultValue">false</meta>
+                    <meta attribute="description">Is this machine class allowed to traverse the lane loaded.</meta>
+                </property>
+
+                <property name="allowEmpty" type="boolean" column="ALLOW_EMPTY" not-null="true">
+                    <meta attribute="defaultValue">false</meta>
+                    <meta attribute="description">Is this machine class allowed to traverse the lane empty.</meta>
+                </property>
+
+                <property name="travelLoadedTime" column="LOADED_TRAVEL_TIME" not-null="false">
+                    <meta attribute="description">The time for this machine class to traverse the lane loaded.</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="travelEmptyTime" column="EMPTY_TRAVEL_TIME" not-null="false">
+                    <meta attribute="description">The time for this machine class to traverse the lane empty.</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="efhLengthLoaded" column="EFH_LENGTH_LOADED" not-null="false">
+                    <meta attribute="description">The EFH length of the lane for this machine class when loaded.</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="efhLengthEmpty" column="EFH_LENGTH_EMPTY" not-null="false">
+                    <meta attribute="description">The EFH length of the lane for this machine class when empty.</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+            </composite-element>
+        </map>
+
+    </class>
+
+</hibernate-mapping>
+
+

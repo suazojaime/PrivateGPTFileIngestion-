@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2011, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="
+                  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+             ">
+
+    <http auto-config="true" use-expressions="true">
+        <csrf disabled="true"/>
+        <intercept-url pattern="/**" access="permitAll" method="OPTIONS"/>
+        <intercept-url pattern="/checkLogon/**" access="permitAll"/>
+        <intercept-url pattern="/changePassword/**" access="permitAll"/>
+        <intercept-url pattern="/SettingsUCC/bundle/**" access="permitAll"/>
+        <intercept-url pattern="/SettingsUCC/getTranslation/**" access="permitAll"/>
+        <intercept-url pattern="/SettingsUCC/getAllTranslations/**" access="permitAll"/>
+        <intercept-url pattern="/SettingsUCC/getAllUnitInstances" access="permitAll"/>
+        <intercept-url pattern="/SettingsUCC/getAllUnitTypes" access="permitAll"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <http-basic />
+    </http>
+
+    <global-method-security pre-post-annotations="enabled"/>
+
+    <!--
+    Credentials must be kept to re-authenticate remote invocation calls.
+    -->
+    <authentication-manager erase-credentials="false">
+        <authentication-provider ref="authProvider"/>
+    </authentication-manager>
+
+    <beans:bean id="authProvider" class="minestar.platform.uifacade.security.UserUCCFacadeAuthenticationProvider">
+        <beans:property name="userUCCFacade" ref="userUCC"/>
+    </beans:bean>
+
+</beans:beans>

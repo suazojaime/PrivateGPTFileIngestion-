@@ -1,0 +1,19 @@
+
+<!--************************************************************************-->
+<!-- EVENT NODES-->
+<!--- $Id: CycleNodeConfig.xml,v 1.2 2005-02-03 04:01:20 johne Exp $ -->
+<!--************************************************************************-->
+<EventNodeConfiguration>
+    <EventNode
+        name="Auxiliary.Boundaries"
+        type="Filtered"
+        filter="Auxiliary.Filter"
+        />
+
+    <EventNode
+        name = "Road.Segment.Beacons"
+        type = "Filtered"
+        filter = "Road.Segment.Beacons.Filter"
+    />
+
+</EventNodeConfiguration>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="1c8100bc-c329-46d7-877c-37b90846e60a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for CAPACITY as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="CAPACITY"/>
+        </preConditions>
+        <comment>MO-13576: DropTable CAPACITY</comment>
+        <dropTable tableName="CAPACITY"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="f7fc7912-ca9a-46db-874b-e7f82fe5519a" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for ALU_CAPACITY_PROPERTIES as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ALU_CAPACITY_PROPERTIES"/>
+            </not>
+        </preConditions>
+        <comment>MO-13576: CreateTable ALU_CAPACITY_PROPERTIES</comment>
+        <createTable tablespace="MW_ENT" remarks="A grouping of capacity properties." tableName="ALU_CAPACITY_PROPERTIES">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_OID" type="BIGINT"/>
+            <column name="BAY" type="INT" remarks="Number of the Bay"/>
+            <column name="BAYID" type="INT" remarks="Id of the Bay"/>
+            <column name="MAXIMUMMASS" type="INT" remarks="Maximum mass of the Bay"/>
+            <column name="CRITICALLEVEL" type="INT" remarks="Critical Level Percentage of the Bay"/>
+            <column name="WARNINGLEVEL" type="INT" remarks="Warning Level Percentage of the Bay"/>
+            <column name="IS_ACTIVE" type="BOOLEAN" remarks="Is this Cable Bridge active">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="ALU_CAPACITY_PROPERTIES_PK" tablespace="MW_IDXENT" tableName="ALU_CAPACITY_PROPERTIES"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="ALU_CAPACITY_UNQ" tableName="ALU_CAPACITY_PROPERTIES">
+            <column name="MACHINE_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="bf503b2b-b5b7-44c4-a2ab-75eea49b4ed1" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ALU_CAPACITY_PROPERTIES_FK1 to table ALU_CAPACITY_PROPERTIES as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="ALU_CAPACITY_PROPERTIES" columnName="MACHINE_OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ALU_CAPACITY_PROPERTIES" foreignKeyName="ALU_CAPACITY_PROPERTIES_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-13576: AddForeignKeyConstraint ALU_CAPACITY_PROPERTIES_FK1 to ALU_CAPACITY_PROPERTIES (MACHINE_OID)</comment>
+        <sql>UPDATE ALU_CAPACITY_PROPERTIES SET MACHINE_OID = NULL WHERE MACHINE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = ALU_CAPACITY_PROPERTIES.MACHINE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="ALU_CAPACITY_PROPERTIES" baseColumnNames="MACHINE_OID" constraintName="ALU_CAPACITY_PROPERTIES_FK1" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ALU_CAPACITY_PROPERTIES" constraintName="ALU_CAPACITY_PROPERTIES_FK1"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

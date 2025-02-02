@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="271b146f-0ac5-41a1-9516-83fd5c9551e3" author="MineStar" dbms="mssql" runOnChange="true">
+        <comment>FLT-8207: ModifyFunction InterpolatedSmu to respect reset</comment>
+        <sqlFile path="db/changelog/functions/sqlserver/InterpolatedSmuReset.sql" endDelimiter="Go" stripComments="false"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="271b146f-0ac5-41a1-9516-83fd5c9551e9" author="MineStar" dbms="oracle" runOnChange="true">
+        <comment>FLT-8207: ModifyFunction InterpolatedSmu to respect reset</comment>
+        <sqlFile path="db/changelog/functions/oracle/smuPkgReset.sql" endDelimiter="Go" stripComments="false"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

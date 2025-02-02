@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2023-2024 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="coreJmsConnectionFactory" class="minestar.platform.jms.activemq.ActiveMQFactoryWrapper" lazy-init="true">
+        <constructor-arg index="0" type="java.lang.String" value="${minestar.fsb.host}"/>
+        <constructor-arg index="1" type="int" value="${minestar.fsb.port}"/>
+        <constructor-arg index="2" type="boolean" value="false"/>
+        <property name="minLargeMessageSize" value="${FSB_MIN_LARGE_MESSAGE_SIZE}"/>
+    </bean>
+
+    <bean id="pooledJmsConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory" lazy-init="true">
+        <constructor-arg index="0" ref="coreJmsConnectionFactory"/>
+    </bean>
+
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate" lazy-init="true" p:connectionFactory-ref="pooledJmsConnectionFactory"/>
+
+    <bean id="jobEventTopic" class="org.apache.activemq.artemis.jms.client.ActiveMQTopic" lazy-init="true">
+        <constructor-arg value="minestar.event.job"/>
+    </bean>
+
+</beans>

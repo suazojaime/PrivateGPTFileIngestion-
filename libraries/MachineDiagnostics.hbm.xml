@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.pitlink.domain.machinediagnostics.MachineDiagnosticMessageImpl" table="MACHINEDIAGNOSTIC">
+        <meta attribute="alias" inherit="false">MachineDiagnostic</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">An event that happened to a machine.</meta>
+
+        <meta attribute="index">
+            name=MACHINEDIAGNOSTIC_IDX1
+            columns=MACHINE_OID,TIMESTAMP
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="OID"
+                access="field"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        <many-to-one
+                name="machineRef"
+                column="MACHINE_OID"
+                not-null="true"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                access="field"
+                >
+            <meta attribute="alias">machine</meta>
+            <meta attribute="description">The machine the event happened to.</meta>
+        </many-to-one>
+        <property
+                name="timestamp"
+                type="java.util.Date"
+                access="field">
+            <column name="TIMESTAMP" not-null="true" default="01-JAN-1970"/>
+        </property>
+        <property
+                name="message"
+                type="java.lang.String"
+                column="MESSAGE"
+                length="510"
+                not-null="true"
+                access="field"
+                >
+        </property>
+        <property 
+                name="resourceString" 
+                type="ResourceStringType"
+                column="RESOURCE_STRING"
+                length="510"
+                access="field"
+                >
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Shovel Classes">
+
+    <machineClass xsi:type="shovelClassImpl">
+        <name>P&amp;H2300XPC</name>
+        <manufacturer>P&amp;H</manufacturer>
+        <description>P&amp;H 2300 XPC Series Shovel</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <dipperCapacity magnitude="25.50" unit="cubic metres"/>
+        <dipperLoadCapacity magnitude="28.10" unit="cubic metres"/>
+        <reachRadius magnitude="21.30" unit="metre"/>
+    </machineClass>
+
+</machineClassExport>
+

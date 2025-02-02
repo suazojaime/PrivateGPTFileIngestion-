@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="7b890c40-b1d6-43e7-98ea-8f09d9645bd7" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for ASSIGNMENT_EVENT.LHD_ASSIGNMENT_CONTEXT as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="ASSIGNMENT_EVENT" columnName="LHD_ASSIGNMENT_CONTEXT"/>
+        </preConditions>
+        <comment>FUG-6276: ChangeDataType of ASSIGNMENT_EVENT.LHD_ASSIGNMENT_CONTEXT from VARCHAR(255) to VARCHAR(2048)</comment>
+        <modifyDataType columnName="LHD_ASSIGNMENT_CONTEXT" newDataType="VARCHAR(2048)" tableName="ASSIGNMENT_EVENT"/>
+        <rollback>
+            <modifyDataType columnName="LHD_ASSIGNMENT_CONTEXT" newDataType="VARCHAR(255)" tableName="ASSIGNMENT_EVENT"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

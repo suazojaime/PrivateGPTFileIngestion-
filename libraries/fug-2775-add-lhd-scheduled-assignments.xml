@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="f63feca8-4ce2-4496-ac10-21eaa3af1eaf" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for LHD_SCHEDULED_ASSIGNMENT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LHD_SCHEDULED_ASSIGNMENT"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2775: CreateTable LHD_SCHEDULED_ASSIGNMENT</comment>
+        <createTable tablespace="MW_ENT" remarks="Information pertaining to scheduled assignment for an LHD." tableName="LHD_SCHEDULED_ASSIGNMENT">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE" type="BIGINT" remarks="A reference to the machine that this scheduled assignment applies.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="INT" remarks="The status of the LHD Scheduled Assignment."/>
+            <column name="GOAL_TYPE" type="INT" remarks="The type of goal being references DUMP, LOAD or INVERSION."/>
+            <column name="GOAL_REF" type="BIGINT" remarks="This is a reference to the associated goal."/>
+            <column name="CREATION_TIME" type="DATETIME2" remarks="The date that the Scheduled LHD Assignment was created.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRIGGER_TIME" type="DATETIME2" remarks="The date that the Scheduled LHD Assignment should be enacted.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CYCLE_OID" type="BIGINT" remarks="This is a reference to the associated cycle."/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="LHD_SCHEDULED_ASSIGNMENT_PK" tablespace="MW_IDXENT" tableName="LHD_SCHEDULED_ASSIGNMENT"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="a714d80e-ac6c-4c92-9144-d1808aae4062" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for LHD_SCHEDULED_ASSIGNMENT_FK1 to table LHD_SCHEDULED_ASSIGNMENT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="LHD_SCHEDULED_ASSIGNMENT" columnName="MACHINE"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="LHD_SCHEDULED_ASSIGNMENT" foreignKeyName="LHD_SCHEDULED_ASSIGNMENT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2775: AddForeignKeyConstraint LHD_SCHEDULED_ASSIGNMENT_FK1 to LHD_SCHEDULED_ASSIGNMENT (MACHINE)</comment>
+        <sql>DELETE FROM LHD_SCHEDULED_ASSIGNMENT WHERE MACHINE IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = LHD_SCHEDULED_ASSIGNMENT.MACHINE)</sql>
+        <addForeignKeyConstraint baseTableName="LHD_SCHEDULED_ASSIGNMENT" baseColumnNames="MACHINE" constraintName="LHD_SCHEDULED_ASSIGNMENT_FK1" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="LHD_SCHEDULED_ASSIGNMENT" constraintName="LHD_SCHEDULED_ASSIGNMENT_FK1"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

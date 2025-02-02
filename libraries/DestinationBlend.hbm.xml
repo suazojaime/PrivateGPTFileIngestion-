@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.mine.domain.material" schema="model" default-access="field" default-lazy="false">
+
+    <class name="DestinationBlend" table="DESTINATION_BLEND">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A destination blend</meta>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="OID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        <property
+                name="active"
+                type="java.lang.Boolean"
+                column="IS_ACTIVE"
+                not-null="true"
+                >
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Is the destination blend active</meta>
+        </property>
+        <property name="observational" type="java.lang.Boolean" access="field">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">False when assignment is controlling the trucks.</meta>
+            <column name="OBSERVATIONAL" not-null="true" default="0"/>
+        </property>
+        <property
+                name="minimumRate"
+                column="MINIMUM_RATE"
+                >
+            <meta attribute="unitType">rate</meta>
+            <meta attribute="description">The destination blend minimum rate</meta>
+            <type name="quantity">
+                <param name="unitType">rate</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+        <property
+                name="maximumRate"
+                column="MAXIMUM_RATE"
+                >
+            <meta attribute="unitType">rate</meta>
+            <meta attribute="description">The destination blend maximum rate</meta>
+            <type name="quantity">
+                <param name="unitType">rate</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property
+                name="startDate"
+                type="java.util.Date"
+                column="START_DATE"
+                not-null="false"
+                >
+            <meta attribute="description">The date time the destination blend started</meta>
+        </property>
+
+        <property
+                name="endDate"
+                type="java.util.Date"
+                column="END_DATE"
+                not-null="false"
+                >
+            <meta attribute="description">The date time the destination blend end</meta>
+        </property>
+
+        <property
+                name="lastBatchStartDate"
+                type="java.util.Date"
+                column="LAST_BATCH_MASS_DATE"
+                not-null="false"
+                >
+            <meta attribute="description">The date time the batch mass updated</meta>
+        </property>
+
+        <many-to-one
+                class="minestar.mine.domain.material.BlendReference"
+                name="blend"
+                column="BLEND_OID"
+                not-null="true"/>
+
+        <set name="processors" table="DESTINATION_BLEND_PROCESSOR">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The processors assigned to this destination blend</meta>
+            <key column="DESTINATION_BLEND_OID" not-null="true" />
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="PROCESSOR_OID" not-found="ignore"/>
+        </set>
+    </class>
+</hibernate-mapping>

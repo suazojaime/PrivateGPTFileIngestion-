@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="4847d897-3723-4097-8979-a4e00963cda2" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored set delay frequency to not null as DELAY table does not exist."
+                onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="DELAY"/>
+                <columnExists tableName="DELAY" columnName="FREQUENCY_TYPE"/>
+            </and>
+        </preConditions>
+        <comment>FLT-6448: Set delay frequency to not null</comment>
+        <addNotNullConstraint columnDataType="int"
+                              columnName="FREQUENCY_TYPE"
+                              defaultNullValue="0"
+                              tableName="DELAY"/>
+    </changeSet>
+
+</databaseChangeLog>

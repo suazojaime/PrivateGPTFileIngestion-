@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="76fd9290-3d1c-499b-862a-5889b60e8811" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for LAST_DRAW_POINT_OID, LAST_ORE_PASS_OID in table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="LAST_LOAD_WAYPOINT_OID"/>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="LAST_DUMP_WAYPOINT_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6952: AddColumn MACHINE_IN_PIT.LAST_LOAD_WAYPOINT_OID</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="LAST_LOAD_WAYPOINT_OID" type="BIGINT" remarks="Reference to the last loading waypoint that the Truck took a load."/>
+            <column name="LAST_DUMP_WAYPOINT_OID" type="BIGINT" remarks="Reference to the last dumping waypoint that the Truck dumped."/>
+        </addColumn>
+        <sql>UPDATE MACHINE_IN_PIT set LAST_LOAD_WAYPOINT_OID = LAST_DRAW_POINT_OID</sql>
+        <sql>UPDATE MACHINE_IN_PIT set LAST_DUMP_WAYPOINT_OID = LAST_ORE_PASS_OID</sql>
+        <dropColumn columnName="LAST_DRAW_POINT_OID" tableName="MACHINE_IN_PIT"/>
+        <dropColumn columnName="LAST_ORE_PASS_OID" tableName="MACHINE_IN_PIT"/>
+        <rollback>
+            <addColumn tableName="MACHINE_IN_PIT">
+                <column name="LAST_DRAW_POINT_OID" type="BIGINT"/>
+            </addColumn>
+            <addColumn tableName="MACHINE_IN_PIT">
+                <column name="LAST_ORE_PASS_OID" type="BIGINT"/>
+            </addColumn>
+            <sql>UPDATE MACHINE_IN_PIT set LAST_DRAW_POINT_OID = LAST_LOAD_WAYPOINT_OID</sql>
+            <sql>UPDATE MACHINE_IN_PIT set LAST_ORE_PASS_OID = LAST_DUMP_WAYPOINT_OID</sql>
+            <dropColumn columnName="LAST_LOAD_WAYPOINT_OID" tableName="MACHINE_IN_PIT"/>
+            <dropColumn columnName="LAST_DUMP_WAYPOINT_OID" tableName="MACHINE_IN_PIT"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

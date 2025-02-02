@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    
+    <changeSet id="bd1ad485-bf55-4191-920b-2f18d80cc374" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored alter PERFORMANCE_STATS as OPERATION_NAME column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PERFORMANCE_STATS" columnName="OPERATION_NAME"/>
+        </preConditions>
+
+        <comment>AHS-8255: DropTable PERFORMANCE_STATS</comment>
+        <dropTable tableName="PERFORMANCE_STATS"/>
+
+        <comment>AHS-8255: CreateTable PERFORMANCE_STATS</comment>
+        <createTable tablespace="MW_ENT" remarks="Performance Statistics" tableName="PERFORMANCE_STATS">
+            <column name="PROCESS" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OPERATION" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="START_TIME" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="END_TIME" type="DATETIME2" remarks="The end-time of the metric period">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COUNTER" type="BIGINT" remarks="The count of operations within the period">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MAX_MILLIS" type="BIGINT" remarks="The maximum invocation time (in milliseconds) within the period">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TOTAL_MILLIS" type="BIGINT" remarks="The total invocation time (in milliseconds) within the period">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="PROCESS,OPERATION,START_TIME" constraintName="PERFORMANCE_STATS_PK" tablespace="MW_IDXENT" tableName="PERFORMANCE_STATS"/>
+
+        <rollback>
+            <dropTable tableName="PERFORMANCE_STATS"/>
+            <createTable tablespace="MW_ENT" remarks="Performance Statistics" tableName="PERFORMANCE_STATS">
+                <column name="PROCESS" type="VARCHAR(30)" remarks="The process that generated the statistics">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="OPERATION_TYPE" type="VARCHAR(30)" remarks="The type of operation">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="DIRECTION" type="VARCHAR(3)" remarks="The direction in which the operation was performed: In=Operation invoked by an external process, Out=Operation invoked by this process">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="OPERATION_NAME" type="VARCHAR(254)" remarks="The name of the operation">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="START_TIME" type="DATETIME2" remarks="The start-time of the statistic period">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="END_TIME" type="DATETIME2" remarks="The end-time of the statistic period">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="EXECUTIONS" type="BIGINT" remarks="The number of invocations of the operation within the period">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="MAX_MILLIS" type="BIGINT" remarks="The maximum invocation time (in milliseconds) within the period">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="TOTAL_MILLIS" type="BIGINT" remarks="The total invocation time (in milliseconds) within the period">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="PROCESS,OPERATION_TYPE,DIRECTION,OPERATION_NAME,START_TIME" constraintName="PERFORMANCE_STATS_PK" tablespace="MW_IDXENT" tableName="PERFORMANCE_STATS"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="bde77100-33ac-4778-835e-5aaafc50404e" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for MSTATE_STATE of table MACHINE_IN_PIT as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_IN_PIT" columnName="MSTATE_STATE"/>
+        </preConditions>
+        <comment>AHS-7563: DropColumn MACHINE_IN_PIT.MSTATE_STATE</comment>
+        <dropColumn columnName="MSTATE_STATE" tableName="MACHINE_IN_PIT"/>
+        <rollback>
+            <addColumn tableName="MACHINE_IN_PIT">
+                <column name="MSTATE_STATE" type="TINYINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="cbfd691f-1624-44f1-8a1c-116914b4e7b1" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for MSTATE_DISCRIMINATOR of table MACHINE_IN_PIT as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_IN_PIT" columnName="MSTATE_DISCRIMINATOR"/>
+        </preConditions>
+        <comment>AHS-7563: DropColumn MACHINE_IN_PIT.MSTATE_DISCRIMINATOR</comment>
+        <dropColumn columnName="MSTATE_DISCRIMINATOR" tableName="MACHINE_IN_PIT"/>
+        <rollback>
+            <addColumn tableName="MACHINE_IN_PIT">
+                <column name="MSTATE_DISCRIMINATOR" type="VARCHAR(3)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

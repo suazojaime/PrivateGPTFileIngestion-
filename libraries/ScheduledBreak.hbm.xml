@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical" default-lazy="false" default-access="field">
+    <class
+            name="minestar.machinetracking.domain.ScheduledBreak"
+            table="SCHEDULEDBREAK"
+            >
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A scheduled break</meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="SCHEDULEDBREAK_OID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property
+                name="status"
+                type="minestar.machinetracking.domain.ScheduledBreakStatus$UserType"
+                column="STATUS"
+                >
+            <meta attribute="description">The status of this scheduled break.</meta>
+            <meta attribute="choices" inherit="false">choice:scheduledBreakStatus</meta>
+        </property>
+
+        <property
+                name="breakName"
+                type="java.lang.String"
+                column="BREAKNAME"
+                length="254"
+                >
+            <meta attribute="description">The name of this scheduled break.</meta>
+        </property>
+
+        <property
+                name="breakTime"
+                type="TimestampType"
+                column ="BREAKTIME_UTC"
+                not-null="true"
+                >
+            <meta attribute="utc-description">The utc time this scheduled break is to occur.</meta>
+            <meta attribute="description">The time this scheduled break is to occur.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+                name="sessionCount"
+                type="java.lang.Integer"
+                column="SESSIONCOUNT"
+                not-null="true"
+                >
+            <meta attribute="description">The number of sessions this break is broken up into.</meta>
+            <meta attribute="universe-type-measure">true</meta>
+        </property>
+
+        <property
+                name="sessionDelta"
+                column="SESSIONDELTA"
+                >
+            <meta attribute="description">The time between the starting of each of the sessions.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+
+        </property>
+
+        <many-to-one
+                name="delayClass"
+                column="DELAYCLASS"
+                class= "minestar.production.domain.DelayClassReference"
+                access="field"
+                not-found="ignore"
+                >
+            <meta attribute="description">The class, type, or categorisation of this delay.</meta>
+        </many-to-one>
+
+        <property
+            name="shiftDate"
+            type="TimestampType"
+            column="SHIFTDATE_UTC"
+            not-null="true"
+            >
+            <meta attribute="utc-description">The utc date of the shift that this break will occur in.</meta>
+            <meta attribute="description">The date of the shift that this break will occur in.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+                name="shiftIdentifier"
+                type="java.lang.String"
+                column="SHIFTIDENTIFIER"
+                length="254"
+                >
+            <meta attribute="description">The identifier of the shift that this break will occur in.</meta>
+        </property>
+
+        <property
+                name="allowRefueling"
+                type="java.lang.Boolean"
+                column="ALLOWREFUELING"
+                not-null="true"
+                >
+            <meta attribute="description">True if trucks are allowed to refuel during this scheduled break.</meta>
+        </property>
+
+        <property
+                name="loadState"
+                type="minestar.domain.model.persistence.LoadStateUserType"
+                column="LOADSTATE"
+                >
+            <meta attribute="description">The allowed load state that this break will occur in.</meta>
+            <meta attribute="universe-type-measure">true</meta>
+        </property>
+
+        <many-to-one
+                name="messageOnAllocation"
+                class="minestar.pitlink.domain.StandardMessageReference"
+                column="MSGALLOCATION"
+                not-found="ignore"
+                >
+            <meta attribute="ignoreManyToOneLookupExpr">true</meta>
+            <meta attribute="description">The message sent when the session allocation is imminent for a break.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="messageOnImminent"
+                class="minestar.pitlink.domain.StandardMessageReference"
+                column="MSGIMMINENT"
+                not-found="ignore"
+                >
+            <meta attribute="ignoreManyToOneLookupExpr">true</meta>
+            <meta attribute="description">The message sent when the session allocation is imminent for a break.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="messageOnCancel"
+                class="minestar.pitlink.domain.StandardMessageReference"
+                column="MSGCANCEL"
+                not-found="ignore"
+                >
+            <meta attribute="ignoreManyToOneLookupExpr">true</meta>
+            <meta attribute="description">The message sent when the session allocation is cancelled for a break.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="messageOnReschedule"
+                class="minestar.pitlink.domain.StandardMessageReference"
+                column="MSGRESCHEDULE"
+                not-found="ignore"
+                >
+            <meta attribute="ignoreManyToOneLookupExpr">true</meta>
+            <meta attribute="description">The message sent when the session allocation is rescheduled for a break.</meta>
+        </many-to-one>
+
+        <property
+                name="breakDuration"
+                column="BREAKDURATION"
+                >
+            <meta attribute="description">The time between the starting of the break and the expected end of the break.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property
+                name="allocatedDuration"
+                column="ALLOCATEDDURATION"
+                >
+            <meta attribute="description">The time between the starting of the break and the allocated message being sent to the machine.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property
+                name="imminentDuration"
+                column="IMMINENTDURATION"
+                >
+            <meta attribute="description">The time between the starting of the break and the imminent message being sent to the machine.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <!-- associations -->
+        <map name="machineSessionMap" table="SCHED_BREAK_MACHINE_SESSION" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=SB_MACHINE_SESSION_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+            <!--<meta attribute="index-alias">interfaceName</meta>-->
+            <meta attribute="description">A mapping of the machine to the session that machine will be on.</meta>
+            <key column="OID"/>
+            <map-key-many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID"/>
+            <element type="java.lang.Integer" column="SESSION_NR"/>
+        </map>
+
+        <set name="machineManualMap"  table="SCHED_BREAK_MANUAL_MACHINE" cascade="none" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">A list of the machines that have been manually mapped.</meta>
+            <key column="OID"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID"/>
+        </set>
+
+        <set name="machineExcludeMap"  table="SCHED_BREAK_EXCLUDED_MACHINE" cascade="none" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">A list of the machines that have been excluded from the break allocation.</meta>
+            <key column="OID"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        <map name="machineOperatorMap" table="SCHED_BREAK_MACHINE_OPERATOR" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=SB_MACHINE_OPERATOR_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">A mapping of the machine to the operator of that machine.</meta>
+            <key column="OID" not-null="true"/>
+            <map-key-many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID"/>
+            <many-to-many class="minestar.machinetracking.domain.PersonReference" column="PERSON_OID" not-found="ignore"/>
+        </map>
+
+        <set name="machineAlocMsgSent"  table="SCHED_BREAK_ALLOCMSG_MACHINE" cascade="none" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">A list of the machines that have been sent a message to inform the operator that this scheduled break has been allocated.</meta>
+            <key column="OID"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        <set name="machineImmMsgSent"  table="SCHED_BREAK_IMMMSG_MACHINE" cascade="none" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">A list of the machines that have been sent a message to inform the operator that this scheduled break is imminent.</meta>
+            <key column="OID"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        <set name="machineCanMsgSent"  table="SCHED_BREAK_CANMSG_MACHINE" cascade="none" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">A list of the machines that have been sent a message to inform the operator that this scheduled break is cancelled.</meta>
+            <key column="OID"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        <set name="allowedDests" table="SCHED_BREAK_ALLOWED_DEST" cascade="none" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">A list of the destinations or fuel bays that the machines are allowed at.</meta>
+            <key column="OID"/>
+            <many-to-many class="minestar.mine.domain.minemodel.LocationReference" column="LOCATION_OID" not-found="ignore"/>
+        </set>
+
+        <set name="allowedMachines" table="SCHED_BREAK_ALLOWED_MACHINE" cascade="none" lazy="false" fetch="select" batch-size="200" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">A list of the fuel bays that the machines are allowed at.</meta>
+            <key column="OID"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

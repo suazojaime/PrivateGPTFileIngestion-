@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.pitlink.domain.machine.MachineClassIcon" table="MACHINE_CLASS_ICON">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">
+            The icon used to draw a machine class.
+        </meta>
+        <meta attribute="foreign-key">
+            name=MACHINE_CLASS_ICON_ICON_OID_FK
+            columns=ICON_OID
+            referenced-table=MACHINECLASS
+            referenced-columns=MACHINECLASS_OID
+            on-delete=CASCADE
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="ICON_OID">
+            <!-- MachineClass.OID -->
+            <generator class="assigned"/>
+        </id>
+
+        <many-to-one name="machineClassRef"
+                     class="minestar.pitlink.domain.machine.MachineClassReference"
+                     formula="ICON_OID" not-null="true"/>
+
+        <property name="id" type="long" column="ID" not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="description">An automatically generated unique ID value for this icon record.</meta>
+        </property>
+
+        <property
+                name="highIconName"
+                type="string"
+                column="HIGH_ICON_NAME"
+                length="254">
+            <meta attribute="description">The name of the high resolution icon.</meta>
+        </property>
+
+        <property
+                name="mediumIconName"
+                type="string"
+                column="MEDIUM_ICON_NAME"
+                length="254">
+            <meta attribute="description">The name of the medium resolution icon.</meta>
+        </property>
+
+        <property
+                name="lowIconName"
+                type="string"
+                column="LOW_ICON_NAME"
+                length="254">
+            <meta attribute="description">The name of the low resolution icon.</meta>
+        </property>
+
+        <property name="iconSetId" type="int" column="ICON_SET">
+            <meta attribute="choices" inherit="false">choice:truckClassIconSets</meta>
+            <meta attribute="description">
+                The integer reference of the truck class icon set. 0=Mining, 1=Highway, 2=Train
+            </meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

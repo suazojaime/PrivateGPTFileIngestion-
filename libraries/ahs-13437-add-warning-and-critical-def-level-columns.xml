@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="861c5ed7-406b-4f2f-94fa-9e8cff297cd9" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for WARNING_DEF_LEVEL to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="WARNING_DEF_LEVEL"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13437: AddColumn MACHINE.WARNING_DEF_LEVEL</comment>
+        <addColumn tableName="MACHINE">
+            <column name="WARNING_DEF_LEVEL" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="a6e34274-43fc-4ead-b822-7665856a6cfa" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CRITICAL_DEF_LEVEL to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="CRITICAL_DEF_LEVEL"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13437: AddColumn MACHINE.CRITICAL_DEF_LEVEL</comment>
+        <addColumn tableName="MACHINE">
+            <column name="CRITICAL_DEF_LEVEL" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="12334c6e-452c-497f-a6fa-67e8ea4164fc" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for WARNING_DEF_LEVEL to table MACHINECLASS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <columnExists tableName="MACHINECLASS" columnName="WARNING_DEF_LEVEL"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13437: AddColumn MACHINECLASS.WARNING_DEF_LEVEL</comment>
+        <addColumn tableName="MACHINECLASS">
+            <column name="WARNING_DEF_LEVEL" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="0220ef57-8950-44fb-990e-e5b664cd084b" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CRITICAL_DEF_LEVEL to table MACHINECLASS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <columnExists tableName="MACHINECLASS" columnName="CRITICAL_DEF_LEVEL"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13437: AddColumn MACHINECLASS.CRITICAL_DEF_LEVEL</comment>
+        <addColumn tableName="MACHINECLASS">
+            <column name="CRITICAL_DEF_LEVEL" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

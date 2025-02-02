@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="e80fc924-cc40-4a7c-97ef-d79d27d537af" author="MineStar" failOnError="false">
+        <comment>FUG-10204: Update Barrier Category to Entry</comment>
+        <sql>
+            UPDATE MACHINECATEGORY SET NAME = 'Entry' WHERE NAME = 'Barrier'
+        </sql>
+        <rollback>
+            <sql>
+                UPDATE MACHINECATEGORY SET NAME = 'Barrier' WHERE NAME = 'Entry'
+            </sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="2df83552-65eb-47d6-8389-621589945fda" author="MineStar" failOnError="false">
+        <comment>FUG-10204: Update Barrier Class to Entry</comment>
+        <sql>
+            UPDATE MACHINECLASS SET NAME = 'UndergroundEntry' WHERE NAME = 'UndergroundBarrier'
+        </sql>
+        <rollback>
+            <sql>
+                UPDATE MACHINECLASS SET NAME = 'UndergroundBarrier' WHERE NAME = 'UndergroundEntry'
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

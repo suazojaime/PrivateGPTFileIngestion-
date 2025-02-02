@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.production.domain.DelayClass" table="DELAYCLASS">
+
+        <meta attribute="alias" inherit="false">DelayType</meta>
+        <meta attribute="lookupExpr" inherit="false">name</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=DELAYCLASS_ID
+            unique=true
+            columns=ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=DELAYCLASS_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">A prototype or template delay used to construct real delays.</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="DELAYCLASS_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="id" type="long" column="ID" not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="description">An automatically generated unique ID value for this type of delay.</meta>
+        </property>
+
+        <many-to-one
+                name="delayCategory"
+                class="minestar.production.domain.DelayCategoryReference"
+                column="DELAYCATEGORY"
+                not-null="true"
+                >
+            <meta attribute="description">The delay category that this type of delays fits into. These are values like 'Scheduled Electrical' etc.</meta>
+        </many-to-one>
+
+        <property name="name" type="string" column="NAME" length="254" not-null="true">
+            <meta attribute="description">The common name for this kind of delay.</meta>
+        </property>
+
+        <property name="description" type="string" column="DESCRIPTION" length="254">
+            <meta attribute="description">A free form description of this type of delay.</meta>
+        </property>
+
+        <property name="externalRef" type="string" column="EXTERNALREF" length="254">
+            <meta attribute="description">A reference for use by MIMS or another external system interfacing with MineStar.</meta>
+        </property>
+
+        <property name="externalDesc" type="string" column="EXTERNALDESC" length="254">
+            <meta attribute="description">A description for use by MIMS or another external system interfacing with
+                MineStar.
+            </meta>
+        </property>
+
+        <property name="email" type="string" column="EMAIL" length="254">
+            <meta attribute="description">An e-mail address where notification should be sent whenever delays of this type occur.</meta>
+        </property>
+
+        <property name="defaultDuration" column="DURATION">
+            <meta attribute="alias">duration</meta>
+            <meta attribute="description">The default duration for delays of this type.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property name="active" type="boolean" column="IS_ACTIVE" not-null="true">
+            <meta attribute="description">Is the delay class active?</meta>
+        </property>
+
+        <property name="acknowledgementReq" type="boolean" column="ACKNOWLEDGEMENTREQ" not-null="true">
+            <meta attribute="description">Indicates whether or not delays of this type require acknowledgement by default.</meta>
+        </property>
+
+        <property name="availableInField" type="boolean" column="INFIELD" not-null="true">
+            <meta attribute="description">Indicates whether this delay type can be created from the field consoles.</meta>
+        </property>
+
+        <property name="productionReportingOnly" type="boolean" column="PRODUCTIONREPORTINGONLY" not-null="true">
+            <meta attribute="description">Indicates whether or not delays of this type should, by default, be considered
+                only for the purposes of production reporting. Entities on such delays can still be given assignments.
+            </meta>
+        </property>
+
+        <property name="engineStopped" type="boolean" column="ENGINESTOPPED" not-null="true">
+            <meta attribute="description">Indicates whether or not a machine's engine will be switched off when it is delayed for this reason.</meta>
+        </property>
+
+        <property name="validForRoad" type="boolean" column="ISVALIDFORROAD" not-null="true">
+            <meta attribute="description">Is this kind of delay valid for Roads.</meta>
+        </property>
+
+        <property name="validForLocation" type="boolean" column="ISVALIDFORLOCATION" not-null="true">
+            <meta attribute="description">Is this kind of delay valid for Destinations.</meta>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  type="long">
+            <meta attribute="description">The mine model update version when the delay type was created/modified.</meta>
+            <column name="MODEL_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property name="layerUpdateVersion"
+                  type="long">
+            <meta attribute="description">The layer update version when the delay type was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <many-to-one
+                name="delayActivityClass"
+                column="DELAYACTIVITYCLASS"
+                class= "minestar.production.domain.DelayActivityClassReference">
+            <meta attribute="alias" inherit="false">delayActivityClass</meta>
+            <meta attribute="description">The optional delay activity class of this delay type</meta>
+        </many-to-one>
+
+        <!-- associations -->
+        <set name="associations" table="DELAY_CLASS_ASSOCIATION" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index-alias">machineCategory</meta>
+            <meta attribute="alias" inherit="false">association</meta>
+            <meta attribute="description">The set of entities that can experience this type of delay.</meta>
+            <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineCategoryImpl</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineCategoryReference" column="MACHINE_CATEGORY_OID"/>
+        </set>
+    </class>
+
+    <!-- A lightweight reference to a DelayClass -->
+    <class name="minestar.production.domain.DelayClassReference" table="DELAYCLASS" mutable="false" lazy="false">
+
+        <meta attribute="alias" inherit="false">DELAYCLASS_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a DelayClass.</meta>
+        <meta attribute="view-create-order">1</meta>
+        <meta attribute="view-master">true</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="DELAYCLASS_OID"/>
+        <property name="id" type="long" column="ID" not-null="true"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

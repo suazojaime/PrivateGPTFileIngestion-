@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+    <bean id="productionRequestService" parent="serviceInstance" lazy-init="true">
+        <constructor-arg value="minestar.assignment.service.planning.ProductionRequestService"/>
+    </bean>
+
+    <bean id="productionRequestServiceTemplate" parent="serviceInstance" lazy-init="true">
+        <constructor-arg value="minestar.assignment.service.planning.ProductionRequestServiceTemplate"/>
+    </bean>
+
+    <bean id="prodPlanServiceV2" parent="serviceInstance" lazy-init="true">
+        <constructor-arg value="minestar.planmanagement.service.v2.ProdPlanServiceV2"/>
+    </bean>
+
+</beans>

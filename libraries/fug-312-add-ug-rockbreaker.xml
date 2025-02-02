@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="7abc5066-5e09-44bf-acdb-e9b684e73244" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for ORE_PASS_ROCK_BREAKER_FK of table ORE_PASS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_ROCK_BREAKER_FK"/>
+        </preConditions>
+        <comment>FUG-312: DropForeignKeyConstraint ORE_PASS_ROCK_BREAKER_FK from ORE_PASS (ROCK_BREAKER)</comment>
+        <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_ROCK_BREAKER_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="ORE_PASS" baseColumnNames="ROCK_BREAKER" constraintName="ORE_PASS_ROCK_BREAKER_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="6a01642e-e1a1-47be-9ffd-347e78a9c014" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddUniqueConstraint for ORE_PASS_ROCK_BREAKER_UK to table ORE_PASS as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <columnExists tableName="ORE_PASS" columnName="ROCK_BREAKER"/>
+            <sqlCheck expectedResult="0">select count(*) from USER_IND_COLUMNS cols where cols.table_name='ORE_PASS' and cols.COLUMN_NAME='ROCK_BREAKER'</sqlCheck>
+        </preConditions>
+        <comment>FUG-312: AddUniqueConstraint ORE_PASS_ROCK_BREAKER_UK to ORE_PASS (ROCK_BREAKER)</comment>
+        <addUniqueConstraint columnNames="ROCK_BREAKER" constraintName="ORE_PASS_ROCK_BREAKER_UK" tableName="ORE_PASS"/>
+        <rollback>
+            <dropUniqueConstraint tableName="ORE_PASS" constraintName="ORE_PASS_ROCK_BREAKER_UK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="ffe02a2f-dd9b-4eb2-9ec7-bded7d4aa4ff" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for UG_ROCK_BREAKER as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="UG_ROCK_BREAKER"/>
+            </not>
+        </preConditions>
+        <comment>FUG-312: CreateTable UG_ROCK_BREAKER</comment>
+        <createTable tablespace="MW_ENT" remarks="Represents a rock breaker in an underground mine." tableName="UG_ROCK_BREAKER">
+            <column name="ROCK_BREAKER_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ROCK_BREAKER_OID" constraintName="UG_ROCK_BREAKER_PK" tablespace="MW_IDXENT" tableName="UG_ROCK_BREAKER"/>
+        <rollback>
+            <dropTable tableName="UG_ROCK_BREAKER"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="1734e53e-de65-4180-a433-a9048c4283cb" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for UG_ROCK_BREAKER_ROCK_BREAKE_FK to table UG_ROCK_BREAKER as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="UG_ROCK_BREAKER"/>
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="UG_ROCK_BREAKER" foreignKeyName="UG_ROCK_BREAKER_ROCK_BREAKE_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-312: AddForeignKeyConstraint UG_ROCK_BREAKER_ROCK_BREAKE_FK to UG_ROCK_BREAKER (ROCK_BREAKER_OID)</comment>
+        <sql>DELETE FROM UG_ROCK_BREAKER WHERE ROCK_BREAKER_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = UG_ROCK_BREAKER.ROCK_BREAKER_OID)</sql>
+        <addForeignKeyConstraint baseTableName="UG_ROCK_BREAKER" baseColumnNames="ROCK_BREAKER_OID" constraintName="UG_ROCK_BREAKER_ROCK_BREAKE_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="UG_ROCK_BREAKER" constraintName="UG_ROCK_BREAKER_ROCK_BREAKE_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="e2032880-4aee-4d80-bcdd-f07a91fbf2a4" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ORE_PASS_ROCK_BREAKER_FK to table ORE_PASS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <tableExists tableName="UG_ROCK_BREAKER"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_ROCK_BREAKER_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-312: AddForeignKeyConstraint ORE_PASS_ROCK_BREAKER_FK to ORE_PASS (ROCK_BREAKER)</comment>
+        <sql>UPDATE ORE_PASS SET ROCK_BREAKER = NULL WHERE ROCK_BREAKER IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UG_ROCK_BREAKER WHERE UG_ROCK_BREAKER.ROCK_BREAKER_OID = ORE_PASS.ROCK_BREAKER)</sql>
+        <addForeignKeyConstraint baseTableName="ORE_PASS" baseColumnNames="ROCK_BREAKER" constraintName="ORE_PASS_ROCK_BREAKER_FK" referencedTableName="UG_ROCK_BREAKER" referencedColumnNames="ROCK_BREAKER_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_ROCK_BREAKER_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

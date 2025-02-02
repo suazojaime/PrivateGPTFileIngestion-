@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="f806aa0c-11aa-4570-86f9-43acc211bc6a" author="MineStar" failOnError="false">
+        <comment>AHS-8967: Add MACHINE.OPERATINGMODE check constraint</comment>
+        <sql>UPDATE MACHINE SET OPERATINGMODE = 1 WHERE OPERATINGMODE IS NOT NULL AND OPERATINGMODE NOT IN (1,2,3,4,5,6)</sql>
+        <sql>ALTER TABLE MACHINE ADD CONSTRAINT OPERATINGMODE_CHECK CHECK (OPERATINGMODE IN (1,2,3,4,5,6))</sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

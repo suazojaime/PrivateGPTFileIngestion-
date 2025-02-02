@@ -1,0 +1,371 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <!-- ****************************************************************************** -->
+    <!-- Person/PersonImpl -->
+    <!-- ****************************************************************************** -->
+    <class name="minestar.machinetracking.domain.PersonImpl"
+           proxy="minestar.machinetracking.domain.Person"
+           table="PERSON"
+           discriminator-value="XAEntity.Person">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index" inherit="false">
+            name=PERSON_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index" inherit="false">
+            name=PERSON_MACPASSWORD
+            unique=true
+            columns=MACPASSWORD
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="import-order">5</meta>
+
+        <meta attribute="description">
+            Information about the people who operate the machines in the mine.
+        </meta>
+
+        <cache usage="read-write" region="model-versioned"/>
+
+        <id name="OID" type="long" column="PERSON_OID" access="field">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID" not-null="false"/>
+
+        <property name="active" type="boolean" access="field">
+            <column name="IS_ACTIVE" not-null="true" default="1"/>
+        </property>
+
+        <property name="name" type="string" column="NAME" length="254" not-null="true" access="field"/>
+        <property name="maintenanceUser" type="boolean" access="field">
+            <column name="MAINTENANCE_USER" not-null="true" default="0"/>
+        </property>
+        <property name="macPassword" type="int" column="MACPASSWORD" access="field">
+            <meta attribute="universe-type-measure">false</meta>
+        </property>
+        <property name="personnelId" type="string" column="PERSONNELID" length="254" access="field">
+            <meta attribute="universe-type-measure">false</meta>
+        </property>
+        <property name="allocationDate" type="java.util.Date" column="ALLOCATIONDATE" access="field"/>
+        <property name="allocationPriority" type="int" column="ALLOCATIONPRIORITY" access="field"/>
+        <property name="excludeFromMachineAllocation" type="boolean" access="field">
+            <meta attribute="alias" inherit="false">excludeFromMachineAlloc</meta>
+            <column name="EXCLUDEFROMMACHINEALLOCATION" not-null="true" default="0"/>
+        </property>
+        <many-to-one name="shiftChangeGroupRef" class="minestar.assignment.domain.AssGroupReference" column="SHIFTCHANGEGROUP" access="field">
+            <meta attribute="alias" inherit="false">shiftChangeGroup</meta>
+        </many-to-one>
+
+        <property name="techLevel" type="string" column="TECH_LEVEL" length="254" access="field"/>
+        <property name="position" type="string" column="POSITION" length="254" access="field"/>
+        <property name="department" type="string" column="DEPARTMENT" length="254" access="field"/>
+        <property name="primarySupervisor" type="string" column="PRIMARY_SUPERVISOR" length="254" access="field"/>
+        <property name="hireDate" type="java.util.Date" column="HIRE_DATE" access="field"/>
+        <property name="externalRef" type="string" column="EXTERNALREF" length="254" access="field">
+            <meta attribute="description">The external system reference of this person</meta>
+        </property>
+        <property name="externalDesc" type="string" column="EXTERNALDESC" length="254" access="field">
+            <meta attribute="description">The External System Description</meta>
+        </property>
+
+        <property name="emergencyMedicalTechnician" type="boolean" column="EMT"  not-null="true" access="field"/>
+        <property name="firstResponder" type="boolean" column="FIRST_RESPONDER"  not-null="true" access="field"/>
+        <property name="busDriver" type="boolean" column="BUS_DRIVER"  not-null="true" access="field"/>
+
+        <property name="layerUpdateVersion" type="long" access="field">
+            <meta attribute="description">The layer update version when the operator was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <!-- underground user mapping -->
+        <many-to-one name="userRef"
+                     class="minestar.platform.domain.user.UserReference"
+                     column="USERREF"  access="field"/>
+
+        <!-- associations -->
+
+        <set name="crewRefs" table="PERSON_CREW" fetch="subselect" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="alias" inherit="false">crew</meta>
+            <meta attribute="key-alias">person</meta>
+            <meta attribute="key-manyToOne">minestar.machinetracking.domain.PersonReference</meta>
+            <meta attribute="universe-suffix" inherit="false">PCR</meta>
+            <meta attribute="viewproperty-crewoid" inherit="false">
+                type=string
+                expression=lookupResource.crew.oid.query
+            </meta>
+            <meta attribute="viewproperty-crew_n" inherit="false">
+                type=string
+                expression=lookupResource.crew.name.query
+            </meta>
+
+            <key column="PERSON_OID" not-null="true"/>
+            <many-to-many class="minestar.platform.domain.roster.CrewReference" column="CREW_OID" />
+        </set>
+
+        <list name="preferredMachineRefs" table="PREFERRED_MACHINE" fetch="subselect" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="choices" inherit="false">
+                service(minestar.pitlink.application.MachineCollectionProvider):Machine
+            </meta>
+            <meta attribute="alias" inherit="false">preferences</meta>
+            <meta attribute="key-alias">person</meta>
+            <meta attribute="key-manyToOne">minestar.machinetracking.domain.PersonReference</meta>
+            <meta attribute="index-alias">itemIndex</meta>
+            <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineImpl</meta>
+
+            <key column="PERSON_OID" not-null="true"/>
+            <index column="MACHINE_NR"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID"/>
+        </list>
+
+        <set name="plannedAbsences" table="PLANNED_ABSENCE" sort="natural" fetch="subselect" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                columns=PERSON_OID,START_DATE
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="key-alias">person</meta>
+            <meta attribute="key-manyToOne">minestar.machinetracking.domain.PersonReference</meta>
+            <meta attribute="element-alias"/>
+
+            <key column="PERSON_OID" not-null="true"/>
+            <composite-element class="minestar.platform.domain.calendar.PlannedAbsence">
+                <property name="startDate" type="java.util.Date" column="START_DATE" not-null="true" access="field">
+                    <meta attribute="description">The start date of the absence</meta>
+                </property>
+
+                <property name="endDate" type="java.util.Date" column="END_DATE" not-null="true" access="field">
+                    <meta attribute="description">The end date of the absence</meta>
+                </property>
+
+                <many-to-one name="reasonForAbsence" class="minestar.platform.domain.calendar.AbsenceType" column="REASON_FOR_ABSENCE" not-null="true" access="field">
+                    <meta attribute="choices" inherit="false">
+                        service(minestar.platform.application.calendar.AbsenceTypeCollectionProvider):absenceTypes
+                    </meta>
+                    <meta attribute="description">The reason for the absence</meta>
+                </many-to-one>
+            </composite-element>
+        </set>
+
+        <set name="rosteredOvertime" table="OVERTIME" sort="natural" fetch="subselect" access="field">
+
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                columns=PERSON_OID,START_DATE
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="description">The overtime performed by the person.</meta>
+
+            <meta attribute="key-alias">person</meta>
+            <meta attribute="key-manyToOne">minestar.machinetracking.domain.PersonReference</meta>
+            <meta attribute="element-alias"/>
+
+            <key column="PERSON_OID" not-null="true"/>
+            <composite-element class="minestar.platform.domain.calendar.Overtime">
+                <property name="startDate" type="java.util.Date" column="START_DATE" not-null="true" access="field">
+                    <meta attribute="description">The start date of the absence</meta>
+                </property>
+
+                <property name="endDate" type="java.util.Date" column="END_DATE" not-null="true" access="field">
+                    <meta attribute="description">The end date of the overtime</meta>
+                </property>
+
+                <property name="shiftType" type="string" length="254" column="SHIFT_TYPE" not-null="true" access="field">
+                    <meta attribute="description">The shift type of the overtime</meta>
+                </property>
+
+                <many-to-one name="shiftChangeGroupRef" class="minestar.assignment.domain.AssGroupReference" column="SHIFTCHANGEGROUP" access="field">
+                    <meta attribute="alias" inherit="false">shiftChangeGroup</meta>
+                </many-to-one>
+            </composite-element>
+        </set>
+
+        <set name="personMachineLicences" table="PERSON_MACHINE_LICENCE" fetch="subselect" access="field">
+
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                columns=PERSON_OID,LICENCE_OID
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="alias" inherit="false">machineLicences</meta>
+            <meta attribute="description">The machine licences held by the person.</meta>
+
+            <meta attribute="key-alias">person</meta>
+            <meta attribute="key-manyToOne">minestar.machinetracking.domain.PersonReference</meta>
+            <meta attribute="element-alias"/>
+
+            <key column="PERSON_OID" not-null="true"/>
+            <composite-element class="minestar.machinetracking.domain.PersonMachineLicence">
+                <many-to-one name="machineLicenceRef" class="minestar.machinetracking.domain.MachineLicenceReference"
+                             column="LICENCE_OID" not-null="true" lazy="false" access="field">
+                    <meta attribute="alias">machineLicence</meta>
+                    <meta attribute="description">MachineLicence reference</meta>
+                </many-to-one>
+
+                <property name="dateAcquired" type="java.util.Date" column="DATE_ACQUIRED" access="field">
+                    <meta attribute="description">Date licence acquired</meta>
+                </property>
+
+                <property name="lastUse" type="java.util.Date" column="LAST_USE_DATE" access="field">
+                    <meta attribute="description">Last use date of licence</meta>
+                </property>
+
+                <property name="tempExpireDate" type="java.util.Date" column="TEMP_EXPIRE_DATE" access="field">
+                    <meta attribute="description">Temporary expiry date</meta>
+                </property>
+
+                <property name="active" type="boolean" access="field">
+                    <meta attribute="description">Licence active flag</meta>
+                    <column name="IS_ACTIVE" not-null="true" default="1"/>
+                </property>
+            </composite-element>
+        </set>
+
+        <!-- The "contact" details should really be stored in the PERSON table as a direct component,
+             rather than using a join to an external table.  The join is left in to keep the
+             table model backwards compatible. -->
+        <join table="CONTACTDETAILS" optional="true">
+
+            <key column="OID" not-null="true"/>
+
+            <component name="contact" class="minestar.machinetracking.domain.ContactDetails" lazy="false" access="field">
+                <meta attribute="table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="primary-key">
+                    tablespace=MW_IDXENT
+                </meta>
+                <meta attribute="export-nested">true</meta>
+                <meta attribute="description">Contact details</meta>
+
+                <property name="address1" type="string" column="ADDRESS1" length="254" access="field">
+                    <meta attribute="description">address line 1</meta>
+                </property>
+                <property name="address2" type="string" column="ADDRESS2" length="254" access="field">
+                    <meta attribute="description">address line 2</meta>
+                </property>
+                <property name="city" type="string" column="CITY" length="254" access="field">
+                    <meta attribute="description">name of the city</meta>
+                </property>
+                <property name="emergName" type="string" column="EMERGNAME" length="254" access="field">
+                    <meta attribute="description">emergency contact name</meta>
+                </property>
+                <property name="emergPhone" type="string" column="EMERGPHONE" length="254" access="field">
+                    <meta attribute="description">emergency contact phone</meta>
+                </property>
+                <property name="mobile" type="string" column="MOBILE" length="254" access="field">
+                    <meta attribute="description">mobile number</meta>
+                </property>
+                <property name="phone" type="string" column="PHONE" length="254" access="field">
+                    <meta attribute="description">phone number</meta>
+                </property>
+                <property name="email" type="string" column="EMAIL" length="254" access="field">
+                    <meta attribute="description">email address</meta>
+                </property>
+                <property name="zip" type="string" column="POSTCODE" length="254" access="field">
+                    <meta attribute="description">address zip code</meta>
+                </property>
+                <property name="region" type="string" column="STATE" length="254" access="field">
+                    <meta attribute="description">address region</meta>
+                </property>
+                <!-- Hibernate gets confused when all properties of a component are null and
+                     assumes that the whole component is null.  This causes Hibernate to perform
+                     an INSERT instead of an UPDATE in some cases, resulting in a PK violation.
+                     The LAST_MODIFIED column is used as a token not-null column -->
+                <property name="lastModified" type="java.util.Date" access="field">
+                    <column name="LAST_MODIFIED" not-null="true" default="01-JAN-1970"/>
+                </property>
+            </component>
+        </join>
+    </class>
+
+    <class name="minestar.platform.domain.calendar.AbsenceType"
+           table="ABSENCE_TYPE"
+           lazy="false">
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=ABSENCE_TYPE_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="import-order">0</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="view-create-order">1</meta>
+        <meta attribute="description">A shift absence type</meta>
+
+        <id name="OID" type="long" column="OID" access="field">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <version name="version" access="field">
+            <meta attribute="description">The absence type version.</meta>
+        </version>
+
+        <property name="name" type="string" column="NAME" length="254" not-null="true" access="field">
+            <meta attribute="description">The name of the absence type</meta>
+        </property>
+    </class>
+
+    <!-- ****************************************************************************** -->
+    <!-- PersonReference -->
+    <!-- ****************************************************************************** -->
+    <class name="minestar.machinetracking.domain.PersonReference"
+           table="PERSON"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">PERSON_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a person</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="PERSON_OID" access="field"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true" access="field"/>
+        <property name="macPassword" type="int" column="MACPASSWORD" access="field"/>
+    </class>
+
+</hibernate-mapping>

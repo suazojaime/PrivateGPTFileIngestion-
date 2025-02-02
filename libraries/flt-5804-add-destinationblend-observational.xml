@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2017, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="5aa64860-abda-45cd-b067-f1e3d3836dd7" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for OBSERVATIONAL to table DESTINATION_BLEND as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="DESTINATION_BLEND"/>
+            <not>
+                <columnExists tableName="DESTINATION_BLEND" columnName="OBSERVATIONAL"/>
+            </not>
+        </preConditions>
+        <comment>FLT-5804: AddColumn DESTINATION_BLEND.OBSERVATIONAL</comment>
+        <addColumn tableName="DESTINATION_BLEND">
+            <column name="OBSERVATIONAL" type="BOOLEAN" defaultValueBoolean="false"
+                    remarks="False when assignment is controlling the trucks.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="SystemStorageSubRep"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="1"
+		 rightMargin="20"
+		 topMargin="1"
+		 bottomMargin="1"
+		 whenNoDataType="AllSectionsNoDetail"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<parameter name="SERVERNAME" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="MONITORSEQUENCE" isForPrompting="true" class="java.lang.Integer"/>
+	<parameter name="MONITORTYPE" isForPrompting="true" class="java.lang.String"/>
+	<queryString><![CDATA[Select * from V_ServerFileSystemStats 
+ Where ServerName = $P{SERVERNAME}
+     And MonitorSequence = $P{MONITORSEQUENCE}
+    And MonitorType = $P{MONITORTYPE}
+ Order By SystemVolume]]></queryString>
+	<field name="SERVERNAME" class="java.lang.String"/>
+	<field name="MONITORSEQUENCE" class="java.lang.Integer"/>
+	<field name="MONITORTYPE" class="java.lang.String"/>
+	<field name="SYSTEMVOLUME" class="java.lang.String"/>
+	<field name="FREESPACE" class="java.lang.Double"/>
+	<field name="TOTALSIZE" class="java.lang.Double"/>
+	<field name="PERCENTFREE" class="java.lang.Double"/>
+		<background>
+			<band height="0">
+			</band>
+		</background>
+		<title>
+			<band height="0">
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0">
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="38">
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="8"
+						y="2"
+						width="173"
+						height="18"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-BoldOblique" size="12" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Server File System Statistics</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="2"
+						y="22"
+						width="52"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>FS Volume</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="62"
+						y="22"
+						width="70"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[Free Space (Gb)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="136"
+						y="22"
+						width="45"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Total Size</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="186"
+						y="22"
+						width="30"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[% Free]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="11">
+				<rectangle>
+					<reportElement
+						mode="Opaque"
+						x="1"
+						y="0"
+						width="215"
+						height="11"
+						forecolor="#000000"
+						backcolor="#FFAF00"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false">
+							<printWhenExpression><![CDATA[new Boolean(($V{REPORT_COUNT}.longValue() % 2 != 0))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="NoStretch" pen="None" fill="Solid" />
+				</rectangle>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="2"
+						y="1"
+						width="78"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String">$F{SYSTEMVOLUME}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="94"
+						y="1"
+						width="33"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double">$F{FREESPACE}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="147"
+						y="1"
+						width="32"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double">$F{TOTALSIZE}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="186"
+						y="1"
+						width="28"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double">$F{PERCENTFREE}</textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="1">
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="1">
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="1">
+			</band>
+		</summary>
+</jasperReport>

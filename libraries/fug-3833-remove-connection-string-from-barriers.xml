@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="25390d57-85bf-40b8-9b53-6c686bf8f771" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for OPC_CONNECTION_NAME of table UG_AIS_BARRIER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UG_AIS_BARRIER" columnName="OPC_CONNECTION_NAME"/>
+        </preConditions>
+        <comment>FUG-3833: DropColumn UG_AIS_BARRIER.OPC_CONNECTION_NAME</comment>
+        <dropColumn columnName="OPC_CONNECTION_NAME" tableName="UG_AIS_BARRIER"/>
+        <rollback>
+            <addColumn tableName="UG_AIS_BARRIER">
+                <column name="OPC_CONNECTION_NAME" type="VARCHAR(254)" remarks="OPC External System task name">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

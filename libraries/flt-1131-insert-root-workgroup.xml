@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="804eee54-3af2-4d89-a400-220d3ae74eac" author="MineStar" dbms="oracle" failOnError="false">
+        <preConditions onFailMessage="'root' WorkGroup already exists" onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM WORK_GROUP WHERE NAME = 'root'</sqlCheck>
+        </preConditions>
+        <comment>FLT-1131: Insert 'root' WorkGroup</comment>
+        <sql>INSERT INTO WORK_GROUP (WORK_GROUP_OID, NAME) VALUES (nextOID(), 'root')</sql>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="eada5d3e-ffe0-423f-a318-611724e34780" author="MineStar" dbms="mssql" failOnError="false">
+        <preConditions onFailMessage="'root' WorkGroup already exists" onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM WORK_GROUP WHERE NAME = 'root'</sqlCheck>
+        </preConditions>
+        <comment>FLT-1131: Insert 'root' WorkGroup</comment>
+        <sql>CREATE TABLE #tempOID (nextOID INTEGER)</sql>
+        <sql>INSERT INTO #tempOID (nextOID) EXEC [dbo].nextOID</sql>
+        <sql>INSERT INTO WORK_GROUP (WORK_GROUP_OID, NAME) VALUES ((SELECT nextOID from #tempOID), 'root')</sql>
+        <sql>DROP TABLE #tempOID</sql>
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>

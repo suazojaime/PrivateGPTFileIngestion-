@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class
+            name="minestar.platform.domain.lookup.RCalendar"
+            table="R_CALENDAR"
+    >
+        <meta attribute="table">
+            tablespace=MW_ECF
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=R_CALENDAR_IND
+            columns=SEQ
+            unique=false
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=R_CALENDAR_IND2
+            columns=DATE_START_UTC, DATE_END_UTC
+            unique=false
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="OID"
+        >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property
+                name="dateStart"
+                type="TimestampType"
+                length="7"
+        >
+            <meta attribute="utc-description">The utc date that was started.</meta>
+            <meta attribute="description">The date that was started</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="DATE_START_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+        <property
+                name="dateEnd"
+                type="TimestampType"
+                length="7"
+        >
+            <meta attribute="utc-description">The utc date that was ended.</meta>
+            <meta attribute="description">The date that was ended</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="DATE_END_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+        <property
+                name="periodName"
+                type="java.lang.String"
+                column="PERIOD_NAME"
+                not-null="true"
+                length="80"
+        >
+        </property>
+        <property
+                name="locale"
+                type="java.lang.String"
+                column="LOCALE"
+                not-null="true"
+                length="32"
+        >
+        </property>
+        <property
+                name="name"
+                type="java.lang.String"
+                column="NAME"
+                not-null="true"
+                length="32"
+        >
+        </property>
+        <property
+                name="timezoneId"
+                type="java.lang.String"
+                column="TIMEZONE_ID"
+                not-null="true"
+                length="32"
+        >
+        </property>
+        <property
+                name="seq"
+                type="java.lang.Long"
+                column="SEQ"
+                not-null="true"
+        >
+        </property>
+        <property
+                name="rname"
+                type="java.lang.String"
+                column="R_NAME"
+                length="32"
+        >
+        </property>
+        <property
+                name="system"
+                type="java.lang.String"
+                column="SYSTEM"
+                length="32"
+        >
+        </property>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="325b9662-4e56-4a3b-95ec-e3d58d9a6b5a" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AlterColumn for CLEARING_USER_OID of table OBSTACLE_CLEAR as column does not exist or column is already nullable"
+                onFail="MARK_RAN">
+            <columnExists tableName="OBSTACLE_CLEAR" columnName="CLEARING_USER_OID"/>
+            <ext:columnIsNotNullable tableName="OBSTACLE_CLEAR" columnName="CLEARING_USER_OID"/>
+        </preConditions>
+        <comment>AHS-10036: AlterColumn OBSTACLE_CLEAR.CLEARING_USER_OID - nullability changed from false to true</comment>
+        <dropNotNullConstraint tableName="OBSTACLE_CLEAR" columnName="CLEARING_USER_OID" columnDataType="BIGINT"/>
+    </changeSet>
+
+</databaseChangeLog>

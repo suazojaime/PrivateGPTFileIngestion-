@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="e3dc212a-48a7-4f76-97b4-8940e64658a6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored deleting stopped destination blends as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="DESTINATION_BLEND"/>
+            <and>
+                <tableExists tableName="DESTINATION_BLEND_PROCESSOR"/>
+            </and>
+        </preConditions>
+        <delete tableName="DESTINATION_BLEND_PROCESSOR">
+            <where>DESTINATION_BLEND_OID IN ( SELECT OID FROM DESTINATION_BLEND WHERE END_DATE IS NOT NULL )</where>
+        </delete>
+        <delete tableName="DESTINATION_BLEND" >
+            <where>END_DATE IS NOT NULL</where>
+        </delete>
+        <comment>{FLT-4731}: Delete stopped rows from DESTINATION_BLEND</comment>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+
+</databaseChangeLog>

@@ -1,0 +1,1080 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kpiSummaries>
+
+    <fact name="main">
+        <detail name="hourInShift" expr="1.0 + int((main.endTime.getTime() - calendar.shiftStartTime.getTime() - 1000) // 3600000)" type="java.lang.Double" />
+    </fact>
+
+    <realtimeKpi if="truck" name="truckAvailability" fact="main" persisted="true" desc="Truck Availability Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+                <dimensionAttributeRef name="name"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="availableTime"/>
+            <measureRef name="totalTime"/>
+            <measureRef name="operHoursSeconds"/>
+        </measures>
+        <kpis>
+            <kpi name="_availableTimeForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="availableTime"/>
+            </kpi>
+            <kpi name="_totalTimeForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="totalTime"/>
+            </kpi>
+            <kpi name="_operHoursSecondsForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+            <rolledupKpi name="_classAvailableTimeForShift" rollupOf="_availableTimeForShift"/>
+            <rolledupKpi name="_classTotalTimeForShift" rollupOf="_totalTimeForShift"/>
+            <rolledupKpi name="_classOperHoursSecondsForShift" rollupOf="_operHoursSecondsForShift"/>
+
+            <rolledupKpi name="_totalAvailableTimeForShift" rollupOf="_classAvailableTimeForShift"/>
+            <rolledupKpi name="_totalTotalTimeForShift" rollupOf="_classTotalTimeForShift"/>
+            <rolledupKpi name="_totalOperHoursSecondsForShift" rollupOf="_classOperHoursSecondsForShift"/>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="unitAvailability"
+                              if="kpi._totalTimeForShift &gt; 0"
+                              expr="kpi._availableTimeForShift * 100 / kpi._totalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+            <calculatedMember name="unitUseOfAvailability"
+                              if="kpi._availableTimeForShift &gt; 0"
+                              expr="kpi._operHoursSecondsForShift * 100 / kpi._availableTimeForShift"
+                  label="Use Of Availability" 
+                              unitType="ratio"/>
+            <calculatedMember name="availability"
+                              if="kpi._classTotalTimeForShift &gt; 0"
+                              expr="kpi._classAvailableTimeForShift * 100 / kpi._classTotalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+            <calculatedMember name="useOfAvailability"
+                              if="kpi._classAvailableTimeForShift &gt; 0"
+                              expr="kpi._classOperHoursSecondsForShift * 100 / kpi._classAvailableTimeForShift"
+                  label="Use Of Availability" 
+                              unitType="ratio"/>
+
+            <calculatedMember name="totalAvailability"
+                              if="kpi._totalTotalTimeForShift &gt; 0"
+                              expr="kpi._totalAvailableTimeForShift * 100 / kpi._totalTotalTimeForShift"
+                              label="Total Availability"
+                              unitType="ratio"/>
+            <calculatedMember name="totalUseOfAvailability"
+                              if="kpi._totalAvailableTimeForShift &gt; 0"
+                              expr="kpi._totalOperHoursSecondsForShift * 100 / kpi._totalAvailableTimeForShift"
+                              label="Total Use Of Availability" 
+                              unitType="ratio"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="loader" name="loaderAvailability" fact="main" persisted="true" desc="Loader Availability Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="categoryName"/>
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="availableTime"/>
+            <measureRef name="totalTime"/>
+            <measureRef name="operHoursSeconds"/>
+        </measures>
+        <kpis>
+            <kpi name="_availableTimeForShift" if="primaryMachine.categoryName != &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="availableTime"/>
+            </kpi>
+            <kpi name="_totalTimeForShift" if="primaryMachine.categoryName != &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="totalTime"/>
+            </kpi>
+            <kpi name="_operHoursSecondsForShift" if="primaryMachine.categoryName != &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+            <rolledupKpi name="_categoryAvailableTimeForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_availableTimeForShift"/>
+            <rolledupKpi name="_totalAvailableTimeForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_categoryAvailableTimeForShift"/>
+            <rolledupKpi name="_categoryTotalTimeForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_totalTimeForShift"/>
+            <rolledupKpi name="_totalTotalTimeForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_categoryTotalTimeForShift"/>
+            <rolledupKpi name="_categoryOperHoursSecondsForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_operHoursSecondsForShift"/>
+            <rolledupKpi name="_totalOperHoursSecondsForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_categoryOperHoursSecondsForShift"/>
+        </kpis>
+        <calculatedMembers>
+            <calculatedMember name="availability"
+                              if="kpi._totalTimeForShift &gt; 0 and primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                              expr="kpi._availableTimeForShift * 100 / kpi._totalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="useOfAvailability"
+                              if="kpi._availableTimeForShift &gt; 0 and primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                              expr="kpi._operHoursSecondsForShift * 100 / kpi._availableTimeForShift"
+                              label="Use Of Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="totalAvailability"
+                              if="kpi._totalTotalTimeForShift &gt; 0 and primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                              expr="kpi._totalAvailableTimeForShift * 100 / kpi._totalTotalTimeForShift"
+                              label="Total Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="totalUseOfAvailability"
+                              if="kpi._totalAvailableTimeForShift &gt; 0 and primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                              expr="kpi._totalOperHoursSecondsForShift * 100 / kpi._totalAvailableTimeForShift"
+                              label="Total Use Of Availability"
+                              unitType="ratio"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="loader" name="shovelAvailability" fact="main" persisted="true" desc="Shovel Availability Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="categoryName"/>
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="availableTime"/>
+            <measureRef name="totalTime"/>
+            <measureRef name="operHoursSeconds"/>
+        </measures>
+        <kpis>
+            <kpi name="_availableTimeForShift" if="primaryMachine.categoryName == &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="availableTime"/>
+            </kpi>
+            <kpi name="_totalTimeForShift" if="primaryMachine.categoryName == &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="totalTime"/>
+            </kpi>
+            <kpi name="_operHoursSecondsForShift" if="primaryMachine.categoryName == &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+            <rolledupKpi name="_totalAvailableTimeForShift"
+                         if="primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                         rollupOf="_availableTimeForShift"/>
+            <rolledupKpi name="_totalTotalTimeForShift"
+                         if="primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                         rollupOf="_totalTimeForShift"/>
+            <rolledupKpi name="_totalOperHoursSecondsForShift"
+                         if="primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                         rollupOf="_operHoursSecondsForShift"/>
+        </kpis>
+        <calculatedMembers>
+            <calculatedMember name="availability"
+                              if="kpi._totalTimeForShift &gt; 0 and primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                              expr="kpi._availableTimeForShift * 100 / kpi._totalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="useOfAvailability"
+                              if="kpi._availableTimeForShift &gt; 0 and primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                              expr="kpi._operHoursSecondsForShift * 100 / kpi._availableTimeForShift"
+                              label="Use Of Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="totalAvailability"
+                              if="kpi._totalTotalTimeForShift &gt; 0 and primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                              expr="kpi._totalAvailableTimeForShift * 100 / kpi._totalTotalTimeForShift"
+                              label="Total Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="totalUseOfAvailability"
+                              if="kpi._totalAvailableTimeForShift &gt; 0 and primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                              expr="kpi._totalOperHoursSecondsForShift * 100 / kpi._totalAvailableTimeForShift"
+                              label="Total Use Of Availability"
+                              unitType="ratio"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="loadHaulDump" name="lhdAvailability" fact="main" persisted="true"
+                 desc="Load Haul Dump Availability Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+                <dimensionAttributeRef name="name"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="availableTime"/>
+            <measureRef name="totalTime"/>
+            <measureRef name="operHoursSeconds"/>
+        </measures>
+        <kpis>
+            <kpi name="_availableTimeForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="availableTime"/>
+            </kpi>
+            <kpi name="_totalTimeForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="totalTime"/>
+            </kpi>
+            <kpi name="_operHoursSecondsForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+            <rolledupKpi name="_classAvailableTimeForShift" rollupOf="_availableTimeForShift"/>
+            <rolledupKpi name="_classTotalTimeForShift" rollupOf="_totalTimeForShift"/>
+            <rolledupKpi name="_classOperHoursSecondsForShift" rollupOf="_operHoursSecondsForShift"/>
+
+            <rolledupKpi name="_totalAvailableTimeForShift" rollupOf="_classAvailableTimeForShift"/>
+            <rolledupKpi name="_totalTotalTimeForShift" rollupOf="_classTotalTimeForShift"/>
+            <rolledupKpi name="_totalOperHoursSecondsForShift" rollupOf="_classOperHoursSecondsForShift"/>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="unitAvailability"
+                              if="kpi._totalTimeForShift &gt; 0"
+                              expr="kpi._availableTimeForShift * 100 / kpi._totalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+            <calculatedMember name="unitUseOfAvailability"
+                              if="kpi._availableTimeForShift &gt; 0"
+                              expr="kpi._operHoursSecondsForShift * 100 / kpi._availableTimeForShift"
+                              label="Use of Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="availability"
+                              if="kpi._classTotalTimeForShift &gt; 0"
+                              expr="kpi._classAvailableTimeForShift * 100 / kpi._classTotalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+            <calculatedMember name="useOfAvailability"
+                              if="kpi._classAvailableTimeForShift &gt; 0"
+                              expr="kpi._classOperHoursSecondsForShift * 100 / kpi._classAvailableTimeForShift"
+                              label="Use of Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="totalAvailability"
+                              if="kpi._totalTotalTimeForShift &gt; 0"
+                              expr="kpi._totalAvailableTimeForShift * 100 / kpi._totalTotalTimeForShift"
+                              label="Total Availability"
+                              unitType="ratio"/>
+            <calculatedMember name="totalUseOfAvailability"
+                              if="kpi._totalAvailableTimeForShift &gt; 0"
+                              expr="kpi._totalOperHoursSecondsForShift * 100 / kpi._totalAvailableTimeForShift"
+                              label="Total Use of Availability"
+                              unitType="ratio"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckFleetAvailability" fact="main" persisted="true" desc="Truck Availability Kpis per Fleet">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <multiValueDimensionAttributeRef name="fleetNames" singleName="fleetName" separator="," />
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="availableTime"/>
+            <measureRef name="totalTime"/>
+            <measureRef name="operHoursSeconds"/>
+        </measures>
+        <kpis>
+            <kpi name="_availableTimeForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="availableTime"/>
+            </kpi>
+            <kpi name="_totalTimeForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="totalTime"/>
+            </kpi>
+            <kpi name="_operHoursSecondsForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="availability"
+                              if="kpi._totalTimeForShift &gt; 0"
+                              expr="kpi._availableTimeForShift * 100 / kpi._totalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+            <calculatedMember name="useOfAvailability"
+                              if="kpi._availableTimeForShift &gt; 0"
+                              expr="kpi._operHoursSecondsForShift * 100 / kpi._availableTimeForShift"
+                              label="Use Of Availability"
+                              unitType="ratio"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="loadHaulDump" name="lhdFleetAvailability" fact="main" persisted="true" desc="LHD Availability Kpis per Fleet">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <multiValueDimensionAttributeRef name="fleetNames" singleName="fleetName" separator="," />
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="availableTime"/>
+            <measureRef name="totalTime"/>
+            <measureRef name="operHoursSeconds"/>
+        </measures>
+        <kpis>
+            <kpi name="_availableTimeForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="availableTime"/>
+            </kpi>
+            <kpi name="_totalTimeForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="totalTime"/>
+            </kpi>
+            <kpi name="_operHoursSecondsForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="availability"
+                              if="kpi._totalTimeForShift &gt; 0"
+                              expr="kpi._availableTimeForShift * 100 / kpi._totalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+            <calculatedMember name="useOfAvailability"
+                              if="kpi._availableTimeForShift &gt; 0"
+                              expr="kpi._operHoursSecondsForShift * 100 / kpi._availableTimeForShift"
+                              label="Use Of Availability"
+                              unitType="ratio"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckSpotting" fact="main" persisted="true" desc="Truck Spotting Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+            <dimensionRef name="secondaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="spottingAtSourceDuration"/>
+        </measures>
+
+        <kpis>
+            <kpi name="averageSpottingForShiftPerTruckClassPerLoaderClass" stat="mean" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="spottingAtSourceDuration"/>
+            </kpi>
+            <rolledupKpi name="averageSpottingForShiftPerTruckClass" rollupOf="averageSpottingForShiftPerTruckClassPerLoaderClass"/>
+            <rolledupKpi name="averageSpottingForShift" rollupOf="averageSpottingForShiftPerTruckClass"/>
+        </kpis>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckWaitForLoad" fact="main" persisted="true" desc="Truck Wait For Load Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+            <dimensionRef name="secondaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="waitForLoadDuration"/>
+        </measures>
+
+        <kpis>
+            <kpi name="averageWaitForLoadForShiftPerTruckClassPerLoaderClass" stat="mean" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="waitForLoadDuration"/>
+            </kpi>
+            <rolledupKpi name="averageWaitForLoadForShiftPerTruckClass" rollupOf="averageWaitForLoadForShiftPerTruckClassPerLoaderClass"/>
+            <rolledupKpi name="averageWaitForLoadForShift" rollupOf="averageWaitForLoadForShiftPerTruckClass"/>
+        </kpis>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckWaitForDump" fact="main" persisted="true" desc="Truck Wait For Dump Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+            <dimensionRef name="secondaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="waitForDumpDuration"/>
+        </measures>
+
+        <kpis>
+            <kpi name="averageWaitForDumpForShiftPerTruckClassPerLoaderClass" stat="mean" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="waitForDumpDuration"/>
+            </kpi>
+            <rolledupKpi name="averageWaitForDumpForShiftPerTruckClass" rollupOf="averageWaitForDumpForShiftPerTruckClassPerLoaderClass"/>
+            <rolledupKpi name="averageWaitForDumpForShift" rollupOf="averageWaitForDumpForShiftPerTruckClass"/>
+        </kpis>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckQueuing" fact="main" persisted="true" desc="Truck Queuing Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+            <dimensionRef name="secondaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="queuingAtSourceDuration"/>
+        </measures>
+
+        <kpis>
+            <kpi name="averageQueuingForShiftPerTruckClassPerLoaderClass" stat="mean" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="queuingAtSourceDuration"/>
+            </kpi>
+            <rolledupKpi name="averageQueuingForShiftPerTruckClass" rollupOf="averageQueuingForShiftPerTruckClassPerLoaderClass"/>
+            <rolledupKpi name="averageQueuingForShift" rollupOf="averageQueuingForShiftPerTruckClass"/>
+        </kpis>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckTonsPerOperHour" fact="main" persisted="true" desc="Truck Tons per Oper Hour Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="operHoursSeconds"/>
+            <measureRef name="payloadReporting"/>
+        </measures>
+
+        <kpis>
+            <kpi name="_operHoursSecondsForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+
+            <kpi name="_totalTonsForShift" stat="sum" type="shift" label="Total Tons" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+            <rolledupKpi name="_totalOperHoursSecondsForShift"
+                         rollupOf="_operHoursSecondsForShift"/>
+            <rolledupKpi name="_totalTotalTonsForShift"
+                         rollupOf="_totalTonsForShift"/>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="tonsPerOperHour"
+                              if="kpi._operHoursSecondsForShift &gt; 0"
+                              expr="kpi._totalTonsForShift * 3600 / kpi._operHoursSecondsForShift"
+                              label="Tons Per Oper Hour"
+                              unitType="rate"/>
+            <calculatedMember name="truckTonsPerOperHour"
+                              if="kpi._totalOperHoursSecondsForShift &gt; 0"
+                              expr="kpi._totalTotalTonsForShift * 3600 / kpi._totalOperHoursSecondsForShift"
+                              label="Total Tons Per Oper Hour"
+                              unitType="rate"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="loader" name="loaderTonsPerOperHour" fact="main" persisted="true" desc="Loader Tons per Oper Hour Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="categoryName"/>
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="operHoursSeconds"/>
+            <measureRef name="payloadReporting"/>
+        </measures>
+
+        <kpis>
+            <kpi name="_operHoursSecondsForShift" if="primaryMachine.categoryName != &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+
+            <kpi name="_totalTonsForShift" if="primaryMachine.categoryName != &apos;Shovel Classes&apos;" stat="sum" type="shift" label="Total Tons" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+            <rolledupKpi name="_categoryOperHoursSecondsForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_operHoursSecondsForShift"/>
+            <rolledupKpi name="_totalOperHoursSecondsForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_categoryOperHoursSecondsForShift"/>
+            <rolledupKpi name="_categoryTotalTonsForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_totalTonsForShift"/>
+            <rolledupKpi name="_totalTotalTonsForShift"
+                         if="primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                         rollupOf="_categoryTotalTonsForShift"/>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="tonsPerOperHour"
+                              if="kpi._operHoursSecondsForShift &gt; 0 and primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                              expr="kpi._totalTonsForShift * 3600 / kpi._operHoursSecondsForShift"
+                              label="Tons Per Oper Hour"
+                              unitType="rate"/>
+            <calculatedMember name="loaderTonsPerOperHour"
+                              if="kpi._totalOperHoursSecondsForShift &gt; 0 and primaryMachine.categoryName != &apos;Shovel Classes&apos;"
+                              expr="kpi._totalTotalTonsForShift * 3600 / kpi._totalOperHoursSecondsForShift"
+                              label="Total Tons Per Oper Hour"
+                              unitType="rate"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="loader" name="shovelTonsPerOperHour" fact="main" persisted="true" desc="Shovel Tons per Oper Hour Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="categoryName"/>
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="operHoursSeconds"/>
+            <measureRef name="payloadReporting"/>
+        </measures>
+
+        <kpis>
+            <kpi name="_operHoursSecondsForShift" if="primaryMachine.categoryName == &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+
+            <kpi name="_totalTonsForShift" if="primaryMachine.categoryName == &apos;Shovel Classes&apos;" stat="sum" type="shift" label="Total Tons" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+            <rolledupKpi name="_totalOperHoursSecondsForShift"
+                         if="primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                         rollupOf="_operHoursSecondsForShift"/>
+            <rolledupKpi name="_totalTotalTonsForShift"
+                         if="primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                         rollupOf="_totalTonsForShift"/>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="tonsPerOperHour"
+                              if="kpi._operHoursSecondsForShift &gt; 0 and primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                              expr="kpi._totalTonsForShift * 3600 / kpi._operHoursSecondsForShift"
+                              label="Tons Per Oper Hour"
+                              unitType="rate"/>
+            <calculatedMember name="shovelTonsPerOperHour"
+                              if="kpi._totalOperHoursSecondsForShift &gt; 0 and primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                              expr="kpi._totalTotalTonsForShift * 3600 / kpi._totalOperHoursSecondsForShift"
+                              label="Total Tons Per Oper Hour"
+                              unitType="rate"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="loadHaulDump" name="lhdTonsPerOperHour" fact="main" persisted="true"
+                 desc="Load Haul Dump Tonnes per Oper Hour Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="operHoursSeconds"/>
+            <measureRef name="payloadReporting"/>
+        </measures>
+
+        <kpis>
+            <kpi name="_operHoursSecondsForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+
+            <kpi name="_totalTonsForShift" stat="sum" type="shift" label="Total Tons" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+            <rolledupKpi name="_totalOperHoursSecondsForShift"
+                         rollupOf="_operHoursSecondsForShift"/>
+            <rolledupKpi name="_totalTotalTonsForShift"
+                         rollupOf="_totalTonsForShift"/>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="tonsPerOperHour"
+                              if="kpi._operHoursSecondsForShift &gt; 0"
+                              expr="kpi._totalTonsForShift * 3600 / kpi._operHoursSecondsForShift"
+                              label="Tonnes per Oper. Hour"
+                              unitType="rate"/>
+            <calculatedMember name="lhdTonsPerOperHour"
+                              if="kpi._totalOperHoursSecondsForShift &gt; 0"
+                              expr="kpi._totalTotalTonsForShift * 3600 / kpi._totalOperHoursSecondsForShift"
+                              label="Total Tonnes per Oper. Hour"
+                              unitType="rate"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckFleetTonsPerOperHour" fact="main" persisted="true"
+                 desc="Truck Fleet Tons per Oper Hour Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <multiValueDimensionAttributeRef name="fleetNames" singleName="fleetName" separator="," />
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="operHoursSeconds"/>
+            <measureRef name="payloadReporting"/>
+        </measures>
+
+        <kpis>
+            <kpi name="_operHoursSecondsForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+
+            <kpi name="_totalTonsForShift" stat="sum" type="shift" label="Total Tons" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="tonsPerOperHour"
+                              if="kpi._operHoursSecondsForShift &gt; 0"
+                              expr="kpi._totalTonsForShift * 3600 / kpi._operHoursSecondsForShift"
+                              label="Tons Per Oper Hour"
+                              unitType="rate"/>
+        </calculatedMembers>
+    </realtimeKpi>
+
+    <realtimeKpi if="loadHaulDump" name="lhdFleetTonsPerOperHour" fact="main" persisted="true"
+                 desc="Truck Fleet Tons per Oper Hour Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <multiValueDimensionAttributeRef name="fleetNames" singleName="fleetName" separator="," />
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="operHoursSeconds"/>
+            <measureRef name="payloadReporting"/>
+        </measures>
+
+        <kpis>
+            <kpi name="_operHoursSecondsForShift" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+
+            <kpi name="_totalTonsForShift" stat="sum" type="shift" label="Total Tons" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+        </kpis>
+
+        <calculatedMembers>
+            <calculatedMember name="tonsPerOperHour"
+                              if="kpi._operHoursSecondsForShift &gt; 0"
+                              expr="kpi._totalTonsForShift * 3600 / kpi._operHoursSecondsForShift"
+                              label="Tons Per Oper Hour"
+                              unitType="rate"/>
+        </calculatedMembers>
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckTonsPerMachineClass" fact="main" persisted="true"
+                 desc="Truck Tons per Machine Class Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="payloadReporting"/>
+        </measures>
+        <kpis>
+            <kpi name="totalForShift" stat="sum" type="shift" label="Total" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+        </kpis>
+    </realtimeKpi>
+
+    <realtimeKpi if="loadHaulDump" name="lhdTonsPerMachineClass" fact="main" persisted="true"
+                 desc="Load Haul Dump Tons per Machine Class Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="className"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="payloadReporting"/>
+        </measures>
+
+        <kpis>
+            <kpi name="totalForShift" stat="sum" type="shift" label="Total" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+        </kpis>
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckTonsPerFleet" fact="main" persisted="true"
+                 desc="Truck Tons per Fleet Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <multiValueDimensionAttributeRef name="fleetNames" singleName="fleetName" separator="," />
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="payloadReporting"/>
+        </measures>
+        <kpis>
+            <kpi name="totalForShift" stat="sum" type="shift" label="Total" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+        </kpis>
+    </realtimeKpi>
+
+    <realtimeKpi if="loadHaulDump" name="lhdTonsPerFleet" fact="main" persisted="true"
+                 desc="Load Haul Dump Tons per Fleet Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <multiValueDimensionAttributeRef name="fleetNames" singleName="fleetName" separator="," />
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="payloadReporting"/>
+        </measures>
+        <kpis>
+            <kpi name="totalForShift" stat="sum" type="shift" label="Total" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+        </kpis>
+    </realtimeKpi>
+
+    <!-- realtimeKpi if="truck" name="ounces" fact="main" desc="Ounces of product mined per shift">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <measures>
+            <measureRef name="gradeProductAUFA"/>
+        </measures>
+        <kpis>
+            <kpi name="shiftOunces" stat="sum" type="shift" label="AUFA" unitType="mass ounce" active="true">
+                <parameter name="measure" valueRef="gradeProductAUFA"/>
+            </kpi>
+        </kpis>
+    </realtimeKpi-->
+
+    <realtimeKpi if="truck" name="hourlyTonsMined" fact="main" persisted="true" desc="Tons Mined in Each Hour of Shift" shiftCheck="true">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+
+        <dimensions>
+            <detailRef name="hourInShift"/>
+        </dimensions>
+        <measures>
+            <measureRef name="payloadReporting"/>
+        </measures>
+        <kpis>
+            <kpi name="tonsMined" stat="sum" type="shift" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+            <rolledupKpi name="cumulativeTonsMined" rollupOf="tonsMined"/>
+        </kpis>
+        <calculatedMembers>
+            <calculatedMember name="hourlyCumulativeTonsMined" if="kpi.cumulativeTonsMined > 0.0" expr="kpi.cumulativeTonsMined" unitType="mass" numDimensions="1" />
+        </calculatedMembers>
+    </realtimeKpi>
+
+    <realtimeKpi if="loadHaulDump" name="lhdHourlyTonsMined" fact="main" persisted="true" desc="Tons Mined in Each Hour of Shift">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <detailRef name="hourInShift"/>
+        </dimensions>
+        <measures>
+            <measureRef name="payloadReporting"/>
+        </measures>
+        <kpis>
+            <kpi name="tonsMined" stat="sum" type="shift" unitType="mass" active="true">
+                <parameter name="measure" valueRef="payloadReporting"/>
+            </kpi>
+            <rolledupKpi name="cumulativeTonsMined" rollupOf="tonsMined"/>
+        </kpis>
+        <calculatedMembers>
+            <calculatedMember name="hourlyCumulativeTonsMined"
+                              if="kpi.cumulativeTonsMined > 0.0"
+                              expr="kpi.cumulativeTonsMined"
+                              unitType="mass"
+                              numDimensions="1" />
+        </calculatedMembers>
+    </realtimeKpi>
+
+    <realtimeKpi if="loader" name="loaderHangTime" fact="main" persisted="true" desc="Loader Hang Time Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="name"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="hangTimeDuration"/>
+        </measures>
+
+        <kpis>
+            <kpi name="averageHangTimeForShiftPerLoadingTool" if="primaryMachine.categoryName != &apos;Loadout Unit&apos;" stat="mean" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="hangTimeDuration"/>
+            </kpi>
+            <rolledupKpi name="averageHangTimeForShift" rollupOf="averageHangTimeForShiftPerLoadingTool"/>
+        </kpis>
+
+    </realtimeKpi>
+
+    <realtimeKpi if="truck" name="truckActivity" fact="main" persisted="true" machineType="truck" desc="Truck Activity Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+
+        <measures>
+            <measureRef name="travellingEmptyDuration"/>
+            <measureRef name="queuingAtSourceDuration"/>
+            <measureRef name="spottingAtSourceDuration"/>
+            <measureRef name="waitForLoadDuration"/>
+            <measureRef name="loadingDuration"/>
+            <measureRef name="travellingFullDuration"/>
+            <measureRef name="queuingAtSinkDuration"/>
+            <measureRef name="spottingAtSinkDuration"/>
+            <measureRef name="waitForDumpDuration"/>
+            <measureRef name="dumpingDuration"/>
+        </measures>
+        <kpis>
+            <kpi name="travellingEmptyTime" stat="mean" type="shift"  label="Travelling Empty        " unitType="duration" active="true">
+                <parameter name="measure" valueRef="travellingEmptyDuration"/>
+            </kpi>
+            <kpi name="queuingAtSourceTime" stat="mean" type="shift"  label="Queuing at Loading Tool " unitType="duration" active="true">
+                <parameter name="measure" valueRef="queuingAtSourceDuration"/>
+            </kpi>
+            <kpi name="spottingAtSourceTime" stat="mean" type="shift" label="Spotting at Loading Tool" unitType="duration" active="true">
+                <parameter name="measure" valueRef="spottingAtSourceDuration"/>
+            </kpi>
+            <kpi name="waitForLoadTime" stat="mean" type="shift"      label="Wait for Load at Loading Tool" unitType="duration" active="true">
+                <parameter name="measure" valueRef="waitForLoadDuration"/>
+            </kpi>
+            <kpi name="loadingTime" stat="mean" type="shift"          label="Loading at Loading Tool" unitType="duration" active="true">
+                <parameter name="measure" valueRef="loadingDuration"/>
+            </kpi>
+            <kpi name="travellingFullTime" stat="mean" type="shift"   label="Travelling Full" unitType="duration" active="true">
+                <parameter name="measure" valueRef="travellingFullDuration"/>
+            </kpi>
+            <kpi name="queuingAtSinkTime" stat="mean" type="shift"    label="Queuing At Dump" unitType="duration" active="true">
+                <parameter name="measure" valueRef="queuingAtSinkDuration"/>
+            </kpi>
+            <kpi name="spottingAtSinkTime" stat="mean" type="shift"   label="Spotting At Dump" unitType="duration" active="true">
+                <parameter name="measure" valueRef="spottingAtSinkDuration"/>
+            </kpi>
+            <kpi name="waitForDumpTime" stat="mean" type="shift"      label="Wait for Dump at Dump" unitType="duration" active="true">
+                <parameter name="measure" valueRef="waitForDumpDuration"/>
+            </kpi>
+            <kpi name="dumpingTime" stat="mean" type="shift" label="Dumping at Dump" unitType="duration" active="true">
+                <parameter name="measure" valueRef="dumpingDuration"/>
+            </kpi>
+        </kpis>
+    </realtimeKpi>
+
+    <realtimeKpi if="loadHaulDump" name="lhdActivity" fact="main" persisted="true" desc="Load Haul Dump Activity Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+
+        <measures>
+            <measureRef name="travellingEmptyDuration"/>
+            <measureRef name="loadingDuration"/>
+            <measureRef name="travellingFullDuration"/>
+            <measureRef name="dumpingDuration"/>
+        </measures>
+        <kpis>
+            <kpi name="travellingEmptyTime" stat="mean" type="shift" label="Travelling Empty" unitType="duration" active="true">
+                <parameter name="measure" valueRef="travellingEmptyDuration"/>
+            </kpi>
+            <kpi name="loadingTime" stat="mean" type="shift" label="Loading" unitType="duration" active="true">
+                <parameter name="measure" valueRef="loadingDuration"/>
+            </kpi>
+            <kpi name="travellingFullTime" stat="mean" type="shift" label="Travelling Full" unitType="duration" active="true">
+                <parameter name="measure" valueRef="travellingFullDuration"/>
+            </kpi>
+            <kpi name="dumpingTime" stat="mean" type="shift" label="Dumping" unitType="duration" active="true">
+                <parameter name="measure" valueRef="dumpingDuration"/>
+            </kpi>
+        </kpis>
+    </realtimeKpi>
+
+    <!-- This one is similar to truckActivity but splits VIMS and non-VIMS trucks 
+    <realtimeKpi if="truck" name="vimsTruckActivity" fact="main" machineType="truck" desc="VIMS Truck Activity Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="isVimsEnabled"/>
+            </dimensionRef>
+        </dimensions>
+
+        <measures>
+            <measureRef name="travellingEmptyDuration"/>
+            <measureRef name="queuingAtSourceDuration"/>
+            <measureRef name="spottingAtSourceDuration"/>
+            <measureRef name="loadingDuration"/>
+            <measureRef name="travellingFullDuration"/>
+            <measureRef name="queuingAtSinkDuration"/>
+            <measureRef name="spottingAtSinkDuration"/>
+            <measureRef name="dumpingDuration"/>
+        </measures>
+        <kpis>
+            <kpi name="travellingEmptyTime" stat="mean" type="shift" label="Travelling Empty Time" unitType="duration" active="true">
+                <parameter name="measure" valueRef="travellingEmptyDuration"/>
+            </kpi>
+            <kpi name="queuingAtSourceTime" stat="mean" type="shift" label="Queuing At Source Time" unitType="duration" active="true">
+                <parameter name="measure" valueRef="queuingAtSourceDuration"/>
+            </kpi>
+            <kpi name="spottingAtSourceTime" stat="mean" type="shift" label="Spotting At Source Time" unitType="duration" active="true">
+                <parameter name="measure" valueRef="spottingAtSourceDuration"/>
+            </kpi>
+            <kpi name="loadingTime" stat="mean" type="shift" label="Loading Time" unitType="duration" active="true">
+                <parameter name="measure" valueRef="loadingDuration"/>
+            </kpi>
+            <kpi name="travellingFullTime" stat="mean" type="shift" label="Travelling Full Time" unitType="duration" active="true">
+                <parameter name="measure" valueRef="travellingFullDuration"/>
+            </kpi>
+            <kpi name="queuingAtSinkTime" stat="mean" type="shift" label="Queuing At Sink Time" unitType="duration" active="true">
+                <parameter name="measure" valueRef="queuingAtSinkDuration"/>
+            </kpi>
+            <kpi name="spottingAtSinkTime" stat="mean" type="shift" label="Spotting At Sink Time" unitType="duration" active="true">
+                <parameter name="measure" valueRef="spottingAtSinkDuration"/>
+            </kpi>
+            <kpi name="dumpingTime" stat="mean" type="shift" label="Dumping Time" unitType="duration" active="true">
+                <parameter name="measure" valueRef="dumpingDuration"/>
+            </kpi>
+        </kpis>
+    </realtimeKpi>
+    -->
+
+    <realtimeKpi if="truck" name="truckEFH" fact="main" persisted="true" desc="Truck EFH Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="name"/>
+            </dimensionRef>
+        </dimensions>
+
+        <measures>
+            <measureRef name="totalEfhLength"/>
+        </measures>
+
+        <kpis>
+            <kpi name="averageEfhByTruckForShift" stat="mean" type="shift" unitType="length">
+                <parameter name="measure" valueRef="totalEfhLength"/>
+            </kpi>
+            <rolledupKpi name="averageEfhForShift" rollupOf="averageEfhByTruckForShift"/>
+        </kpis>
+
+    </realtimeKpi>
+
+   <realtimeKpi if="loader" name="testshovelAvailability" fact="main" persisted="true" desc="Test Shovel Availability Kpis">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="name"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="availableTime"/>
+            <measureRef name="totalTime"/>
+            <measureRef name="operHoursSeconds"/>
+        </measures>
+        <kpis>
+            <kpi name="_availableTimeForShift" if="primaryMachine.categoryName == &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="availableTime"/>
+            </kpi>
+            <kpi name="_totalTimeForShift" if="primaryMachine.categoryName == &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="totalTime"/>
+            </kpi>
+            <kpi name="_operHoursSecondsForShift" if="primaryMachine.categoryName == &apos;Shovel Classes&apos;" stat="sum" type="shift" unitType="duration">
+                <parameter name="measure" valueRef="operHoursSeconds"/>
+            </kpi>
+        </kpis>
+        <calculatedMembers>
+            <calculatedMember name="availability"
+                              if="kpi._totalTimeForShift &gt; 0 and primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                              expr="kpi._availableTimeForShift * 100 / kpi._totalTimeForShift"
+                              label="Availability"
+                              unitType="ratio"/>
+
+            <calculatedMember name="useOfAvailability"
+                              if="kpi._availableTimeForShift &gt; 0 and primaryMachine.categoryName == &apos;Shovel Classes&apos;"
+                              expr="kpi._operHoursSecondsForShift * 100 / kpi._availableTimeForShift"
+                              label="Use Of Availability"
+                              unitType="ratio"/>
+        </calculatedMembers>
+
+    </realtimeKpi>
+</kpiSummaries>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?><!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+
+    <classdef name="minestar.assignment.domain.TransportVehicle">
+
+        <propertygroup name="details">
+            <uigroupdef mode="tab"/>
+            <propertydef name="OID" access="readonly">
+                <typedef>
+                    <type code="long"/>
+                </typedef>
+                <uidef visiblewhen="false"/>
+            </propertydef>
+
+            <propertydef name="name" label="Name*">
+                <validationdef name="required" type="shared"/>
+            </propertydef>
+
+            <propertydef name="description"/>
+
+            <propertydef name="seats">
+                <defaultvalue class="java.lang.Integer">0</defaultvalue>
+            </propertydef>
+
+            <propertydef name="dedicatedDriver">
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+            </propertydef>
+
+            <propertydef name="excludeFromTransAllocation" label="Exclude from transport allocation">
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+            </propertydef>
+
+            <propertydef name="shiftChangeGroup">
+                <uidef visiblewhen="testConfigOption('com.mincom.works.shiftchange.Config', 'useShiftChangeGroups')"/>
+            </propertydef>
+
+        </propertygroup>
+
+        <propertygroup name="send" label="Run">
+            <uigroupdef mode="tab"/>
+
+            <propertydef name="locationRun" label="Stations">
+                <uidef widget="ordered" custom="{setOrderArrows=Boolean(false)}"/>
+            </propertydef>
+
+            <propertydef name="machineRun" label="Loading Tools">
+                <uidef widget="ordered" custom="{setOrderArrows=Boolean(false)}"/>
+            </propertydef>
+
+        </propertygroup>
+
+        <validationgroup name="Name uniqeness check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+
+    </classdef>
+</classdefs>

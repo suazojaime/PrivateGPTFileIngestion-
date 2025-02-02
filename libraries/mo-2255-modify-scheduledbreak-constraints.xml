@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="e2c1785c-3978-4da1-9464-691920fd6d3e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for SCHEDULEDBREAK.BREAKTIME_UTC as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="SCHEDULEDBREAK" columnName="BREAKTIME_UTC"/>
+        </preConditions>
+        <comment>MO-2255: AddNotNullConstraint to SCHEDULEDBREAK.BREAKTIME_UTC</comment>
+        <sql>DELETE FROM SCHEDULEDBREAK WHERE BREAKTIME_UTC IS NULL</sql>
+        <addNotNullConstraint columnName="BREAKTIME_UTC" columnDataType="DATETIME2" tableName="SCHEDULEDBREAK"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SCHEDULEDBREAK" columnName="BREAKTIME_UTC" columnDataType="DATETIME2"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="ca3a886d-71b6-4015-b302-9590184f0a41" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for SCHEDULEDBREAK.SESSIONCOUNT as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="SCHEDULEDBREAK" columnName="SESSIONCOUNT"/>
+        </preConditions>
+        <comment>MO-2255: AddNotNullConstraint to SCHEDULEDBREAK.SESSIONCOUNT</comment>
+        <sql>UPDATE SCHEDULEDBREAK SET SESSIONCOUNT = 0 WHERE SESSIONCOUNT IS NULL</sql>
+        <addNotNullConstraint columnName="SESSIONCOUNT" columnDataType="INT" tableName="SCHEDULEDBREAK"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SCHEDULEDBREAK" columnName="SESSIONCOUNT" columnDataType="INT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="e9b69b49-1acc-4bec-ad85-76c6a8caf602" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for SCHEDULEDBREAK.SHIFTDATE_UTC as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="SCHEDULEDBREAK" columnName="SHIFTDATE_UTC"/>
+        </preConditions>
+        <comment>MO-2255: AddNotNullConstraint to SCHEDULEDBREAK.SHIFTDATE_UTC</comment>
+        <sql>DELETE FROM SCHEDULEDBREAK WHERE SHIFTDATE_UTC IS NULL</sql>
+        <addNotNullConstraint columnName="SHIFTDATE_UTC" columnDataType="DATETIME2" tableName="SCHEDULEDBREAK"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SCHEDULEDBREAK" columnName="SHIFTDATE_UTC" columnDataType="DATETIME2"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="78d7d16b-698f-4642-a928-8e531934e60a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for SCHEDULEDBREAK.ALLOWREFUELING as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="SCHEDULEDBREAK" columnName="ALLOWREFUELING"/>
+        </preConditions>
+        <comment>MO-2255: AddNotNullConstraint to SCHEDULEDBREAK.ALLOWREFUELING</comment>
+        <sql>UPDATE SCHEDULEDBREAK SET ALLOWREFUELING = 0 WHERE ALLOWREFUELING IS NULL</sql>
+        <addNotNullConstraint columnName="ALLOWREFUELING" columnDataType="BOOLEAN" tableName="SCHEDULEDBREAK"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SCHEDULEDBREAK" columnName="ALLOWREFUELING" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

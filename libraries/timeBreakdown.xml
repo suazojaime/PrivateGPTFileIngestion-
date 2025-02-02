@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE kpiSummaries SYSTEM "../kpisummaries.dtd">
+
+<kpiSummaries context="cycle" tablePrefix="CYCLE_">
+    <fact name="main">
+        <!-- Activity measures -->
+        <measure if="prod" name="travellingEmptyDuration" expr="cycle.activities.travellingEmptyDuration" unitType="duration" category="activity" desc="The duration of the travelling empty activity of the cycle." insert="custom activity"/>
+        <measure if="prod" name="travellingFullDuration" expr="cycle.activities.travellingFullDuration" unitType="duration" category="activity" desc="The duration of the travelling full activity of the cycle." insert="custom activity"/>
+        <measure if="prod" name="loadingDuration" expr="cycle.activities.loadingDuration" unitType="duration" category="activity" desc="The loading duration of the loading activity of the cycle." insert="custom activity"/>
+        <!-- Truck Activities -->
+        <measure if="truck" name="queuingAtSourceDuration" expr="cycle.activities.queuingAtSourceDuration" unitType="duration" category="activity" desc="The duration of the queuing at source activity time for truck cycles." insert="custom activity"/>
+        <measure if="truck" name="spottingAtSourceDuration" expr="cycle.activities.spottingAtSourceDuration" unitType="duration" category="activity" desc="The duration of the spotting at source activity time for truck cycles." insert="custom activity"/>
+        <measure if="truck" name="queuingAtSinkDuration" expr="cycle.activities.queuingAtSinkDuration" unitType="duration" category="activity" desc="The duration of the queuing at sink activity time for truck cycles" insert="custom activity"/>
+        <measure if="truck" name="spottingAtSinkDuration" expr="cycle.activities.spottingAtSinkDuration" unitType="duration" category="activity" desc="The duration of the spotting at sink activity time for truck cycles" insert="custom activity"/>
+        <measure if="truck" name="dumpingDuration" expr="cycle.activities.dumpingDuration" unitType="duration" category="activity" desc="The duration of the dumping activity time for truck cycles." insert="custom activity"/>
+        <measure if="truck" name="waitForLoadDuration" expr="cycle.activities.waitForLoadDuration" unitType="duration" category="activity"  desc="The duration of the wait for load activity for truck cycles" insert="custom activity"/>
+        <measure if="truck" name="queuingDuration" expr="main.queuingAtSourceDuration + main.queuingAtSinkDuration" unitType="duration" category="activity" desc="The duration of both queuing at sink and queuing at source added together" insert="custom activity"/>
+        <measure if="truck" name="spottingDuration" expr="main.spottingAtSourceDuration + main.spottingAtSinkDuration" unitType="duration" category="activity" desc="The duration of both spotting at sink and spotting at source added together" insert="custom activity"/>
+        <!-- Loading Tool Activities -->
+        <measure if="loader" name="hangTimeDuration" expr="cycle.activities.hangTimeDuration" unitType="duration" category="activity" desc='The duration of the "Hang.Time" activity for loader cycles' insert="custom activity"/>
+        <measure if="loader" name="waitForSpotDuration" expr="cycle.activities.waitForSpotDuration" unitType="duration" category="activity"  desc="The duration of the wait for spot activity for loader cycles" insert="custom activity"/>
+        <measure if="loader" name="lhdDuration" expr='cycle.activities.getDurationByActivity("LHD")' unitType="duration" category="activity"  desc='The duration of the "LHD" activity for loader cycles' insert="custom activity"/>
+        <measure if="loader" name="auxDuration" expr='cycle.activities.getDurationByActivity("AUX")' unitType="duration" category="activity"  desc='The duration of the "AUX" activity for loader cycles' insert="custom activity"/>
+        <!-- Aquila Drill Activities -->
+        <measure if="drill" name="drillAddSteelDuration" expr='cycle.activities.getDurationByActivity("Add.Steel")' unitType="duration"  insert="custom activity"/>
+        <measure if="drill" name="drillRemoveSteelDuration" expr='cycle.activities.getDurationByActivity("Remove.Steel")' unitType="duration"  insert="custom activity"/>
+        <measure if="drill" name="drillPropelDuration" expr='cycle.activities.getDurationByActivity("Propel")' unitType="duration"  insert="custom activity"/>
+        <measure if="drill" name="drillIdleDuration" expr='cycle.activities.getDurationByActivity("Idle")' unitType="duration"  insert="custom activity"/>
+        <measure if="drill" name="drillLevelDuration" expr='cycle.activities.getDurationByActivity("Level")' unitType="duration"  insert="custom activity"/>
+        <measure if="drill" name="drillDrillingDuration" expr='cycle.activities.getDurationByActivity("Drill")' unitType="duration"  insert="custom activity"/>
+        <!-- All Equipment Activities -->
+        <measure name="notDeterminedDuration" expr='cycle.activities.getDurationByActivity("NOT_DETERMINED")' unitType="duration" category="activity" desc='The duration of all activities of the type "NOT_DETERMINED"' insert="custom activity"/>
+        <!-- Auxiliary Activities -->
+
+        <!-- Activity measures additional fields -->
+
+        <!-- Time Bucket Measures based on Delay Category -->
+        <measure name="operatingDelayTime" expr='cycle.allDelays.getDurationByCategory("Operating Delay")' unitType="duration" category="delay" insert="custom timeBucket"/>
+        <measure name="nonOperatingDelayTime" expr='cycle.allDelays.getDurationByCategory("Non-Operating Delay")' unitType="duration" category="delay" insert="custom timeBucket"/>
+        <measure name="standbyTime" expr='cycle.allDelays.getDurationByCategory("Standby")' unitType="duration" category="delay" insert="custom timeBucket head"/>
+        <measure name="unscheduledDownTime" expr='cycle.allDelays.getDurationByCategory("Unscheduled Down")' unitType="duration" category="delay" insert="custom timeBucket head"/>
+        <measure name="scheduledDownTime" expr='cycle.allDelays.getDurationByCategory("Scheduled Down")' unitType="duration" category="delay" insert="custom timeBucket"/>
+
+        <measure name="operatingDelayCount" expr='cycle.allDelays.getCountByCategory("Operating Delay")' unitType="unitless" category="delay" insert="custom timeBucket"/>
+        <measure name="nonOperatingDelayCount" expr='cycle.allDelays.getCountByCategory("Non-Operating Delay")' unitType="unitless" category="delay" insert="custom timeBucket"/>
+        <measure name="standbyCount" expr='cycle.allDelays.getCountByCategory("Standby")' unitType="unitless" category="delay" insert="custom timeBucket"/>
+        <measure name="scheduledDownCount" expr='cycle.allDelays.getCountByCategory("Scheduled Down")' unitType="unitless" category="delay" insert="custom timeBucket"/>
+        <measure name="unscheduledDownCount" expr='cycle.allDelays.getCountByCategory("Unscheduled Down")' unitType="unitless" category="delay" insert="custom timeBucket"/>
+
+        <!-- Delay measures additional fields -->
+        <measure name="downStoppagesCount" expr="main.scheduledDownCount + main.unscheduledDownCount" unitType="unitless" category="delay" insert="custom timeBucket"/>
+        <measure name="allStoppagesCount" expr="main.standbyCount + main.scheduledDownCount + main.unscheduledDownCount" unitType="unitless" category="delay" insert="custom timeBucket"/>
+
+        <!-- Time measures Level 3 -->
+        <measure if="truck" name="operatingTime" expr="main.loadingDuration + main.travellingEmptyDuration + main.queuingAtSourceDuration + main.spottingAtSourceDuration + main.travellingFullDuration + main.queuingAtSinkDuration + main.spottingAtSinkDuration + main.dumpingDuration + main.waitForLoadDuration + main.waitForDumpDuration + main.notDeterminedDuration" unitType="duration" category="time" desc="The duration of all operating activities." insert="custom time"/>
+        <measure if="loader" name="operatingTime" expr="main.loadingDuration + main.travellingEmptyDuration + main.travellingFullDuration + main.hangTimeDuration + main.lhdDuration + main.auxDuration + main.waitForSpotDuration + main.notDeterminedDuration" unitType="duration" category="time" desc="The duration of all operating activities." insert="custom time"/>
+        <measure if="selfloader" name="operatingTime" expr="main.cycleDuration" unitType="duration" category="time" desc="Just a default - should be overridden" insert="custom time"/>
+        <measure if="auxmobile" name="operatingTime" expr="main.notDeterminedDuration" type="java.lang.Float" unitType="duration" category="time" desc="Just a default - should be overridden" insert="custom time"/>
+        <measure if="drill" name="operatingTime" expr="main.drillAddSteelDuration + main.drillRemoveSteelDuration + main.drillPropelDuration + main.drillIdleDuration + main.drillLevelDuration + main.drillDrillingDuration + main.notDeterminedDuration" unitType="duration" category="time" desc="The duration of all operating activities." insert="custom time"/>
+
+        <measure name="delayTime" expr="main.operatingDelayTime + main.nonOperatingDelayTime" unitType="duration" category="delay" insert="custom time"/>
+
+        <!-- Time measures Level 2.5 -->
+        <measure name="operHoursSeconds" expr="main.operatingTime + main.delayTime" unitType="duration" category="time" insert="custom time"/>
+
+        <!-- Time measures Level 2 -->
+        <measure name="availableTime" expr="main.operatingTime + main.standbyTime + main.delayTime" unitType="duration" category="delay" insert="custom time"/>
+        <measure name="downTime" expr="main.scheduledDownTime + main.unscheduledDownTime" unitType="duration" category="delay" insert="custom time"/>
+
+        <!-- Time measures Level 1 -->
+        <measure name="totalTime" expr="main.availableTime + main.downTime" unitType="duration" category="time" insert="custom time"/>
+    </fact>
+</kpiSummaries>

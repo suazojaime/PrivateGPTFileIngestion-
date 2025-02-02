@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="b2a78014-74cc-4d17-83ae-5e3ae2b5d450" author="MineStar" dbms="postgresql" runOnChange="true">
+        <comment>AHS-9999: CreateFunction unit_name</comment>
+        <sqlFile path="db/changelog/functions/postgresql/unit_name.sql" endDelimiter="GO" stripComments="true"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="b82084a3-665a-4bf4-b4c0-697ff561fdee" author="MineStar" dbms="postgresql" runOnChange="true">
+        <comment>AHS-9999: CreateFunction unit_conv</comment>
+        <sqlFile path="db/changelog/functions/postgresql/unit_conv.sql" endDelimiter="GO" stripComments="true"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="b2a78014-74cc-4d17-83ae-5e3ae2b5d452" author="MineStar" dbms="postgresql" runOnChange="true">
+        <comment>AHS-9999: CreateFunction timestamp_diff</comment>
+        <sqlFile path="db/changelog/functions/postgresql/timestamp_diff.sql" endDelimiter="GO" stripComments="true"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

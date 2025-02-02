@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+                   objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+  <changeSet id="312ba69d-6f75-4201-a570-2425d61f04d9" context="Underground/Underground_Management" author="MineStar" failOnError="false">
+    <preConditions onFailMessage="Ignored AddColumn for dump_macro_end to table gis_ug_goal as column already exists." onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="gis_ug_goal" columnName="dump_macro_end"/>
+      </not>
+    </preConditions>
+    <comment>AHS-6409 AddColumn DUMP_MACRO_END to table GIS_UG_GOAL</comment>
+    <addColumn tableName="gis_ug_goal">
+      <column name="dump_macro_end" type="GEOMETRY(PointZ, 0)"/>
+    </addColumn>
+    <sql>
+      CREATE INDEX spatial_gis_ug_goal_dump_macro_end
+      ON gis_ug_goal
+      USING gist
+      (dump_macro_end);
+    </sql>
+    <rollback>
+      <dropColumn tableName="gis_ug_goal" columnName="dump_macro_end"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="4cc3b27f-7bdd-49fb-93d9-6d50edd4d922" context="Underground/Underground_Management" author="MineStar" failOnError="false">
+    <preConditions onFailMessage="Ignored AddColumn for INCLUDEDMACHINETYPES to table gis_ug_zone_layer as column already exists." onFail="MARK_RAN">
+      <not>
+        <columnExists tableName="gis_ug_zone_layer" columnName="INCLUDEDMACHINETYPES"/>
+      </not>
+    </preConditions>
+    <comment>AHS-6409 AddColumn INCLUDEDMACHINETYPES to table GIS_UG_ZONE_LAYER</comment>
+    <addColumn tableName="gis_ug_zone_layer">
+      <column name="INCLUDEDMACHINETYPES" type="VARCHAR"/>
+    </addColumn>
+    <rollback>
+      <dropColumn tableName="gis_ug_zone_layer" columnName="INCLUDEDMACHINETYPES"/>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

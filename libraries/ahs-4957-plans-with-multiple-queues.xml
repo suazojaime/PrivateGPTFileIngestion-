@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="62fbbd38-3a78-47ff-8ef1-b6330d836302" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropPrimaryKey for PLAN_LANE_INFO_QUEUE_PK of table PLAN_LANE_INFO_QUEUE as primaryKey does not exist."
+                onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="PLAN_LANE_INFO_QUEUE_PK" tableName="PLAN_LANE_INFO_QUEUE"/>
+        </preConditions>
+        <comment>AHS-4957: DropPrimaryKey PLAN_LANE_INFO_QUEUE_PK from PLAN_LANE_INFO_QUEUE (PLAN_OID,LANE_NR)</comment>
+        <dropPrimaryKey constraintName="PLAN_LANE_INFO_QUEUE_PK" tableName="PLAN_LANE_INFO_QUEUE"/>
+        <rollback>
+            <addPrimaryKey columnNames="PLAN_OID,LANE_NR" constraintName="PLAN_LANE_INFO_QUEUE_PK"
+                           tableName="PLAN_LANE_INFO_QUEUE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a8f242f0-c88a-4438-a4c8-bb7b82dc86b5" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for GROUP_NR to table PLAN_LANE_INFO_QUEUE as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_QUEUE"/>
+            <not>
+                <columnExists tableName="PLAN_LANE_INFO_QUEUE" columnName="GROUP_NR"/>
+            </not>
+        </preConditions>
+        <comment>AHS-4957: AddColumn PLAN_LANE_INFO_QUEUE.GROUP_NR</comment>
+        <addColumn tableName="PLAN_LANE_INFO_QUEUE">
+            <column name="GROUP_NR" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="5e4bf563-63e1-443b-8aee-59de055c655e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_LANE_INFO_QUEUE_UIDX1 to table PLAN_LANE_INFO_QUEUE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_QUEUE"/>
+            <not>
+                <indexExists indexName="PLAN_LANE_INFO_QUEUE_UIDX1" tableName="PLAN_LANE_INFO_QUEUE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-4957: CreateUniqueIndex PLAN_LANE_INFO_QUEUE_UIDX1 on PLAN_LANE_INFO_QUEUE (PLAN_OID,GROUP_NR,LANE_NR)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="PLAN_LANE_INFO_QUEUE" indexName="PLAN_LANE_INFO_QUEUE_UIDX1">
+            <column name="PLAN_OID"/>
+            <column name="GROUP_NR"/>
+            <column name="LANE_NR"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Base changelog -->
+    <include file="db/changelog/4_1/platform/platform-tables.xml"/>
+
+    <!-- 5.7 Base schema -->
+    <include file="db/changelog/5_7/timeseries/updates/mo-942-add-route-cost-table.xml"/>
+
+    <!-- 5.7_1 Base schema -->
+    <include file="db/changelog/5_7_1/timeseries/updates/mo-4494-add-config-store-schema-table.xml"/>
+    <include file="db/changelog/5_7_1/timeseries/updates/mo-4532-add-config-store-data-table.xml"/>
+    <include file="db/changelog/5_7_1/timeseries/updates/mo-5831-create-raster-config-table.xml"/>
+</databaseChangeLog>

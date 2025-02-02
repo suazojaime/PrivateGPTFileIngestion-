@@ -1,0 +1,148 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE translations SYSTEM "MessageTranslations.dtd">
+
+<!-- Created by Mark Banham 27 Jul 2005 -->
+
+<!--
+Revision History:
+$Log: not supported by cvs2svn $
+Revision 1.1  2005/07/28 04:51:48  markb
+PIT-323 New ability to access mine model attributes.
+
+-->
+
+
+<translations>
+
+    <translation active="true" keyword="OPERATOR_NAME">
+        <description>
+            The name of the operator for the machine receiving the message.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.OperatorName"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="LOCKED_LOADING_TOOLS">
+        <alias keyword="LOCKED_EXCAVATORS"/>
+        <description>
+            The name of the Loading Tools that the machine receiving the message is currently
+            locked to.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.LockedExcavators"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="NEXT_BREAK">
+        <description>
+            The details of the next break that the machine receiving the message will be on.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.NextBreak"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="NEXT_BREAK_NAME">
+        <description>
+            The name of the next break that the machine receiving the message will be on.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.NextBreak" constructorArgument="BREAK_NAME"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="NEXT_BREAK_TIME">
+        <description>
+            The time of the next break that the machine receiving the message will be on.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.NextBreak" constructorArgument="BREAK_TIME"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="NEXT_BREAK_DATE">
+        <description>
+            The date of the next break that the machine receiving the message will be on.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.NextBreak" constructorArgument="BREAK_DATE"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="NEXT_BREAK_DATETIME">
+        <description>
+            The date and time of the next break that the machine receiving the message will be on.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.NextBreak" constructorArgument="BREAK_DATE_TIME"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="NEXT_TIE_DOWNS">
+        <description>
+            The tie down destinations for the machine receiving the message.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.NextTieDowns"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="ARRIVAL_TIMES">
+        <description>
+            The arrival times of all trucks on route to the machine receiving the message.
+            This is really only intended for loading tools.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.ArrivalTimes"/>
+        </implementation>
+    </translation>
+
+    <translation active="true" keyword="KPI_VALUE">
+        <description>
+            Obtains a specific KPI value or values for the machine receiving the message.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.KPIValue"/>
+        </implementation>
+        <parameters separator=",">
+            <parameter description="KPI Summaries full identifier"/>
+        </parameters>
+    </translation>
+
+    <translation active="true" keyword="MACHINE_IN_PIT">
+        <description>
+            Obtains the current mining block for the machine sending the message
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.MachineInPitAttributes"/>
+        </implementation>
+    </translation>
+        
+    <translation active="true" keyword="ATTRIBUTE_VALUE">
+        <description>
+            Obtains a specific attribute value for the machine receiving the message.
+            Attribute values may be cascaded by '.' to get other attribute values.
+            E.G.
+                lastLoader.currentOperator.name
+            will get the machines lastLoader attribute, get the currentOperator of this, and then
+            get the name of the operator.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.AttributeValue"/>
+        </implementation>
+        <parameters separator=".">
+            <parameter description="Attribute name, with optional sub attributes seperated by a '.'"/>
+        </parameters>
+    </translation>
+
+    <translation active="true" keyword="LOCATION_NAME">
+        <description>
+            The name of the location that the machine receiving the message is at.
+        </description>
+        <implementation>
+            <java class="minestar.pitlink.service.message.util.translator.LocationName"/>
+        </implementation>
+    </translation>
+
+</translations>

@@ -1,0 +1,49 @@
+====================================================================
+EdtFTPj License
+====================================================================
+
+We Enterprise Distributed Technologies Ltd grant you license to use this Software on the following terms:
+
+1.License and support
+
+1.1. This Software is licensed and not sold to you. Your use of this Software is governed solely by the
+terms of this License. This License is personal to you.
+
+1.2. This Software is owned by us. This Software is protected by copyright law, and the owners reserve
+ownership of all Intellectual Property Rights in it, and all rights other than those expressly granted by
+this Agreement.
+
+2.Source License
+
+Subject to payment of the Source License fee:
+
+2.1. You may incorporate the Software in applications you create, provided such applications consist of
+substantially more than the Software.
+
+2.2. You may distribute, license, and sell applications you have created created which incorporate the
+Software
+
+2.3. You may modify the source code of the Software
+
+2.4. You must retain in the source code any copyright notice therein.
+
+2.5. You may not copy, rent, lease, assign or otherwise distribute or part with the source code of the
+Software.
+
+2.6. You must incorporate the following disclaimer in the documentation and/or other materials provided
+with any distributed application you create which incorporates the Software:
+
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ANY PERSON
+WHO HAS CONTRIBUTED TO OR IS THE OWNER OF ANY PART OF THIS SOFTWARE BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGE.
+
+

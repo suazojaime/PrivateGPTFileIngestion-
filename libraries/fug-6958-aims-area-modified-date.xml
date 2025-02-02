@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="1e96d2f2-4406-407c-92a3-cd0debc80bd4" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for LAST_MODIFIED_DATE_UTC to table AIMS_AREA as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="AIMS_AREA"/>
+            <not>
+                <columnExists tableName="AIMS_AREA" columnName="LAST_MODIFIED_DATE_UTC"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6958: AddColumn AIMS_AREA.LAST_MODIFIED_DATE_UTC</comment>
+        <addColumn tableName="AIMS_AREA">
+            <column name="LAST_MODIFIED_DATE_UTC" type="DATETIME2" remarks="The timestamp of when this area map was last modified by a user.">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

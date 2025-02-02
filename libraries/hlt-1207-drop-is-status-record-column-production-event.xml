@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="d7bf0fb8-3692-4d7f-a1ea-7ee576741398" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for  IS_STATUS_RECORD of table PRODUCTION_EVENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PRODUCTION_EVENT" columnName="IS_STATUS_RECORD"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn PRODUCTION_EVENT.IS_STATUS_RECORD</comment>
+        <dropColumn columnName="IS_STATUS_RECORD" tableName="PRODUCTION_EVENT"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

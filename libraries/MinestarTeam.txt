@@ -1,0 +1,28 @@
+MineStar was brought to you by:
+
+Product management team:
+  Andrew Lingard, Anthony Finch, Phil Neville, Andrew Lovell
+
+Project management team: 
+  Tony Gaffney
+
+Field follow management:
+  Chris Lear
+
+Software Engineers:
+  Ian Clatworthy, John Farrell, Chris Moran, Ian Booth,  Mark Banham,
+  Barbara Bok, Andrew Cartwright, Ian Edmonstone, Todd Bloomfield, 
+  George Dlouhy, Danny Adcock, Greg Davis, Gerrod Thomas, Phil Jones,
+  Shane McGough, Ross Mann)
+
+  (Martin Pool, Darryl Collins, Campbell James, Matt Cheers, Olivier Fillon,
+  Peta Slade, Derek Dominish, Simon McMullen, Leon Mar, Hans Andersen,
+  Julian Boot - DSTC , Ted McFadden - DTSC, Chris Glover)
+
+QA/Support team: 
+  Vincent Klepacki, David Tarr, Kym Minks
+  (Paul Henschke)
+
+Documentation team:
+  David O'Brien, Jen McKee
+  (Joanne Lovitz, Peter Bloxsom, Matt Campbell)

@@ -1,0 +1,322 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class
+            name="minestar.mine.domain.minemodel.ZoneImpl"
+            table="ZONE"
+            dynamic-update="true"
+            proxy="minestar.mine.domain.minemodel.Zone"
+            >
+
+        <meta attribute="view-master">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+            storage.initial=64K
+            storage.next=64K
+            storage.pctincrease=0
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+            storage.initial=64k
+            storage.next=64k
+            storage.pctincrease=0
+        </meta>
+        <meta attribute="index">
+            name=ZONE_1
+            unique=true
+            columns=ID
+            tablespace=MW_IDXENT
+            storage.initial=64K
+            storage.next=64K
+            storage.pctincrease=0
+        </meta>
+        <meta attribute="index">
+            name=ZONE_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">The definition of a mine model zone</meta>
+
+        <cache usage="read-write" region="model-versioned"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="ZONE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="DISCRIMINATOR_ID" not-null="false"/>
+
+        <version name="version" access="field">
+              <meta attribute="description">The version number for optimistic locking</meta>
+        </version>
+
+        <property
+                name="id"
+                type="java.lang.Long"
+                column="ID"
+                not-null="true"
+                >
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="description">An automatically generated unique ID value for this zone.</meta>
+        </property>
+
+        <property
+                name="revision"
+                type="java.lang.Long"
+                column="REVISION"
+                not-null="true"
+                >
+            <meta attribute="description">The zone revision for use with synchronizing on board files</meta>
+        </property>
+
+        <property
+                name="name"
+                type="java.lang.String"
+                column="NAME"
+                not-null="true"
+                >
+            <meta attribute="description">The zone name</meta>
+        </property>
+
+        <property
+                name="active"
+                type="java.lang.Boolean"
+                column="IS_ACTIVE"
+                not-null="true"
+                >
+                <meta attribute="defaultValue">true</meta>
+                <meta attribute="description">Is this zone active</meta>
+        </property>
+
+        <property name="layerUpdateVersion" type="long">
+            <meta attribute="description">The layer update version when the zone was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property name="createdDate"
+                  type="TimestampType"
+                  column="CREATED_DATE_UTC">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The zone creation utc timestamp.</meta>
+            <meta attribute="description">The zone creation timestamp</meta>
+        </property>
+
+        <property name="lastUpdatedDate"
+                  type="TimestampType"
+                  column="LAST_UPDATED_DATE_UTC">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The zone updated utc timestamp.</meta>
+            <meta attribute="description">The zone updated timestamp</meta>
+        </property>
+
+        <property name="editable" type="boolean" column="EDITABLE" not-null="true">
+            <meta attribute="description">Is this zone editable?</meta>
+        </property>
+
+        <component name="flags" class="minestar.autonomy.util.DataFlags" lazy="false">
+            <meta attribute="description">Zone flags.</meta>
+            <property name="bedDown" type="boolean" column="BED_UP_DURING_TRAVEL" not-null="true"/>
+            <property name="level1EntryIncident" type="boolean" column="LEVEL_ENTRY_INCIDENT" not-null="true"/>
+            <property name="level1ExitIncident" type="boolean" column="LEVEL_EXIT_INCIDENT" not-null="true"/>
+            <property name="beepIfOtherMachinesEnter" type="boolean" column="MACHINE_ENTRY_BEEP" not-null="true"/>
+            <property name="beepIfOtherMachinesArePresent" type="boolean" column="MACHINE_PRESENT_BEEP" not-null="true"/>
+            <property name="silenceProximityAlarms" type="boolean" column="SILENCE_PROXIMITY_ALARMS" not-null="true"/>
+            <property name="silenceRadarAlarms" type="boolean" column="SILENCE_RADAR_ALARMS" not-null="true"/>
+            <property name="mannedExclusionZone" type="boolean" column="MANNED_EXC_ZONE" not-null="true"/>
+            <property name="cleanUp" type="boolean" column="CLEAN_UP" not-null="true"/>
+            <property name="canBeRemovedByPanel" type="boolean" column="REMOVE_BY_PANEL" not-null="true"/>
+            <property name="autonomousInclusionZone" type="boolean" column="AUTONOMOUS_INC_ZONE" not-null="true"/>
+            <property name="autonomousExclusionZone" type="boolean" column="AUTONOMOUS_EXC_ZONE" not-null="true"/>
+            <property name="outsideAOZ" type="boolean" column="OUTSIDE_AOZ" not-null="true"/>
+            <property name="multicastUpdateZone" type="boolean" column="MULTICAST_UPDATE_ZONE" not-null="true"/>
+            <property name="passable" type="boolean" column="PASSABLE" not-null="true"/>
+        </component>
+
+        <property name="speedLimit"
+                  column="SPEED_LIMIT"
+                  not-null="true"
+                 >
+            <meta attribute="description">The speed limit for any machine that travels in this zone</meta>
+            <meta attribute="defaultValue">0</meta>
+            <type name="quantity">
+                <param name="unitType">speed</param>
+            </type>
+        </property>
+
+        <property name="displayColorRed"
+                  column="DISPLAY_COLOR_RED"
+                  type="java.lang.Integer"
+                  >
+        </property>
+
+         <property name="displayColorBlue"
+                  column="DISPLAY_COLOR_Blue"
+                  type="java.lang.Integer"
+                  >
+        </property>
+
+         <property name="displayColorGreen"
+                  column="DISPLAY_COLOR_GREEN"
+                  type="java.lang.Integer"
+                  >
+        </property>
+
+        <property name="displayColorAlpha"
+                  type="java.lang.Integer"
+        >
+            <meta attribute="description">The alpha value determines a zone color's transparency. Possible values include 0 - 255, 0 being fully transparent and 255 being fully visible.</meta>
+            <column name="DISPLAY_COLOR_ALPHA" default="255"/>
+        </property>
+
+        <property
+                name="messageOnEntry"
+                type="java.lang.String"
+                column="MSG_ON_ENTRY"
+                >
+            <meta attribute="description">Informational-only pop-up</meta>
+        </property>
+
+        <property
+                name="messageOnExit"
+                type="java.lang.String"
+                column="MSG_ON_EXIT"
+                >
+            <meta attribute="description">Informational-only pop-up</meta>
+        </property>
+
+        <property name="tractionLevel"
+                  column="SLICKNESS_PARAMETER"
+                  type="java.lang.Integer"
+                  >
+        </property>
+
+        <property name="wateringFactor"
+                  column="WATERING_FACTOR"
+                  type="java.lang.Integer"
+                  >
+        </property>
+
+        <property name="intermittentWatering"
+                  column="INTERMITTENT_WATERING"
+                  type="java.lang.Boolean"
+                  >
+        </property>
+
+        <property name="boundaryType"
+                  column="BOUNDARY_TYPE"
+                  type="java.lang.Integer"
+                  >
+            <meta attribute="description">???</meta>
+        </property>
+
+        <property
+                name="automaticallyManaged"
+                type="java.lang.Boolean"
+                column="AUTO_MANAGED"
+                not-null="true"
+                >
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">Is this zone managed in other ways automatically.</meta>
+        </property>
+
+        <property name="loadedSpeedLimit">
+            <meta attribute="description">The loaded speed limit for any loaded machine that travels in this zone</meta>
+            <meta attribute="defaultValue">0</meta>
+            <column name="LOADED_SPEED_LIMIT" not-null="true" default="0"/>
+            <type name="quantity">
+                <param name="unitType">speed</param>
+            </type>
+        </property>
+
+        <property
+                name="notes"
+                type="java.lang.String"
+                length="2000"
+                column="NOTES"
+        >
+            <meta attribute="description">User can enter a comment against a zone when creating or updating.</meta>
+        </property>
+
+        <property
+                name="barrier"
+                type="java.lang.Boolean"
+                column="BARRIER"
+                not-null="true"
+        >
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">Is this zone a barrier.</meta>
+        </property>
+
+        <list name="includedMachineTypes" table="ZONE_MACHINE_CLASS_IN" lazy="false" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">Machine classes included in the zone.</meta>
+            <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+            <key column="ZONE_OID" not-null="true"/>
+            <list-index column="SORT_ORDER"/>
+            <many-to-many column="MACHINECLASS_OID" class="minestar.pitlink.domain.machine.MachineClassReference" lazy="false"/>
+        </list>
+
+        <component name="relativePolygon" class="minestar.mine.domain.minemodel.RelativePolygon" lazy="false">
+
+            <meta attribute="description">The Zones polygon</meta>
+            <property name="centroid" type="XYZCoordinate">
+                <meta attribute="description">The xyz coordinate for the polygon.</meta>
+                <column name="CENTROID_POINT_X"/>
+                <column name="CENTROID_POINT_Y"/>
+                <column name="CENTROID_POINT_Z"/>
+            </property>
+
+            <list name="points" table="ZONE_POLYGON_POINT" lazy="false">
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    tablespace=MW_IDXENT
+                </meta>
+                <meta attribute="index-alias">pointNr</meta>
+
+                <key column="ZONE_OID" not-null="true"/>
+                <list-index column="POINT_NR"/>
+                <element type="XYZCoordinate" not-null="true">
+                    <column name="POINT_X" not-null="true"/>
+                    <column name="POINT_Y" not-null="true"/>
+                    <column name="POINT_Z" not-null="true"/>
+                </element>
+            </list>
+        </component>
+    </class>
+
+
+    <!-- ****************************************************************************** -->
+    <!-- ZoneReference -->
+    <!-- ****************************************************************************** -->
+    <class name="minestar.mine.domain.minemodel.ZoneReference"
+           table="ZONE"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">ZONE_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a zone</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="ZONE_OID"/>
+        <property name="name" type="string" column="NAME" not-null="true"/>
+        <property name="id" type="long" column="ID" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

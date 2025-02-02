@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:condbean="http://www.minestar.au.cat.com/springbeans/condbean"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.minestar.au.cat.com/springbeans/condbean http://www.minestar.au.cat.com/springbeans/condbean/condbeans.xsd
+       ">
+
+    <condbean:cond withoutPrivilege="BlendingToDestination">
+        <bean id="uiFacadeStuff" class="java.lang.Object" lazy-init="true"
+              depends-on="registerBlendUCCImpl, registerDelayUCCImpl, registerDelayActivityUCCImpl, registerConfigServiceFacadeImpl,
+                          registerCoverageServiceImpl, registerCycleUCCImpl,
+                          registerGradeBlockUCCImpl, registerHealthUCCImpl, registerIncidentUCCImpl, registerKpiUCCImpl,
+                          registerLayerDefinitionServiceImpl, registerLayerUCCImpl, registerLocationUCCImpl,
+                          registerMachineCategoryUCCImpl, registerMachineClassUCCImpl, registerMachineUCCImpl,
+                          registerMaterialUCCImpl,
+                          registerMonitorUCCImpl, registerPersonUCCImpl,
+                          registerReplayUCCImpl, registerRoadUCCImpl,
+                          registerSettingsUCCImpl, registerSharedLayerUCCImpl,
+                          registerTooltipUCCImpl, registerTpmUCCImpl, registerUnitUCCImpl, registerUserUCCImpl,
+                          registerWaypointUCCImpl, registerTimeUsageModelUCCImpl,
+                          registerDesignerLiteUCCImpl,
+                          registerShiftProductionPlanUCCImpl
+                          registerDynamicTkphUCCImpl, registerOnboardUCCImpl">
+        </bean>
+    </condbean:cond>
+
+</beans>

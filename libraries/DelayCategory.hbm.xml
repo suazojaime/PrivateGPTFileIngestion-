@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.production.domain.DelayCategory" table="DELAYCATEGORY">
+
+        <meta attribute="view-create-order">1</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=DELAYCATEGORY_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">A grouping for delay classes.</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="DELAYCATEGORY_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        
+        <property name="name" type="string" column="NAME" length="255" not-null="true">
+            <meta attribute="description">The display name for this delay category.</meta>
+        </property>
+
+        <property name="colourRgb" type="int" column="COLOUR" not-null="true">
+            <meta attribute="description">The colour to use to display delays of this type in Delay Monitor.</meta>
+            <meta attribute="defaultValue">0</meta>
+        </property>
+
+        <property name="bold" type="boolean" column="BOLD" not-null="true">
+            <meta attribute="description">Whether to use bold text to display delays of this type in Delay Monitor.</meta>
+            <meta attribute="defaultValue">0</meta>
+        </property>
+
+        <property name="italic" type="boolean" column="ITALIC" not-null="true">
+            <meta attribute="description">Whether to use italic text to display delays of this type in Delay Monitor.</meta>
+            <meta attribute="defaultValue">0</meta>
+        </property>
+    </class>
+
+    <!-- A lightweight reference to a DelayCategory -->
+    <class name="minestar.production.domain.DelayCategoryReference" table="DELAYCATEGORY" mutable="false" lazy="false">
+
+        <meta attribute="alias" inherit="false">DELAYCATEGORY_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a DelayCategory.</meta>
+        <meta attribute="view-create-order">1</meta>
+        <meta attribute="view-master">true</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="DELAYCATEGORY_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

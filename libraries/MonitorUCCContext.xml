@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- must have this -->
+    <bean id="monitorUCCImpl" class="minestar.platform.uifacade.monitor.impl.MonitorUCCImpl"
+          lazy-init="true">
+        <property name="delayUCC" ref="delayUCCImpl" />
+        <property name="gradeBlockUCC" ref="gradeBlockUCCImpl"/>
+        <property name="healthUCC" ref="healthUCCImpl"/>
+        <property name="kpiUCC" ref="kpiUCCImpl"/>
+        <property name="locationUCC" ref="locationUCCImpl"/>
+        <property name="machineCategoryUCC" ref="machineCategoryUCCImpl"/>
+        <property name="machineClassUCC" ref="machineClassUCCImpl"/>
+        <property name="machineUCC" ref="machineUCCImpl"/>
+        <property name="materialUCC" ref="materialUCCImpl"/>
+        <property name="personUCC" ref="personUCCImpl"/>
+        <property name="roadUCC" ref="roadUCCImpl"/>
+        <property name="tooltipUCC" ref="tooltipUCCImpl"/>
+        <property name="tpmUCC" ref="tpmUCCImpl"/>
+        <property name="userUCC" ref="userUCCImpl"/>
+        <property name="waypointUCC" ref="waypointUCCImpl"/>
+        <property name="layerUCC" ref="layerUCCImpl"/>
+        <property name="zoneUCC" ref="zoneUCCImpl"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerMonitorUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Monitor UCC"/>
+        <constructor-arg value="minestar.platform.uifacade.monitor.MonitorUCCFacade"/>
+        <constructor-arg ref="monitorUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="monitorUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="monitorUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="monitorUCC"/>
+        <property name="service" ref="monitorUCCProxy"/>
+        <property name="serviceInterface" value="minestar.platform.uifacade.monitor.MonitorUCCFacade"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="3ffaa766-af96-4ee2-bd54-b4de33483534" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for DISPLAY_COLOR to table PLAN_MODEL as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="DISPLAY_COLOR"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10280: AddColumn PLAN_MODEL.DISPLAY_COLOR</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="DISPLAY_COLOR" type="INT" remarks="The RGB display color for the plan."/>
+        </addColumn>
+        <sql>UPDATE PLAN_MODEL SET DISPLAY_COLOR = DISPLAY_COLOR_RED*65536 + DISPLAY_COLOR_GREEN*256 + DISPLAY_COLOR_BLUE</sql>
+        <rollback>
+            <dropColumn tableName="PLAN_MODEL" columnName="DISPLAY_COLOR"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a560821c-5d9c-4765-bc4f-8ea34e7f7e69" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for DISPLAY_COLOR_RED of table PLAN_MODEL as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="DISPLAY_COLOR_RED"/>
+        </preConditions>
+        <comment>AHS-10280: DropColumn PLAN_MODEL.DISPLAY_COLOR_RED</comment>
+        <dropColumn columnName="DISPLAY_COLOR_RED" tableName="PLAN_MODEL"/>
+        <rollback>
+            <addColumn tableName="PLAN_MODEL">
+                <column name="DISPLAY_COLOR_RED" type="INT"
+                        remarks="The red component of the RGB display color for the plan."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3202f0e7-e1f6-4553-a885-c5163cd9a9db" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for DISPLAY_COLOR_GREEN of table PLAN_MODEL as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="DISPLAY_COLOR_GREEN"/>
+        </preConditions>
+        <comment>AHS-10280: DropColumn PLAN_MODEL.DISPLAY_COLOR_GREEN</comment>
+        <dropColumn columnName="DISPLAY_COLOR_GREEN" tableName="PLAN_MODEL"/>
+        <rollback>
+            <addColumn tableName="PLAN_MODEL">
+                <column name="DISPLAY_COLOR_GREEN" type="INT"
+                        remarks="The green component of the RGB display color for the plan."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="63e81288-3589-493e-97e0-aab99a7224b4" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for DISPLAY_COLOR_BLUE of table PLAN_MODEL as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="DISPLAY_COLOR_BLUE"/>
+        </preConditions>
+        <comment>AHS-10280: DropColumn PLAN_MODEL.DISPLAY_COLOR_BLUE</comment>
+        <dropColumn columnName="DISPLAY_COLOR_BLUE" tableName="PLAN_MODEL"/>
+        <rollback>
+            <addColumn tableName="PLAN_MODEL">
+                <column name="DISPLAY_COLOR_BLUE" type="INT"
+                        remarks="The blue component of the RGB display color for the plan."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="82d553be-8d5c-4da5-bfa2-69cac0611c00" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_PLAN_OID_FK of table PLAN_GROUP as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP" foreignKeyName="PLAN_GROUP_PLAN_OID_FK"/>
+        </preConditions>
+        <comment>AHS-12268: DropForeignKeyConstraint PLAN_GROUP_PLAN_OID_FK from PLAN_GROUP (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP" constraintName="PLAN_GROUP_PLAN_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP" baseColumnNames="PLAN_OID" constraintName="PLAN_GROUP_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="5c77b60a-3fb7-4651-8c11-745459b19f10" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_PLAN_AREA_PLAN_G_FK of table PLAN_GROUP_PLAN_AREA as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_PLAN_AREA" foreignKeyName="PLAN_GROUP_PLAN_AREA_PLAN_G_FK"/>
+        </preConditions>
+        <comment>AHS-12268: DropForeignKeyConstraint PLAN_GROUP_PLAN_AREA_PLAN_G_FK from PLAN_GROUP_PLAN_AREA (PLAN_GROUP_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_PLAN_AREA" constraintName="PLAN_GROUP_PLAN_AREA_PLAN_G_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_PLAN_AREA" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_PLAN_AREA_PLAN_G_FK" referencedTableName="PLAN_GROUP" referencedColumnNames="PLAN_GROUP_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2ace2004-1774-4bb9-ac66-f04502ab0600" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_PLAN_GROUP_OID_FK of table SPOT_POINT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT" foreignKeyName="SPOT_POINT_PLAN_GROUP_OID_FK"/>
+        </preConditions>
+        <comment>AHS-12268: DropForeignKeyConstraint SPOT_POINT_PLAN_GROUP_OID_FK from SPOT_POINT (PLAN_GROUP_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT" constraintName="SPOT_POINT_PLAN_GROUP_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT" baseColumnNames="PLAN_GROUP_OID" constraintName="SPOT_POINT_PLAN_GROUP_OID_FK" referencedTableName="PLAN_GROUP" referencedColumnNames="PLAN_GROUP_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="818c76cf-652b-4b46-b7c7-b6c513f24dc0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_PLAN_OID_FK of table SPOT_POINT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT" foreignKeyName="SPOT_POINT_PLAN_OID_FK"/>
+        </preConditions>
+        <comment>AHS-12268: DropForeignKeyConstraint SPOT_POINT_PLAN_OID_FK from SPOT_POINT (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT" constraintName="SPOT_POINT_PLAN_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT" baseColumnNames="PLAN_OID" constraintName="SPOT_POINT_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="8bcb9fc6-0e62-47e0-9e76-a766dce195b0" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_PLAN_AREA_PLAN_G_FK to table PLAN_GROUP_PLAN_AREA as (1) the source or referenced column does not exist, or (2) the foreignKey already exists."
+                       onFail="MARK_RAN">
+            <columnExists tableName="PLAN_GROUP_PLAN_AREA" columnName="PLAN_GROUP_OID"/>
+            <columnExists tableName="PLAN_GROUP" columnName="PLAN_GROUP_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_PLAN_AREA" foreignKeyName="PLAN_GROUP_PLAN_AREA_PLAN_G_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12268: AddForeignKeyConstraint PLAN_GROUP_PLAN_AREA_PLAN_G_FK to PLAN_GROUP_PLAN_AREA (PLAN_GROUP_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_PLAN_AREA WHERE PLAN_GROUP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_GROUP WHERE PLAN_GROUP.PLAN_GROUP_OID = PLAN_GROUP_PLAN_AREA.PLAN_GROUP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_PLAN_AREA" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_PLAN_AREA_PLAN_G_FK" referencedTableName="PLAN_GROUP" referencedColumnNames="PLAN_GROUP_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_PLAN_AREA" constraintName="PLAN_GROUP_PLAN_AREA_PLAN_G_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="dee05c4a-e0cb-4af9-9fb9-837f2539c9bf" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_PLAN_OID_FK to table PLAN_GROUP as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PLAN_GROUP" columnName="PLAN_OID"/>
+            <columnExists tableName="PLAN_MODEL" columnName="PLAN_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP" foreignKeyName="PLAN_GROUP_PLAN_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12268: AddForeignKeyConstraint PLAN_GROUP_PLAN_OID_FK to PLAN_GROUP (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_MODEL WHERE PLAN_MODEL.PLAN_OID = PLAN_GROUP.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP" baseColumnNames="PLAN_OID" constraintName="PLAN_GROUP_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP" constraintName="PLAN_GROUP_PLAN_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="34ffcf67-ba7a-41a9-8b20-2a2754da02b0" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_PLAN_GROUP_OID_FK to table SPOT_POINT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLAN_GROUP_OID"/>
+            <columnExists tableName="PLAN_GROUP" columnName="PLAN_GROUP_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT" foreignKeyName="SPOT_POINT_PLAN_GROUP_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12268: AddForeignKeyConstraint SPOT_POINT_PLAN_GROUP_OID_FK to SPOT_POINT (PLAN_GROUP_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT WHERE PLAN_GROUP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_GROUP WHERE PLAN_GROUP.PLAN_GROUP_OID = SPOT_POINT.PLAN_GROUP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT" baseColumnNames="PLAN_GROUP_OID" constraintName="SPOT_POINT_PLAN_GROUP_OID_FK" referencedTableName="PLAN_GROUP" referencedColumnNames="PLAN_GROUP_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT" constraintName="SPOT_POINT_PLAN_GROUP_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="4cce7855-8671-4623-ae6c-b903afdf8711" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_PLAN_OID_FK to table SPOT_POINT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLAN_OID"/>
+            <columnExists tableName="PLAN_MODEL" columnName="PLAN_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT" foreignKeyName="SPOT_POINT_PLAN_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12268: AddForeignKeyConstraint SPOT_POINT_PLAN_OID_FK to SPOT_POINT (PLAN_OID)</comment>
+        <sql>UPDATE SPOT_POINT SET PLAN_OID = (SELECT PG.PLAN_OID FROM PLAN_GROUP PG WHERE PG.PLAN_GROUP_OID = SPOT_POINT.PLAN_GROUP_OID) WHERE PLAN_OID IS NULL</sql>
+        <sql>DELETE FROM SPOT_POINT WHERE PLAN_OID IS NULL OR NOT EXISTS (SELECT 'x' FROM PLAN_MODEL WHERE PLAN_MODEL.PLAN_OID = SPOT_POINT.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT" baseColumnNames="PLAN_OID" constraintName="SPOT_POINT_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT" constraintName="SPOT_POINT_PLAN_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="1f22ff1d-86b1-44c4-895c-46f293cb3cf8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for SPOT_POINT.PLAN_OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="SPOT_POINT" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>AHS-10280: AddNotNullConstraint to SPOT_POINT.PLAN_OID</comment>
+        <addNotNullConstraint columnName="PLAN_OID" columnDataType="BIGINT" tableName="SPOT_POINT"/>
+    </changeSet>
+
+    <changeSet id="0eb4956b-12b3-431a-9742-d6d64c2cb97a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_GROUP_PLAN_IX to table PLAN_GROUP as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP"/>
+            <not>
+                <indexExists indexName="PLAN_GROUP_PLAN_IX" tableName="PLAN_GROUP"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10280: CreateIndex PLAN_GROUP_PLAN_IX on PLAN_GROUP (PLAN_OID)</comment>
+        <createIndex unique="false" tableName="PLAN_GROUP" indexName="PLAN_GROUP_PLAN_IX">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="64598684-5215-49bd-8f1e-c6fc997b9252" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SPOT_POINT_PLAN_IX to table SPOT_POINT as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <indexExists indexName="SPOT_POINT_PLAN_IX" tableName="SPOT_POINT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10280: CreateIndex SPOT_POINT_PLAN_IX on SPOT_POINT (PLAN_OID)</comment>
+        <createIndex unique="false" tableName="SPOT_POINT" indexName="SPOT_POINT_PLAN_IX">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+    <changeSet id="b328df30-e612-42de-afa8-1c68657932e2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SPOT_POINT_PLAN_GROUP_IX to table SPOT_POINT as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <indexExists indexName="SPOT_POINT_PLAN_GROUP_IX" tableName="SPOT_POINT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10280: CreateIndex SPOT_POINT_PLAN_GROUP_IX on SPOT_POINT (PLAN_GROUP_OID)</comment>
+        <createIndex unique="false" tableName="SPOT_POINT" indexName="SPOT_POINT_PLAN_GROUP_IX">
+            <column name="PLAN_GROUP_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

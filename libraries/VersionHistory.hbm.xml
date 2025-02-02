@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.mine.domain.minemodel.version.VersionHistoryImpl"
+           table="VERSION_HISTORY"
+           dynamic-update="true"
+           proxy="minestar.mine.domain.minemodel.version.VersionHistory">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">Records all changes to version information from all machines.</meta>
+
+        <meta attribute="index">
+            name=VERSION_HISTORY_MACHINE
+            columns=MACHINE_OID
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=VERSION_HISTORY_TOTIME
+            columns=TOTIME_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=VERSION_HISTORY_FROMTIME
+            columns=FROMTIME_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="VERSION_HISTORY_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="machineOid"
+                  type="java.lang.Long"
+                  column="MACHINE_OID"
+                  not-null="true">
+            <meta attribute="description">The OID of the machine the message was sent from.</meta>
+        </property>
+
+        <property name="machineName"
+                  type="java.lang.String"
+                  column="MACHINE_NAME">
+            <meta attribute="description">The machine's name, kept here in case the machine is renamed later or deleted.</meta>
+        </property>
+
+        <property name="fromTime"
+                  type="TimestampType"
+                  column="FROMTIME_UTC"
+                  not-null="true">
+            <meta attribute="utc-description">The utc time that this information was valid from.</meta>
+            <meta attribute="description">The time that this information was valid from.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="toTime"
+                  type="TimestampType"
+                  column="TOTIME_UTC"
+                  not-null="true">
+            <meta attribute="utc-description">The utc time that this information was valid to.</meta>
+            <meta attribute="description">The time that this information was valid to.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <bag name="componentHists"
+             lazy="false"
+             batch-size="100"
+             access="field"
+             cascade="all-delete-orphan">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="column">"COMPONENT_OID"</meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">A list of all component version info for this machine.</meta>
+            <meta attribute="view-include">false</meta>
+            <meta attribute="view-ignore">true</meta>
+
+            <key column="VERSION_MESSAGE_OID"/>
+            <one-to-many class="minestar.mine.domain.minemodel.version.ComponentHistImpl"/>
+
+        </bag>
+    </class>
+
+    <class name="minestar.mine.domain.minemodel.version.ComponentHistImpl"
+           table="COMPONENT_HISTORY"
+           dynamic-update="true">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">Records version status of components and related software.</meta>
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="index">
+            name=COMPONENT_OBTAINED_DATE
+            columns=OBTAINEDTIME_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="COMPONENT_VERSION_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property
+                name="deleted"
+                type="java.lang.Boolean"
+                column="DELETED">
+            <meta attribute="description">Whether this component has been deleted.</meta>
+        </property>
+
+        <property
+                name="obtainedTime"
+                type="TimestampType"
+                column="OBTAINEDTIME_UTC">
+            <meta attribute="utc-description">The utc time this component's version status info was first received.</meta>
+            <meta attribute="description">The time this component's version status info was first received.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+                name="checkedTime"
+                type="TimestampType"
+                column="CHECKEDTIME_UTC">
+            <meta attribute="utc-description">The most recent utc time this component's version status info was received.</meta>
+            <meta attribute="description">The most recent time this component's version status info was received.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+                name="componentID"
+                type="java.lang.Long"
+                column="COMPONENT_ID">
+            <meta attribute="description">The unique ID of the component.</meta>
+        </property>
+
+        <property
+                name="componentName"
+                type="java.lang.String"
+                column="COMPONENT_NAME">
+            <meta attribute="description">The name of the component.</meta>
+        </property>
+
+        <property
+                name="hwVersion"
+                type="java.lang.String"
+                column="HW_VERSION">
+            <meta attribute="description">The part number of the component.</meta>
+        </property>
+
+        <property
+                name="hwSerial"
+                type="java.lang.String"
+                column="HW_SERIAL">
+            <meta attribute="description">The hardware serial number.</meta>
+        </property>
+
+        <property
+                name="firmwareVersion"
+                type="java.lang.String"
+                column="FIRMWARE_VERSION">
+            <meta attribute="description">The firmware/boot/bios version.</meta>
+        </property>
+
+        <property
+                name="osVersion"
+                type="java.lang.String"
+                column="OS_VERSION">
+            <meta attribute="description">The Operating System Version information.</meta>
+        </property>
+
+        <bag name="software"
+             table="SOFTWARE_HISTORY"
+             lazy="false"
+             access="field"
+             cascade="all-delete-orphan">
+
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <!-- The default primary key of a set containing composite-elements contains all of the
+                 properties of the composite-element.  Use a custom index instead. -->
+            <meta attribute="no-primary-key">true</meta>
+            <meta attribute="index" inherit="false">
+                name=SOFTWARE_VERSION_HIST_PARENT
+                columns=OID
+                tablespace=MW_IDXOBJ
+            </meta>
+            <meta attribute="view-include">false</meta>
+            <meta attribute="view-ignore">true</meta>
+
+            <key column="OID" not-null="true"/>
+            <composite-element class="minestar.mine.domain.minemodel.version.SoftwareHistImpl">
+                <meta attribute="view-include">false</meta>
+                <meta attribute="view-ignore">true</meta>
+                <property
+                        name="deleted"
+                        type="java.lang.Boolean"
+                        column="DELETED">
+                    <meta attribute="description">Whether this software has been deleted.</meta>
+                </property>
+
+                <property
+                        name="obtainedTime"
+                        type="TimestampType"
+                        column="OBTAINEDTIME_UTC">
+                    <meta attribute="utc-description">The utc time this software's version status info was first received.</meta>
+                    <meta attribute="description">The time this software's version status info was first received.</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+
+                <property
+                        name="checkedTime"
+                        type="TimestampType"
+                        column="CHECKEDTIME_UTC">
+                    <meta attribute="utc-description">The most recent utc time this software's version status info was received.</meta>
+                    <meta attribute="description">The most recent time this software's version status info was received.</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+
+                <property
+                        name="softwareName"
+                        type="java.lang.String"
+                        column="SW_NAME">
+                    <meta attribute="description">The name of the software.</meta>
+                </property>
+
+                <property
+                        name="softwareVersion"
+                        type="java.lang.String"
+                        column="SW_VERSION">
+                    <meta attribute="description">The current version of the software.</meta>
+                </property>
+
+                <property
+                        name="softwareRelease"
+                        type="java.util.Date"
+                        column="SW_RELEASE">
+                    <meta attribute="description">The release date of the software.</meta>
+                </property>
+
+                <property
+                        name="softwareExpiry"
+                        type="java.util.Date"
+                        column="SW_EXPIRY">
+                    <meta attribute="description">The expiry date of the software.</meta>
+                </property>
+
+                <property
+                        name="softwareGroupDesc"
+                        type="java.lang.String"
+                        column="SW_GR_DESC">
+                    <meta attribute="description">Software group description.</meta>
+                </property>
+            </composite-element>
+        </bag>
+
+    </class>
+
+</hibernate-mapping>

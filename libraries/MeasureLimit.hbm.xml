@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.health.impl.definition.MeasureLimit" table="MEASURE_LIMIT">
+
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <meta attribute="index">
+            name=MEASURE_LIMIT_UNIQ
+            columns=MACHINE_OID, MACHINE_CLASS_OID, MEASURE_OID, AUTHOR_TYPE
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">Logical limits of the range of measure values</meta>
+
+        <!-- Create foreign keys with 'on delete cascade' at the database level. -->
+        <meta attribute="foreign-key">
+            on-delete=CASCADE
+        </meta>
+
+        <id name="oid" type="long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="authorType"
+                  type="minestar.health.impl.definition.MeasureLimitAuthorTypeUserType"
+                  column="AUTHOR_TYPE"
+                  not-null="true">
+        </property>
+
+        <many-to-one name="machineRef" column="MACHINE_OID" class="minestar.pitlink.domain.machine.MachineReference">
+            <meta attribute="alias">machine</meta>
+        </many-to-one>
+        <many-to-one name="machineClassRef" column="MACHINE_CLASS_OID" class="minestar.pitlink.domain.machine.MachineClassReference">
+            <meta attribute="alias">machineClass</meta>
+        </many-to-one>
+        <many-to-one name="measure" column="MEASURE_OID" class="minestar.health.api.definition.Measure" not-null="true"/>
+
+        <property name="name" type="string" column="NAME" length="50"/>
+        <property name="description" type="string" column="DESCRIPTION" length="200"/>
+        <property name="method" type="minestar.health.impl.definition.MeasureMethodUserType" column="METHOD" length="16"/>
+        <property name="upper" type="double" column="UPPER"/>
+        <property name="target" type="double" column="TARGET"/>
+        <property name="lower" type="double" column="LOWER"/>
+        <property name="extremeLower" type="double" column="EXTREME_LOWER"/>
+        <property name="extremeUpper" type="double" column="EXTREME_UPPER"/>
+    </class>
+</hibernate-mapping>

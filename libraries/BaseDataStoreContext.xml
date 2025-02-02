@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+    <!-- The basic bean types for different database vendors -->
+    <bean name="dataStoreConfig" class="com.mincom.util.deployment.DataStoreSpec"
+          abstract="true" init-method="init">
+        <property name="instanceName" value="${dataSource1.instance}"/>
+        <property name="databaseServer" value="${dataSource1.server}"/>
+        <property name="role" value="${dbRole}"/>
+        <property name="port" value="${dataSource1.port}"/>
+    </bean>
+
+    <bean name="warehouseDataStoreConfig" class="com.mincom.util.deployment.DataStoreSpec"
+          abstract="true" init-method="init">
+        <property name="instanceName" value="${dataSource3.instance}"/>
+        <property name="databaseServer" value="${dataSource3.server}"/>
+        <property name="role" value="${dbRole}"/>
+        <property name="port" value="${dataSource1.port}"/>
+    </bean>
+
+    <bean name="oracleDataStoreConfig" class="com.mincom.util.deployment.OracleDataStoreSpec"
+          lazy-init="true" scope="prototype" init-method="init">
+        <constructor-arg index="0" value="oracle"/>
+        <!--<constructor-arg index="1" value="jdbc:oracle:thin:@{1}{4}{5}{2}{3}"/>-->
+        <constructor-arg index="1" value="jdbc:metrics:oracle:thin:@{1}{4}{5}{2}{3}"/>
+        <constructor-arg index="2" value=""/>
+        <!--<constructor-arg index="3" value="oracle.jdbc.OracleDriver"/>-->
+        <constructor-arg index="3" value="minestar.platform.metrics.jdbc.MetricsDriver"/>
+        <constructor-arg index="4" value=":"/>
+        <constructor-arg index="5" value=":"/>
+        <property name="instanceName" value="${dataSource1.instance}"/>
+        <property name="databaseServer" value="${dataSource1.server}"/>
+        <property name="role" value="${dbRole}"/>
+        <property name="port" value="${dataSource1.port}"/>
+    </bean>
+
+    <bean name="postgisDataStoreConfig" class="com.mincom.util.deployment.DataStoreSpec" lazy-init="true" init-method="init">
+        <constructor-arg index="0" value="postgresql"/>
+        <constructor-arg index="1" value="jdbc:postgresql://${postgis.host}:${postgis.port}/${postgis.database}?currentSchema=${postgis.schema},public&amp;loggerLevel=OFF"/>
+        <constructor-arg index="2" value=""/>
+        <constructor-arg index="3" value="org.postgresql.Driver"/>
+        <constructor-arg index="4" value="/"/>
+        <constructor-arg index="5" value=":"/>
+        <property name="instanceName" value="${postgis.database}"/>
+        <property name="databaseServer" value="${postgis.host}"/>
+        <property name="logicalDBName" value="gis"/>
+        <property name="port" value="${postgis.port}"/>
+        <property name="schema" value="${postgis.schema}"/>
+        <property name="username" value="${postgis.username}"/>
+        <property name="password" value="${postgis.password}"/>
+    </bean>
+
+    <bean name="postgresqlDataStoreConfig" parent="dataStoreConfig" lazy-init="true" scope="prototype">
+        <constructor-arg index="0" value="postgresql"/>
+        <constructor-arg index="1" value="jdbc:postgresql://{1}{4}{5}{2}{3}?loggerLevel=OFF"/>
+        <constructor-arg index="2" value="jdbc:postgresql://{1}{4}{5}{2}{3}?loggerLevel=OFF"/>
+        <constructor-arg index="3" value="org.postgresql.Driver"/>
+        <constructor-arg index="4" value="/"/>
+        <constructor-arg index="5" value=":"/>
+    </bean>
+
+    <bean name="postgresqlWarehouseDataStoreConfig" parent="warehouseDataStoreConfig" lazy-init="true" scope="prototype">
+        <constructor-arg index="0" value="postgresql"/>
+        <!--<constructor-arg index="1" value="jdbc:postgresql://{1}{4}{5}{2}{3}"/>-->
+        <constructor-arg index="1" value="jdbc:metrics:postgresql://{1}{4}{5}{2}{3}?loggerLevel=OFF"/>
+        <!--<constructor-arg index="2" value="jdbc:postgresql://{1}{4}{5}{2}{3}"/>-->
+        <constructor-arg index="2" value="jdbc:metrics:postgresql://{1}{4}{5}{2}{3}?loggerLevel=OFF"/>
+        <!--<constructor-arg index="3" value="org.postgresql.Driver"/>-->
+        <constructor-arg index="3" value="minestar.platform.metrics.jdbc.MetricsDriver"/>
+        <constructor-arg index="4" value="/"/>
+        <constructor-arg index="5" value=":"/>
+    </bean>
+
+    <bean name="h2DataStoreConfig" parent="dataStoreConfig" lazy-init="true" scope="prototype">
+        <constructor-arg index="0" value="h2"/>
+        <constructor-arg index="1" value="jdbc:h2:{MSTAR_DATA}/{1};IFEXISTS=TRUE"/>
+        <constructor-arg index="2" value=""/>
+        <constructor-arg index="3" value="org.h2.Driver"/>
+        <constructor-arg index="4" value="\"/>
+        <constructor-arg index="5" value=":"/>
+        <property name="connectionInitCommand" value="set schema_search_path={0}, PUBLIC"/>
+    </bean>
+
+    <bean name="sqlserverDataStoreConfig" parent="dataStoreConfig" lazy-init="true" scope="prototype">
+        <constructor-arg index="0" value="sqlserver"/>
+        <!--<constructor-arg index="1" value="jdbc:sqlserver://{1}{2}{3}{4}{5}"/>-->
+        <constructor-arg index="1" value="jdbc:metrics:sqlserver://{1}{2}{3}{4}{5};queryTimeout=${_SQL_SERVER_QUERY_TIMEOUT};encrypt=false"/>
+        <!--<constructor-arg index="2" value="jdbc:sqlserver://{1}{2}{3}{4}{5}"/>-->
+        <constructor-arg index="2" value="jdbc:metrics:sqlserver://{1}{2}{3}{4}{5};queryTimeout=${_SQL_SERVER_QUERY_TIMEOUT};encrypt=false"/>
+        <!--<constructor-arg index="3" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>-->
+        <constructor-arg index="3" value="minestar.platform.metrics.jdbc.MetricsDriver"/>
+        <constructor-arg index="4" value="\"/>
+        <constructor-arg index="5" value=":"/>
+    </bean>
+
+    <bean name="sqlserverWarehouseDataStoreConfig" parent="warehouseDataStoreConfig" lazy-init="true" scope="prototype">
+        <constructor-arg index="0" value="sqlserver"/>
+        <constructor-arg index="1" value="jdbc:sqlserver://{1}{2}{3}{4}{5};encrypt=false"/>
+        <constructor-arg index="2" value="jdbc:sqlserver://{1}{2}{3}{4}{5};encrypt=false"/>
+        <constructor-arg index="3" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <constructor-arg index="4" value="\"/>
+        <constructor-arg index="5" value=":"/>
+    </bean>
+
+    <bean name="oracleWarehouseDataStoreConfig" class="com.mincom.util.deployment.OracleDataStoreSpec"
+          lazy-init="true" scope="prototype" init-method="init">
+        <constructor-arg index="0" value="oracle"/>
+        <constructor-arg index="1" value="jdbc:oracle:thin:@{1}:1521{2}{3}"/>
+        <constructor-arg index="2" value=""/>
+        <constructor-arg index="3" value="oracle.jdbc.OracleDriver"/>
+        <constructor-arg index="4" value=":"/>
+        <constructor-arg index="5" value=":"/>
+        <property name="instanceName" value="${dataSource3.instance}"/>
+        <property name="databaseServer" value="${dataSource3.server}"/>
+        <property name="role" value="${dbRole}"/>
+    </bean>
+    <bean name="sqlserverModelDataStoreConfig" parent="dataStoreConfig" lazy-init="true" scope="prototype">
+        <constructor-arg index="0" value="sqlserver"/>
+        <!--<constructor-arg index="1" value="jdbc:sqlserver://{1}{2}{3}{4}{5}"/>-->
+        <constructor-arg index="1" value="jdbc:metrics:sqlserver://{1}{2}{3}{4}{5};queryTimeout=${_SQL_SERVER_QUERY_TIMEOUT};encrypt=false"/>
+        <!--<constructor-arg index="2" value="jdbc:sqlserver://{1}{2}{3}{4}{5}"/>-->
+        <constructor-arg index="2" value="jdbc:metrics:sqlserver://{1}{2}{3}{4}{5};queryTimeout=${_SQL_SERVER_QUERY_TIMEOUT};encrypt=false"/>
+        <!--<constructor-arg index="3" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>-->
+        <constructor-arg index="3" value="minestar.platform.metrics.jdbc.MetricsDriver"/>
+        <constructor-arg index="4" value="\"/>
+        <constructor-arg index="5" value=":"/>
+        <property name="logicalDBName" value="model"/>
+    </bean>
+</beans>

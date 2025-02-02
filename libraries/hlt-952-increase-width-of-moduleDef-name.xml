@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="f003c10c-63a7-4564-85b2-0961dde6f637" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for MEASURE_DEF.NAME as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="MEASURE_DEF" columnName="NAME"/>
+        </preConditions>
+        <comment>HLT-952: ChangeDataType of MEASURE_DEF.NAME from VARCHAR(96) to VARCHAR(100)</comment>
+        <modifyDataType columnName="NAME" newDataType="VARCHAR(100)" tableName="MEASURE_DEF"/>
+        <rollback>
+            <!-- Truncate any data longer than 96 characters. -->
+            <sql dbms="oracle">update MEASURE_DEF set NAME=SUBSTR(NAME,1,96) where LENGTH(NAME)>96</sql>
+            <sql dbms="mssql">update MEASURE_DEF set NAME=SUBSTRING(NAME,1,96) where LEN(NAME)>96</sql>
+            <!-- Revert the data type back to 96 characters. -->
+            <modifyDataType tableName="MEASURE_DEF" columnName="NAME" newDataType="VARCHAR(96)"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="54568b6a-0b7a-47da-8554-2bf7879e7206" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropForeignKeyConstraint for ASSIGNMENT_EVENT_FK1 of table ASSIGNMENT_EVENT as foreignKey does not exist."
+                onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="ASSIGNMENT_EVENT" foreignKeyName="ASSIGNMENT_EVENT_FK1"/>
+        </preConditions>
+        <comment>AHS-12668: DropForeignKeyConstraint ASSIGNMENT_EVENT_FK1 from ASSIGNMENT_EVENT (SCHEDASSIGNMENTACTIVATEDELAY)</comment>
+        <dropForeignKeyConstraint baseTableName="ASSIGNMENT_EVENT" constraintName="ASSIGNMENT_EVENT_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="ASSIGNMENT_EVENT" baseColumnNames="SCHEDASSIGNMENTACTIVATEDELAY"
+                                     constraintName="ASSIGNMENT_EVENT_FK1" referencedTableName="DELAY"
+                                     referencedColumnNames="DELAY_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6b9739db-f066-4ba1-8bdd-d8c070bfe99e" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropForeignKeyConstraint for ASSIGNMENT_EVENT_SCHEDASSIG_FK of table ASSIGNMENT_EVENT as foreignKey does not exist."
+                onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="ASSIGNMENT_EVENT"
+                                        foreignKeyName="ASSIGNMENT_EVENT_SCHEDASSIG_FK"/>
+        </preConditions>
+        <comment>AHS-12668: DropForeignKeyConstraint ASSIGNMENT_EVENT_SCHEDASSIG_FK from ASSIGNMENT_EVENT (SCHEDASSIGNMENTARRIVALDELAY)</comment>
+        <dropForeignKeyConstraint baseTableName="ASSIGNMENT_EVENT" constraintName="ASSIGNMENT_EVENT_SCHEDASSIG_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="ASSIGNMENT_EVENT" baseColumnNames="SCHEDASSIGNMENTARRIVALDELAY"
+                                     constraintName="ASSIGNMENT_EVENT_SCHEDASSIG_FK" referencedTableName="DELAY"
+                                     referencedColumnNames="DELAY_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,23 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="5e3840a7-92bc-4bbe-a5bd-21cd5ceb2c4a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_HIGHWALL_CLOCKWISE to table PLAN_GROUP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP"/>
+            <not>
+                <columnExists tableName="PLAN_GROUP" columnName="IS_HIGHWALL_CLOCKWISE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1709: AddColumn PLAN_GROUP.IS_HIGHWALL_CLOCKWISE</comment>
+        <addColumn tableName="PLAN_GROUP">
+            <column name="IS_HIGHWALL_CLOCKWISE" type="BOOLEAN" remarks="Is the highwall dumping point direction clockwise?"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="71ba3f18-6289-4c7e-89a8-6e15489afc81" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for IS_HIGHWALL_CLOCKWISE of table PLAN_GROUP as column does not exist or column is already not nullable" onFail="MARK_RAN">
+            <columnExists tableName="PLAN_GROUP" columnName="IS_HIGHWALL_CLOCKWISE"/>
+            <ext:columnIsNullable tableName="PLAN_GROUP" columnName="IS_HIGHWALL_CLOCKWISE"/>
+        </preConditions>
+        <comment>AHS-1709: AlterColumn PLAN_GROUP.IS_HIGHWALL_CLOCKWISE - nullability changed from true to false - defaultValue changed from 'null' to '0'</comment>
+        <addDefaultValue columnName="IS_HIGHWALL_CLOCKWISE" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="PLAN_GROUP"/>
+        <addNotNullConstraint columnName="IS_HIGHWALL_CLOCKWISE" defaultNullValue="0" columnDataType="BOOLEAN" tableName="PLAN_GROUP"/>
+    </changeSet>
+</databaseChangeLog>

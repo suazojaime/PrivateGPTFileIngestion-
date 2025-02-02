@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                    http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                   ">
+    <changeSet id="7f932bb0-7c66-449e-b55a-c9fedfa1cb56" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for NOTES to table WALL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="WALL"/>
+            <not>
+                <columnExists tableName="WALL" columnName="NOTES"/>
+            </not>
+        </preConditions>
+        <comment>FUG-1355: AddColumn WALL.NOTES</comment>
+        <addColumn tableName="WALL">
+            <column name="NOTES" type="VARCHAR(1000)" remarks="The user-entered notes on the wall, e.g. why it was created, in order to pass this information to other users."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="WALL" columnName="NOTES"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

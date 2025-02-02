@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="historical" default-lazy="false">
+
+    <class name="minestar.mine.domain.material.HistoricalGradeBlockOverrideImpl"
+           proxy="minestar.mine.domain.material.HistoricalGradeBlockOverride"
+           table="HGB_OVERRIDE">
+
+        <meta attribute="alias" inherit="false">HGBOVERRIDE</meta>
+        <meta attribute="description">A historical record of grade block overrides.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="GB_OVERRIDE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one
+                name="gradeBlockRef"
+                column="GRADE_BLOCK"
+                not-null="true"
+                class="minestar.mine.domain.material.GradeBlockReference"
+                access="field"
+                index="IDX_GB_TIMESTAMP"
+        >
+            <meta attribute="description">
+                A reference to the grade (MSMODEL.GRADE) that this historical record applies to.
+            </meta>
+        </many-to-one>
+        <map name="gradevalues" table="HGB_OVCONT_VAL" fetch="select" batch-size="100">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="alias" inherit="false">GRADEVALUES</meta>
+            <meta attribute="index" inherit="false">
+                name=GRADEBLOCK_CONT_VALUE_12U
+                columns=OID
+                tablespace=MW_IDXOBJ
+            </meta>
+            <meta attribute="index-alias">grade</meta>
+            <meta attribute="unitType">unitless</meta>
+            <meta attribute="element-quantity">Null:LOOKUP(UNITNAME, GRADE, GRADE_OID, GRADE_OID)
+            </meta>
+            <meta attribute="description">Mining block continuous grade values</meta>
+
+            <key column="OID" not-null="true"/>
+            <index-many-to-many class="minestar.production.domain.grade.GradeReference" column="GRADE_OID"/>
+            <element type="float" column="VALUE" not-null="true"/>
+        </map>
+
+        <map name="disgradevalues" table="HGB_OVDISC_VAL" fetch="select" batch-size="100">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="alias" inherit="false">DISGRADEVALUES</meta>
+            <meta attribute="index" inherit="false">
+                name=GRADEBLOCK_DISC_VALUE_12U
+                columns=OID
+                tablespace=MW_IDXOBJ
+            </meta>
+            <meta attribute="index-alias">grade</meta>
+            <meta attribute="description">The discrete grade values for the block</meta>
+
+            <key column="OID" not-null="true"/>
+            <index-many-to-many class="minestar.production.domain.grade.GradeReference" column="GRADE_OID"/>
+            <element type="string" column="VALUE" not-null="true"/>
+        </map>
+
+        <many-to-one name="userRef"
+                     class="minestar.platform.domain.user.UserReference"
+                     column="USER1"
+                     not-null="true">
+            <meta attribute="description">
+                A reference to the user (MSMODEL.USER) who applied the override.
+            </meta>
+        </many-to-one>
+
+        <property name="timestampDate"
+                  type="TimestampType"
+                  column="TIMESTAMP_UTC"
+                  not-null="true"
+                  index="IDX_GB_TIMESTAMP">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="description">The timestamp of when this override became active.</meta>
+            <meta attribute="utc-description">
+                The UTC timestamp of when this override became active.
+            </meta>
+        </property>
+
+
+        <property name="expiryTimestamp"
+                  type="TimestampType"
+                  column="EXPIRY_TIMESTAMP_UTC"
+                  not-null="true">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="description">The timestamp of when this override will expire.</meta>
+            <meta attribute="utc-description">
+                The UTC timestamp of when this override will expire.
+            </meta>
+        </property>
+    </class>
+
+</hibernate-mapping>

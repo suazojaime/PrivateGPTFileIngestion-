@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="productionPlanValidatorImpl" class="minestar.planmanagement.service.ProductionPlanValidatorImpl"
+          lazy-init="false" scope="singleton">
+        <constructor-arg name="mineFleetService" ref="mineFleetServiceImpl"/>
+        <constructor-arg name="mineLayoutService" ref="mineLayoutServiceImpl"/>
+        <constructor-arg name="materialManagementService" ref="materialManagementServiceImpl"/>
+        <constructor-arg name="delayManagementService" ref="delayManagementServiceImpl" />
+        <constructor-arg name="blendingService" ref="blendingServiceImpl"/>
+        <constructor-arg name="fleetProductionService" ref="fleetProductionServiceImpl"/>
+    </bean>
+
+    <bean id="planManagementDateTimeFormatValidator" class="minestar.planmanagement.service.PlanManagementDateTimeFormatValidator"
+          lazy-init="false" scope="singleton">
+    </bean>
+
+    <!-- declare the Ppsi service bean -->
+    <bean id="productionPlanServiceImpl" class="minestar.planmanagement.service.ProductionPlanServiceImpl" lazy-init="false">
+        <constructor-arg name="planManagementDateTimeFormatValidator" ref="planManagementDateTimeFormatValidator"/>
+        <constructor-arg name="productionPlanValidator" ref="productionPlanValidatorImpl"/>
+        <constructor-arg name="prodPlanService" ref="prodPlanServiceImplV2"/>
+        <constructor-arg name="prodPlanTaskService" ref="prodPlanTaskServiceImpl"/>
+        <constructor-arg name="notification" ref="notification"/>
+        <constructor-arg name="txManager" ref="minestarTransactionManager"/>
+        <constructor-arg name="materialManagementService" ref="materialManagementServiceImpl"/>
+        <constructor-arg name="blendingService" ref="blendingServiceImpl"/>
+    </bean>
+
+    <!-- register service in spring -->
+    <bean id="registerPpsiService" parent="registrationInstance" lazy-init="false" >
+        <constructor-arg value="Plan Management Service"/>
+        <constructor-arg value="minestar.planmanagement.service.PpsiService"/>
+        <constructor-arg ref="productionPlanServiceImpl"/>
+    </bean>
+
+    <!-- expose the service on the MineStar bus -->
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="minePlanService"/>
+        <!-- This looks wrong. service is not wrapped with Proxy -->
+        <property name="service" ref="productionPlanServiceImpl"/>
+        <property name="serviceInterface" value="minestar.planmanagement.service.PpsiService"/>
+        <property name="registryPort" value="${MSTAR_BUS_PORT}"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.script.Script"
+           table="SCRIPT">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=SCRIPT_ID
+            unique=true
+            columns=ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=SCRIPT_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A set of ordered instructions for a truck.</meta>
+
+        <cache usage="read-write" region="model-versioned"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="SCRIPT_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <version name="version">
+              <meta attribute="description">The version number for optimistic locking</meta>
+        </version>
+
+        <property name="id"
+                  type="java.lang.Long"
+                  column="ID"
+                  not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="description">
+                A unique ID value for this script.
+                Automatically generated values start at 256 with values below this reserved for system type scripts.
+            </meta>
+        </property>
+
+        <property name="revision"
+                  type="java.lang.Long"
+                  column="REVISION"
+                  not-null="true">
+            <meta attribute="description">The script revision for use with synchronizing onboard files</meta>
+        </property>
+
+        <property name="active"
+                  type="java.lang.Boolean"
+                  column="IS_ACTIVE"
+                  not-null="true">
+                <meta attribute="defaultValue">true</meta>
+                <meta attribute="description">Is this script active</meta>
+        </property>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="NAME"
+                  not-null="true">
+            <meta attribute="description">A user supplied identifier for this script.</meta>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  column="MODEL_UPDATE_VERSION"
+                  type="long"
+                  not-null="true">
+            <meta attribute="description">The mine model update version when the script was created/modified.</meta>
+        </property>
+
+        <property name="layerUpdateVersion"
+                  column="LAYER_UPDATE_VERSION"
+                  type="long"
+                  not-null="true">
+            <meta attribute="description">The layer update version when the script was created/modified.</meta>
+        </property>
+
+        <list name="scriptElements"
+              table="ACCESSORY_CONTROLS"
+              batch-size="100"
+              cascade="all-delete-orphan">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias">elementNr</meta>
+            <meta attribute="description">An ordered list of all accessory controls for this script.</meta>
+
+            <key column="OID" not-null="true"/>
+            <index type="java.lang.Integer" column="ELEMENT_NR"/>
+            <element type="minestar.mine.domain.minemodel.script.AccessoryControlUserType" not-null="true">
+                <column name="DISCRIMINATOR_ID" not-null="true"/>
+                <column name="BED_POSITION"/>
+                <column name="BED_VELOCITY"/>
+                <column name="ENGINE_MODE"/>
+                <column name="HAZARD_TURN_ON"/>
+                <column name="HEADLIGHT_MODE"/>
+                <column name="HORN_DURATION"/>
+                <column name="MOTION_CONTROL"/>
+                <column name="PAUSE_DURATION"/>
+                <column name="PAUSE_DISTANCE"/>
+                <column name="TRIGGERED_SCRIPT_SCRIPT"/>
+                <column name="TURN_SIGNAL_MODE"/>
+            </element>
+        </list>
+
+    </class>
+
+    <!-- A lightweight reference to a Script -->
+    <class name="minestar.mine.domain.minemodel.script.ScriptReference" table="SCRIPT" mutable="false" lazy="false">
+
+        <meta attribute="alias" inherit="false">SCRIPT_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a script.</meta>
+        <meta attribute="view-create-order">1</meta>
+        <meta attribute="view-master">true</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="SCRIPT_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+        <property name="id" type="long" column="ID" not-null="true"/>
+    </class>
+
+    <class name="minestar.mine.domain.minemodel.script.server.ServerScript"
+           table="SERVER_SCRIPT">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=SERVER_SCRIPT_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">A set of ordered instructions for a truck.</meta>
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="SERVER_SCRIPT_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="active"
+                  type="java.lang.Boolean"
+                  column="IS_ACTIVE"
+                  not-null="true">
+                <meta attribute="defaultValue">true</meta>
+                <meta attribute="description">Is this script active</meta>
+        </property>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="NAME"
+                  not-null="true">
+            <meta attribute="description">A user supplied identifier for this script.</meta>
+        </property>
+
+        <list name="scriptElements"
+              table="SERVER_SCRIPT_ELEMENT"
+              batch-size="100"
+              cascade="all-delete-orphan">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias">elementNr</meta>
+            <meta attribute="description">An ordered list of all server script elements for this server script.</meta>
+
+            <key column="OID" not-null="true"/>
+            <index type="java.lang.Integer" column="ELEMENT_NR"/>
+
+            <element type="minestar.mine.domain.minemodel.script.server.ServerScriptElementUserType" not-null="true">
+                <column name="DISCRIMINATOR_ID" not-null="true"/>
+                <column name="MOVEMENT_DISTANCE"/>
+                <column name="SCRIPT_CALL"/>
+            </element>
+        </list>
+
+    </class>
+
+</hibernate-mapping>

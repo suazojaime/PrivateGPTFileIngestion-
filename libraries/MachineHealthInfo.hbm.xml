@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class name="minestar.health.domain.data.MachineHealthInfo" table="MACHINE_HEALTH_INFO">
+
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <!-- Create foreign keys with 'on delete cascade' at the database level. -->
+        <meta attribute="foreign-key">
+            on-delete=CASCADE
+        </meta>
+
+		<id name="machineOid" type="java.lang.Long" access="field">
+            <column name="MACHINE_OID" />
+            <generator class="foreign">
+                <param name="property">machineRef</param>
+            </generator>
+        </id>
+        <one-to-one name="machineRef" class="minestar.pitlink.domain.machine.MachineReference" access="field" constrained="true">
+            <meta attribute="view-ignore">true</meta>
+        </one-to-one>
+        <property name="configVersion" type="java.lang.String" column="CONFIG_VERSION" length="16">
+        	<meta attribute="description">Configuration Version</meta>
+        </property>
+        <property name="configPartNum" type="java.lang.String" column="CONFIG_PART_NUM" length="16">
+        	<meta attribute="description">Configuration Part Number</meta>
+        </property>
+        <property name="softwareVersion" type="java.lang.String" column="SOFTWARE_VERSION" length="16" >
+        	<meta attribute="description">Software Version</meta>
+        </property>
+        <property name="sourceCodePartNum" type="java.lang.String" column="SOURCE_CODE_PART_NUM" length="16">
+        	<meta attribute="description">Source Code Part Number</meta>
+        </property>
+        <property name="hardwarePartNum" type="java.lang.String" column="HARDWARE_PART_NUM" length="20" >
+        	<meta attribute="description">Hardware Part Number</meta>
+        </property>
+        <property name="hardwareVersion" type="java.lang.String" column="HARDWARE_VERSION" length="16" >
+        	<meta attribute="description">Hardware Version</meta>
+        </property>
+        <property name="timestamp" type="TimestampType" column="TIMESTAMP_UTC">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="description">The time at which this information was recorded</meta>
+            <meta attribute="utc-description">The time at which this information was recorded in UTC time</meta>
+        </property>
+    </class>
+</hibernate-mapping>

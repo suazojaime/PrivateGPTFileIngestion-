@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+
+<classdefs>
+    <classdef name="minestar.mine.domain.RoadTravelCondition" keyproperty="name" >
+        <propertydef name="OID" access="readonly">
+            <uidef visiblewhen="false"/>
+        </propertydef>
+        <propertydef name="name">
+            <validationdef name="required" type="shared"/>
+            <description>The name of the travel condition.</description>
+        </propertydef>
+        <propertydef name="adjustmentFactor">
+            <validationdef name="rangeCheck" type="shared">
+                <param name="lower">80</param>
+                <param name="upper">150</param>
+                <message>Value between 80 and 150</message>
+            </validationdef>
+            <description>The percentage used to adjust road travel times.</description>
+        </propertydef>
+        <!--propertydef name="speedAlarmFactor">
+            <description>The percentage travel time decrease before an alarmis raised.</description>
+        </propertydef-->        
+        <validationgroup name="Name Check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+    </classdef>
+</classdefs>

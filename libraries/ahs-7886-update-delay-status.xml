@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="187a16cb-acec-4f6a-8f5a-8d5187506473" author="MineStar" failOnError="false">
+        <comment>AHS-7886: Remove obsolete DELAY.STATUS and add check constraint</comment>
+        <sql>UPDATE DELAY SET STATUS = 3 WHERE STATUS IN (4,5,6)</sql>
+        <sql>UPDATE DELAY SET STATUS = 0 WHERE STATUS NOT IN (0,1,2,3,7)</sql>
+        <sql>ALTER TABLE DELAY ADD CONSTRAINT DELAY_STATUS_CHECK CHECK (STATUS IN (0,1,2,3,7))</sql>
+        <rollback>
+            <sql>ALTER TABLE DELAY DROP CONSTRAINT DELAY_STATUS_CHECK</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

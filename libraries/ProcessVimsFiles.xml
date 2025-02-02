@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<circuit>
+
+    &JobExecutors;
+
+    <nodes>
+        <node name="startNode" class="com.mincom.integ.cat.equip.onboard.nodes.MachineFanoutNode">
+            <var name="isDefaultStartNode">true</var>
+	        <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="DownloadVimsFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isEndNode">true</var>
+            <var name="executor">healthFtpExecutor</var>
+            <var name="defaultJobUrl">com.mincom.integ.cat.vims.download.VimsFileTransferJob</var>
+            <var name="jobClass">com.mincom.integ.cat.vims.download.VimsFileTransferJob</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="SendVimsClockUpdate" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isStartNode">true</var>
+            <var name="isEndNode">true</var>
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">minestar.health.jobs.VimsClockSetJob</var>
+            <var name="defaultJobUrl">minestar.health.jobs.VimsClockSetJob</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="SendBroadcastSet" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isStartNode">true</var>
+            <var name="isEndNode">true</var>
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">minestar.health.jobs.SendBroadcastSetJob</var>
+            <var name="defaultJobUrl">minestar.health.jobs.SendBroadcastSetJob</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="DatalogActivate" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isStartNode">true</var>
+            <var name="isEndNode">true</var>
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">com.mincom.integ.cat.vims.download.DatalogActivateJob</var>
+            <var name="defaultJobUrl">com.mincom.integ.cat.vims.download.DatalogActivateJob</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="SnapshotActivate" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isStartNode">true</var>
+            <var name="isEndNode">true</var>
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">com.mincom.integ.cat.vims.download.SnapshotActivateJob</var>
+            <var name="defaultJobUrl">com.mincom.integ.cat.vims.download.SnapshotActivateJob</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="ImportVimsFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isStartNode">true</var>
+            <var name="isEndNode">true</var>
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">minestar.health.jobs.VimsImportJob</var>
+            <var name="defaultJobUrl">minestar.health.jobs.VimsImportJob</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="TPIDatalogActivate" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isStartNode">true</var>
+            <var name="isEndNode">true</var>
+            <var name="executor">healthFtpExecutor</var>
+            <var name="jobClass">minestar.health.util.tpi.TpiDatalogActivateJob</var>
+            <var name="defaultJobUrl">minestar.health.util.tpi.TpiDatalogActivateJob</var>
+        </node>
+
+        <node name="ImportTPIFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isStartNode">true</var>
+            <var name="isEndNode">true</var>
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">minestar.health.util.tpi.TpiImportJob</var>
+            <var name="defaultJobUrl">minestar.health.util.tpi.TpiImportJob</var>
+        </node>
+    </nodes>
+    <connections>
+        <connect source="startNode" sink="DownloadVimsFiles" />
+    </connections>
+</circuit>
+

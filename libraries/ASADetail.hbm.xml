@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.health.util.asa" schema="historical">
+
+    <class name="HaulRoadDataPoint" table="ASA_DETAIL">
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=ASA_DETAIL_UNIQ
+            unique=true
+            columns=SUMMARYID, TIMESTAMP_UTC
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">Time series data samples used in the calculation of an FPO Haul Road Severity Index</meta>
+
+        <id name="id" >
+            <meta attribute="alias">OID</meta>
+            <meta attribute="description">The id of this sample.</meta>
+            <generator class="uuid.hex"/>
+        </id>
+
+        <many-to-one name="summary" column="SUMMARYID" not-null="true">
+            <meta attribute="alias">parentOID</meta>
+            <meta attribute="description">The summary dataset to which this sample belongs.</meta>
+        </many-to-one>
+
+        <property name="listIndex" column="LISTINDEX" not-null="true">
+            <meta attribute="description">An index into this list of samples.</meta>
+        </property>
+
+        <property name="timestamp" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time at which this sample was collected.</meta>
+            <meta attribute="description">The time at which this sample was collected.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="TIMESTAMP_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+
+        <property name="racking" column="RACKING">
+            <meta attribute="unitType" inherit="false">pressure</meta>
+            <meta attribute="description">Racking value.</meta>
+        </property>
+        <property name="bias" column="BIAS">
+            <meta attribute="unitType" inherit="false">pressure</meta>
+            <meta attribute="description">Bias value.</meta>
+        </property>
+        <property name="pitch" column="PITCH">
+            <meta attribute="unitType" inherit="false">pressure</meta>
+            <meta attribute="description">Pitch value.</meta>
+        </property>
+        <property name="suspCylLtf" column="SUSPCYLLTF">
+            <meta attribute="unitType" inherit="false">pressure</meta>
+            <meta attribute="description">Left Front Suspension Cylinder Pressure.</meta>
+        </property>
+        <property name="suspCylLtr" column="SUSPCYLLTR">
+            <meta attribute="unitType" inherit="false">pressure</meta>
+            <meta attribute="description">Left Rear Suspension Cylinder Pressure.</meta>
+        </property>
+        <property name="suspCylRtr" column="SUSPCYLRTR">
+            <meta attribute="unitType" inherit="false">pressure</meta>
+            <meta attribute="description">Right Rear Suspension Cylinder Pressure.</meta>
+        </property>
+        <property name="suspCylRtf" column="SUSPCYLRTF">
+            <meta attribute="unitType" inherit="false">pressure</meta>
+            <meta attribute="description">Right Front Suspension Cylinder Pressure.</meta>
+        </property>
+        <property name="actualGear" column="ACTUALGEAR">
+            <meta attribute="description">The gear the machine was in at the time of this sample.</meta>
+        </property>
+        <property name="engFuelRate" column="ENGFUELRATE">
+            <meta attribute="unitType" inherit="false">flow</meta>
+            <meta attribute="description">Rate of fuel consumption.</meta>
+        </property>
+        <property name="engSpeed" column="ENGSPEED">
+            <meta attribute="unitType" inherit="false">angular velocity</meta>
+            <meta attribute="description">Engine speed.</meta>
+        </property>
+        <property name="groundSpeed" column="GROUNDSPEED">
+            <meta attribute="unitType" inherit="false">speed</meta>
+            <meta attribute="description">Ground Speed.</meta>
+        </property>
+        <property name="retarder" column="RETARDER">
+            <meta attribute="description">Retarder value.</meta>
+        </property>
+        <property name="payload" column="PAYLOAD">
+            <meta attribute="unitType" inherit="false">mass</meta>
+            <meta attribute="description">The Payload.</meta>
+        </property>
+        <property name="payloadStatus" column="PAYLOADSTATUS">
+            <meta attribute="description">Payload status.</meta>
+        </property>
+        <property name="ltFBrkTemp" column="LTFBRKTEMP">
+            <meta attribute="unitType" inherit="false">temperature</meta>
+            <meta attribute="description">Left Front Brake Temperature.</meta>
+        </property>
+        <property name="ltRBrkTemp" column="LTRBRKTEMP">
+            <meta attribute="unitType" inherit="false">temperature</meta>
+            <meta attribute="description">Left Rear Brake Temperature.</meta>
+        </property>
+        <property name="rtFBrkTemp" column="RTFBRKTEMP">
+            <meta attribute="unitType" inherit="false">temperature</meta>
+            <meta attribute="description">Right Front Brake Temperature.</meta>
+        </property>
+        <property name="rtRBrkTemp" column="RTRBRKTEMP">
+            <meta attribute="unitType" inherit="false">temperature</meta>
+            <meta attribute="description">Right Rear Brake Temperature.</meta>
+        </property>
+        <property name="haulDistance" column="HAULDISTANCE">
+            <meta attribute="unitType" inherit="false">length</meta>
+            <meta attribute="description">The last haul distance.</meta>
+        </property>
+        <property name="rackingLevel" column="RACKINGLEVEL">
+            <meta attribute="description">The racking pressure relative to management limits - 0 = below, 1 = above 1st limit, 2 = above second limit.</meta>
+        </property>
+        <property name="biasLevel" column="BIASLEVEL">
+            <meta attribute="description">The bias pressure relative to management limits - 0 = below, 1 = above 1st limit, 2 = above second limit.</meta>
+        </property>
+
+        <property name="rackingException" column="RACKINGEXCEPTION">
+            <meta attribute="description">A flag indicating whether this sample was counted as a racking exception.</meta>
+        </property>
+
+        <property name="biasException" column="BIASEXCEPTION">
+            <meta attribute="description">A flag indicating whether this sample was counted as a bias exception.</meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

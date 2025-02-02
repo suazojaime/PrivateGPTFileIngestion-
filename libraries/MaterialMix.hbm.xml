@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class
+        name="minestar.machinetracking.domain.MaterialMix"
+        table="MATERIALMIX"
+        >
+
+        <meta attribute="table">
+    		tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+	    	tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=MATERIALMIX_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">
+            Lists of materials to be applied to servers that are working with known groupings of materials.
+        </meta>
+
+        <id name="OID" type="long" column="MATERIALMIX_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="id" type="long" column="ID" not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+            <meta attribute="description">The unique external id of the material mix.</meta>
+        </property>
+
+        <property name="name" type="string" column="NAME" length="254" not-null="true">
+            <meta attribute="description">The name of the material mix.</meta>
+        </property>
+
+        <property name="description" type="string" column="DESCRIPTION" length="254">
+            <meta attribute="description">A description of the material mix.</meta>
+        </property>
+
+        <property name="layerUpdateVersion" type="long" column="LAYER_UPDATE_VERSION" not-null="true">
+            <meta attribute="description">The layer update version when the material mix was created/modified.</meta>
+        </property>
+
+        <property name="modelUpdateVersion" type="long" column="MODEL_UPDATE_VERSION" not-null="true">
+            <meta attribute="description">The mine model update version when the material mix was created/modified.</meta>
+        </property>
+
+        <!-- associations -->
+        <set name="mixMaterials" table="MIX_MATERIAL">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">A list of all materials in the mix.</meta>
+            <meta attribute="choices" inherit="false">service(minestar.machinetracking.application.MaterialCollectionProvider):materialRefs</meta>
+            <meta attribute="view-reference">minestar.machinetracking.domain.MaterialImpl</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.machinetracking.domain.MaterialReference" column="MATERIAL_OID"/>
+        </set>
+    </class>
+
+    <!-- A lightweight reference to a MaterialGroup -->
+    <class name="minestar.machinetracking.domain.MaterialMixReference" table="MATERIALMIX" mutable="false" lazy="false">
+        <meta attribute="alias" inherit="false">MATERIAL_MIX_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a material mix.</meta>
+        <meta attribute="view-create-order">1</meta>
+        <meta attribute="view-master">true</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="MATERIALMIX_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

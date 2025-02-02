@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+    <classdef name="minestar.production.domain.LoaderRecipe" keyproperty="name" >
+		<propertygroup name="details">
+            <uigroupdef mode="tab"/>
+            <propertydef name="OID" access="readonly">
+                <uidef visiblewhen="false"/>
+            </propertydef>            
+            <propertydef name="name" label="Recipe Name">
+                <validationdef name="required" type="shared"/>
+            </propertydef>
+            <propertydef name="version" label="Version" access="readonly">
+                <uidef updateable="false" enabledwhen="false"/>
+            </propertydef>
+            <propertydef name="activities" label="Stockpiles">
+                <uidef widget="association" custom='{childPropName="activity"}'/>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="send" label="Send to Machines">
+            <uigroupdef mode="tab"/>
+            <propertygroup name="sendGUI">
+                <uigroupdef mode="plain"  layout="horizontal"/> 
+                <propertydef name="machines" label="Loaders" category="transient">
+                    <typedef>
+                        <javaclass name="java.util.Set" choices="loaderrecipe:machines" />
+                    </typedef>
+                    <uidef widget="checkbox" updateable="false" />  
+                </propertydef>
+                <propertydef name="sendRecipe" label="Send Recipe" category="transient">
+                    <typedef><type code="string"/></typedef>
+                    <uidef widget="command"
+                            custom='{showOnForm:"true",
+                                    jobUrl:"com.mincom.integ.cat.equip.onboard.commands.SendRequestFromParameters",
+                                    configClass:"com.mincom.integ.field.config.SendToolKeyUpdateConfig",
+                                    jobName:"Loader Recipe Update"}'/>
+                </propertydef>
+            </propertygroup>
+        </propertygroup>
+        <validationgroup name="Loader Recipe Name Check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+    </classdef>
+    <classdef name="minestar.production.domain.ToolKeyDef">
+		<propertygroup name="details">
+			<uigroupdef mode="plain"/>
+            <propertydef name="activityCount" label="Count">
+                <defaultvalue>1</defaultvalue>
+                <validationdef type="expression">
+                    <pattern>[1-9][0-9]*</pattern>
+                    <error>Value must be 1 or greater</error>
+                    <message>Enter a value 1 or greater</message>
+                </validationdef>
+            </propertydef>
+            <propertydef name="activity" label="Machine Activity">
+            </propertydef>
+        </propertygroup>
+    </classdef>
+</classdefs>

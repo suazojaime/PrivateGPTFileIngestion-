@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="c6cbd14b-f648-4daa-9e54-365fab8eeacc" author="MineStar" failOnError="false">
+
+        <comment>FLT-7030: Delete quartz related data as ecf classes are removed </comment>
+        <sql>
+            delete from QRTZ_SIMPLE_TRIGGERS;
+            delete from QRTZ_BLOB_TRIGGERS;
+            delete from QRTZ_CRON_TRIGGERS;
+            delete from QRTZ_TRIGGERS;
+            delete from QRTZ_JOB_DETAILS;
+        </sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- must have this -->
+    <bean id="tooltipUCCImpl" class="minestar.platform.uifacade.tooltip.impl.TooltipUCCImpl"
+          lazy-init="true">
+        <property name="delayManagementService" ref="delayManagementServiceImpl"/>
+        <property name="planCache" ref="displayablePlanCacheImpl"/>
+        <property name="hazardLayoutService" ref="hazardLayoutServiceImpl"/>
+        <property name="laneLayoutService" ref="laneLayoutServiceImpl"/>
+        <property name="materialManagementService" ref="materialManagementServiceImpl"/>
+        <property name="mineFleetService" ref="mineFleetServiceImpl"/>
+        <property name="mineLayoutService" ref="mineLayoutServiceImpl"/>
+        <property name="zoneLayoutService" ref="zoneLayoutServiceImpl"/>
+        <property name="extensions" ref="toolTipExtensions"/>
+    </bean>
+    
+    <bean id="toolTipExtensions" class="minestar.platform.uifacade.tooltip.impl.TooltipExtensions"/>
+
+    <!-- support for serviceFactory -->
+    <bean id="registerTooltipUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Tooltip UCC"/>
+        <constructor-arg value="minestar.platform.uifacade.tooltip.TooltipUCCFacade"/>
+        <constructor-arg ref="tooltipUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="tooltipUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="tooltipUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="tooltipUCC"/>
+        <property name="service" ref="tooltipUCCProxy"/>
+        <property name="serviceInterface" value="minestar.platform.uifacade.tooltip.TooltipUCCFacade"/>
+    </bean>
+
+</beans>

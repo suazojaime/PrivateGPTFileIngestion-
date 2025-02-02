@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="30ebfbd1-201e-441e-9910-61d6b8296ab8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROCESSOR_QUEUE as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROCESSOR_QUEUE"/>
+        </preConditions>
+        <comment>AHS-7789: DropTable PROCESSOR_QUEUE</comment>
+        <dropTable tableName="PROCESSOR_QUEUE"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="A list of machines that are currently queueing." tableName="PROCESSOR_QUEUE">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="MACHINE_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="OID,MACHINE_OID" constraintName="PROCESSOR_QUEUE_PK" tablespace="MW_IDXENT" tableName="PROCESSOR_QUEUE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="0b33b0f6-a9fe-447e-a72f-d88639db4c5a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for VERSION to table PROD_PLAN_TASK_HIST as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_HIST"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK_HIST" columnName="VERSION"/>
+            </not>
+        </preConditions>
+        <comment>MO-6792: AddColumn PROD_PLAN_TASK_HIST.VERSION</comment>
+        <addColumn tableName="PROD_PLAN_TASK_HIST">
+            <column name="VERSION" type="INT"/>
+        </addColumn>
+        <sql>UPDATE PROD_PLAN_TASK_HIST SET VERSION = 1 WHERE VERSION IS NULL</sql>
+        <addNotNullConstraint tableName="PROD_PLAN_TASK_HIST" columnName="VERSION" columnDataType="INT"/>
+        <rollback>
+            <dropColumn tableName="PROD_PLAN_TASK_HIST" columnName="VERSION"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Shovel Classes">
+
+    <machineClass xsi:type="shovelClassImpl">
+        <name>Bucyrus295</name>
+        <manufacturer>Bucyrus</manufacturer>
+        <description>Bucyrus 295 Series Shovel</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <dipperLoadCapacity magnitude="39.0" unit="cubic metres"/>
+    </machineClass>
+
+</machineClassExport>

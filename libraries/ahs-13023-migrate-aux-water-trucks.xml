@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="d402e364-ae8a-4d00-b7c4-65b5f5b78337" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <comment>AHS-13023: Migrate existing water trucks to the new water truck classes</comment>
+        <sql>
+            UPDATE MACHINECLASS
+            set ECF_CLASS_ID = 'XAEntity.MachineClass.AuxiliaryClass.AuxMobileClass.WaterTruckClass'
+            where CATEGORY = (SELECT MACHINECATEGORY_OID from MACHINECATEGORY where name = 'Water Truck Classes')
+        </sql>
+
+        <sql>
+            UPDATE MACHINE
+            set ECF_CLASS_ID = 'XAEntity.Machine.WaterTruck'
+            where CLASS IN (
+                SELECT MACHINECLASS_OID from MACHINECLASS
+                where MACHINECLASS.ECF_CLASS_ID = 'XAEntity.MachineClass.AuxiliaryClass.AuxMobileClass.WaterTruckClass')
+        </sql>
+        <rollback>
+            <sql>
+                UPDATE MACHINECLASS
+                set ECF_CLASS_ID = 'XAEntity.MachineClass.AuxiliaryClass.AuxMobileClass'
+                where ECF_CLASS_ID = 'XAEntity.MachineClass.AuxiliaryClass.AuxMobileClass.WaterTruckClass'
+            </sql>
+
+            <sql>
+                UPDATE MACHINE
+                set ECF_CLASS_ID = 'XAEntity.Machine.Auxiliary.AuxMobile'
+                where ECF_CLASS_ID = 'XAEntity.Machine.WaterTruck'
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
+

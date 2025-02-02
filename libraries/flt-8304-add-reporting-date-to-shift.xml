@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="583f1d71-4789-4aa9-866b-2cb68135ad4d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for REPORTING_DATE to table SHIFT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SHIFT"/>
+            <not>
+                <columnExists tableName="SHIFT" columnName="REPORTING_DATE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8304: AddColumn SHIFT.REPORTING_DATE</comment>
+        <addColumn tableName="SHIFT">
+            <column name="REPORTING_DATE" type="VARCHAR(8)" remarks="The value of the DAY column in ISO8601 format"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

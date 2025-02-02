@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="466effb4-75dc-4235-a1a7-37e99c474660" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LADAR_HEALTH_STATUS of table MACHINE_IN_PIT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_IN_PIT" columnName="LADAR_HEALTH_STATUS"/>
+        </preConditions>
+        <comment>FUG-354: DropColumn MACHINE_IN_PIT.LADAR_HEALTH_STATUS</comment>
+        <dropColumn columnName="LADAR_HEALTH_STATUS" tableName="MACHINE_IN_PIT"/>
+        <rollback>
+            <addColumn tableName="MACHINE_IN_PIT">
+                <column name="LADAR_HEALTH_STATUS" type="VARCHAR(255)" remarks="The dirtiness level of LADARs."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

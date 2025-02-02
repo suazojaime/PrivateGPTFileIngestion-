@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<circuit>
+
+	&JobExecutors;
+
+    <nodes>
+        <node name="startNode" class="com.mincom.env.integ.circuit.node.NullJobExecutionNode">
+            <var name="isDefaultStartNode">true</var>
+			<inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="uploadFanout" class="com.mincom.integ.cat.equip.onboard.nodes.UploadFanoutNode">
+			<inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="uploadFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="executor">fieldFtpExecutor</var>
+			<var name="defaultJobUrl">com.mincom.integ.cat.equip.onboard.commands.UploadFiles</var>
+			<var name="jobClass">com.mincom.integ.cat.equip.onboard.commands.UploadFiles</var>
+			<inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="activateFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isEndNode">true</var>
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">com.mincom.integ.cat.equip.onboard.commands.ActivateMineStarFiles</var>
+            <var name="defaultJobUrl">com.mincom.integ.cat.equip.onboard.commands.ActivateMineStarFiles</var>
+			<inputvar name="listener" input="listener"/>
+        </node>
+   </nodes>
+
+    <connections>
+        <connect source="startNode" sink="uploadFanout" />
+        <connect source="uploadFanout" sink="uploadFiles" />
+        <connect source="uploadFiles" sink="activateFiles" />
+    </connections>
+</circuit>
+

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) 2021  Caterpillar, Inc.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b2ddc672-c1aa-439a-8e93-3c72a59fe952" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for V2_PROD_PLAN_VALIDATION_ERROR as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_VALIDATION_ERROR"/>
+        </preConditions>
+        <comment>MO-2559: DropTable V2_PROD_PLAN_VALIDATION_ERROR</comment>
+        <dropTable tableName="V2_PROD_PLAN_VALIDATION_ERROR"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" tableName="V2_PROD_PLAN_VALIDATION_ERROR">
+                <column name="PLAN_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ERROR_NR" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="REFERENCE" type="VARCHAR(254)"/>
+                <column name="REFERENCE_TYPE" type="VARCHAR(254)">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="PLAN_OID,ERROR_NR" constraintName="V2_PROD_PLAN_VALIDATION_ERR_PK" tablespace="MW_IDXENT" tableName="V2_PROD_PLAN_VALIDATION_ERROR"/>
+            <addForeignKeyConstraint baseTableName="V2_PROD_PLAN_VALIDATION_ERROR" baseColumnNames="PLAN_OID" constraintName="V2_PROD_PLAN_VALIDATION_ER_FK1" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="6a20d722-81cf-4b09-9e33-f978745881b1" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_REFERENCE_WARNING as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_REFERENCE_WARNING"/>
+            </not>
+        </preConditions>
+        <comment>MO-2559: CreateTable PROD_PLAN_REFERENCE_WARNING</comment>
+        <createTable tablespace="MW_ENT" tableName="PROD_PLAN_REFERENCE_WARNING">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFERENCE" type="VARCHAR(254)"/>
+            <column name="REFERENCE_TYPE" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_REFERENCE_WARNING_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_REFERENCE_WARNING"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="475ef44a-0af4-41f7-83e0-5623991ec15e" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_REFERENCE_WARNIN_FK1 to table PROD_PLAN_REFERENCE_WARNING as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_REFERENCE_WARNING" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_REFERENCE_WARNING" foreignKeyName="PROD_PLAN_REFERENCE_WARNIN_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2559: AddForeignKeyConstraint PROD_PLAN_REFERENCE_WARNIN_FK1 to PROD_PLAN_REFERENCE_WARNING (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_REFERENCE_WARNING WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_REFERENCE_WARNING.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_REFERENCE_WARNING" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_REFERENCE_WARNIN_FK1" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_REFERENCE_WARNING" constraintName="PROD_PLAN_REFERENCE_WARNIN_FK1"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

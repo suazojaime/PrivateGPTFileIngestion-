@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="cac70f0e-997e-4a22-87c5-5defd4cf162b" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+    <preConditions onFailMessage="Ignored AddColumn for MODEL_UPDATE_VERSION to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+      <tableExists tableName="PLAN_MODEL"/>
+      <not>
+        <columnExists tableName="PLAN_MODEL" columnName="MODEL_UPDATE_VERSION"/>
+      </not>
+    </preConditions>
+    <comment>AHS-6331: AddColumn PLAN_MODEL.MODEL_UPDATE_VERSION</comment>
+    <addColumn tableName="PLAN_MODEL">
+      <column name="MODEL_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0" remarks="The mine model update version when the plane was created/modified.">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="dbe8234e-9605-412f-b8a4-f56e8daf503d" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+    <preConditions onFailMessage="Ignored Default for MODEL_UPDATE_VERSION to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+      <tableExists tableName="PLAN_MODEL"/>
+      <not>
+        <columnExists tableName="PLAN_MODEL" columnName="MODEL_UPDATE_VERSION"/>
+      </not>
+    </preConditions>
+    <comment>AHS-6331: modify the PLAN_MODEL.MODEL_UPDATE_VERSION default value to be 0</comment>
+    <sql dbms="oracle">ALTER TABLE PLAN_MODEL MODIFY (MODEL_UPDATE_VERSION DEFAULT 0);</sql>
+    <sql dbms="msssql">ALTER TABLE PLAN_MODEL DROP DF_PLAN_MODEL_MODEL_UPDATE_VERSION;</sql>
+    <sql dbms="msssql">ALTER TABLE PLAN_MODEL ADD CONSTRAINT DF_PLAN_MODEL_MODEL_UPDATE_VERSION DEFAULT 0 FOR MODEL_UPDATE_VERSION;</sql>
+    <rollback>
+      <comment>@EmptyRollback</comment>
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

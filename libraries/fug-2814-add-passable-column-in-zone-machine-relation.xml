@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="3086231f-d354-41d1-829a-b448ea1a0b88" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PASSABLE to table ZONE_MACHINE_RELATION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ZONE_MACHINE_RELATION"/>
+            <not>
+                <columnExists tableName="ZONE_MACHINE_RELATION" columnName="PASSABLE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2814: AddColumn ZONE_MACHINE_RELATION.PASSABLE</comment>
+        <addColumn tableName="ZONE_MACHINE_RELATION">
+            <column name="PASSABLE" type="BOOLEAN" defaultValueNumeric="1" remarks="Is this zone PASSABLE">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

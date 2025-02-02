@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2015, Caterpillar, Brisbane Australia. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+
+    <bean id="truckMachineStopProvider"
+          class="minestar.autonomy.service.traffic.stop.truck.TruckMachineStopProvider"
+          lazy-init="true">
+        <property name="laneUsageService" ref="laneUsageServiceImpl"/>
+        <property name="truckStopCommandGenerator" ref="truckStopCommandGenerator"/>
+        <property name="truckProcessAutonomousStopStatus" ref="truckProcessAutonomousStopStatus"/>
+    </bean>
+
+    <bean id="truckStopCommandGenerator"
+          class="minestar.autonomy.service.traffic.stop.truck.TruckStopCommandGenerator"
+          lazy-init="true">
+        <property name="truckControlMessagingService" ref="truckControlMessagingServiceImpl"/>
+    </bean>
+
+    <bean id="truckProcessAutonomousStopStatus"
+          class="minestar.autonomy.service.traffic.stop.truck.TruckProcessAutonomousStopStatus"
+          lazy-init="true">
+        <property name="laneUsageService" ref="laneUsageServiceImpl"/>
+        <property name="updateSendMachineStop" ref="updateSendMachineStop"/>
+    </bean>
+
+
+</beans>
+ 

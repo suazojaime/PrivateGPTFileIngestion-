@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- internal cache beans, not available for remoting or serviceFactory -->
+    <bean id="displayablePlanCacheImpl" class="minestar.mine.uifacade.plan.collection.DisplayablePlanCache"
+          lazy-init="true" parent="cacheParent">
+        <property name="dumpPlanningService" ref="dumpPlanningServiceImpl"/>
+        <property name="loadPlanningService" ref="loadPlanningServiceImpl"/>
+        <property name="notification" ref="notification"/>
+    </bean>
+
+    <!-- must have this -->
+    <bean id="planUCCImpl" class="minestar.mine.uifacade.plan.impl.PlanUCCImpl" lazy-init="true">
+        <property name="planCache" ref="displayablePlanCacheImpl"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerPlanUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Plan UCC"/>
+        <constructor-arg value="minestar.mine.uifacade.plan.PlanUCCFacade"/>
+        <constructor-arg ref="planUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="planUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="planUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="planUCC"/>
+        <property name="service" ref="planUCCProxy"/>
+        <property name="serviceInterface" value="minestar.mine.uifacade.plan.PlanUCCFacade"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a81208ee-71bd-43b4-9632-630ce93108bb" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PERCEPTION_VERIFICATION_STATS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PERCEPTION_VERIFICATION_STATS"/>
+            </not>
+        </preConditions>
+        <comment>MO-9811: CreateTable PERCEPTION_VERIFICATION_STATS</comment>
+        <createTable tablespace="MW_ENT" remarks="This holds the statistics associated with an AxT and its most recent attempt to perceive an AODV Target." tableName="PERCEPTION_VERIFICATION_STATS">
+            <column name="MACHINE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AODV_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RESET_DATE_UTC" type="DATETIME2" remarks="The statistic reset timestamp"/>
+            <column name="CREATED_DATE_UTC" type="DATETIME2" remarks="The creation timestamp"/>
+            <column name="LAST_UPDATED_DATE_UTC" type="DATETIME2" remarks="The updated timestamp"/>
+            <column name="LAST_HIT_DATE_UTC" type="DATETIME2" remarks="The last hit timestamp"/>
+            <column name="LAST_MISS_DATE_UTC" type="DATETIME2" remarks="The last miss timestamp"/>
+            <column name="HIT_COUNT" type="BIGINT" remarks="The number of successful perception attempts detected."/>
+            <column name="MISS_COUNT" type="BIGINT" remarks="The number of unsuccessful perception attempts detected."/>
+            <column name="VERIFICATION_PASSED" type="BOOLEAN" remarks="True if the previous perception attempt was successful."/>
+        </createTable>
+        <addPrimaryKey columnNames="MACHINE_OID,AODV_OID" constraintName="PERCEPTION_VERIFICATION_STA_PK" tablespace="MW_IDXENT" tableName="PERCEPTION_VERIFICATION_STATS"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="2482be49-8bfc-4afa-aba5-4bee877e3a34" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PERCEPTION_VERIFICATION_ST_FK1 to table PERCEPTION_VERIFICATION_STATS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PERCEPTION_VERIFICATION_STATS" columnName="MACHINE_OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PERCEPTION_VERIFICATION_STATS" foreignKeyName="PERCEPTION_VERIFICATION_ST_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-9811: AddForeignKeyConstraint PERCEPTION_VERIFICATION_ST_FK1 to PERCEPTION_VERIFICATION_STATS (MACHINE_OID)</comment>
+        <sql>DELETE FROM PERCEPTION_VERIFICATION_STATS WHERE MACHINE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = PERCEPTION_VERIFICATION_STATS.MACHINE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PERCEPTION_VERIFICATION_STATS" baseColumnNames="MACHINE_OID" constraintName="PERCEPTION_VERIFICATION_ST_FK1" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PERCEPTION_VERIFICATION_STATS" constraintName="PERCEPTION_VERIFICATION_ST_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="4cc52af9-ae66-4c9b-802a-03a4e0615d3c" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PERCEPTION_VERIFICATION_ST_FK2 to table PERCEPTION_VERIFICATION_STATS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PERCEPTION_VERIFICATION_STATS" columnName="AODV_OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PERCEPTION_VERIFICATION_STATS" foreignKeyName="PERCEPTION_VERIFICATION_ST_FK2"/>
+            </not>
+        </preConditions>
+        <comment>MO-9811: AddForeignKeyConstraint PERCEPTION_VERIFICATION_ST_FK2 to PERCEPTION_VERIFICATION_STATS (AODV_OID)</comment>
+        <sql>DELETE FROM PERCEPTION_VERIFICATION_STATS WHERE AODV_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = PERCEPTION_VERIFICATION_STATS.AODV_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PERCEPTION_VERIFICATION_STATS" baseColumnNames="AODV_OID" constraintName="PERCEPTION_VERIFICATION_ST_FK2" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PERCEPTION_VERIFICATION_STATS" constraintName="PERCEPTION_VERIFICATION_ST_FK2"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

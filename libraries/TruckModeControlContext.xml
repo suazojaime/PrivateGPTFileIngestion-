@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2013, Caterpillar, Brisbane Australia. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+        
+    <bean id="truckModeControlService"
+          class="minestar.mode.truck.control.TruckModeControlService"
+          lazy-init="true">
+        <property name="sharedModeControlService" ref="sharedModeControlService"/>
+    </bean>
+   
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="modeControlServiceImpl"/>
+        <property name="targetMethod"><value>addDelegate</value></property>
+        <property name="arguments">
+            <list>
+                <ref bean="truckModeControlService"/>
+            </list>
+        </property>
+    </bean>
+    
+</beans>

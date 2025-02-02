@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="be3fca8a-9722-4bcf-a3ba-6baa50c58147" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_FRONT_LEFT_X to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_LEFT_X"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_FRONT_LEFT_X</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_FRONT_LEFT_X" type="DOUBLE" remarks="The offset of the dataCollection relative to the front left."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_LEFT_X"/>
+        </rollback>	  																						 
+    </changeSet>
+    <changeSet id="96ac7bc8-3a3b-45e7-aed0-2bd57999780f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_FRONT_LEFT_Y to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_LEFT_Y"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_FRONT_LEFT_Y</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_FRONT_LEFT_Y" type="DOUBLE" remarks="The offset of the dataCollection relative to the front left."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_LEFT_Y"/>
+        </rollback>		  	   
+    </changeSet>
+    <changeSet id="51ed2223-753b-4a1a-894c-05bdd93dc46e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_FRONT_LEFT_Z to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_LEFT_Z"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_FRONT_LEFT_Z</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_FRONT_LEFT_Z" type="DOUBLE" remarks="The offset of the dataCollection relative to the front left."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_LEFT_Z"/>
+        </rollback>		  		   
+    </changeSet>
+    <changeSet id="4578aa90-0181-4a1d-a7dc-b0472a7b76ee" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_FRONT_RIGHT_X to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_RIGHT_X"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_FRONT_RIGHT_X</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_FRONT_RIGHT_X" type="DOUBLE" remarks="The offset of the dataCollection relative to the front right."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_RIGHT_X"/>
+        </rollback>		  		   
+    </changeSet>
+    <changeSet id="ef5d25f7-591e-45fe-8c63-cf540ac37825" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_FRONT_RIGHT_Y to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_RIGHT_Y"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_FRONT_RIGHT_Y</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_FRONT_RIGHT_Y" type="DOUBLE" remarks="The offset of the dataCollection relative to the front right."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_RIGHT_Y"/>
+        </rollback>		  			   
+    </changeSet>
+    <changeSet id="fda7b921-6e6c-4ff0-8734-26e9918da4a5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_FRONT_RIGHT_Z to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_RIGHT_Z"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_FRONT_RIGHT_Z</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_FRONT_RIGHT_Z" type="DOUBLE" remarks="The offset of the dataCollection relative to the front right."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_FRONT_RIGHT_Z"/>
+        </rollback>		   
+    </changeSet>
+    <changeSet id="244e8ee4-5dd4-4af5-85cf-8dca26f28ac0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_REAR_LEFT_X to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_LEFT_X"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_REAR_LEFT_X</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_REAR_LEFT_X" type="DOUBLE" remarks="The offset of the dataCollection relative to the rear left."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_LEFT_X"/>
+        </rollback>		  			   
+    </changeSet>
+    <changeSet id="9b0ef464-bfea-4df4-a8b0-5b59d2e4a638" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_REAR_LEFT_Y to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_LEFT_Y"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_REAR_LEFT_Y</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_REAR_LEFT_Y" type="DOUBLE" remarks="The offset of the dataCollection relative to the rear left."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_LEFT_Y"/>
+        </rollback>		  		   
+    </changeSet>
+    <changeSet id="f734c91f-3a3b-4703-b23a-49241b64abaa" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_REAR_LEFT_Z to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_LEFT_Z"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_REAR_LEFT_Z</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_REAR_LEFT_Z" type="DOUBLE" remarks="The offset of the dataCollection relative to the rear left."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_LEFT_Z"/>
+        </rollback>		  																					  			   
+    </changeSet>
+    <changeSet id="9cd4fd4c-092f-49d9-8908-a21cd2f17a3f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_REAR_RIGHT_X to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_RIGHT_X"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_REAR_RIGHT_X</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_REAR_RIGHT_X" type="DOUBLE" remarks="The offset of the dataCollection relative to the rear right."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_RIGHT_X"/>
+        </rollback>		  																											   
+    </changeSet>
+    <changeSet id="f6fde9fd-46f6-4821-8e0b-98a47b56a407" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_REAR_RIGHT_Y to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_RIGHT_Y"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_REAR_RIGHT_Y</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_REAR_RIGHT_Y" type="DOUBLE" remarks="The offset of the dataCollection relative to the rear right."/>
+        </addColumn>
+		 <rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_RIGHT_Y"/>
+        </rollback>		  
+    </changeSet>
+    <changeSet id="a7ba5369-dfe4-4848-a229-3c4c23291bdd" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DATA_COLLECTION_REAR_RIGHT_Z to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_RIGHT_Z"/>
+            </not>
+        </preConditions>
+        <comment>MO-12903: AddColumn MACHINE_TYPE.DATA_COLLECTION_REAR_RIGHT_Z</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="DATA_COLLECTION_REAR_RIGHT_Z" type="DOUBLE" remarks="The offset of the dataCollection relative to the rear right."/>
+        </addColumn>
+		<rollback>
+            <dropColumn tableName="MACHINE_TYPE" columnName="DATA_COLLECTION_REAR_RIGHT_Z"/>
+        </rollback>		  			   
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2017, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="a526ad04-5ffa-45b7-9541-db7b1d4d6a51" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MACHINE_NAME to table SAFETY_CHECK_RECORD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SAFETY_CHECK_RECORD"/>
+            <not>
+                <columnExists tableName="SAFETY_CHECK_RECORD" columnName="MACHINE_NAME"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4142: AddColumn SAFETY_CHECK_RECORD.MACHINE_NAME</comment>
+        <addColumn tableName="SAFETY_CHECK_RECORD">
+            <column name="MACHINE_NAME" type="VARCHAR(254)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="d3c57e2f-63cf-4ad9-8ab6-722ab6215783" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for OPERATOR_NAME to table SAFETY_CHECK_RECORD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SAFETY_CHECK_RECORD"/>
+            <not>
+                <columnExists tableName="SAFETY_CHECK_RECORD" columnName="OPERATOR_NAME"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4142: AddColumn SAFETY_CHECK_RECORD.OPERATOR_NAME</comment>
+        <addColumn tableName="SAFETY_CHECK_RECORD">
+            <column name="OPERATOR_NAME" type="VARCHAR(254)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="fc088551-78bc-4568-8568-dcc8a273d6e6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ITEM_NAME to table SAFETY_CHECK_RECORD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SAFETY_CHECK_RECORD"/>
+            <not>
+                <columnExists tableName="SAFETY_CHECK_RECORD" columnName="ITEM_NAME"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4142: AddColumn SAFETY_CHECK_RECORD.ITEM_NAME</comment>
+        <addColumn tableName="SAFETY_CHECK_RECORD">
+            <column name="ITEM_NAME" type="VARCHAR(254)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

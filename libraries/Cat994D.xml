@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Loader Classes">
+
+    <machineClass xsi:type="loaderClassImpl">
+        <name>Cat994D</name>
+        <manufacturer>Caterpillar</manufacturer>
+        <description>Caterpillar 994 D Series Wheel Loader</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="4.641" unit="cubic metres"/>
+        <minimumRefuelAmount magnitude="0.00" unit="cubic metres"/>
+        <refuelLevel magnitude="0.4641" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.23205" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="12.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000006" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.000107" unit="cubic metres per second"/>
+        <maximumSpeed magnitude="6.277778" unit="metres per second"/>
+        <dipperCapacity magnitude="14.00" unit="cubic metres"/>
+        <dipperLoadCapacity magnitude="17.00" unit="cubic metres"/>
+        <nominalPayload magnitude="34470" unit="kilogram"/>
+        <maxPayload magnitude="34470" unit="kilogram"/>
+        <raiseHCTLoaded magnitude="12.50" unit="hour"/>
+        <dumpHCTLoaded magnitude="3.40" unit="hour"/>
+        <lowerHCTEmpty magnitude="4.00" unit="hour"/>
+        <totalHCT magnitude="19.90" unit="hour"/>
+        <widthOverTyres magnitude="5.449" unit="metre"/>
+        <hydraulicTankCapacity magnitude="0.621" unit="cubic metres"/>
+        <treadWidth magnitude="0.00" unit="metre"/>
+        <groundClearance magnitude="0.825" unit="metre"/>
+        <hydraulicSystemCapacity magnitude="0.00" unit="cubic metres"/>
+        <loaderEngine bore="170" displacement="69.0" flywheelPower="933.0" grossPower="1027.0" numCylinders="0"
+                      ratedRPM="0" stroke="190"/>
+        <speedForward>
+            <entry>
+                <key>1</key>
+                <value magnitude="2.03" unit="metres per second"/>
+            </entry>
+            <entry>
+                <key>2</key>
+                <value magnitude="3.58" unit="metres per second"/>
+            </entry>
+            <entry>
+                <key>3</key>
+                <value magnitude="6.28" unit="metres per second"/>
+            </entry>
+            <entry>
+                <key>4</key>
+                <value magnitude="0.0" unit="metres per second"/>
+            </entry>
+        </speedForward>
+        <speedReverse>
+            <entry>
+                <key>1</key>
+                <value magnitude="2.25" unit="metres per second"/>
+            </entry>
+            <entry>
+                <key>2</key>
+                <value magnitude="3.97" unit="metres per second"/>
+            </entry>
+            <entry>
+                <key>3</key>
+                <value magnitude="6.92" unit="metres per second"/>
+            </entry>
+            <entry>
+                <key>4</key>
+                <value magnitude="0.0" unit="metres per second"/>
+            </entry>
+        </speedReverse>
+    </machineClass>
+
+
+</machineClassExport>
+

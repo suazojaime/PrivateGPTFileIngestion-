@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE dumpSelection SYSTEM "TSSBlockBuilder.dtd">
+<!--
+
+-->
+<dumpSelection>
+
+    <region name="MP">
+        <tssType list="10,13,139" dump="CUT_17_LOW">
+            <cut name="08">
+                <dump name="SEC_8"></dump>
+            </cut>
+         </tssType>
+
+        <tssType list="11" dump="W12">
+            <cut name="08">
+                <dump name="SEC_8"></dump>
+            </cut>
+            <cut name="17">
+                <dump name="CUT_17_LOW"></dump>
+            </cut>
+         </tssType>
+
+        <tssType list="12,129" dump="W12_SULF">
+            <cut name="18">
+                <dump name="CUT_17_LOW"></dump>
+            </cut>
+            <cut name="17">
+                <dump name="CUT_17_LOW"></dump>
+            </cut>
+        </tssType>
+
+        <tssType list="14,149" dump="W12_SULF">
+            <cut name="18">
+                <dump name="CUT_17_LOW"></dump>
+            </cut>
+            <cut name="17">
+                <dump name=""></dump>
+            </cut>
+        </tssType>
+
+        <tssType list="21" dump="L31_OSGOOD">
+            <cut name="08">
+                <dump name="L31_OSGOOD"></dump>
+            </cut>
+        </tssType>
+
+        <tssType list="217" dump="CUT_17_BACK"></tssType>
+
+        <tssType list="218" dump="W8_CARB_25"></tssType>
+
+        <tssType list="117,118,119" dump="W12"></tssType>
+        <tssType list="219" dump="L1_CARB_RIND"></tssType>
+        <tssType list="31" dump="JOR"></tssType>
+        <tssType list="32,33" dump="J2-JUN"></tssType>
+        <tssType list="329" dump="JOR">
+	        <grade name="Gold1">
+                <logicalOp opp="GT"></logicalOp>
+                <value value="0.04999"></value>
+                <dump name="J1-JUN"></dump>
+            </grade>
+    	</tssType>
+        <tssType list="328" dump="W8_CARB_25"></tssType>
+        <tssType list="327" dump="W8_CARB_25"></tssType>
+        <tssType list="41,42,45,46,47,419,429" dump="SS1_SUB_SULF"></tssType>
+        <tssType list="43,44,48,439,449" dump="SS3_SUB_SULF"></tssType>
+        <tssType list="51,519" dump="SL_A"></tssType>
+        <tssType list="52,529" dump="SL_B2"></tssType>
+        <tssType list="53,539" dump="SL_C"></tssType>
+        <tssType list="54,549" dump="SL_D"></tssType>
+        <tssType list="55,559,56,569,57,579,58,589" dump="SL_E2"></tssType>
+        <tssType list="61,619" dump="SM_A2"></tssType>
+        <tssType list="62,629" dump="SM_B"></tssType>
+        <tssType list="63,639" dump="SM_C"></tssType>
+        <tssType list="64,649" dump="SM_D"></tssType>
+        <tssType list="65,659,66,669,67,679,68,689" dump="SM_E"></tssType>
+        <tssType list="71,719" dump="SH_A"></tssType>
+        <tssType list="72,729" dump="SH_B2"></tssType>
+        <tssType list="73,739" dump="SH_C"></tssType>
+        <tssType list="74,749" dump="SH_D"></tssType>
+        <tssType list="76,769" dump="SH_F"></tssType>
+        <tssType list="77,779" dump="SH_E2"></tssType>
+        <tssType list="75,759,78,789" dump="SH_E2"></tssType>
+        <tssType list="81,819" dump="SAGE_F1"></tssType>
+        <tssType list="82,829" dump="SAGE_B1"></tssType>
+        <tssType list="83,839" dump="SAGE_C1"></tssType>
+        <tssType list="84,849" dump="SAGE_I1"></tssType>
+        <tssType list="85,859" dump="SAGE_B1"></tssType>
+        <tssType list="86,869" dump="SAGE_D1"></tssType>
+        <tssType list="87,879,88,889" dump="SAGE_E1"></tssType>
+
+    </region>
+
+    <region name="VP">
+        <tssType list="10,11,14,149" dump="V4 BACKFILL"></tssType>
+        <tssType list="21,217" dump="L31-OSGOOD PAD"></tssType>
+        <tssType list="218" dump="L31 CARBON RIND">
+            <grade name="Gold1">
+                <logicalOp opp="GT"></logicalOp>
+                <value value="0.02499"></value>
+                <dump name="JOR"></dump>
+            </grade>
+        </tssType>
+        <tssType list="219" dump="W8 CARBON 25"></tssType>
+        <tssType list="31" dump="JOR"></tssType>
+        <tssType list="32,33" dump="J2-JUNIPER"></tssType>
+        <tssType list="329" dump="JOR"></tssType>
+        <tssType list="41,42,43,44,419,429,439,449" dump="SS9-SUB SULF"></tssType>
+        <tssType list="51,52,53,54,55,56,57,58,59" dump="SL9-LOW SULF MILL"></tssType>
+        <tssType list="61,62,63,64,65,66,67,68,69" dump="SM9-MID SULF MILL"></tssType>
+        <tssType list="84,849" dump="SAGE I-1"></tssType>
+    </region>
+
+</dumpSelection>

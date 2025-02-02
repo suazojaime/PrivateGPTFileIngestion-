@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2022 Caterpillar
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <class name="minestar.pitlink.domain.machine.MachineCategoryImpl"
+           table="MACHINECATEGORY"
+           discriminator-value="XAEntity.MachineCategory">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=MACHINECATEGORY_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A grouping mechanism for machines to provide basic grouping and feature specification.</meta>
+        <meta attribute="import-order">0</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="MACHINECATEGORY_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID"/>
+
+        <property name="active" type="boolean">
+            <meta attribute="description">Is this machine category active</meta>
+            <column name="IS_ACTIVE" not-null="true" default="1"/>
+        </property>
+
+        <property name="name" type="java.lang.String" column="NAME" length="254" not-null="true">
+            <meta attribute="description">The name of the MachineCategory</meta>
+        </property>
+
+        <property name="description" type="java.lang.String" column="DESCRIPTION" length="254">
+            <meta attribute="description">A brief description of the machine category</meta>
+        </property>
+
+        <property name="iconUrl" type="java.lang.String" column="ICONURL" length="254">
+            <meta attribute="description">The path of the icon for display on the client for this MachineCategory</meta>
+        </property>
+
+        <property name="stateSet" type="java.lang.String" column="STATESET" length="254">
+            <meta attribute="description">The path to a file containing the logical state-set for this machine category</meta>
+        </property>
+
+        <property name="cycleEngine" type="java.lang.String" column="CYCLEENGINE" length="254">
+            <meta attribute="description">The cycle engine model associated with this machine category</meta>
+        </property>
+
+        <set name="capabilities" table="MACHINE_CATEGORY_CAPABILITY" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The set of capabilities this machine category has.</meta>
+            <meta attribute="choices" inherit="false">choice:machineCapabilities</meta>
+
+            <cache usage="read-write" region="model"/>
+
+            <key column="OID" not-null="true"/>
+            <element type="java.lang.Integer" column="CAPABILITY_ID" not-null="true"/>
+        </set>
+
+        <subclass name="minestar.pitlink.domain.machine.FixedPlantCategoryImpl"
+                  discriminator-value="XAEntity.MachineCategory.FixedPlantCategory">
+            <subclass name="minestar.pitlink.domain.machine.AStopTestStationCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.AStopTestStationCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.ChuteCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.ChuteCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.ConveyorCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.ConveyorCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.CommandProxyCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.CommandProxyCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.FuelBayCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.FuelBayCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.AutonomousWaterRefillStationCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.AutonomousWaterRefillStationCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.LayoverCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.LayoverCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.MaterialServiceCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.MaterialServiceCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.PayloadServiceCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.PayloadServiceCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.InfrastructureCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.InfrastructureCategory">
+                <subclass name="minestar.pitlink.domain.machine.PseudoliteCategoryImpl"
+                          discriminator-value="XAEntity.MachineCategory.InfrastructureCategory.PseudoliteCategory"/>
+            </subclass>
+            <subclass name="minestar.pitlink.domain.machine.LoadoutUnitCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.LoadoutUnitCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.AutomatedLoadoutUnitCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.AutomatedLoadoutUnitCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.FixedProcessorCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.ProcessorCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.PerceptionTargetCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.PerceptionTargetCategory">
+                <subclass name="minestar.pitlink.domain.machine.PerceptionBasedLocalizationTargetCategoryImpl"
+                          discriminator-value="XAEntity.MachineCategory.PerceptionBasedLocalizationTargetCategory"/>
+                <subclass name="minestar.pitlink.domain.machine.PerceptionCalibrationVerificationTargetCategoryImpl"
+                          discriminator-value="XAEntity.MachineCategory.PerceptionCalibrationVerificationTargetCategory"/>
+                <subclass name="minestar.pitlink.domain.machine.AutomaticObjectDetectionVerificationTargetCategoryImpl"
+                          discriminator-value="XAEntity.MachineCategory.AutomaticObjectDetectionVerificationTargetCategory"/>
+            </subclass>
+            <subclass name="minestar.pitlink.domain.machine.RockBreakerCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.RockBreakerCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.EntryCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.BarrierCategory"/>
+            <subclass name="minestar.pitlink.domain.machine.LoadingBayCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.LoadingBayCategory"/>
+        </subclass>
+        <subclass name="minestar.pitlink.domain.machine.BlastholeDrillCategoryImpl"
+                  discriminator-value="XAEntity.MachineCategory.BlastholeDrillCategory"/>
+        <subclass name="minestar.pitlink.domain.machine.DraglineCategoryImpl"
+                  discriminator-value="XAEntity.MachineCategory.DraglineCategory"/>
+        <subclass name="minestar.pitlink.domain.machine.MobileCategoryImpl"
+                  discriminator-value="XAEntity.MachineCategory.MobileCategory">
+            <subclass name="minestar.pitlink.domain.machine.MobileProcessorCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.MobileProcessorCategory"/>
+        </subclass>
+        <subclass name="minestar.pitlink.domain.machine.ExternalMachineCategoryImpl"
+                  discriminator-value="XAEntity.MachineCategory.ExternalMachineCategory">
+            <subclass name="minestar.pitlink.domain.machine.DataBridgeCategoryImpl"
+                      discriminator-value="XAEntity.MachineCategory.DataBridgeCategory"/>
+        </subclass>
+        <subclass name="minestar.pitlink.domain.machine.PanelCategoryImpl"
+                  discriminator-value="XAEntity.MachineCategory.PanelCategory"/>
+        <subclass name="minestar.pitlink.domain.machine.TeleremoteControlCategoryImpl"
+                  discriminator-value="XAEntity.MachineCategory.TeleremoteControlCategory"/>
+    </class>
+
+    <!-- A lightweight reference to a MachineCategory -->
+    <class name="minestar.pitlink.domain.machine.MachineCategoryReference"
+           table="MACHINECATEGORY"
+           mutable="false">
+
+        <meta attribute="alias" inherit="false">MACHINE_CATEGORY_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a machine category.</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="MACHINECATEGORY_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

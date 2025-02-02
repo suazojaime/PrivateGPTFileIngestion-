@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="4e918cd0-6126-4030-843b-5325a29f639d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for TERRAIN_SYNC_OK to table GRADEBLOCK_GROUP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK_GROUP"/>
+            <not>
+                <columnExists tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3969: grade block group terrain sync</comment>
+        <addColumn tableName="GRADEBLOCK_GROUP">
+            <column name="TERRAIN_SYNC_OK" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

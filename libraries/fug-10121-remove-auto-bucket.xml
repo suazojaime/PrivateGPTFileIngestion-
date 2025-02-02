@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="e4bfd1f5-1ab4-4c30-9e5d-7a1163b62c19" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for AUTO_BUCKET_ENABLED of table LOAD_GOAL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="LOAD_GOAL" columnName="AUTO_BUCKET_ENABLED"/>
+        </preConditions>
+        <comment>FUG-10121: DropColumn LOAD_GOAL.AUTO_BUCKET_ENABLED</comment>
+        <dropColumn columnName="AUTO_BUCKET_ENABLED" tableName="LOAD_GOAL"/>
+        <rollback>
+            <addColumn tableName="LOAD_GOAL">
+                <column name="AUTO_BUCKET_ENABLED" type="BOOLEAN"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="74b9bcab-ad89-4020-b700-b9b7a62704a2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PROHIBITED_SEQ_MATERIAL_MODIFIER to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="PROHIBITED_SEQ_MATERIAL_MODIFIER"/>
+            </not>
+        </preConditions>
+        <comment>MO-5735: AddColumn MACHINE_IN_PIT.PROHIBITED_SEQ_MATERIAL_MODIFIER</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="PROHIBITED_SEQ_MATERIAL_MODIFIER" type="VARCHAR(255)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="c906ca0e-a193-42d6-b2e3-20eaefd7a5ef" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PROHIBITED_SEQ_OCCURRENCES to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="PROHIBITED_SEQ_OCCURRENCES"/>
+            </not>
+        </preConditions>
+        <comment>MO-5735: AddColumn MACHINE_IN_PIT.PROHIBITED_SEQ_OCCURRENCES</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="PROHIBITED_SEQ_OCCURRENCES" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

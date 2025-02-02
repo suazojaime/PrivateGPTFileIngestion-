@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.underground.route.RouteImpl"
+           proxy="minestar.mine.domain.minemodel.underground.route.Route"
+           table="ROUTE"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">ROUTE</meta>
+        <meta attribute="view-ignore">true</meta>
+        <meta attribute="description">
+            A directed link between two route nodes used for underground path-planning.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="ROUTE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="active" type="java.lang.Boolean">
+            <meta attribute="description">
+                Whether this route is active or disabled.
+                (This flag is '1' if it is active and '0' if disabled.)
+            </meta>
+
+            <column name="IS_ACTIVE" not-null="true" default="1"/>
+        </property>
+
+        <many-to-one name="entry"
+                     class="minestar.mine.domain.minemodel.underground.route.RouteNodeImpl"
+                     column="ENTRY_NODE"
+                     lazy="false"
+                     not-null="true"
+                     cascade="persist,merge,save-update">
+            <meta attribute="description">Start point of link.</meta>
+        </many-to-one>
+
+        <property name="manual"
+                  type="java.lang.Boolean"
+                  column="MANUAL">
+            <meta attribute="description">Describes if a route was manually placed.</meta>
+        </property>
+
+        <many-to-one name="exit"
+                     class="minestar.mine.domain.minemodel.underground.route.RouteNodeImpl"
+                     column="EXIT_NODE"
+                     lazy="false"
+                     not-null="true"
+                     cascade="persist,merge,save-update">
+            <meta attribute="description">End point of link.</meta>
+        </many-to-one>
+
+        <property name="reverseAllowed"
+                  type="java.lang.Boolean"
+                  column="REVERSE_ALLOWED">
+            <meta attribute="description">Whether a machine can travel in reverse along this route.</meta>
+        </property>
+
+        <property name="bidirectional" type="java.lang.Boolean">
+            <meta attribute="description">Whether travelling forward is permitted both ways or one way.</meta>
+            <column name="BIDIRECTIONAL" not-null="false" default="1"/>
+        </property>
+
+        <property name="forwardManualWeight"
+                  column="FORWARD_MANUAL_WGHT">
+            <meta attribute="description">
+                User-entered value of the weight cost of a machine travelling forward along this route.
+            </meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property name="reverseManualWeight"
+                  column="REVERSE_MANUAL_WGHT">
+            <meta attribute="description">
+                User-entered value of the weight cost of a machine travelling in reverse along this route.
+            </meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property name="forwardHint" column="FORWARD_HINT">
+            <meta attribute="description">Forward Hint</meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.mine.domain.minemodel.underground.route.RouteHint</param>
+            </type>
+        </property>
+
+        <property name="reverseHint" column="REVERSE_HINT">
+            <meta attribute="description">Reverse Hint</meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.mine.domain.minemodel.underground.route.RouteHint</param>
+            </type>
+        </property>
+
+        <property
+                name="forwardBias"
+                column="FORWARD_BIAS"
+        >
+            <meta attribute="unitType">ratio</meta>
+            <meta attribute="description">The forward bias</meta>
+            <type name="quantity">
+                <param name="unitType">ratio</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property
+                name="reverseBias"
+                column="REVERSE_BIAS"
+        >
+            <meta attribute="unitType">ratio</meta>
+            <meta attribute="description">The reverse bias</meta>
+            <type name="quantity">
+                <param name="unitType">ratio</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <set name="intersectingWalls" table="ROUTE_WALLS" lazy="false" access="field">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">References to walls that this route intersects with.</meta>
+            <key column="ROUTE_OID"/>
+            <many-to-many class="minestar.mine.domain.minemodel.underground.WallReference" column="WALL_OID"/>
+        </set>
+
+        <set name="routePaths" cascade="all-delete-orphan" access="field" lazy="false">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <key column="ROUTE_OID" not-null="true"/>
+            <one-to-many class="minestar.mine.domain.minemodel.underground.route.RoutePathImpl" />
+        </set>
+    </class>
+
+    <class name="minestar.mine.domain.minemodel.underground.route.RoutePathImpl"
+           proxy="minestar.mine.domain.minemodel.underground.route.RoutePath"
+           table="ROUTE_PATH"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">RoutePath</meta>
+        <meta attribute="view-ignore">true</meta>
+        <meta attribute="description">
+            If a route does not travel in a straight-line, this class describes the arcs that form the path of the
+            route.
+            There may be arcs that are specific to a machine class.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="ROUTE_PATH_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one name="machineClass"
+                     class="minestar.pitlink.domain.machine.MachineClassReference"
+                     column="MACHINE_CLASS_OID"
+                     not-null="false">
+            <meta attribute="description">Machine class that route path applies to</meta>
+        </many-to-one>
+
+        <list name="routeArcs" table="ROUTE_ARC" cascade="all-delete-orphan" access="field" lazy="false">
+            <meta attribute="description">If route does not travel in a straight-line, describes the arcs that form the path of the route</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="ROUTE_PATH_OID"/>
+            <list-index column="LIST_INDEX"/>
+
+            <composite-element class="minestar.mine.domain.minemodel.underground.route.RouteArcImpl">
+                <property name="center" type="XYZCoordinate">
+                    <meta attribute="description">Center of circle</meta>
+                    <column name="CENTER_X" not-null="true"/>
+                    <column name="CENTER_Y" not-null="true"/>
+                    <column name="CENTER_Z" not-null="true"/>
+                </property>
+
+                <property name="radius" column="RADIUS" not-null="true">
+                    <meta attribute="description">Radius of circle</meta>
+                    <meta attribute="unitType">length</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+
+                <property name="startAngle" column="START_ANGLE" not-null="true">
+                    <meta attribute="description">Starting angle of circle that forms the arc</meta>
+                    <meta attribute="unitType">angle</meta>
+                    <type name="quantity">
+                        <param name="unitType">angle</param>
+                    </type>
+                </property>
+
+                <property name="extentAngle" column="EXTENT_ANGLE" not-null="true">
+                    <meta attribute="description">Extent angle of circle that forms the arc</meta>
+                    <meta attribute="unitType">angle</meta>
+                    <type name="quantity">
+                        <param name="unitType">angle</param>
+                    </type>
+                </property>
+            </composite-element>
+        </list>
+    </class>
+
+</hibernate-mapping>

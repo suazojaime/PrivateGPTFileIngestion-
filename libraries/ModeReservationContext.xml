@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2013, Caterpillar, Brisbane Australia. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+
+    <bean id="modeReservationServiceImpl"
+          class="minestar.autonomy.service.mode.core.DelegatingModeReservationService"/>
+
+    <bean id="registerModeReservationService" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Mode Reservation Service"/>
+        <constructor-arg value="minestar.autonomy.service.mode.ModeReservationService"/>
+        <constructor-arg ref="modeReservationServiceImpl"/>
+    </bean>
+
+    <bean id="sharedReserveMachine"
+          class="minestar.mode.shared.reservation.ReserveMachine">
+        <constructor-arg name="machineModeService" ref="machineModeServiceImpl"/>
+        <constructor-arg name="mineFleetService" ref="mineFleetServiceImpl"/>
+        <constructor-arg name="modeEventHandler" ref="modeEventHandler"/>
+        <constructor-arg name="modeUsageLocks" ref="modeUsageLocks"/>
+        <constructor-arg name="userService" ref="userServiceImpl"/>
+    </bean>
+
+    <bean id="sharedRevokeReservation"
+          class="minestar.mode.shared.reservation.RevokeReservation">
+        <constructor-arg name="machineModeService" ref="machineModeServiceImpl"/>
+        <constructor-arg name="modeUsageLocks" ref="modeUsageLocks"/>
+        <constructor-arg name="modeEventHandler" ref="modeEventHandler"/>
+        <constructor-arg name="modeMessageService" ref="modeMessageServiceImpl"/>
+    </bean>
+
+    <bean id="sharedModeReservationService" class="minestar.mode.shared.SharedModeReservationService">
+        <property name="reserveMachine" ref="sharedReserveMachine"/>
+        <property name="revokeReservation" ref="sharedRevokeReservation"/>
+    </bean>
+
+    <bean id="userModeChangeService" class="minestar.autonomy.service.mode.UserModeChangeServiceImpl"
+          init-method="startListening">
+        <constructor-arg name="mineFleetService" ref="mineFleetServiceImpl" />
+        <constructor-arg name="machineModeService" ref="machineModeServiceImpl"/>
+        <constructor-arg name="sharedModeReservationService" ref="sharedModeReservationService"/>
+        <constructor-arg name="notification" ref="notification"/>
+    </bean>
+
+</beans>

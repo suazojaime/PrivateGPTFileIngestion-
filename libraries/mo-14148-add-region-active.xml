@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="c9d1e3f5-e6cc-4018-9a1a-fb4c1773d071" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ACTIVE to table REGION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="REGION"/>
+            <not>
+                <columnExists tableName="REGION" columnName="ACTIVE"/>
+            </not>
+        </preConditions>
+        <comment>MO-14148: AddColumn REGION.ACTIVE</comment>
+        <addColumn tableName="REGION">
+            <column name="ACTIVE" type="BOOLEAN" remarks="Is this region active?"/>
+        </addColumn>
+        <sql>UPDATE REGION SET ACTIVE = 0 WHERE ACTIVE IS NULL</sql>
+        <addNotNullConstraint columnName="ACTIVE" columnDataType="BOOLEAN" tableName="REGION"/>
+        <rollback>
+            <dropColumn columnName="ACTIVE" tableName="REGION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="2e285b45-4afb-449a-8c68-e45f98a64e04" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored Update all REGION to ACTIVE as table does not exist or column does not exist." onFail="MARK_RAN">
+            <tableExists tableName="REGION"/>
+            <columnExists tableName="REGION" columnName="ACTIVE"/>
+        </preConditions>
+        <comment>MO-15106: Update all regions to be active</comment>
+        <!-- Make all regions active as part of this upgrade -->
+        <sql>UPDATE REGION SET ACTIVE = 1</sql>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="fb59e5d0-58e0-4588-ada3-0c9748957e7f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for MACHINE.EXPECTEDDURATIONBETWEENREFUELS as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="MACHINE" columnName="EXPECTEDDURATIONBETWEENREFUELS"/>
+        </preConditions>
+        <comment>AHS-7878: ChangeDataType of MACHINE.EXPECTEDDURATIONBETWEENREFUELS from BIGINT to DOUBLE</comment>
+        <modifyDataType columnName="EXPECTEDDURATIONBETWEENREFUELS" newDataType="DOUBLE" tableName="MACHINE"/>
+        <rollback>
+            <modifyDataType columnName="EXPECTEDDURATIONBETWEENREFUELS" newDataType="BIGINT" tableName="MACHINE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="dc22d1ad-8aea-432d-9be7-5276430614d0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for FUELANDLUBETYPE_1R of table FUELANDLUBETYPE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="FUELANDLUBETYPE_1R" tableName="FUELANDLUBETYPE"/>
+        </preConditions>
+        <comment>AHS-7878: DropIndex FUELANDLUBETYPE_1R from FUELANDLUBETYPE (NAME,FUELANDLUBETYPE_OID)</comment>
+        <dropIndex tableName="FUELANDLUBETYPE" indexName="FUELANDLUBETYPE_1R"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" indexName="FUELANDLUBETYPE_1R" tableName="FUELANDLUBETYPE">
+                <column name="NAME"/>
+                <column name="FUELANDLUBETYPE_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="014751a6-ab29-4e35-af08-f1d7ca22d94b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for FUELANDLUBETYPE_NAME of table FUELANDLUBETYPE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="FUELANDLUBETYPE_NAME" tableName="FUELANDLUBETYPE"/>
+        </preConditions>
+        <comment>AHS-7878: DropIndex FUELANDLUBETYPE_NAME from FUELANDLUBETYPE (NAME)</comment>
+        <dropIndex indexName="FUELANDLUBETYPE_NAME" tableName="FUELANDLUBETYPE"/>
+        <rollback>
+            <createIndex unique="true" indexName="FUELANDLUBETYPE_NAME" tableName="FUELANDLUBETYPE">
+                <column name="NAME"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+        
+    <changeSet id="8db63290-772f-43ec-838e-d60187f488c6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for FUELANDLUBETYPE.NAME as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="FUELANDLUBETYPE" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-7878: AddNotNullConstraint to FUELANDLUBETYPE.NAME</comment>
+        <addNotNullConstraint columnName="NAME" columnDataType="VARCHAR(254)" tableName="FUELANDLUBETYPE"/>
+    </changeSet>
+
+    <changeSet id="681ffff5-d885-4930-97aa-9cb04039901f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for FUELANDLUBETYPE_NAME to table FUELANDLUBETYPE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="FUELANDLUBETYPE"/>
+            <not>
+                <indexExists indexName="FUELANDLUBETYPE_NAME" tableName="FUELANDLUBETYPE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7878: CreateUniqueIndex FUELANDLUBETYPE_NAME on FUELANDLUBETYPE (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="FUELANDLUBETYPE_NAME" tableName="FUELANDLUBETYPE">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="72a27c63-c642-4448-bab0-11feec508de7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for FUELANDLUBETYPE.DISPLAY_ORDER as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="FUELANDLUBETYPE" columnName="DISPLAY_ORDER"/>
+        </preConditions>
+        <comment>AHS-7878: DropDefaultValue '0' from FUELANDLUBETYPE.DISPLAY_ORDER</comment>
+        <dropDefaultValue columnName="DISPLAY_ORDER" columnDataType="INT" tableName="FUELANDLUBETYPE"/>
+        <rollback>
+            <addDefaultValue columnName="DISPLAY_ORDER" columnDataType="INT" defaultValueNumeric="0" tableName="FUELANDLUBETYPE"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

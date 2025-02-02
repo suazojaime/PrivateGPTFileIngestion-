@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <!--    Drop Key Constraints   -->
+
+    <changeSet id="a0ec28cc-b371-462a-b39a-6e89e1fd5699" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for ADC_ENTRY_LIST_PANEL_FK of table ADC_ENTRY_LIST as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="ADC_ENTRY_LIST" foreignKeyName="ADC_ENTRY_LIST_PANEL_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint ADC_ENTRY_LIST_PANEL_FK from ADC_ENTRY_LIST (PANEL)</comment>
+        <dropForeignKeyConstraint baseTableName="ADC_ENTRY_LIST" constraintName="ADC_ENTRY_LIST_PANEL_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="ADC_ENTRY_LIST" baseColumnNames="PANEL" constraintName="ADC_ENTRY_LIST_PANEL_FK" referencedTableName="UNDERGROUND_PANEL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="e7c1127e-51b0-417c-a4f5-be41e49a9259" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for DRAW_CARD_ASSIGNMENT_ASSIGN_FK of table DRAW_CARD_ASSIGNMENT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="DRAW_CARD_ASSIGNMENT" foreignKeyName="DRAW_CARD_ASSIGNMENT_ASSIGN_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint DRAW_CARD_ASSIGNMENT_ASSIGN_FK from DRAW_CARD_ASSIGNMENT (ASSIGNED_PANEL)</comment>
+        <dropForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" constraintName="DRAW_CARD_ASSIGNMENT_ASSIGN_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" baseColumnNames="ASSIGNED_PANEL" constraintName="DRAW_CARD_ASSIGNMENT_ASSIGN_FK" referencedTableName="UNDERGROUND_PANEL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="1acbe862-d94f-4525-86ff-c76611a93a92" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for DRAW_CARD_ASSIGNMENT_FK1 of table DRAW_CARD_ASSIGNMENT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="DRAW_CARD_ASSIGNMENT" foreignKeyName="DRAW_CARD_ASSIGNMENT_FK1"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint DRAW_CARD_ASSIGNMENT_FK1 from DRAW_CARD_ASSIGNMENT (ASSIGNED_JOINED_PANEL)</comment>
+        <dropForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" constraintName="DRAW_CARD_ASSIGNMENT_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" baseColumnNames="ASSIGNED_JOINED_PANEL" constraintName="DRAW_CARD_ASSIGNMENT_FK1" referencedTableName="JOINED_UNDERGROUND_PANEL" referencedColumnNames="JOINED_PANEL_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="3535aaa2-c803-4e2f-86ae-fe45a9add910" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for DRAW_CARD_ASSIGNMENT_SERVIC_FK of table DRAW_CARD_ASSIGNMENT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="DRAW_CARD_ASSIGNMENT" foreignKeyName="DRAW_CARD_ASSIGNMENT_SERVIC_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint DRAW_CARD_ASSIGNMENT_SERVIC_FK from DRAW_CARD_ASSIGNMENT (SERVICING_PANEL)</comment>
+        <dropForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" constraintName="DRAW_CARD_ASSIGNMENT_SERVIC_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" baseColumnNames="SERVICING_PANEL" constraintName="DRAW_CARD_ASSIGNMENT_SERVIC_FK" referencedTableName="UNDERGROUND_PANEL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="3d67781d-9919-44db-91a9-1295307fb492" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for DRAW_POINT_PANEL_OID_FK of table DRAW_POINT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="DRAW_POINT" foreignKeyName="DRAW_POINT_PANEL_OID_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint DRAW_POINT_PANEL_OID_FK from DRAW_POINT (PANEL_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="DRAW_POINT" constraintName="DRAW_POINT_PANEL_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="DRAW_POINT" baseColumnNames="PANEL_OID" constraintName="DRAW_POINT_PANEL_OID_FK" referencedTableName="UNDERGROUND_PANEL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="2b54906e-8a7e-4a2c-bc76-5a1e166ed19e" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for FDC_ENTRY_LIST_PANEL_FK of table FDC_ENTRY_LIST as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="FDC_ENTRY_LIST" foreignKeyName="FDC_ENTRY_LIST_PANEL_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint FDC_ENTRY_LIST_PANEL_FK from FDC_ENTRY_LIST (PANEL)</comment>
+        <dropForeignKeyConstraint baseTableName="FDC_ENTRY_LIST" constraintName="FDC_ENTRY_LIST_PANEL_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="FDC_ENTRY_LIST" baseColumnNames="PANEL" constraintName="FDC_ENTRY_LIST_PANEL_FK" referencedTableName="UNDERGROUND_PANEL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="87750e31-a1c3-4f9f-9155-fc6d3cd8c46d" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for ORE_PASS_PANEL_OID_FK of table ORE_PASS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_PANEL_OID_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint ORE_PASS_PANEL_OID_FK from ORE_PASS (PANEL_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_PANEL_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="ORE_PASS" baseColumnNames="PANEL_OID" constraintName="ORE_PASS_PANEL_OID_FK" referencedTableName="UNDERGROUND_PANEL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="348c2ce9-5de4-4bc0-84ce-bc6d5e88b325" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for POSITION_OF_INTEREST_PANEL_FK of table POSITION_OF_INTEREST as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="POSITION_OF_INTEREST" foreignKeyName="POSITION_OF_INTEREST_PANEL_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint POSITION_OF_INTEREST_PANEL_FK from POSITION_OF_INTEREST (PANEL)</comment>
+        <dropForeignKeyConstraint baseTableName="POSITION_OF_INTEREST" constraintName="POSITION_OF_INTEREST_PANEL_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="POSITION_OF_INTEREST" baseColumnNames="PANEL" constraintName="POSITION_OF_INTEREST_PANEL_FK" referencedTableName="UNDERGROUND_PANEL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="e23ded83-20ef-46b0-8b44-b06dadff46e4" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for UNDERGROUND_PANEL_JOINED_PA_FK of table UNDERGROUND_AREA as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="UNDERGROUND_PANEL" foreignKeyName="UNDERGROUND_PANEL_JOINED_PA_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint UNDERGROUND_PANEL_JOINED_PA_FK from UNDERGROUND_AREA (JOINED_PANEL_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="UNDERGROUND_PANEL" constraintName="UNDERGROUND_PANEL_JOINED_PA_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="UNDERGROUND_PANEL" baseColumnNames="JOINED_PANEL_OID" constraintName="UNDERGROUND_PANEL_JOINED_PA_FK" referencedTableName="JOINED_UNDERGROUND_AREA" referencedColumnNames="JOINED_PANEL_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="9783ce0d-e7fd-4422-8f64-cfb8ce52950a" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for SUBPANEL_BARRIERS_OID_FK of table SUBPANEL_BARRIERS as primaryKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SUBPANEL_BARRIERS" foreignKeyName="SUBPANEL_BARRIERS_OID_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropPrimaryKey SUBPANEL_BARRIERS_OID_FK from AIMS_AREA (OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SUBPANEL_BARRIERS" constraintName="SUBPANEL_BARRIERS_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SUBPANEL_BARRIERS" baseColumnNames="OID" constraintName="SUBPANEL_BARRIERS_OID_FK" referencedTableName="AIS_SUBPANEL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+            <sql>DELETE FROM SUBPANEL_BARRIERS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM AIS_SUBPANEL WHERE AIS_SUBPANEL.OID = SUBPANEL_BARRIERS.OID)</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="cccbe648-9692-41e5-92f5-0c671d6c7625" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for AIS_SUBPANEL_UGPANEL_OID_FK of table AIS_SUBPANEL as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="AIS_SUBPANEL" foreignKeyName="AIS_SUBPANEL_UGPANEL_OID_FK"/>
+        </preConditions>
+        <comment>FUG-6944: DropForeignKeyConstraint AIS_SUBPANEL_UGPANEL_OID_FK from AIS_SUBPANEL (UGPANEL_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="AIS_SUBPANEL" constraintName="AIS_SUBPANEL_UGPANEL_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="AIS_SUBPANEL" baseColumnNames="UGPANEL_OID" constraintName="AIS_SUBPANEL_UGPANEL_OID_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="CASCADE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6b752b47-39b4-41b0-bfa4-87342b643042" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropUniqueConstraint for AIS_SUBPANEL_UGPANEL_OID_UK of table AIS_SUBPANEL as the table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="AIS_SUBPANEL"/>
+        </preConditions>
+        <comment>FUG-6944: DropUniqueConstraint AIS_SUBPANEL_UGPANEL_OID_UK from AIS_SUBPANEL (UGPANEL_OID)</comment>
+        <dropUniqueConstraint constraintName="AIS_SUBPANEL_UGPANEL_OID_UK" tableName="AIS_SUBPANEL"/>
+        <rollback>
+            <addUniqueConstraint columnNames="UGPANEL_OID" constraintName="AIS_SUBPANEL_UGPANEL_OID_UK" tableName="AIS_SUBPANEL"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="de029bc2-9049-4e25-9177-8c943062d27b" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for AIS_SUBPANEL_PK of table AIS_SUBPANEL as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="AIS_SUBPANEL_PK" tableName="AIS_SUBPANEL"/>
+        </preConditions>
+        <comment>FUG-6944: DropPrimaryKey AIS_SUBPANEL_PK from AIMS_AREA (OID)</comment>
+        <dropPrimaryKey constraintName="AIS_SUBPANEL_PK" tableName="AIS_SUBPANEL"/>
+        <rollback>
+            <addPrimaryKey columnNames="OID" constraintName="AIS_SUBPANEL_PK" tableName="AIS_SUBPANEL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="f6ab99e0-d585-417c-b088-396e90b70582" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for JOINED_UNDERGROUND_PANEL_PK of table JOINED_UNDERGROUND_PANEL as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="JOINED_UNDERGROUND_PANEL_PK" tableName="JOINED_UNDERGROUND_PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: DropPrimaryKey JOINED_UNDERGROUND_PANEL_PK from JOINED_UNDERGROUND_PANEL (JOINED_PANEL_OID)</comment>
+        <dropPrimaryKey constraintName="JOINED_UNDERGROUND_PANEL_PK" tableName="JOINED_UNDERGROUND_PANEL"/>
+        <rollback>
+            <addPrimaryKey columnNames="JOINED_PANEL_OID" constraintName="JOINED_UNDERGROUND_PANEL_PK" tableName="JOINED_UNDERGROUND_PANEL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="3ae5fd2f-e000-4379-b82a-549ce1d97ccb" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for UNDERGROUND_PANEL_PK of table UNDERGROUND_PANEL as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="UNDERGROUND_PANEL_PK" tableName="UNDERGROUND_PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: DropPrimaryKey UNDERGROUND_PANEL_PK from UNDERGROUND_PANEL (OID)</comment>
+        <dropPrimaryKey constraintName="UNDERGROUND_PANEL_PK" tableName="UNDERGROUND_PANEL"/>
+        <rollback>
+            <addPrimaryKey columnNames="OID" constraintName="UNDERGROUND_PANEL_PK" tableName="UNDERGROUND_PANEL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="57c97ec8-8407-4ece-810d-eeb1e4570fac" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for PANEL_NAME of table UNDERGROUND_PANEL as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="PANEL_NAME" tableName="UNDERGROUND_PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: DropIndex PANEL_NAME from UNDERGROUND_PANEL (PANEL_NAME)</comment>
+        <dropIndex tableName="UNDERGROUND_PANEL" indexName="PANEL_NAME"/>
+        <rollback>
+            <createIndex unique="true" tableName="UNDERGROUND_PANEL" indexName="PANEL_NAME">
+                <column name="PANEL_NAME"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <!--    Rename Columns -->
+
+    <changeSet id="cae95e88-6aad-435b-b850-042cef1dfb57" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for PANEL_NAME of table UNDERGROUND_PANEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UNDERGROUND_PANEL" columnName="PANEL_NAME"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn UNDERGROUND_PANEL.PANEL_NAME</comment>
+        <renameColumn oldColumnName="PANEL_NAME" newColumnName="AREA_NAME" tableName="UNDERGROUND_PANEL"/>
+    </changeSet>
+
+    <changeSet id="deb6dc9c-cc81-4886-8f0a-f4a4cabba823" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for PANEL of table ADC_ENTRY_LIST as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ADC_ENTRY_LIST" columnName="PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn ADC_ENTRY_LIST.PANEL</comment>
+        <renameColumn oldColumnName="PANEL" newColumnName="AREA" tableName="ADC_ENTRY_LIST"/>
+    </changeSet>
+    
+    <changeSet id="5e25ce70-dadb-4046-8661-1402a3b624f5" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for ASSIGNED_PANEL of table DRAW_CARD_ASSIGNMENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_CARD_ASSIGNMENT" columnName="ASSIGNED_PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn DRAW_CARD_ASSIGNMENT.ASSIGNED_PANEL</comment>
+        <renameColumn oldColumnName="ASSIGNED_PANEL" newColumnName="ASSIGNED_AREA" tableName="DRAW_CARD_ASSIGNMENT"/>
+    </changeSet>
+
+    <changeSet id="576feb57-0f8c-40fd-9f43-f4ae75443a18" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for SERVICING_PANEL of table DRAW_CARD_ASSIGNMENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_CARD_ASSIGNMENT" columnName="SERVICING_PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn DRAW_CARD_ASSIGNMENT.SERVICING_PANEL</comment>
+        <renameColumn oldColumnName="SERVICING_PANEL" newColumnName="SERVICING_AREA" tableName="DRAW_CARD_ASSIGNMENT"/>
+    </changeSet>
+
+    <changeSet id="0a98d787-d449-4729-9ecd-8b45a3f9a904" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ASSIGNED_JOINED_PANEL of table DRAW_CARD_ASSIGNMENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_CARD_ASSIGNMENT" columnName="ASSIGNED_JOINED_PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: DropColumn DRAW_CARD_ASSIGNMENT.ASSIGNED_JOINED_PANEL</comment>
+        <renameColumn oldColumnName="ASSIGNED_JOINED_PANEL" newColumnName="ASSIGNED_JOINED_AREA" tableName="DRAW_CARD_ASSIGNMENT"/>
+    </changeSet>
+
+    <changeSet id="b7200778-154e-4aa1-85df-52b549451ef5" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for PANEL_OID of table DRAW_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_POINT" columnName="PANEL_OID"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn DRAW_POINT.PANEL_OID</comment>
+        <renameColumn oldColumnName="PANEL_OID" newColumnName="AREA_OID" tableName="DRAW_POINT"/>
+    </changeSet>
+
+    <changeSet id="d74de695-be0b-46fa-9b3e-802d74bd6632" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for PANEL of table FDC_ENTRY_LIST as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="FDC_ENTRY_LIST" columnName="PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn FDC_ENTRY_LIST.PANEL</comment>
+        <renameColumn oldColumnName="PANEL" newColumnName="AREA" tableName="FDC_ENTRY_LIST"/>
+    </changeSet>
+
+    <changeSet id="fb1a063a-fc87-4777-82e1-d920746a8ab7" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for PANEL_OID of table ORE_PASS as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ORE_PASS" columnName="PANEL_OID"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn ORE_PASS.PANEL_OID</comment>
+        <renameColumn oldColumnName="PANEL_OID" newColumnName="AREA_OID" tableName="ORE_PASS"/>
+    </changeSet>
+
+    <changeSet id="4ce54219-377f-4317-a997-b66ca7f72e65" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for PANEL of table POSITION_OF_INTEREST as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="POSITION_OF_INTEREST" columnName="PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn POSITION_OF_INTEREST.PANEL</comment>
+        <renameColumn oldColumnName="PANEL" newColumnName="AREA" tableName="POSITION_OF_INTEREST"/>
+    </changeSet>
+
+    <changeSet id="0979a11c-c3ec-4898-9c89-c448172e8223" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for UGPANEL_OID of table AIS_SUBPANEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="AIS_SUBPANEL" columnName="UGPANEL_OID"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn AIS_SUBPANEL.UGPANEL_OID</comment>
+        <renameColumn oldColumnName="UGPANEL_OID" newColumnName="UGAREA_OID" tableName="AIS_SUBPANEL"/>
+    </changeSet>
+
+    <changeSet id="1972f470-920b-4113-920f-4def41ea82ca" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for JOINED_PANEL_OID of table JOINED_UNDERGROUND_PANEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="JOINED_UNDERGROUND_PANEL" columnName="JOINED_PANEL_OID"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn JOINED_UNDERGROUND_PANEL.JOINED_PANEL_OID</comment>
+        <renameColumn oldColumnName="JOINED_PANEL_OID" newColumnName="JOINED_AREA_OID" tableName="JOINED_UNDERGROUND_PANEL"/>
+    </changeSet>
+
+    <changeSet id="8db54f14-3722-46f1-b4e4-755a98baf87c" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for JOINED_PANEL_NAME of table JOINED_UNDERGROUND_PANEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="JOINED_UNDERGROUND_PANEL" columnName="JOINED_PANEL_NAME"/>
+        </preConditions>
+        <comment>FUG-6944: DropColumn JOINED_UNDERGROUND_PANEL.JOINED_PANEL_NAME</comment>
+        <renameColumn oldColumnName="JOINED_PANEL_NAME" newColumnName="JOINED_AREA_NAME" tableName="JOINED_UNDERGROUND_PANEL"/>
+    </changeSet>
+
+    <changeSet id="d7c4f61e-da5f-4322-999d-3d9f0b9a629d" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for PANEL_STATUS_COMMENTS of table UNDERGROUND_PANEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UNDERGROUND_PANEL" columnName="PANEL_STATUS_COMMENTS"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn UNDERGROUND_PANEL.PANEL_STATUS_COMMENTS</comment>
+        <renameColumn oldColumnName="PANEL_STATUS_COMMENTS" newColumnName="AREA_STATUS_COMMENTS" tableName="UNDERGROUND_PANEL"/>
+    </changeSet>
+
+    <changeSet id="65f756a4-a288-4811-8d68-e0fc46f4d21b" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for JOINED_PANEL_OID of table UNDERGROUND_PANEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UNDERGROUND_PANEL" columnName="JOINED_PANEL_OID"/>
+        </preConditions>
+        <comment>FUG-6944: RenameColumn UNDERGROUND_PANEL.JOINED_PANEL_OID</comment>
+        <renameColumn oldColumnName="JOINED_PANEL_OID" newColumnName="JOINED_AREA_OID" tableName="UNDERGROUND_PANEL"/>
+    </changeSet>
+
+
+    <!--    Rename Tables    -->
+
+    <changeSet id="87dbce69-e470-42b0-bc34-0cc37d2ed27a" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameTable for AIS_SUBPANEL as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="AIS_SUBPANEL"/>
+        </preConditions>
+        <comment>FUG-6944: RenameTable AIS_SUBPANEL</comment>
+        <renameTable oldTableName="AIS_SUBPANEL" newTableName="AIMS_AREA"/>
+    </changeSet>
+
+    <changeSet id="189fb710-60fc-4e84-a3d2-722106bb4530" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for JOINED_UNDERGROUND_PANEL as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="JOINED_UNDERGROUND_PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: DropTable JOINED_UNDERGROUND_PANEL</comment>
+        <renameTable oldTableName="JOINED_UNDERGROUND_PANEL" newTableName="JOINED_UNDERGROUND_AREA"/>
+    </changeSet>
+
+
+    <changeSet id="7d5ea60a-5b5a-4bec-a65b-2a3427df7e51" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameTable for SUBPANEL_BARRIERS as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="SUBPANEL_BARRIERS"/>
+        </preConditions>
+        <comment>FUG-6944: RenameTable SUBPANEL_BARRIERS</comment>
+        <renameTable oldTableName="SUBPANEL_BARRIERS" newTableName="AREA_BARRIERS"/>
+    </changeSet>
+
+
+    <changeSet id="5df2d22f-e64e-4f40-9951-83ab40614e26" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for UNDERGROUND_PANEL as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="UNDERGROUND_PANEL"/>
+        </preConditions>
+        <comment>FUG-6944: DropTable UNDERGROUND_PANEL</comment>
+        <renameTable oldTableName="UNDERGROUND_PANEL" newTableName="UNDERGROUND_AREA"/>
+    </changeSet>
+
+
+    <!--    Add Primary Keys    -->
+
+    <changeSet id="7744d6c6-87d5-47f2-bca6-9c1225d91c5a" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for AIMS_AREA_PK to table AIMS_AREA as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="AIMS_AREA"/>
+            <not>
+                <primaryKeyExists primaryKeyName="AIMS_AREA_PK" tableName="AIMS_AREA"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddPrimaryKey AIMS_AREA_PK to AIMS_AREA (OID)</comment>
+        <sql dbms="oracle">DELETE FROM AIMS_AREA WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID ORDER BY ROWID) RN FROM AIMS_AREA) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID ORDER BY %%physloc%%) AS ROW_NUM FROM AIMS_AREA) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID" constraintName="AIMS_AREA_PK" tablespace="MW_IDXENT" tableName="AIMS_AREA"/>
+        <rollback>
+            <dropPrimaryKey constraintName="AIMS_AREA_PK" tableName="AIMS_AREA"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="e20c2246-1eb2-45dd-a2d7-eaf329b61f13" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddUniqueConstraint for AIMS_AREA_UGAREA_OID_UK to table AIMS_AREA as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="AIMS_AREA"/>
+        </preConditions>
+        <comment>FUG-6944: AddUniqueConstraint AIMS_AREA_UGAREA_OID_UK to AIMS_AREA (UGAREA_OID)</comment>
+        <addUniqueConstraint columnNames="UGAREA_OID" constraintName="AIMS_AREA_UGAREA_OID_UK" tableName="AIMS_AREA"/>
+    </changeSet>
+    <changeSet id="9f7c08e3-0c33-4da3-a764-e48db273e448" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for SUBPANEL_BARRIERS_PK of table AREA_BARRIERS as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="SUBPANEL_BARRIERS_PK" tableName="AREA_BARRIERS"/>
+        </preConditions>
+        <comment>FUG-6944: DropPrimaryKey SUBPANEL_BARRIERS_PK from AREA_BARRIERS (OID,SORT_ORDER)</comment>
+        <dropPrimaryKey constraintName="SUBPANEL_BARRIERS_PK" tableName="AREA_BARRIERS"/>
+        <rollback>
+            <addPrimaryKey columnNames="OID,SORT_ORDER" constraintName="SUBPANEL_BARRIERS_PK" tableName="AREA_BARRIERS"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="cdedd249-df42-40de-a1e7-9f74ece80b76" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for AREA_BARRIERS_PK to table AREA_BARRIERS as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="AREA_BARRIERS"/>
+            <not>
+                <primaryKeyExists primaryKeyName="AREA_BARRIERS_PK" tableName="AREA_BARRIERS"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddPrimaryKey AREA_BARRIERS_PK to AREA_BARRIERS (OID,SORT_ORDER)</comment>
+        <sql dbms="oracle">DELETE FROM AREA_BARRIERS WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, SORT_ORDER ORDER BY ROWID) RN FROM AREA_BARRIERS) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, SORT_ORDER ORDER BY %%physloc%%) AS ROW_NUM FROM AREA_BARRIERS) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,SORT_ORDER" constraintName="AREA_BARRIERS_PK" tablespace="MW_IDXENT" tableName="AREA_BARRIERS"/>
+        <rollback>
+            <dropPrimaryKey constraintName="AREA_BARRIERS_PK" tableName="AREA_BARRIERS"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="817e4cf1-45cf-4d10-802d-f76e5c5575d5" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for JOINED_UNDERGROUND_AREA_PK to table JOINED_UNDERGROUND_AREA as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="JOINED_UNDERGROUND_AREA"/>
+            <not>
+                <primaryKeyExists primaryKeyName="JOINED_UNDERGROUND_AREA_PK" tableName="JOINED_UNDERGROUND_AREA"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddPrimaryKey JOINED_UNDERGROUND_AREA_PK to JOINED_UNDERGROUND_AREA (JOINED_AREA_OID)</comment>
+        <sql dbms="oracle">DELETE FROM JOINED_UNDERGROUND_AREA WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY JOINED_AREA_OID ORDER BY ROWID) RN FROM JOINED_UNDERGROUND_AREA) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY JOINED_AREA_OID ORDER BY %%physloc%%) AS ROW_NUM FROM JOINED_UNDERGROUND_AREA) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="JOINED_AREA_OID" constraintName="JOINED_UNDERGROUND_AREA_PK" tablespace="MW_IDXENT" tableName="JOINED_UNDERGROUND_AREA"/>
+        <rollback>
+            <dropPrimaryKey constraintName="JOINED_UNDERGROUND_AREA_PK" tableName="JOINED_UNDERGROUND_AREA"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="804886ce-a4e8-4060-9384-62594d8a6088" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for UNDERGROUND_AREA_PK to table UNDERGROUND_AREA as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="UNDERGROUND_AREA"/>
+            <not>
+                <primaryKeyExists primaryKeyName="UNDERGROUND_AREA_PK" tableName="UNDERGROUND_AREA"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddPrimaryKey UNDERGROUND_AREA_PK to UNDERGROUND_AREA (OID)</comment>
+        <sql dbms="oracle">DELETE FROM UNDERGROUND_AREA WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID ORDER BY ROWID) RN FROM UNDERGROUND_AREA) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID ORDER BY %%physloc%%) AS ROW_NUM FROM UNDERGROUND_AREA) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID" constraintName="UNDERGROUND_AREA_PK" tablespace="MW_IDXENT" tableName="UNDERGROUND_AREA"/>
+        <rollback>
+            <dropPrimaryKey constraintName="UNDERGROUND_AREA_PK" tableName="UNDERGROUND_AREA"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <!--    Add Foreign Keys    -->
+
+    <changeSet id="01008907-9679-4ed0-b14b-494b9311ce3d" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for AIMS_AREA_UGAREA_OID_FK to table AIMS_AREA as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="AIMS_AREA" columnName="UGAREA_OID"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="AIMS_AREA" foreignKeyName="AIMS_AREA_UGAREA_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint AIMS_AREA_UGAREA_OID_FK to AIMS_AREA (UGAREA_OID)</comment>
+        <sql>DELETE FROM AIMS_AREA WHERE UGAREA_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = AIMS_AREA.UGAREA_OID)</sql>
+        <addForeignKeyConstraint baseTableName="AIMS_AREA" baseColumnNames="UGAREA_OID" constraintName="AIMS_AREA_UGAREA_OID_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="AIMS_AREA" constraintName="AIMS_AREA_UGAREA_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="751edb8d-5507-4c15-bc09-c43a95f6589b" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for AREA_BARRIERS_BARRIER_OID_FK to table AREA_BARRIERS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="AREA_BARRIERS" columnName="BARRIER_OID"/>
+            <columnExists tableName="UG_AIS_BARRIER" columnName="BARRIER_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="AREA_BARRIERS" foreignKeyName="AREA_BARRIERS_BARRIER_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint AREA_BARRIERS_BARRIER_OID_FK to AREA_BARRIERS (BARRIER_OID)</comment>
+        <sql>DELETE FROM AREA_BARRIERS WHERE BARRIER_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UG_AIS_BARRIER WHERE UG_AIS_BARRIER.BARRIER_OID = AREA_BARRIERS.BARRIER_OID)</sql>
+        <addForeignKeyConstraint baseTableName="AREA_BARRIERS" baseColumnNames="BARRIER_OID" constraintName="AREA_BARRIERS_BARRIER_OID_FK" referencedTableName="UG_AIS_BARRIER" referencedColumnNames="BARRIER_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="AREA_BARRIERS" constraintName="AREA_BARRIERS_BARRIER_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="c52bbe6f-c351-43b9-a4f3-9b9017274ca8" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ADC_ENTRY_LIST_AREA_FK to table ADC_ENTRY_LIST as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="ADC_ENTRY_LIST" columnName="AREA"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ADC_ENTRY_LIST" foreignKeyName="ADC_ENTRY_LIST_AREA_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint ADC_ENTRY_LIST_AREA_FK to ADC_ENTRY_LIST (AREA)</comment>
+        <sql>DELETE FROM ADC_ENTRY_LIST WHERE AREA IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = ADC_ENTRY_LIST.AREA)</sql>
+        <addForeignKeyConstraint baseTableName="ADC_ENTRY_LIST" baseColumnNames="AREA" constraintName="ADC_ENTRY_LIST_AREA_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ADC_ENTRY_LIST" constraintName="ADC_ENTRY_LIST_AREA_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="cb4c8b6c-9c47-4df4-8ffb-5b8f7eae291f" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for DRAW_CARD_ASSIGNMENT_ASSIGN_FK to table DRAW_CARD_ASSIGNMENT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_CARD_ASSIGNMENT" columnName="ASSIGNED_AREA"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DRAW_CARD_ASSIGNMENT" foreignKeyName="DRAW_CARD_ASSIGNMENT_ASSIGN_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint DRAW_CARD_ASSIGNMENT_ASSIGN_FK to DRAW_CARD_ASSIGNMENT (ASSIGNED_AREA)</comment>
+        <sql>UPDATE DRAW_CARD_ASSIGNMENT SET ASSIGNED_AREA = NULL WHERE ASSIGNED_AREA IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = DRAW_CARD_ASSIGNMENT.ASSIGNED_AREA)</sql>
+        <addForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" baseColumnNames="ASSIGNED_AREA" constraintName="DRAW_CARD_ASSIGNMENT_ASSIGN_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" constraintName="DRAW_CARD_ASSIGNMENT_ASSIGN_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="42bf596f-3da2-4644-9606-fb6fc31af949" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for AREA_BARRIERS_OID_FK to table AREA_BARRIERS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="AREA_BARRIERS" columnName="OID"/>
+            <columnExists tableName="AIMS_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="AREA_BARRIERS" foreignKeyName="AREA_BARRIERS_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint AREA_BARRIERS_OID_FK to AREA_BARRIERS (OID)</comment>
+        <sql>DELETE FROM AREA_BARRIERS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM AIMS_AREA WHERE AIMS_AREA.OID = AREA_BARRIERS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="AREA_BARRIERS" baseColumnNames="OID" constraintName="AREA_BARRIERS_OID_FK" referencedTableName="AIMS_AREA" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="AREA_BARRIERS" constraintName="AREA_BARRIERS_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="79a982a3-244d-4fae-a0e5-61cae614183e" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for UNDERGROUND_AREA_OPERATING_FK to table UNDERGROUND_AREA as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OPERATING_STATUS"/>
+            <columnExists tableName="OPERATING_STATUS" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="UNDERGROUND_AREA" foreignKeyName="UNDERGROUND_AREA_OPERATING_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint UNDERGROUND_AREA_OPERATING_FK to UNDERGROUND_AREA (OPERATING_STATUS)</comment>
+        <sql>UPDATE UNDERGROUND_AREA SET OPERATING_STATUS = NULL WHERE OPERATING_STATUS IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM OPERATING_STATUS WHERE OPERATING_STATUS.OID = UNDERGROUND_AREA.OPERATING_STATUS)</sql>
+        <addForeignKeyConstraint baseTableName="UNDERGROUND_AREA" baseColumnNames="OPERATING_STATUS" constraintName="UNDERGROUND_AREA_OPERATING_FK" referencedTableName="OPERATING_STATUS" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="UNDERGROUND_AREA" constraintName="UNDERGROUND_AREA_OPERATING_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="dac1ee35-1c4f-4dd3-b848-488427e55a96" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for UNDERGROUND_AREA_AREA_MAP_O_FK to table UNDERGROUND_AREA as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="UNDERGROUND_AREA" columnName="AREA_MAP_OID"/>
+            <columnExists tableName="AREA_MAP" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="UNDERGROUND_AREA" foreignKeyName="UNDERGROUND_AREA_AREA_MAP_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint UNDERGROUND_AREA_AREA_MAP_O_FK to UNDERGROUND_AREA (AREA_MAP_OID)</comment>
+        <sql>UPDATE UNDERGROUND_AREA SET AREA_MAP_OID = NULL WHERE AREA_MAP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM AREA_MAP WHERE AREA_MAP.OID = UNDERGROUND_AREA.AREA_MAP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="UNDERGROUND_AREA" baseColumnNames="AREA_MAP_OID" constraintName="UNDERGROUND_AREA_AREA_MAP_O_FK" referencedTableName="AREA_MAP" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="UNDERGROUND_AREA" constraintName="UNDERGROUND_AREA_AREA_MAP_O_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="c4e3965b-fcd0-4209-ab0a-dcddfb665d63" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for UNDERGROUND_AREA_JOINED_ARE_FK to table UNDERGROUND_AREA as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="UNDERGROUND_AREA" columnName="JOINED_AREA_OID"/>
+            <columnExists tableName="JOINED_UNDERGROUND_AREA" columnName="JOINED_AREA_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="UNDERGROUND_AREA" foreignKeyName="UNDERGROUND_AREA_JOINED_ARE_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint UNDERGROUND_AREA_JOINED_ARE_FK to UNDERGROUND_AREA (JOINED_AREA_OID)</comment>
+        <sql>UPDATE UNDERGROUND_AREA SET JOINED_AREA_OID = NULL WHERE JOINED_AREA_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM JOINED_UNDERGROUND_AREA WHERE JOINED_UNDERGROUND_AREA.JOINED_AREA_OID = UNDERGROUND_AREA.JOINED_AREA_OID)</sql>
+        <addForeignKeyConstraint baseTableName="UNDERGROUND_AREA" baseColumnNames="JOINED_AREA_OID" constraintName="UNDERGROUND_AREA_JOINED_ARE_FK" referencedTableName="JOINED_UNDERGROUND_AREA" referencedColumnNames="JOINED_AREA_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="UNDERGROUND_AREA" constraintName="UNDERGROUND_AREA_JOINED_ARE_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="df16f4e7-509d-41e9-a685-96bea4e83ec3" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for DRAW_CARD_ASSIGNMENT_FK1 to table DRAW_CARD_ASSIGNMENT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_CARD_ASSIGNMENT" columnName="ASSIGNED_JOINED_AREA"/>
+            <columnExists tableName="JOINED_UNDERGROUND_AREA" columnName="JOINED_AREA_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DRAW_CARD_ASSIGNMENT" foreignKeyName="DRAW_CARD_ASSIGNMENT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint DRAW_CARD_ASSIGNMENT_FK1 to DRAW_CARD_ASSIGNMENT (ASSIGNED_JOINED_AREA)</comment>
+        <sql>UPDATE DRAW_CARD_ASSIGNMENT SET ASSIGNED_JOINED_AREA = NULL WHERE ASSIGNED_JOINED_AREA IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM JOINED_UNDERGROUND_AREA WHERE JOINED_UNDERGROUND_AREA.JOINED_AREA_OID = DRAW_CARD_ASSIGNMENT.ASSIGNED_JOINED_AREA)</sql>
+        <addForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" baseColumnNames="ASSIGNED_JOINED_AREA" constraintName="DRAW_CARD_ASSIGNMENT_FK1" referencedTableName="JOINED_UNDERGROUND_AREA" referencedColumnNames="JOINED_AREA_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" constraintName="DRAW_CARD_ASSIGNMENT_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="01b68732-ef66-42a0-b561-4b51742b4c49" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for DRAW_CARD_ASSIGNMENT_SERVIC_FK to table DRAW_CARD_ASSIGNMENT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_CARD_ASSIGNMENT" columnName="SERVICING_AREA"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DRAW_CARD_ASSIGNMENT" foreignKeyName="DRAW_CARD_ASSIGNMENT_SERVIC_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint DRAW_CARD_ASSIGNMENT_SERVIC_FK to DRAW_CARD_ASSIGNMENT (SERVICING_AREA)</comment>
+        <sql>UPDATE DRAW_CARD_ASSIGNMENT SET SERVICING_AREA = NULL WHERE SERVICING_AREA IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = DRAW_CARD_ASSIGNMENT.SERVICING_AREA)</sql>
+        <addForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" baseColumnNames="SERVICING_AREA" constraintName="DRAW_CARD_ASSIGNMENT_SERVIC_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" constraintName="DRAW_CARD_ASSIGNMENT_SERVIC_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="c5df0b18-498c-46ee-b3f5-a61b9602188e" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for DRAW_POINT_AREA_OID_FK to table DRAW_POINT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_POINT" columnName="AREA_OID"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DRAW_POINT" foreignKeyName="DRAW_POINT_AREA_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint DRAW_POINT_AREA_OID_FK to DRAW_POINT (AREA_OID)</comment>
+        <sql>UPDATE DRAW_POINT SET AREA_OID = NULL WHERE AREA_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = DRAW_POINT.AREA_OID)</sql>
+        <addForeignKeyConstraint baseTableName="DRAW_POINT" baseColumnNames="AREA_OID" constraintName="DRAW_POINT_AREA_OID_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DRAW_POINT" constraintName="DRAW_POINT_AREA_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="17ae6e87-1265-4ee5-bb31-24ccd1e230db" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for FDC_ENTRY_LIST_AREA_FK to table FDC_ENTRY_LIST as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="FDC_ENTRY_LIST" columnName="AREA"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="FDC_ENTRY_LIST" foreignKeyName="FDC_ENTRY_LIST_AREA_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint FDC_ENTRY_LIST_AREA_FK to FDC_ENTRY_LIST (AREA)</comment>
+        <sql>DELETE FROM FDC_ENTRY_LIST WHERE AREA IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = FDC_ENTRY_LIST.AREA)</sql>
+        <addForeignKeyConstraint baseTableName="FDC_ENTRY_LIST" baseColumnNames="AREA" constraintName="FDC_ENTRY_LIST_AREA_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="FDC_ENTRY_LIST" constraintName="FDC_ENTRY_LIST_AREA_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="ab7bb2c5-dd09-40e3-83b3-f1fdecbe7895" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ORE_PASS_AREA_OID_FK to table ORE_PASS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="ORE_PASS" columnName="AREA_OID"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_AREA_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint ORE_PASS_AREA_OID_FK to ORE_PASS (AREA_OID)</comment>
+        <sql>UPDATE ORE_PASS SET AREA_OID = NULL WHERE AREA_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = ORE_PASS.AREA_OID)</sql>
+        <addForeignKeyConstraint baseTableName="ORE_PASS" baseColumnNames="AREA_OID" constraintName="ORE_PASS_AREA_OID_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_AREA_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a6cb9e26-e7f6-46b9-8c20-7628e5221620" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateUniqueIndex for AREA_NAME to table UNDERGROUND_AREA as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="UNDERGROUND_AREA"/>
+            <not>
+                <indexExists indexName="AREA_NAME" tableName="UNDERGROUND_AREA"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: CreateUniqueIndex AREA_NAME on UNDERGROUND_AREA (AREA_NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="UNDERGROUND_AREA" indexName="AREA_NAME">
+            <column name="AREA_NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="213ad3e4-2093-4682-86c0-8df6ee3e2c89" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for AIMS_AREA_UGAREA_OID_FK to table AIMS_AREA as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="AIMS_AREA" columnName="UGAREA_OID"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="AIMS_AREA" foreignKeyName="AIMS_AREA_UGAREA_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint AIMS_AREA_UGAREA_OID_FK to AIMS_AREA (UGAREA_OID)</comment>
+        <sql>DELETE FROM AIMS_AREA WHERE UGAREA_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = AIMS_AREA.UGAREA_OID)</sql>
+        <addForeignKeyConstraint baseTableName="AIMS_AREA" baseColumnNames="UGAREA_OID" constraintName="AIMS_AREA_UGAREA_OID_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="AIMS_AREA" constraintName="AIMS_AREA_UGAREA_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="0baf64d5-783d-4662-a458-768ecc9e3bfc" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for DRAW_CARD_ASSIGNMENT_FK1 to table DRAW_CARD_ASSIGNMENT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="DRAW_CARD_ASSIGNMENT" columnName="ASSIGNED_JOINED_AREA"/>
+            <columnExists tableName="JOINED_UNDERGROUND_AREA" columnName="JOINED_AREA_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DRAW_CARD_ASSIGNMENT" foreignKeyName="DRAW_CARD_ASSIGNMENT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint DRAW_CARD_ASSIGNMENT_FK1 to DRAW_CARD_ASSIGNMENT (ASSIGNED_JOINED_AREA)</comment>
+        <sql>UPDATE DRAW_CARD_ASSIGNMENT SET ASSIGNED_JOINED_AREA = NULL WHERE ASSIGNED_JOINED_AREA IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM JOINED_UNDERGROUND_AREA WHERE JOINED_UNDERGROUND_AREA.JOINED_AREA_OID = DRAW_CARD_ASSIGNMENT.ASSIGNED_JOINED_AREA)</sql>
+        <addForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" baseColumnNames="ASSIGNED_JOINED_AREA" constraintName="DRAW_CARD_ASSIGNMENT_FK1" referencedTableName="JOINED_UNDERGROUND_AREA" referencedColumnNames="JOINED_AREA_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" constraintName="DRAW_CARD_ASSIGNMENT_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="75b85df6-15fc-46cb-abbc-ffb35d45112a" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for UNDERGROUND_AREA_JOINED_ARE_FK to table UNDERGROUND_AREA as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="UNDERGROUND_AREA" columnName="JOINED_AREA_OID"/>
+            <columnExists tableName="JOINED_UNDERGROUND_AREA" columnName="JOINED_AREA_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="UNDERGROUND_AREA" foreignKeyName="UNDERGROUND_AREA_JOINED_ARE_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint UNDERGROUND_AREA_JOINED_ARE_FK to UNDERGROUND_AREA (JOINED_AREA_OID)</comment>
+        <sql>UPDATE UNDERGROUND_AREA SET JOINED_AREA_OID = NULL WHERE JOINED_AREA_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM JOINED_UNDERGROUND_AREA WHERE JOINED_UNDERGROUND_AREA.JOINED_AREA_OID = UNDERGROUND_AREA.JOINED_AREA_OID)</sql>
+        <addForeignKeyConstraint baseTableName="UNDERGROUND_AREA" baseColumnNames="JOINED_AREA_OID" constraintName="UNDERGROUND_AREA_JOINED_ARE_FK" referencedTableName="JOINED_UNDERGROUND_AREA" referencedColumnNames="JOINED_AREA_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="UNDERGROUND_AREA" constraintName="UNDERGROUND_AREA_JOINED_ARE_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="6a994de7-d97d-418f-b760-d3c28f43fd3b" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for POSITION_OF_INTEREST_AREA_FK to table POSITION_OF_INTEREST as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="POSITION_OF_INTEREST" columnName="AREA"/>
+            <columnExists tableName="UNDERGROUND_AREA" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="POSITION_OF_INTEREST" foreignKeyName="POSITION_OF_INTEREST_AREA_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6944: AddForeignKeyConstraint POSITION_OF_INTEREST_AREA_FK to POSITION_OF_INTEREST (AREA)</comment>
+        <sql>UPDATE POSITION_OF_INTEREST SET AREA = NULL WHERE AREA IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UNDERGROUND_AREA WHERE UNDERGROUND_AREA.OID = POSITION_OF_INTEREST.AREA)</sql>
+        <addForeignKeyConstraint baseTableName="POSITION_OF_INTEREST" baseColumnNames="AREA" constraintName="POSITION_OF_INTEREST_AREA_FK" referencedTableName="UNDERGROUND_AREA" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="POSITION_OF_INTEREST" constraintName="POSITION_OF_INTEREST_AREA_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

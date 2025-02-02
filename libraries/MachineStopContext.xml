@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2015, Caterpillar, Brisbane Australia. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+    <bean id="machineStopProviders"
+          class="minestar.autonomy.service.traffic.stop.MachineStopProviders"/>
+          
+    <bean id="machineStopServiceImpl"
+          class="minestar.autonomy.service.traffic.stop.MachineStopServiceImpl"
+          lazy-init="true">
+        <property name="updateSendMachineStop" ref="updateSendMachineStop"/>
+        <property name="processAutonomousStopStatus" ref="processAutonomousStopStatus"/>
+        <property name="updateAddSiteStop" ref="updateAddSiteStop"/>
+        <property name="updateSendStopAllMachines" ref="updateSendStopAllMachines"/>
+        <property name="updateRemoveSiteStop" ref="updateRemoveSiteStop"/>
+    </bean>
+
+    <bean id="registerMachineStopService" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Machine Stop Service"/>
+        <constructor-arg value="minestar.autonomy.service.traffic.stop.MachineStopService"/>
+        <constructor-arg ref="machineStopServiceImpl"/>
+    </bean>
+
+    <bean id="machineStopFieldListener" class="minestar.autonomy.service.traffic.stop.MachineStopFieldListener">
+        <property name="notification" ref="notification"/>
+        <property name="processStopRequest" ref="processStopRequest"/>
+        <property name="processStopClear" ref="processStopClear"/>
+        <property name="processAutonomousStopStatus" ref="processAutonomousStopStatus"/>
+        <property name="checkCommandCapability" ref="checkCommandCapability"/>
+        <property name="txManager" ref="minestarTransactionManager"/>
+    </bean>
+    
+    <bean id="checkCommandCapability" 
+          class="minestar.autonomy.service.traffic.stop.controller.CheckCommandCapability"/>
+    
+    <bean id="processAutonomousStopStatus" 
+          class="minestar.autonomy.service.traffic.stop.controller.ProcessAutonomousStopStatus">
+        <property name="machineStopProviders" ref="machineStopProviders"/>
+    </bean>
+
+    <bean id="processStopClear" 
+          class="minestar.autonomy.service.traffic.stop.controller.ProcessStopClear">
+        <property name="pitModelService" ref="pitModelServiceImpl"/>
+        <property name="machineStopProviders" ref="machineStopProviders"/>
+        <property name="checkStopClearCapability" ref="checkStopClearCapability"/>
+    </bean>
+
+    <bean id="checkStopClearCapability"
+          class="minestar.autonomy.service.traffic.stop.controller.CheckStopClearCapability"/>
+    
+    <bean id="processStopRequest" 
+          class="minestar.autonomy.service.traffic.stop.controller.ProcessStopRequest">
+        <property name="pitModelService" ref="pitModelServiceImpl"/>
+        <property name="updateSendMachineStop" ref="updateSendMachineStop"/>
+    </bean>
+    
+    <bean id="sendToAllAutonomousMachines" 
+          class="minestar.autonomy.service.traffic.stop.controller.SendToAllAutonomousMachines">
+        <property name="sendToMachines" ref="sendToMachines"/>
+        <property name="findAllAutonomousMachines" ref="findAllAutonomousMachines"/>
+    </bean>
+    
+    <bean id="sendToMachines" 
+          class="minestar.autonomy.service.traffic.stop.controller.SendToMachines">
+        <property name="sendToMachine" ref="sendToMachine"/>
+    </bean>
+    
+    <bean id="sendToMachine" 
+          class="minestar.autonomy.service.traffic.stop.controller.SendToMachine">
+        <property name="machineStopProviders" ref="machineStopProviders"/>
+    </bean>
+
+    <bean id="updateAddSiteStop" 
+          class="minestar.autonomy.service.traffic.stop.controller.UpdateAddSiteStop">
+        <property name="sendToMachines" ref="sendToMachines"/>
+        <property name="findAllAutonomousMachines" ref="findAllAutonomousMachines"/>
+        <property name="machineStopProviders" ref="machineStopProviders"/>
+    </bean>
+    
+    <bean id="updateRemoveSiteStop" 
+          class="minestar.autonomy.service.traffic.stop.controller.UpdateRemoveSiteStop">
+        <property name="machineStopProviders" ref="machineStopProviders"/>
+    </bean>
+    
+    <bean id="updateSendMachineStop" parent="loggerParent"
+          class="minestar.autonomy.service.traffic.stop.controller.UpdateSendMachineStop">
+        <property name="sendToMachine" ref="sendToMachine"/>
+        <property name="machineHasStopProvider" ref="machineHasStopProvider"/>
+        <property name="machineStopProviders" ref="machineStopProviders"/>
+    </bean>
+    
+    <bean id="machineHasStopProvider" 
+          class="minestar.autonomy.service.traffic.stop.controller.MachineHasStopProvider">
+        <property name="machineStopProviders" ref="machineStopProviders"/>
+    </bean>
+    
+    <bean id="findAllAutonomousMachines" 
+          class="minestar.autonomy.service.traffic.stop.controller.FindAllAutonomousMachines">
+        <property name="machineStopProviders" ref="machineStopProviders"/>
+    </bean>
+    
+    <bean id="updateSendStopAllMachines" 
+          class="minestar.autonomy.service.traffic.stop.controller.UpdateSendStopAllMachines">
+        <property name="sendToAllAutonomousMachines" ref="sendToAllAutonomousMachines"/>
+    </bean>
+
+</beans>

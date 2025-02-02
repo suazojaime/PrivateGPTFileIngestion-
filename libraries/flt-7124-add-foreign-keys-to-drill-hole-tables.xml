@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="66f883c5-db2b-4a17-b78b-1dca6fbe1b4d" author="MineStar" context="Production/Production_Management"
+               failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for DRILL_HOLE_INFORMATION_OID_FK to table DRILL_HOLE_INFORMATION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <columnExists tableName="DRILL_HOLE_INFORMATION" columnName="OID"/>
+            <columnExists tableName="CYCLE" columnName="CYCLE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DRILL_HOLE_INFORMATION" foreignKeyName="DRILL_HOLE_INFORMATION_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7124: AddForeignKeyConstraint DRILL_HOLE_INFORMATION_OID_FK to DRILL_HOLE_INFORMATION (OID)</comment>
+        <sql>DELETE FROM DRILL_HOLE_INFORMATION WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM CYCLE WHERE CYCLE.CYCLE_OID = DRILL_HOLE_INFORMATION.OID)</sql>
+        <addForeignKeyConstraint constraintName="DRILL_HOLE_INFORMATION_OID_FK"
+                                 baseTableName="DRILL_HOLE_INFORMATION" baseColumnNames="OID"
+                                 referencedTableName="CYCLE" referencedColumnNames="CYCLE_OID"
+                                 onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DRILL_HOLE_INFORMATION" constraintName="DRILL_HOLE_INFORMATION_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="528e11fd-6f2b-436d-8032-94972306a4fe" author="MineStar" context="Production/Production_Management"
+               failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for DRILL_HOLE_POSITION_OID_FK to table DRILL_HOLE_POSITION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <columnExists tableName="DRILL_HOLE_POSITION" columnName="OID"/>
+            <columnExists tableName="CYCLE" columnName="CYCLE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DRILL_HOLE_POSITION" foreignKeyName="DRILL_HOLE_POSITION_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7124: AddForeignKeyConstraint DRILL_HOLE_POSITION_OID_FK to DRILL_HOLE_POSITION (OID)</comment>
+        <sql>DELETE FROM DRILL_HOLE_POSITION WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM CYCLE WHERE CYCLE.CYCLE_OID = DRILL_HOLE_POSITION.OID)</sql>
+        <addForeignKeyConstraint constraintName="DRILL_HOLE_POSITION_OID_FK"
+                                 baseTableName="DRILL_HOLE_POSITION" baseColumnNames="OID"
+                                 referencedTableName="CYCLE" referencedColumnNames="CYCLE_OID"
+                                 onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DRILL_HOLE_POSITION" constraintName="DRILL_HOLE_POSITION_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

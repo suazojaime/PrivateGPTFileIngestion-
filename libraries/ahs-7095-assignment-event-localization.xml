@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="fe35b4b2-82c8-4b9d-b8ee-2da9da14a07a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LOCALIZABLE_MESSAGE of table ASSIGNMENT_EVENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ASSIGNMENT_EVENT" columnName="LOCALIZABLE_MESSAGE"/>
+        </preConditions>
+        <comment>AHS-7095: DropColumn ASSIGNMENT_EVENT.LOCALIZABLE_MESSAGE</comment>
+        <dropColumn columnName="LOCALIZABLE_MESSAGE" tableName="ASSIGNMENT_EVENT"/>
+        <rollback>
+            <addColumn tableName="ASSIGNMENT_EVENT">
+                <column name="LOCALIZABLE_MESSAGE" type="VARCHAR(4000)" remarks="The message text in a localizable format"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="1d0b3232-916b-4203-aac7-3d972f3c5b30" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LOCALIZABLE_REASON of table ASSIGNMENT_EVENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ASSIGNMENT_EVENT" columnName="LOCALIZABLE_REASON"/>
+        </preConditions>
+        <comment>AHS-7095: DropColumn ASSIGNMENT_EVENT.LOCALIZABLE_REASON</comment>
+        <dropColumn columnName="LOCALIZABLE_REASON" tableName="ASSIGNMENT_EVENT"/>
+        <rollback>
+            <addColumn tableName="ASSIGNMENT_EVENT">
+                <column name="LOCALIZABLE_REASON" type="VARCHAR(4000)" remarks="The reason of the auto assignment in a localizable format"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3c054ce4-bb2b-4703-a658-80703eafa35a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LOCALIZABLE_ASSIGNMENT_TYPE of table ASSIGNMENT_EVENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ASSIGNMENT_EVENT" columnName="LOCALIZABLE_ASSIGNMENT_TYPE"/>
+        </preConditions>
+        <comment>AHS-7095: DropColumn ASSIGNMENT_EVENT.LOCALIZABLE_ASSIGNMENT_TYPE</comment>
+        <dropColumn columnName="LOCALIZABLE_ASSIGNMENT_TYPE" tableName="ASSIGNMENT_EVENT"/>
+        <rollback>
+            <addColumn tableName="ASSIGNMENT_EVENT">
+                <column name="LOCALIZABLE_ASSIGNMENT_TYPE" type="VARCHAR(4000)" remarks="The assignment type in a localizable format"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

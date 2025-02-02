@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<!-- $Id: DrillHoleConsumable.xml,v 1.6 2005-11-11 05:59:45 johnf Exp $ -->
+<!--
+$Log: not supported by cvs2svn $
+Revision 1.5  2005/11/11 02:19:29  johnf
+starting metadata descriptions
+
+Revision 1.4  2005/10/21 05:49:03  johnf
+new drill cycle messages
+
+Revision 1.3  2005/02/17 00:18:25  ianb
+support for units and default value in hbm files
+
+Revision 1.2  2004/07/27 05:06:23  andrewc
+Get unit types correct
+
+Revision 1.1  2004/07/27 04:33:18  andrewc
+Gem metadata for DrillHoleConsumable - still needs descriptions
+
+-->
+<classdefs>
+    <classdef name="minestar.production.domain.cycle.DrillHoleConsumable">
+        <propertydef name="drillStart">
+            <description>The time drilling started</description>
+        </propertydef>
+        <propertydef name="drillFinish">
+            <description>The time drilling finished</description>
+        </propertydef>
+        <propertydef name="consumableName">
+            <description>The name of the consumable, e.g. its serial number</description>
+        </propertydef>
+        <propertydef name="consumableType">
+            <description>The type of the consumable</description>
+        </propertydef>
+        <propertydef name="consumableCount">
+            <description></description>
+        </propertydef>
+        <propertydef name="meterage">
+            <description>Metres drilled by this consumable during this cycle</description>
+        </propertydef>
+        <propertydef name="rotations">
+            <description>Number of rotations by this consumable during this cycle</description>
+        </propertydef>
+        <propertydef name="energyDissipated">
+            <description>Energy dissipated by the bit in this cycle</description>
+        </propertydef>
+    </classdef>
+</classdefs>

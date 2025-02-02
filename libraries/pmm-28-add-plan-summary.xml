@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Changesets to add the storage of actuals data for plans so it is immutable when the plan goes finalized -->
+
+    <changeSet id="43abd8ef-6b0a-4cc2-8ba9-c7b6ab31837e" author="MineStar">
+        <preConditions onFailMessage="Ignored AddColumn for ACTUAL_EXPIT to table V2_PROD_PLAN as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="V2_PROD_PLAN" columnName="ACTUAL_EXPIT"/>
+            </not>
+        </preConditions>
+        <comment>PMM-28: DB Changes for Plan Summary - add actual_expit</comment>
+        <addColumn tableName="V2_PROD_PLAN">
+            <column name="ACTUAL_EXPIT" type="DOUBLE" remarks="How much was taken out of grade blocks during plan duration"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="d26de454-26b9-41c3-8e89-f8acecf74e98" author="MineStar">
+        <preConditions onFailMessage="Ignored AddColumn for ACTUAL_REHANDLE to table V2_PROD_PLAN as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="V2_PROD_PLAN" columnName="ACTUAL_REHANDLE"/>
+            </not>
+        </preConditions>
+        <comment>PMM-28: DB Changes for Plan Summary - add actual_rehandle</comment>
+        <addColumn tableName="V2_PROD_PLAN">
+            <column name="ACTUAL_REHANDLE" type="DOUBLE" remarks="How much was taken out of stockpiles during plan duration"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

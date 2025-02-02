@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    
+    <changeSet id="0978f779-06b3-4bf7-be06-c04c8498bdcb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ZONE.NAME as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ZONE" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-4376: AddNotNullConstraint to ZONE.NAME</comment>
+        <addNotNullConstraint columnName="NAME" defaultNullValue="" columnDataType="VARCHAR(255)" tableName="ZONE"/>
+    </changeSet>
+
+    <changeSet id="de8b5379-9d52-4a4f-9758-a77100a35590" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored rename zones with duplicate names as (1) ZONE table does not exist, or (2) zone names are already indexed." onFail="MARK_RAN">
+            <tableExists tableName="ZONE"/>
+            <not>
+                <indexExists indexName="ZONE_NAME" tableName="ZONE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-5260: Rename all zones with duplicate names.</comment>
+        <!-- The first statement renames (with a tag) all archived zones that have the same name as an active zone. -->
+        <!-- The second statement renames (with the ID) all zones that have duplicate names. -->
+        <sql dbms="oracle">
+            <![CDATA[
+            update ZONE set NAME=NAME||' <ARCHIVED:'||ID||'>' where IS_ACTIVE=0 and NAME in (select NAME from ZONE group by NAME having SUM(IS_ACTIVE) > 0);
+            update ZONE set NAME=(CASE WHEN IS_ACTIVE = 0 THEN NAME||' <ARCHIVED:'||ID||'>' ELSE NAME||'_'||ID END) where (NAME IN (select NAME from ZONE group by NAME having COUNT(*)>1));
+            ]]>
+        </sql>
+        <sql dbms="mssql">
+            <![CDATA[
+            update ZONE set NAME=CONCAT(NAME,' <ARCHIVED:',ID,'>') where IS_ACTIVE=0 and NAME in (select NAME from ZONE WHERE IS_ACTIVE <> 0);
+            update ZONE set NAME=(CASE WHEN IS_ACTIVE = 0 THEN CONCAT(NAME,' <ARCHIVED:',ID,'>') ELSE CONCAT(NAME,'_',ID) END) where (NAME IN (select NAME from ZONE group by NAME having COUNT(*)>1));
+            ]]>
+        </sql>
+        <rollback/>
+    </changeSet>
+    
+    <changeSet id="a9987c8a-42ab-42bb-b78b-fcd440b41c62" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for ZONE_NAME to table ZONE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="ZONE"/>
+            <not>
+                <indexExists indexName="ZONE_NAME" tableName="ZONE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-4376: CreateUniqueIndex ZONE_NAME on ZONE (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="ZONE_NAME" tableName="ZONE">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

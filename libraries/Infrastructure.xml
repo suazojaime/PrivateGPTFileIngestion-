@@ -1,0 +1,39 @@
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<!--
+    A bean which forces admin to start in an ObjectServer.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="startObjectServerAdmin" class="com.mincom.env.service.server.ObjectServerAdminBean" lazy-init="true"
+          depends-on="objectServerAdmin"/>
+
+    <bean id="objectServerStuff" class="java.lang.Object" lazy-init="false"
+          depends-on="startObjectServerAdmin"/>
+
+    <bean id="heapDumper" class="com.mincom.env.service.server.gadget.HeapDumper" init-method="init">
+        <property name="notification" ref="notification"/>
+    </bean>
+
+    <bean id="threadDumper" class="com.mincom.env.service.server.gadget.ThreadDumper" init-method="init">
+        <property name="notification" ref="notification"/>
+    </bean>
+
+    <bean id="jvmInfo" class="com.mincom.util.gadget.JVMInfo" init-method="init"/>
+
+    <bean id="systemInfo" class="com.mincom.env.service.server.gadget.SystemInfo" init-method="init"/>
+
+    <bean id="createHostProcessStartedFile" class="com.mincom.util.gadget.CreateHostProcessStartedFile"/>
+
+    <bean id="speedoNotification" class="com.mincom.env.service.server.gadget.SpeedoNotificationBean" init-method="init">
+        <constructor-arg name="speedo" ref="speedo"/>
+        <constructor-arg name="notification" ref="notification"/>
+    </bean>
+
+    <bean id="speedoJMX" class="com.mincom.env.service.server.gadget.SpeedoJMXBean" init-method="init">
+        <constructor-arg name="speedo" ref="speedo"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="7e7b942f-46a8-457c-8243-b736ff7b2fc0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for CYCLE_DISCRETE_GRADE.GRADE_OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="CYCLE_DISCRETE_GRADE" columnName="GRADE_OID"/>
+        </preConditions>
+        <comment>FLT-2109: AddNotNullConstraint to CYCLE_DISCRETE_GRADE.GRADE_OID</comment>
+        <addNotNullConstraint columnName="GRADE_OID" columnDataType="BIGINT" tableName="CYCLE_DISCRETE_GRADE"/>
+    </changeSet>
+
+    <changeSet id="1df6bc7e-9058-46a1-be12-72b6dfa0b483" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for CYCLE_SINK_GRADE.GRADE_OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="CYCLE_SINK_GRADE" columnName="GRADE_OID"/>
+        </preConditions>
+        <comment>FLT-2109: AddNotNullConstraint to CYCLE_SINK_GRADE.GRADE_OID</comment>
+        <addNotNullConstraint columnName="GRADE_OID" columnDataType="BIGINT" tableName="CYCLE_SINK_GRADE"/>
+    </changeSet>
+
+    <changeSet id="aab560cc-af3f-4d1e-9b84-d4a69a1420e1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for CYCLE_SOURCE_GRADE_CALC.GRADE_OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="CYCLE_SOURCE_GRADE_CALC" columnName="GRADE_OID"/>
+        </preConditions>
+        <comment>FLT-2109: AddNotNullConstraint to CYCLE_SOURCE_GRADE_CALC.GRADE_OID</comment>
+        <addNotNullConstraint columnName="GRADE_OID" columnDataType="BIGINT" tableName="CYCLE_SOURCE_GRADE_CALC"/>
+    </changeSet>
+
+    <changeSet id="0a7e4d7e-9747-46be-a264-41d18a5be485" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for CYCLE_SOURCE_GRADE_MINED.GRADE_OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="CYCLE_SOURCE_GRADE_MINED" columnName="GRADE_OID"/>
+        </preConditions>
+        <comment>FLT-2109: AddNotNullConstraint to CYCLE_SOURCE_GRADE_MINED.GRADE_OID</comment>
+        <addNotNullConstraint columnName="GRADE_OID" columnDataType="BIGINT" tableName="CYCLE_SOURCE_GRADE_MINED"/>
+    </changeSet>
+
+    <changeSet id="4851e8db-0fbd-4e65-86c0-754abd68231a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for DRILL_HOLE_CONSUMABLE.CONSUMABLE_NAME as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="DRILL_HOLE_CONSUMABLE" columnName="CONSUMABLE_NAME"/>
+        </preConditions>
+        <comment>FLT-2109: AddNotNullConstraint to DRILL_HOLE_CONSUMABLE.CONSUMABLE_NAME</comment>
+        <addNotNullConstraint columnName="CONSUMABLE_NAME" columnDataType="VARCHAR(255)" tableName="DRILL_HOLE_CONSUMABLE"/>
+    </changeSet>
+
+    <changeSet id="c2df6dae-044c-4c73-ae58-0952e24c6c9b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for DRILL_HOLE_PROFILE.SLICE_START_UTC as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="DRILL_HOLE_PROFILE" columnName="SLICE_START_UTC"/>
+        </preConditions>
+        <comment>FLT-2109: AddNotNullConstraint to DRILL_HOLE_PROFILE.SLICE_START_UTC</comment>
+        <addNotNullConstraint columnName="SLICE_START_UTC" columnDataType="DATETIME2" tableName="DRILL_HOLE_PROFILE"/>
+    </changeSet>
+
+    <changeSet id="31118f29-1a3e-4830-a6e9-1d53e3e83fee" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for CYCLEACTIVITY_COMPONENT_12U of table CYCLEACTIVITYCOMPONENT as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLEACTIVITY_COMPONENT_12U" tableName="CYCLEACTIVITYCOMPONENT"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex CYCLEACTIVITY_COMPONENT_12U from CYCLEACTIVITYCOMPONENT (OID)</comment>
+        <dropIndex indexName="CYCLEACTIVITY_COMPONENT_12U" tableName="CYCLEACTIVITYCOMPONENT"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXOBJ" indexName="CYCLEACTIVITY_COMPONENT_12U" tableName="CYCLEACTIVITYCOMPONENT">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="14541956-e6c0-4a6f-99a9-78ff80bee033" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for CYCLEACTIVITYCOMPONENT_PK to table CYCLEACTIVITYCOMPONENT as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLEACTIVITYCOMPONENT"/>
+            <not>
+                <primaryKeyExists primaryKeyName="CYCLEACTIVITYCOMPONENT_PK" tableName="CYCLEACTIVITYCOMPONENT"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey CYCLEACTIVITYCOMPONENT_PK to CYCLEACTIVITYCOMPONENT (OID,START_TIME_UTC)</comment>
+        <sql dbms="oracle">DELETE FROM CYCLEACTIVITYCOMPONENT WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, START_TIME_UTC ORDER BY ROWID) RN FROM CYCLEACTIVITYCOMPONENT) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, START_TIME_UTC ORDER BY %%physloc%%) AS ROW_NUM FROM CYCLEACTIVITYCOMPONENT) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,START_TIME_UTC" constraintName="CYCLEACTIVITYCOMPONENT_PK" tablespace="MW_IDXENT" tableName="CYCLEACTIVITYCOMPONENT"/>
+        <rollback>
+            <dropPrimaryKey constraintName="CYCLEACTIVITYCOMPONENT_PK" tableName="CYCLEACTIVITYCOMPONENT"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="af72d339-031a-4df4-af5e-7eff3fdd2ecb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for CYCLEDELAY_12U of table CYCLEDELAY as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLEDELAY_12U" tableName="CYCLEDELAY"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex CYCLEDELAY_12U from CYCLEDELAY (OID)</comment>
+        <dropIndex indexName="CYCLEDELAY_12U" tableName="CYCLEDELAY"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXOBJ" indexName="CYCLEDELAY_12U" tableName="CYCLEDELAY">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="54599c1f-8a04-4eb3-8a18-b6b7725e6884" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for CYCLEDELAY_PK to table CYCLEDELAY as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLEDELAY"/>
+            <not>
+                <primaryKeyExists primaryKeyName="CYCLEDELAY_PK" tableName="CYCLEDELAY"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey CYCLEDELAY_PK to CYCLEDELAY (OID,START_TIME_UTC)</comment>
+        <sql dbms="oracle">DELETE FROM CYCLEDELAY WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, START_TIME_UTC ORDER BY ROWID) RN FROM CYCLEDELAY) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, START_TIME_UTC ORDER BY %%physloc%%) AS ROW_NUM FROM CYCLEDELAY) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,START_TIME_UTC" constraintName="CYCLEDELAY_PK" tablespace="MW_IDXENT" tableName="CYCLEDELAY"/>
+        <rollback>
+            <dropPrimaryKey constraintName="CYCLEDELAY_PK" tableName="CYCLEDELAY"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="f3e9fa1e-c7e7-4609-99ad-2fb36b1bedd9" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for CYCLEROADSEGMENT_12U of table CYCLEROADSEGMENT as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="CYCLEROADSEGMENT_12U" tableName="CYCLEROADSEGMENT"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: CreateIndex CYCLEROADSEGMENT_12U from CYCLEROADSEGMENT (OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXOBJ" indexName="CYCLEROADSEGMENT_12U" tableName="CYCLEROADSEGMENT">
+            <column name="OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="e46fbebb-f06b-4922-9d03-6ea2b9cffd9d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey CYCLEROADSEGMENT_PK of table CYCLEROADSEGMENT as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLEROADSEGMENT_PK" tableName="CYCLEROADSEGMENT"/>
+        </preConditions>
+        <comment>FLT-2109: DropPrimaryKey CYCLEROADSEGMENT_PK from CYCLEROADSEGMENT</comment>
+        <dropPrimaryKey tableName="CYCLEROADSEGMENT" constraintName="CYCLEROADSEGMENT_PK"/>
+        <rollback>
+            <addPrimaryKey columnNames="OID,START_TIME_UTC" constraintName="CYCLEROADSEGMENT_PK" tablespace="MW_IDXENT" tableName="CYCLEROADSEGMENT"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="6b0b4c0a-8615-4a50-bf48-b8ede6b4eaee" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for CYCLE_CALC_DIPPERS_12U of table CYCLE_CALC_DIPPER as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLE_CALC_DIPPERS_12U" tableName="CYCLE_CALC_DIPPER"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex CYCLE_CALC_DIPPERS_12U from CYCLE_CALC_DIPPER (OID)</comment>
+        <dropIndex indexName="CYCLE_CALC_DIPPERS_12U" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" indexName="CYCLE_CALC_DIPPERS_12U" tableName="CYCLE_CALC_DIPPER">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="86491536-4e5b-48d9-be47-57b770503a8a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for CYCLE_CALC_DIPPER_PK to table CYCLE_CALC_DIPPER as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_CALC_DIPPER"/>
+            <not>
+                <primaryKeyExists primaryKeyName="CYCLE_CALC_DIPPER_PK" tableName="CYCLE_CALC_DIPPER"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey CYCLE_CALC_DIPPER_PK to CYCLE_CALC_DIPPER (OID,DIPPER_NR)</comment>
+        <sql dbms="oracle">DELETE FROM CYCLE_CALC_DIPPER WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, DIPPER_NR ORDER BY ROWID) RN FROM CYCLE_CALC_DIPPER) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, DIPPER_NR ORDER BY %%physloc%%) AS ROW_NUM FROM CYCLE_CALC_DIPPER) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,DIPPER_NR" constraintName="CYCLE_CALC_DIPPER_PK" tablespace="MW_IDXENT" tableName="CYCLE_CALC_DIPPER"/>
+        <rollback>
+            <dropPrimaryKey constraintName="CYCLE_CALC_DIPPER_PK" tableName="CYCLE_CALC_DIPPER"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="6e77dd06-79ed-4cac-ad0b-148b904bc1f0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for CYCLE_DISCRETE_GRADE_12U of table CYCLE_DISCRETE_GRADE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLE_DISCRETE_GRADE_12U" tableName="CYCLE_DISCRETE_GRADE"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex CYCLE_DISCRETE_GRADE_12U from CYCLE_DISCRETE_GRADE (OID)</comment>
+        <dropIndex indexName="CYCLE_DISCRETE_GRADE_12U" tableName="CYCLE_DISCRETE_GRADE"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" indexName="CYCLE_DISCRETE_GRADE_12U" tableName="CYCLE_DISCRETE_GRADE">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="9ec3a777-9bf4-45eb-9d95-3608fdb2225d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for CYCLE_DISCRETE_GRADE_PK to table CYCLE_DISCRETE_GRADE as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_DISCRETE_GRADE"/>
+            <not>
+                <primaryKeyExists primaryKeyName="CYCLE_DISCRETE_GRADE_PK" tableName="CYCLE_DISCRETE_GRADE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey CYCLE_DISCRETE_GRADE_PK to CYCLE_DISCRETE_GRADE (OID,GRADE_OID)</comment>
+        <sql dbms="oracle">DELETE FROM CYCLE_DISCRETE_GRADE WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, GRADE_OID ORDER BY ROWID) RN FROM CYCLE_DISCRETE_GRADE) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, GRADE_OID ORDER BY %%physloc%%) AS ROW_NUM FROM CYCLE_DISCRETE_GRADE) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,GRADE_OID" constraintName="CYCLE_DISCRETE_GRADE_PK" tablespace="MW_IDXENT" tableName="CYCLE_DISCRETE_GRADE"/>
+        <rollback>
+            <dropPrimaryKey constraintName="CYCLE_DISCRETE_GRADE_PK" tableName="CYCLE_DISCRETE_GRADE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="7a7b436b-28b1-48ec-94d4-992093256569" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for CYCLE_MINED_DIPPERS_12U of table CYCLE_MINED_DIPPER as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLE_MINED_DIPPERS_12U" tableName="CYCLE_MINED_DIPPER"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex CYCLE_MINED_DIPPERS_12U from CYCLE_MINED_DIPPER (OID)</comment>
+        <dropIndex indexName="CYCLE_MINED_DIPPERS_12U" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" indexName="CYCLE_MINED_DIPPERS_12U" tableName="CYCLE_MINED_DIPPER">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="ea1a138d-85bd-43c9-9a31-2908f7e55eb0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for CYCLE_MINED_DIPPER_PK to table CYCLE_MINED_DIPPER as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_MINED_DIPPER"/>
+            <not>
+                <primaryKeyExists primaryKeyName="CYCLE_MINED_DIPPER_PK" tableName="CYCLE_MINED_DIPPER"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey CYCLE_MINED_DIPPER_PK to CYCLE_MINED_DIPPER (OID,DIPPER_NR)</comment>
+        <sql dbms="oracle">DELETE FROM CYCLE_MINED_DIPPER WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, DIPPER_NR ORDER BY ROWID) RN FROM CYCLE_MINED_DIPPER) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, DIPPER_NR ORDER BY %%physloc%%) AS ROW_NUM FROM CYCLE_MINED_DIPPER) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,DIPPER_NR" constraintName="CYCLE_MINED_DIPPER_PK" tablespace="MW_IDXENT" tableName="CYCLE_MINED_DIPPER"/>
+        <rollback>
+            <dropPrimaryKey constraintName="CYCLE_MINED_DIPPER_PK" tableName="CYCLE_MINED_DIPPER"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="b588571e-eae8-40c4-b4e7-efa8d0083fe0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for CYCLE_SINK_GRADE_12U of table CYCLE_SINK_GRADE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLE_SINK_GRADE_12U" tableName="CYCLE_SINK_GRADE"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex CYCLE_SINK_GRADE_12U from CYCLE_SINK_GRADE (OID)</comment>
+        <dropIndex indexName="CYCLE_SINK_GRADE_12U" tableName="CYCLE_SINK_GRADE"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" indexName="CYCLE_SINK_GRADE_12U" tableName="CYCLE_SINK_GRADE">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="4768f180-ec30-477e-bb98-2cc87a84d56f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for CYCLE_SINK_GRADE_PK to table CYCLE_SINK_GRADE as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_SINK_GRADE"/>
+            <not>
+                <primaryKeyExists primaryKeyName="CYCLE_SINK_GRADE_PK" tableName="CYCLE_SINK_GRADE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey CYCLE_SINK_GRADE_PK to CYCLE_SINK_GRADE (OID,GRADE_OID)</comment>
+        <sql dbms="oracle">DELETE FROM CYCLE_SINK_GRADE WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, GRADE_OID ORDER BY ROWID) RN FROM CYCLE_SINK_GRADE) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, GRADE_OID ORDER BY %%physloc%%) AS ROW_NUM FROM CYCLE_SINK_GRADE) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,GRADE_OID" constraintName="CYCLE_SINK_GRADE_PK" tablespace="MW_IDXENT" tableName="CYCLE_SINK_GRADE"/>
+        <rollback>
+            <dropPrimaryKey constraintName="CYCLE_SINK_GRADE_PK" tableName="CYCLE_SINK_GRADE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="203d8045-44a2-4446-b44d-ac652a006096" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for CYCLE_SOURCE_GRADE_CALC_12U of table CYCLE_SOURCE_GRADE_CALC as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLE_SOURCE_GRADE_CALC_12U" tableName="CYCLE_SOURCE_GRADE_CALC"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex CYCLE_SOURCE_GRADE_CALC_12U from CYCLE_SOURCE_GRADE_CALC (OID)</comment>
+        <dropIndex indexName="CYCLE_SOURCE_GRADE_CALC_12U" tableName="CYCLE_SOURCE_GRADE_CALC"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" indexName="CYCLE_SOURCE_GRADE_CALC_12U" tableName="CYCLE_SOURCE_GRADE_CALC">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="43dc03d5-9554-4d80-907f-6fbb350c5c9f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for CYCLE_SOURCE_GRADE_CALC_PK to table CYCLE_SOURCE_GRADE_CALC as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_SOURCE_GRADE_CALC"/>
+            <not>
+                <primaryKeyExists primaryKeyName="CYCLE_SOURCE_GRADE_CALC_PK" tableName="CYCLE_SOURCE_GRADE_CALC"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey CYCLE_SOURCE_GRADE_CALC_PK to CYCLE_SOURCE_GRADE_CALC (OID,GRADE_OID)</comment>
+        <sql dbms="oracle">DELETE FROM CYCLE_SOURCE_GRADE_CALC WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, GRADE_OID ORDER BY ROWID) RN FROM CYCLE_SOURCE_GRADE_CALC) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, GRADE_OID ORDER BY %%physloc%%) AS ROW_NUM FROM CYCLE_SOURCE_GRADE_CALC) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,GRADE_OID" constraintName="CYCLE_SOURCE_GRADE_CALC_PK" tablespace="MW_IDXENT" tableName="CYCLE_SOURCE_GRADE_CALC"/>
+        <rollback>
+            <dropPrimaryKey constraintName="CYCLE_SOURCE_GRADE_CALC_PK" tableName="CYCLE_SOURCE_GRADE_CALC"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="37202245-e9e9-4bc2-8701-87cc8f02cfe8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for CYCLE_SOURCE_GRADE_MINED_12U of table CYCLE_SOURCE_GRADE_MINED as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="CYCLE_SOURCE_GRADE_MINED_12U" tableName="CYCLE_SOURCE_GRADE_MINED"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex CYCLE_SOURCE_GRADE_MINED_12U from CYCLE_SOURCE_GRADE_MINED (OID)</comment>
+        <dropIndex indexName="CYCLE_SOURCE_GRADE_MINED_12U" tableName="CYCLE_SOURCE_GRADE_MINED"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" indexName="CYCLE_SOURCE_GRADE_MINED_12U" tableName="CYCLE_SOURCE_GRADE_MINED">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="1dc4410c-e577-49a8-8941-79fdfad04d39" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for CYCLE_SOURCE_GRADE_MINED_PK to table CYCLE_SOURCE_GRADE_MINED as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="CYCLE_SOURCE_GRADE_MINED"/>
+            <not>
+                <primaryKeyExists primaryKeyName="CYCLE_SOURCE_GRADE_MINED_PK" tableName="CYCLE_SOURCE_GRADE_MINED"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey CYCLE_SOURCE_GRADE_MINED_PK to CYCLE_SOURCE_GRADE_MINED (OID,GRADE_OID)</comment>
+        <sql dbms="oracle">DELETE FROM CYCLE_SOURCE_GRADE_MINED WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, GRADE_OID ORDER BY ROWID) RN FROM CYCLE_SOURCE_GRADE_MINED) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, GRADE_OID ORDER BY %%physloc%%) AS ROW_NUM FROM CYCLE_SOURCE_GRADE_MINED) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,GRADE_OID" constraintName="CYCLE_SOURCE_GRADE_MINED_PK" tablespace="MW_IDXENT" tableName="CYCLE_SOURCE_GRADE_MINED"/>
+        <rollback>
+            <dropPrimaryKey constraintName="CYCLE_SOURCE_GRADE_MINED_PK" tableName="CYCLE_SOURCE_GRADE_MINED"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="74cf86db-250a-4181-a804-46b6601afc70" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for DRILL_HOLE_CONSUMABLE_12U of table DRILL_HOLE_CONSUMABLE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="DRILL_HOLE_CONSUMABLE_12U" tableName="DRILL_HOLE_CONSUMABLE"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex DRILL_HOLE_CONSUMABLE_12U from DRILL_HOLE_CONSUMABLE (OID)</comment>
+        <dropIndex indexName="DRILL_HOLE_CONSUMABLE_12U" tableName="DRILL_HOLE_CONSUMABLE"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXOBJ" indexName="DRILL_HOLE_CONSUMABLE_12U" tableName="DRILL_HOLE_CONSUMABLE">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="db3f7da8-da6d-4fa7-8d48-432bb9104f91" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for DRILL_HOLE_CONSUMABLE_PK to table DRILL_HOLE_CONSUMABLE as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="DRILL_HOLE_CONSUMABLE"/>
+            <not>
+                <primaryKeyExists primaryKeyName="DRILL_HOLE_CONSUMABLE_PK" tableName="DRILL_HOLE_CONSUMABLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey DRILL_HOLE_CONSUMABLE_PK to DRILL_HOLE_CONSUMABLE (OID,CONSUMABLE_NAME)</comment>
+        <sql dbms="oracle">DELETE FROM DRILL_HOLE_CONSUMABLE WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, CONSUMABLE_NAME ORDER BY ROWID) RN FROM DRILL_HOLE_CONSUMABLE) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, CONSUMABLE_NAME ORDER BY %%physloc%%) AS ROW_NUM FROM DRILL_HOLE_CONSUMABLE) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,CONSUMABLE_NAME" constraintName="DRILL_HOLE_CONSUMABLE_PK" tablespace="MW_IDXENT" tableName="DRILL_HOLE_CONSUMABLE"/>
+        <rollback>
+            <dropPrimaryKey constraintName="DRILL_HOLE_CONSUMABLE_PK" tableName="DRILL_HOLE_CONSUMABLE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="9864158a-5096-45b9-8c68-2efa1d62f5a2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for DRILL_HOLE_PROFILE_12U of table DRILL_HOLE_PROFILE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="DRILL_HOLE_PROFILE_12U" tableName="DRILL_HOLE_PROFILE"/>
+        </preConditions>
+        <comment>FLT-2109: DropIndex DRILL_HOLE_PROFILE_12U from DRILL_HOLE_PROFILE (OID)</comment>
+        <dropIndex indexName="DRILL_HOLE_PROFILE_12U" tableName="DRILL_HOLE_PROFILE"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXOBJ" indexName="DRILL_HOLE_PROFILE_12U" tableName="DRILL_HOLE_PROFILE">
+                <column name="OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="3bbdcde6-09f6-46d6-89fd-98b827708dc1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for DRILL_HOLE_PROFILE_PK to table DRILL_HOLE_PROFILE as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="DRILL_HOLE_PROFILE"/>
+            <not>
+                <primaryKeyExists primaryKeyName="DRILL_HOLE_PROFILE_PK" tableName="DRILL_HOLE_PROFILE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-2109: AddPrimaryKey DRILL_HOLE_PROFILE_PK to DRILL_HOLE_PROFILE (OID,SLICE_START_UTC)</comment>
+        <sql dbms="oracle">DELETE FROM DRILL_HOLE_PROFILE WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID, SLICE_START_UTC ORDER BY ROWID) RN FROM DRILL_HOLE_PROFILE) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID, SLICE_START_UTC ORDER BY %%physloc%%) AS ROW_NUM FROM DRILL_HOLE_PROFILE) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID,SLICE_START_UTC" constraintName="DRILL_HOLE_PROFILE_PK" tablespace="MW_IDXENT" tableName="DRILL_HOLE_PROFILE"/>
+        <rollback>
+            <dropPrimaryKey constraintName="DRILL_HOLE_PROFILE_PK" tableName="DRILL_HOLE_PROFILE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

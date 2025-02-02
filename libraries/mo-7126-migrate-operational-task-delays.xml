@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="5f4d1c7f-aaaa-4984-a336-2179fadba169" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored migration of PROD_PLAN_TASK as table does not exist" onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK"/>
+        </preConditions>
+        <comment>MO-7126: Migrate PROD_PLAN_TASK delays</comment>
+        <customChange class="minestar.db.customchange.MigrateProdPlanOperationalTaskDelays"/>
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>

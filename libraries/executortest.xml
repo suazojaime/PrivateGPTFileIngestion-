@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<circuit>
+
+	<jobexecutors>
+		<jobexecutor name="logicalExecutor" class="com.mincom.util.job.LogicalJobDispatcher">
+			<var name="delegateClass">com.mincom.util.job.StandardJobExecutor</var>
+            <var name="commandMapping">
+				{
+					stdCommand = "com.mincom.util.job.test.TestJob"
+				}
+            </var>
+        </jobexecutor>
+
+		<jobexecutor name="standardExecutor" class="com.mincom.util.job.StandardJobExecutor">
+        </jobexecutor>
+
+		<jobexecutor name="queueExecutor" class="com.mincom.util.job.QueueJobExecutor">
+			<var name="maxQueueSize">5</var>
+        </jobexecutor>
+
+		<jobexecutor name="executionService" class="JobExecutionService">
+            <var name="instanceName"><![CDATA["Test Job Executor"]]></var>
+        </jobexecutor>		
+	</jobexecutors>
+
+    <nodes>
+        <node name="startNode" class="com.mincom.env.service.job.test.JobMarkerExecutionNode">
+            <var name="isEndNode">false</var>
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">com.mincom.util.job.test.TestJob</var>
+			<inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="node1" class="com.mincom.env.service.job.test.JobMarkerExecutionNode">
+            <var name="isEndNode">false</var>
+            <var name="executor">executionService</var>
+			<var name="defaultJobUrl">com.mincom.util.job.test.TestJob</var>
+			<inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="node2" class="com.mincom.env.service.job.test.JobMarkerExecutionNode">
+            <var name="isEndNode">true</var>
+            <var name="executor">logicalExecutor</var>
+			<var name="defaultJobUrl">stdCommand</var>
+			<inputvar name="listener" input="listener"/>
+        </node>
+   </nodes>
+
+    <connections>
+        <connect source="startNode" sink="node1" />
+        <connect source="node1" sink="node2" />
+    </connections>
+</circuit>
+

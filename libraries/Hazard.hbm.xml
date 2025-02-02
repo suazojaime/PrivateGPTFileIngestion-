@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class
+            name="minestar.mine.domain.minemodel.Hazard"
+            table="HAZARD"
+            dynamic-update="true"
+            discriminator-value="Hazard">
+
+        <meta attribute="view-master">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=HAZARD_ID
+            unique=true
+            columns=ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">The definition of a mine model hazard</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="HAZARD_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="DISCRIMINATOR_ID" not-null="false"/>
+
+        <property name="id" type="long" column="ID" not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="description">An automatically generated unique ID value for this hazard.</meta>
+        </property>
+
+        <property name="active" type="boolean" column="IS_ACTIVE" not-null="true">
+                <meta attribute="defaultValue">true</meta>
+                <meta attribute="description">Is this zone active</meta>
+        </property>
+
+        <property name="layerUpdateVersion" type="long">
+            <meta attribute="description">The layer update version when the hazard was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property name="confirmed" type="boolean" column="CONFIRMED" not-null="true">
+             <meta attribute="description">The confirmed value for the hazard.</meta>
+             <meta attribute="defaultValue">false</meta>
+        </property>
+
+        <many-to-one name="associatedZone"
+                  class="minestar.mine.domain.minemodel.ZoneReference"
+                  column="ASSOCIATED_ZONE">
+            <meta attribute="description">The zone associated with this hazard</meta>
+        </many-to-one>
+
+        <property name="creationDate"
+                  type="TimestampType"
+                  column="CREATION_DATE_UTC">
+            <meta attribute="utc-description">The utc date the hazard was created</meta>
+            <meta attribute="description">The date the hazard was created</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <many-to-one name="hazardType"
+                     class="minestar.mine.domain.minemodel.HazardTypeReference"
+                     column="HAZARD_TYPE"
+                     lazy="false"
+                     >
+            <meta attribute="description">The type of hazard</meta>
+        </many-to-one>
+
+        <component name="positionPolygon" class="minestar.mine.domain.minemodel.RelativePolygon">
+            <meta attribute="description">The Hazards polygon</meta>
+
+            <property name="centroid" type="XYZCoordinate">
+                <meta attribute="description">The xyz coordinate for the polygon.</meta>
+                <column name="CENTROID_POINT_X"/>
+                <column name="CENTROID_POINT_Y"/>
+                <column name="CENTROID_POINT_Z"/>
+            </property>
+
+            <list name="points" table="HAZARD_POLYGON_POINTS">
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    tablespace=MW_IDXENT
+                </meta>
+                <meta attribute="index-alias">pointNr</meta>
+                <key column="HAZARD_OID" not-null="true"/>
+                <list-index column="POINT_NR"/>
+                <element type="XYZCoordinate">
+                    <column name="POINT_X"/>
+                    <column name="POINT_Y"/>
+                    <column name="POINT_Z"/>
+                </element>
+            </list>
+        </component>
+
+    </class>
+
+</hibernate-mapping>

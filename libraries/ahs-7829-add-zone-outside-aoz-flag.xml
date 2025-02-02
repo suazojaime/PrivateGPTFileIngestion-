@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="97092457-826e-4785-b861-bed50c6bfd23" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.EDITABLE as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="EDITABLE"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '1' from ZONE.EDITABLE</comment>
+        <dropDefaultValue columnName="EDITABLE" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="EDITABLE" columnDataType="BOOLEAN" defaultValueBoolean="true" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="7a8b09ea-6c41-4ecb-9cac-ae6489e04d4b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.BED_UP_DURING_TRAVEL as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="BED_UP_DURING_TRAVEL"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.BED_UP_DURING_TRAVEL</comment>
+        <dropDefaultValue columnName="BED_UP_DURING_TRAVEL" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="BED_UP_DURING_TRAVEL" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="fbd06bca-41b6-4903-af6a-65c58c653381" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.LEVEL_ENTRY_INCIDENT as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="LEVEL_ENTRY_INCIDENT"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.LEVEL_ENTRY_INCIDENT</comment>
+        <dropDefaultValue columnName="LEVEL_ENTRY_INCIDENT" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="LEVEL_ENTRY_INCIDENT" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6f06b6a8-b456-400b-ad5e-c7221258118a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.LEVEL_EXIT_INCIDENT as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="LEVEL_EXIT_INCIDENT"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.LEVEL_EXIT_INCIDENT</comment>
+        <dropDefaultValue columnName="LEVEL_EXIT_INCIDENT" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="LEVEL_EXIT_INCIDENT" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="75cfe1a3-a03a-4f90-a859-79f048a41fbd" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.MACHINE_ENTRY_BEEP as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="MACHINE_ENTRY_BEEP"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.MACHINE_ENTRY_BEEP</comment>
+        <dropDefaultValue columnName="MACHINE_ENTRY_BEEP" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="MACHINE_ENTRY_BEEP" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="9a674f7b-2987-47ff-96e9-dd21ffd566fc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.MACHINE_PRESENT_BEEP as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="MACHINE_PRESENT_BEEP"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.MACHINE_PRESENT_BEEP</comment>
+        <dropDefaultValue columnName="MACHINE_PRESENT_BEEP" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="MACHINE_PRESENT_BEEP" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="9bcc1fce-5c82-430c-96c5-c450ce433f66" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.SILENCE_PROXIMITY_ALARMS as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="SILENCE_PROXIMITY_ALARMS"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.SILENCE_PROXIMITY_ALARMS</comment>
+        <dropDefaultValue columnName="SILENCE_PROXIMITY_ALARMS" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="SILENCE_PROXIMITY_ALARMS" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3d61743b-4dac-47a1-a20c-2aafd0e2ff5b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.SILENCE_RADAR_ALARMS as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="SILENCE_RADAR_ALARMS"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.SILENCE_RADAR_ALARMS</comment>
+        <dropDefaultValue columnName="SILENCE_RADAR_ALARMS" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="SILENCE_RADAR_ALARMS" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="ce64bac6-0c89-439b-b2b3-e9c417e70d20" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.MANNED_EXC_ZONE as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="MANNED_EXC_ZONE"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.MANNED_EXC_ZONE</comment>
+        <dropDefaultValue columnName="MANNED_EXC_ZONE" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="MANNED_EXC_ZONE" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="ab3a7904-3cdf-4d46-b5eb-198ee8b28bad" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.CLEAN_UP as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="CLEAN_UP"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.CLEAN_UP</comment>
+        <dropDefaultValue columnName="CLEAN_UP" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="CLEAN_UP" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="705a0120-c39c-417b-8a4e-cdeda5824906" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.REMOVE_BY_PANEL as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="REMOVE_BY_PANEL"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.REMOVE_BY_PANEL</comment>
+        <dropDefaultValue columnName="REMOVE_BY_PANEL" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="REMOVE_BY_PANEL" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="94cca3e8-0bb5-4330-884a-59ddddecc449" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.AUTONOMOUS_INC_ZONE as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="AUTONOMOUS_INC_ZONE"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.AUTONOMOUS_INC_ZONE</comment>
+        <dropDefaultValue columnName="AUTONOMOUS_INC_ZONE" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="AUTONOMOUS_INC_ZONE" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a085aa58-3e49-443a-ba32-bfd8c5228c08" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.AUTONOMOUS_EXC_ZONE as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="AUTONOMOUS_EXC_ZONE"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.AUTONOMOUS_EXC_ZONE</comment>
+        <dropDefaultValue columnName="AUTONOMOUS_EXC_ZONE" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="AUTONOMOUS_EXC_ZONE" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="236cc79c-7c2c-4b65-a4ac-f0b6832c85c3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.MULTICAST_UPDATE_ZONE as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="MULTICAST_UPDATE_ZONE"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.MULTICAST_UPDATE_ZONE</comment>
+        <dropDefaultValue columnName="MULTICAST_UPDATE_ZONE" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="MULTICAST_UPDATE_ZONE" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="45586267-06fe-47e8-be48-a58c0ce07953" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for ZONE.PASSABLE as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="ZONE" columnName="PASSABLE"/>
+        </preConditions>
+        <comment>AHS-7829: DropDefaultValue '0' from ZONE.PASSABLE</comment>
+        <dropDefaultValue columnName="PASSABLE" columnDataType="BOOLEAN" tableName="ZONE"/>
+        <rollback>
+            <addDefaultValue columnName="PASSABLE" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="ZONE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="52537577-0d57-4bff-b9ac-3aced03f00b8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for OUTSIDE_AOZ to table ZONE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ZONE"/>
+            <not>
+                <columnExists tableName="ZONE" columnName="OUTSIDE_AOZ"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7829: AddColumn ZONE.OUTSIDE_AOZ</comment>
+        <addColumn tableName="ZONE">
+            <column name="OUTSIDE_AOZ" type="BOOLEAN" remarks="Zone flags."/>
+        </addColumn>
+        <sql>UPDATE ZONE SET OUTSIDE_AOZ = 0</sql>
+        <addNotNullConstraint tableName="ZONE" columnName="OUTSIDE_AOZ" columnDataType="BOOLEAN"/>
+        <rollback>
+            <dropColumn tableName="ZONE" columnName="OUTSIDE_AOZ"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

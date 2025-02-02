@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="0c424d51-0001-4ab5-8a34-974c9a1df538" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for ROUTE_WALLS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ROUTE_WALLS"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2205: CreateTable ROUTE_WALLS</comment>
+        <createTable tablespace="MW_ENT" remarks="References to walls that this route intersects with." tableName="ROUTE_WALLS">
+            <column name="ROUTE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="WALL_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ROUTE_OID,WALL_OID" constraintName="ROUTE_WALLS_PK" tablespace="MW_IDXENT" tableName="ROUTE_WALLS"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="eac633b1-4d5a-4f07-ae81-9ef90b93afd4" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ROUTE_WALLS_WALL_OID_FK to table ROUTE_WALLS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_WALLS"/>
+            <tableExists tableName="WALL"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ROUTE_WALLS" foreignKeyName="ROUTE_WALLS_WALL_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2205: AddForeignKeyConstraint ROUTE_WALLS_WALL_OID_FK to ROUTE_WALLS (WALL_OID)</comment>
+        <sql>DELETE FROM ROUTE_WALLS WHERE WALL_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM WALL WHERE WALL.WALL_OID = ROUTE_WALLS.WALL_OID)</sql>
+        <addForeignKeyConstraint baseTableName="ROUTE_WALLS" baseColumnNames="WALL_OID" constraintName="ROUTE_WALLS_WALL_OID_FK" referencedTableName="WALL" referencedColumnNames="WALL_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ROUTE_WALLS" constraintName="ROUTE_WALLS_WALL_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="ef099690-82f3-495b-bbec-f401e131dd01" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ROUTE_WALLS_ROUTE_OID_FK to table ROUTE_WALLS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_WALLS"/>
+            <tableExists tableName="ROUTE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ROUTE_WALLS" foreignKeyName="ROUTE_WALLS_ROUTE_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2205: AddForeignKeyConstraint ROUTE_WALLS_ROUTE_OID_FK to ROUTE_WALLS (ROUTE_OID)</comment>
+        <sql>DELETE FROM ROUTE_WALLS WHERE ROUTE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM ROUTE WHERE ROUTE.ROUTE_OID = ROUTE_WALLS.ROUTE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="ROUTE_WALLS" baseColumnNames="ROUTE_OID" constraintName="ROUTE_WALLS_ROUTE_OID_FK" referencedTableName="ROUTE" referencedColumnNames="ROUTE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ROUTE_WALLS" constraintName="ROUTE_WALLS_ROUTE_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

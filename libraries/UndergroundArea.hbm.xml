@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.underground.area.UndergroundAreaImpl"
+           proxy="minestar.mine.domain.minemodel.underground.area.UndergroundArea"
+           table="UNDERGROUND_AREA"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">UNDERGROUNDAREA</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">A corridor in a block-cave mine that contains draw points and ore passes.</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=AREA_NAME
+            unique=true
+            columns=AREA_NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model" />
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator" />
+        </id>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="AREA_NAME"
+                  length="254"
+                  not-null="true">
+            <meta attribute="description">The unique, user-entered identifier for this underground area.</meta>
+        </property>
+
+        <property name="active"
+                  type="java.lang.Boolean"
+                  column="IS_ACTIVE"
+                  not-null="true">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">
+                Whether this underground Area is active or archived.
+                (This flag is '1' if it is active and '0' if archived.)
+            </meta>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  type="java.lang.Long"
+                  column="MODEL_UPDATE_VERSION">
+            <meta attribute="description">The is a copy of the system wide version number.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <property name="remoteOperationOnly"
+                  type="java.lang.Boolean"
+                  column="REMOTE_OP"
+                  not-null="true">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">
+                Whether this underground Area is set up for remote operations or for manned operations.
+                (This flag is '1' if it is for remote operations only and '0' for manned operations only.)
+            </meta>
+        </property>
+
+        <many-to-one name="operatingStatus"
+                     class="minestar.mine.domain.minemodel.underground.operatingstatus.UndergroundAreaOperatingStatusImpl"
+                     column="OPERATING_STATUS"
+                     lazy="false">
+            <meta attribute="description">
+                A reference to the operating status (MSMODEL.OPERATING_STATUS) that describes the current operating
+                conditions of this Area.
+            </meta>
+        </many-to-one>
+
+        <property name="statusComments"
+                  type="java.lang.String"
+                  column="Area_STATUS_COMMENTS"
+                  length="1000">
+            <meta attribute="description">
+                The additional comments entered by the user on the current status of this underground Area.
+            </meta>
+        </property>
+
+        <many-to-one name="areaMap"
+                     class="minestar.mine.domain.minemodel.underground.areamap.AreaMapReference"
+                     column="AREA_MAP_OID">
+            <meta attribute="description">
+                A reference to the area map (MSMODEL.AREA_MAP) that this underground Area is associated with.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="joinedArea"
+                     class="minestar.mine.domain.minemodel.underground.area.JoinedUndergroundAreaReference"
+                     column="JOINED_AREA_OID">
+            <meta attribute="description">
+                A reference to the joined underground Area (MSMODEL.JOINED_UNDERGROUND_AREA) if this Area is joined
+                with other Areas.
+            </meta>
+        </many-to-one>
+
+        <property name="externalRef" type="java.lang.String" column="EXTERNALREF" length="254">
+            <meta attribute="description">The external system reference of this draw point</meta>
+        </property>
+
+        <property name="externalDesc" type="java.lang.String" column="EXTERNALDESC" length="254">
+            <meta attribute="description">The External System Description</meta>
+        </property>
+    </class>
+
+    <!-- A lightweight reference to an underground Area -->
+    <class name="minestar.mine.domain.minemodel.underground.area.UndergroundAreaReference"
+           table="UNDERGROUND_AREA"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">UNDERGROUNDAREAREFERENCE</meta>
+        <meta attribute="description">A minimal reference to an underground area.</meta>
+        <meta attribute="lookupExpr" inherit="false">name</meta>
+        <meta attribute="viewproperty-name" inherit="false">
+            type=string
+            description=The name for the underground area.
+            expression=lookupResource.ugarea.name.query
+        </meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model" />
+
+        <id name="OID"
+            type="long"
+            column="OID"
+            access="field" />
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="AREA_NAME"
+                  access="field" />
+    </class>
+
+</hibernate-mapping>

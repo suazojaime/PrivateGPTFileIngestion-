@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="7190bd2c-3cd9-4651-a44b-4b33f8d2d3c3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored Update for MAX_DECELERATION, MAX_ACCELERATION, MAX_FWD_SPEED, MAX_REV_SPEED, MIN_TURN_RADIUS to table MACHINE_TYPE as table or columns do not exist." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <columnExists tableName="MACHINE_TYPE" columnName="IS_INFRASTRUCTURE"/>
+            <columnExists tableName="MACHINE_TYPE" columnName="MAX_DECELERATION"/>
+            <columnExists tableName="MACHINE_TYPE" columnName="MAX_ACCELERATION"/>
+            <columnExists tableName="MACHINE_TYPE" columnName="MAX_FWD_SPEED"/>
+            <columnExists tableName="MACHINE_TYPE" columnName="MAX_REV_SPEED"/>
+            <columnExists tableName="MACHINE_TYPE" columnName="MIN_TURN_RADIUS"/>
+        </preConditions>
+        <comment>AHS-13357: Update MACHINE_TYPE non-zero performance values</comment>
+        <sql>UPDATE MACHINE_TYPE SET MAX_DECELERATION = 0, MAX_ACCELERATION = 0, MAX_FWD_SPEED = 0, MAX_REV_SPEED = 0, MIN_TURN_RADIUS = 0 WHERE IS_INFRASTRUCTURE = 1 AND (MAX_DECELERATION > 0 OR MAX_ACCELERATION > 0 OR MAX_FWD_SPEED > 0 OR MAX_REV_SPEED > 0 OR MIN_TURN_RADIUS > 0)</sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

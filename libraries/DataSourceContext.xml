@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+    <bean id="minestarLoggingOutputWriter" class="minestar.platform.persistence.MinestarLoggingOutputWriter"/>
+    <bean id="minestarConnectionIdentifier" class="minestar.platform.db.diagnostic.ConnectionIdentifierImpl"/>
+
+    <bean id="dataStoreFactory" class="com.mincom.util.deployment.DataStoreFactory" lazy-init="true">
+        <property name="dataStores" ref="dataStores"/>
+    </bean>
+
+    <!-- Datasources -->
+
+    <!-- A LazyConnectionDataSourceProxy wrapper is used so that connections are only obtained
+         within a transaction if they are required.  Some transactional methods may just access a
+         cache and not require a connection -->
+    <bean id="lazyDataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy"
+          abstract="true" lazy-init="true">
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="defaultTransactionIsolationName" value="TRANSACTION_READ_COMMITTED"/>
+    </bean>
+
+    <!-- A DiagnosticDataSource is used to log details of connection that are open for too long -->
+    <bean id="diagnosticDataSource" class="minestar.platform.db.diagnostic.DiagnosticDataSource"
+          abstract="true" lazy-init="true">
+        <property name="identifier" ref="minestarConnectionIdentifier"/>
+    </bean>
+
+    <!-- A HikariDataSource is used to provide connection pooling -->
+    <bean id="pooledDataSource" class="minestar.platform.persistence.PooledJdbcDataSource"
+          destroy-method="close" abstract="true" lazy-init="true" init-method="init">
+        <property name="autoCommit" value="false"/>
+        <property name="transactionIsolation" value="TRANSACTION_READ_COMMITTED"/>
+        <property name="maximumPoolSize" value="20"/>
+        <property name="speedo" ref="speedo"/>
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+                <prop key="useServerPrepStmts">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- Each data source (model, historical etc) consists of several wrapped layers:
+         1) Outer: LazyDataSource layer means that transactions that do not actually use a
+                   connection won't obtain one from the pool.
+         2) Middle: DiagnosticDataSource layer provides warnings for connections that are open
+                    for too long (currently not used).
+         3) Inner: PooledJdbcDataSource layer provides connection pooling.
+    -->
+
+    <!-- Model DataSource -->
+    <bean id="diagnosticDataSource-model" parent="diagnosticDataSource"  lazy-init="true">
+        <property name="name" value="Model"/>
+        <property name="wrappedDataSource">
+            <bean parent="pooledDataSource">
+                <property name="connectionDetails" ref="modelDataStore"/>
+                <property name="poolName" value="model"/>
+                <property name="maximumPoolSize" value="50"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="pooledModelDataSource" parent="lazyDataSource"  lazy-init="true">
+        <property name="targetDataSource" ref="diagnosticDataSource-model"/>
+    </bean>
+
+    <!-- Historical DataSource -->
+    <bean id="diagnosticDataSource-historical" parent="diagnosticDataSource" lazy-init="true">
+        <property name="name" value="Historical"/>
+        <property name="wrappedDataSource">
+            <bean parent="pooledDataSource">
+                <property name="connectionDetails" ref="historicalDataStore"/>
+                <property name="poolName" value="historical"/>
+                <property name="maximumPoolSize" value="50"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="pooledHistoricalDataSource" parent="lazyDataSource" lazy-init="true">
+        <property name="targetDataSource" ref="diagnosticDataSource-historical"/>
+    </bean>
+
+    <!-- TimeSeries DataSource -->
+    <bean id="diagnosticDataSource-timeseries" parent="diagnosticDataSource" lazy-init="true">
+        <property name="name" value="TimeSeries"/>
+        <property name="wrappedDataSource">
+            <bean parent="pooledDataSource">
+                <property name="connectionDetails" ref="timeseriesDataStore"/>
+                <property name="poolName" value="timeseries"/>
+                <property name="maximumPoolSize" value="50"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="pooledTimeseriesDataSource" parent="lazyDataSource" lazy-init="true">
+        <property name="targetDataSource" ref="diagnosticDataSource-timeseries"/>
+    </bean>
+
+    <!-- Summary DataSource -->
+    <bean id="diagnosticDataSource-summary" parent="diagnosticDataSource" lazy-init="true">
+        <property name="name" value="Summary"/>
+        <property name="wrappedDataSource">
+            <bean parent="pooledDataSource">
+                <property name="connectionDetails" ref="summaryDataStore"/>
+                <property name="autoCommit" value="true"/>
+                <property name="poolName" value="summary"/>
+                <property name="maximumPoolSize" value="5"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="pooledSummaryDataSource" parent="lazyDataSource" lazy-init="true">
+        <property name="targetDataSource" ref="diagnosticDataSource-summary"/>
+        <property name="defaultAutoCommit" value="true"/>
+    </bean>
+
+    <!-- Template DataSource -->
+    <bean id="diagnosticDataSource-template" parent="diagnosticDataSource" lazy-init="true">
+        <property name="name" value="Template"/>
+        <property name="wrappedDataSource">
+            <bean parent="pooledDataSource">
+                <property name="connectionDetails" ref="templateDataStore"/>
+                <property name="poolName" value="template"/>
+                <property name="maximumPoolSize" value="5"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="pooledTemplateDataSource" parent="lazyDataSource" lazy-init="true">
+        <property name="targetDataSource" ref="diagnosticDataSource-template"/>
+    </bean>
+
+    <!-- Reporting DataSource -->
+        <bean id="diagnosticDataSource-reporting" parent="diagnosticDataSource" lazy-init="true">
+            <property name="name" value="Reporting"/>
+            <property name="wrappedDataSource">
+                <bean parent="pooledDataSource">
+                    <property name="connectionDetails" ref="reportingDataStore"/>
+                    <property name="poolName" value="reporting"/>
+                    <property name="maximumPoolSize" value="5"/>
+                </bean>
+            </property>
+        </bean>
+
+    <bean id="pooledReportingDataSource" parent="lazyDataSource" lazy-init="true">
+        <property name="targetDataSource" ref="diagnosticDataSource-reporting"/>
+    </bean>
+
+    <!-- PitModel DataSource -->
+    <bean id="diagnosticDataSource-pitmodel" parent="diagnosticDataSource" lazy-init="true">
+        <property name="name" value="PitModel"/>
+        <property name="wrappedDataSource">
+            <bean parent="pooledDataSource">
+                <property name="connectionDetails" ref="pitmodelDataStore"/>
+                <property name="poolName" value="pitModel"/>
+                <property name="maximumPoolSize" value="5"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="pooledPitmodelDataSource" parent="lazyDataSource" lazy-init="true">
+        <property name="targetDataSource" ref="diagnosticDataSource-pitmodel"/>
+    </bean>
+
+    <!-- TransactionManager for accessing the "pitmodel" database -->
+    <bean id="pitmodelTransactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager" lazy-init="true">
+        <property name="dataSource" ref="pooledPitmodelDataSource"/>
+    </bean>
+
+    <!-- GIS DataSource -->
+    <bean id="pooledGisDataSource" parent="pooledDataSource" lazy-init="true">
+        <property name="connectionDetails" ref="gisDataStore"/>
+        <property name="poolName" value="gis"/>
+        <property name="maximumPoolSize" value="5"/>
+        <property name="autoCommit" value="true"/>
+    </bean>
+
+    <!-- BO Audit DataSource -->
+    <bean id="pooledBoauditDataSource" parent="lazyDataSource" lazy-init="true">
+        <property name="targetDataSource">
+            <bean parent="pooledDataSource">
+                <property name="connectionDetails" ref="boauditDataStore"/>
+                <property name="poolName" value="boAudit"/>
+                <property name="maximumPoolSize" value="5"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="startONS" class="com.mincom.util.deployment.StartOracleNotificationService"/>
+
+    <bean id="diagnosticDataSources" class="minestar.platform.db.diagnostic.DiagnosticDataSourcesBean"
+          init-method="init" lazy-init="true">
+        <property name="enabled" value="${minestar.platform.application.performance.Config@DIAGNOSTIC_DATASOURCES_ENABLED}"/>
+        <property name="period" value="60000"/>
+        <property name="writer" ref="minestarLoggingOutputWriter"/>
+        <property name="taskScheduler" ref="minestarTaskScheduler"/>
+        <property name="dataSources">
+            <list>
+                <ref bean="diagnosticDataSource-model"/>
+                <ref bean="diagnosticDataSource-historical"/>
+                <ref bean="diagnosticDataSource-summary"/>
+                <ref bean="diagnosticDataSource-template"/>
+                <ref bean="diagnosticDataSource-reporting"/>
+                <ref bean="diagnosticDataSource-pitmodel"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

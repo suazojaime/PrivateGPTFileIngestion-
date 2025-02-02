@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="76755043-c93e-4a3a-99c1-444afce288b2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for EMAIL to table CONTACTDETAILS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="CONTACTDETAILS"/>
+            <not>
+                <columnExists tableName="CONTACTDETAILS" columnName="EMAIL"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8047: AddColumn CONTACTDETAILS.EMAIL</comment>
+        <addColumn tableName="CONTACTDETAILS">
+            <column name="EMAIL" type="VARCHAR(254)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="4bda0b6d-a26f-43bd-a9b1-2c5f6850bf91" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table PERSON as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PERSON"/>
+            <not>
+                <columnExists tableName="PERSON" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8047: AddColumn PERSON.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="PERSON">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0" remarks="The layer update version when the operator was created/modified.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="f3044ecf-cc4d-4cb0-aa70-99ac914c9449" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table PERSON as table or column does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PERSON"/>
+            <columnExists tableName="PERSON" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>FLT-8036: Initialize PERSON.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Person"/>
+            <param name="table" value="PERSON"/>
+            <param name="oidColumn" value="PERSON_OID"/>
+            <param name="activeColumn" value="IS_ACTIVE"/>
+            <param name="supportsArchiving" value="true"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE PERSON SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

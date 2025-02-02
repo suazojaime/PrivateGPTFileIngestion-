@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="20e9f073-2207-45f9-96c5-f2b6c4968e32" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MISSION_STATUS to table ASSIGNMENT_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="ASSIGNMENT_EVENT" columnName="MISSION_STATUS"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4686: AddColumn MISSION_STATUS to table ASSIGNMENT_EVENT</comment>
+        <addColumn tableName="ASSIGNMENT_EVENT">
+            <column name="MISSION_STATUS" type="VARCHAR(255)" remarks="The mission status"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="ebc3acbb-a8e7-4701-9455-8315bd6cae46" author="MineStar" context="Underground/Underground_Management" failOnError="false" dbms="oracle">
+        <preConditions onFailMessage="Ignored ModifyDataType of MISSION_STATUS column in table ASSIGNMENT_EVENT since already changed" onFail="MARK_RAN">
+            <sqlCheck expectedResult="254">
+                select char_length
+                from user_tab_cols
+                where table_name = 'ASSIGNMENT_EVENT' and column_name = 'MISSION_STATUS'
+            </sqlCheck>
+        </preConditions>
+        <comment>FUG-4686: ModifyDataType of MISSION_STATUS column in table ASSIGNMENT_EVENT to VARCHAR(255)</comment>
+        <modifyDataType tableName="ASSIGNMENT_EVENT" columnName="MISSION_STATUS" newDataType="VARCHAR(255)"/>
+        <rollback>
+            <modifyDataType tableName="ASSIGNMENT_EVENT" columnName="MISSION_STATUS" newDataType="VARCHAR(254)"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="da451ae1-5ea0-41a8-8bb0-0ab559c1442a" author="MineStar" context="Underground/Underground_Management" failOnError="false" dbms="mssql">
+        <preConditions onFailMessage="Ignored ModifyDataType of MISSION_STATUS column in table ASSIGNMENT_EVENT since already changed" onFail="MARK_RAN">
+            <sqlCheck expectedResult="254">
+                select c.max_length
+                from sys.columns c
+                join sys.tables t on t.object_id = c.object_id
+                where t.name = 'ASSIGNMENT_EVENT' and c.name = 'MISSION_STATUS'
+            </sqlCheck>
+        </preConditions>
+        <comment>FUG-4686: ModifyDataType of MISSION_STATUS column in table ASSIGNMENT_EVENT to VARCHAR(255)</comment>
+        <modifyDataType tableName="ASSIGNMENT_EVENT" columnName="MISSION_STATUS" newDataType="VARCHAR(255)"/>
+        <rollback>
+            <modifyDataType tableName="ASSIGNMENT_EVENT" columnName="MISSION_STATUS" newDataType="VARCHAR(254)"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
+
+
+
+

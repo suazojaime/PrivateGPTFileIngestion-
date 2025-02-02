@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="c0d31f56-d5f9-463d-ba57-8a964e0710cb" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for PLAN_MODEL.MODEL_UPDATE_VERSION as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="PLAN_MODEL" columnName="MODEL_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-8356: DropDefaultValue from PLAN_MODEL.MODEL_UPDATE_VERSION</comment>
+        <dropDefaultValue columnName="MODEL_UPDATE_VERSION" columnDataType="BIGINT" tableName="PLAN_MODEL"/>
+        <rollback>
+            <addDefaultValue columnName="MODEL_UPDATE_VERSION" columnDataType="BIGINT" defaultValueNumeric="0" tableName="PLAN_MODEL"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="06213aaf-0dc8-4a53-874d-92fe43e9ceb6" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for MODEL_UPDATE_VERSION of table PLAN_MODEL as column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="MODEL_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-8356: DropColumn PLAN_MODEL.MODEL_UPDATE_VERSION</comment>
+        <dropColumn columnName="MODEL_UPDATE_VERSION" tableName="PLAN_MODEL"/>
+        <rollback>
+            <addColumn tableName="PLAN_MODEL">
+                <column name="MODEL_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0"
+                        remarks="The mine model update version when the plane was created/modified."/>
+            </addColumn>
+            <sql>UPDATE PLAN_MODEL SET MODEL_UPDATE_VERSION = 0</sql>
+            <addNotNullConstraint tableName="PLAN_MODEL" columnName="MODEL_UPDATE_VERSION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="753091f3-df83-432a-88b0-6659851151a6" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table PLAN_MODEL as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8356: AddColumn PLAN_MODEL.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT"
+                    remarks="The layer update version when the plan was created/modified."/>
+        </addColumn>
+        <sql>UPDATE PLAN_MODEL SET LAYER_UPDATE_VERSION = 0</sql>
+        <addNotNullConstraint tableName="PLAN_MODEL" columnName="LAYER_UPDATE_VERSION" columnDataType="BIGINT"/>
+        <rollback>
+            <dropColumn tableName="PLAN_MODEL" columnName="LAYER_UPDATE_VERSION"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

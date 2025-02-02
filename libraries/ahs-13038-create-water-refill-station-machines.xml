@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a7122654-f917-4460-8133-fb76782ae015" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_CLASS_REFILL_TIME as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_CLASS_REFILL_TIME"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13038: CreateTable MACHINE_CLASS_REFILL_TIME</comment>
+        <createTable tablespace="MW_ENT" remarks="The time it takes to refill a certain class of machine with water" tableName="MACHINE_CLASS_REFILL_TIME">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFILL_TIME" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,MACHINE_CLASS_OID" constraintName="MACHINE_CLASS_REFILL_TIME_PK" tablespace="MW_IDXENT" tableName="MACHINE_CLASS_REFILL_TIME"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="MACHINE_CLASS_REFILL_TIME" indexName="MACHINE_CLASS_REFILL_TIME_12U">
+            <column name="OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="c49fe2f3-fe70-4f5a-b5ec-cce7ef2c57f5" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for WATER_STATION_REFILLABLE_CLASS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="WATER_STATION_REFILLABLE_CLASS"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13038: CreateTable WATER_STATION_REFILLABLE_CLASS</comment>
+        <createTable tablespace="MW_ENT" remarks="Machine classes capable of getting refilled by Water Refill Station" tableName="WATER_STATION_REFILLABLE_CLASS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,MACHINE_CLASS_OID" constraintName="WATER_STATION_REFILLABLE_CL_PK" tablespace="MW_IDXENT" tableName="WATER_STATION_REFILLABLE_CLASS"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="2fd96814-9abe-44a2-bc01-7f4a1dacb1c7" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_CLASS_REFILL_TIME_FK1 to table MACHINE_CLASS_REFILL_TIME as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_CLASS_REFILL_TIME" columnName="OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_CLASS_REFILL_TIME" foreignKeyName="MACHINE_CLASS_REFILL_TIME_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13038: AddForeignKeyConstraint MACHINE_CLASS_REFILL_TIME_FK1 to MACHINE_CLASS_REFILL_TIME (OID)</comment>
+        <sql>DELETE FROM MACHINE_CLASS_REFILL_TIME WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = MACHINE_CLASS_REFILL_TIME.OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_CLASS_REFILL_TIME" baseColumnNames="OID" constraintName="MACHINE_CLASS_REFILL_TIME_FK1" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_CLASS_REFILL_TIME" constraintName="MACHINE_CLASS_REFILL_TIME_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="9219ff77-44af-4a04-ae01-e804daa06bd4" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_CLASS_REFILL_TIME_FK2 to table MACHINE_CLASS_REFILL_TIME as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_CLASS_REFILL_TIME" columnName="MACHINE_CLASS_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_CLASS_REFILL_TIME" foreignKeyName="MACHINE_CLASS_REFILL_TIME_FK2"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13038: AddForeignKeyConstraint MACHINE_CLASS_REFILL_TIME_FK2 to MACHINE_CLASS_REFILL_TIME (MACHINE_CLASS_OID)</comment>
+        <sql>DELETE FROM MACHINE_CLASS_REFILL_TIME WHERE MACHINE_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = MACHINE_CLASS_REFILL_TIME.MACHINE_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_CLASS_REFILL_TIME" baseColumnNames="MACHINE_CLASS_OID" constraintName="MACHINE_CLASS_REFILL_TIME_FK2" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_CLASS_REFILL_TIME" constraintName="MACHINE_CLASS_REFILL_TIME_FK2"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="b038078c-f31d-4bdc-82ad-96a2540e23f2" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for WATER_STATION_REFILLABLE_C_FK1 to table WATER_STATION_REFILLABLE_CLASS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="WATER_STATION_REFILLABLE_CLASS" columnName="MACHINE_CLASS_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="WATER_STATION_REFILLABLE_CLASS" foreignKeyName="WATER_STATION_REFILLABLE_C_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13038: AddForeignKeyConstraint WATER_STATION_REFILLABLE_C_FK1 to WATER_STATION_REFILLABLE_CLASS (MACHINE_CLASS_OID)</comment>
+        <sql>DELETE FROM WATER_STATION_REFILLABLE_CLASS WHERE MACHINE_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = WATER_STATION_REFILLABLE_CLASS.MACHINE_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="WATER_STATION_REFILLABLE_CLASS" baseColumnNames="MACHINE_CLASS_OID" constraintName="WATER_STATION_REFILLABLE_C_FK1" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="WATER_STATION_REFILLABLE_CLASS" constraintName="WATER_STATION_REFILLABLE_C_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="4dee4eae-f0b9-4110-ac73-8bb07c0f4e30" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for WATER_STATION_REFILLABLE_C_FK2 to table WATER_STATION_REFILLABLE_CLASS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="WATER_STATION_REFILLABLE_CLASS" columnName="OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="WATER_STATION_REFILLABLE_CLASS" foreignKeyName="WATER_STATION_REFILLABLE_C_FK2"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13038: AddForeignKeyConstraint WATER_STATION_REFILLABLE_C_FK2 to WATER_STATION_REFILLABLE_CLASS (OID)</comment>
+        <sql>DELETE FROM WATER_STATION_REFILLABLE_CLASS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = WATER_STATION_REFILLABLE_CLASS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="WATER_STATION_REFILLABLE_CLASS" baseColumnNames="OID" constraintName="WATER_STATION_REFILLABLE_C_FK2" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="WATER_STATION_REFILLABLE_CLASS" constraintName="WATER_STATION_REFILLABLE_C_FK2"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

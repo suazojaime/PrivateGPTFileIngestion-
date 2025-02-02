@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="87576a8f-0a0d-44e6-8265-6d8286ec5771" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for THROUGHPUT to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="THROUGHPUT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2547: Add THROUGHPUT column to plan_model</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="THROUGHPUT" type="INT" defaultValueNumeric="0"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="971a0f36-fc9d-40c9-8f6e-f674eb62efbc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for USE_OPT_PERMS_HANDLING_IN_DUMP to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="USE_OPT_PERMS_HANDLING_IN_DUMP"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2547: Add USE_OPT_PERMS_HANDLING_IN_DUMP column to plan_model</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="USE_OPT_PERMS_HANDLING_IN_DUMP" type="BOOLEAN" defaultValueNumeric="1"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="3922c3da-c90e-4a83-bda4-f9baf62a36e7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ENABLE_AUTO_LANE_SPLITTING to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="ENABLE_AUTO_LANE_SPLITTING"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2547: Add ENABLE_AUTO_LANE_SPLITTING column to plan_model</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="ENABLE_AUTO_LANE_SPLITTING" type="BOOLEAN" defaultValueNumeric="1"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="7b81d112-b45b-4eae-ba1b-859dff9c3d49" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for OVERRIDE_DEFAULT_THROUGHPUT to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <columnExists tableName="PLAN_MODEL" columnName="OVERRIDE_DEFAULT_TRAFFIC"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="OVERRIDE_DEFAULT_THROUGHPUT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2547 : RenameColumn PLAN_MODEL.OVERRIDE_DEFAULT_TRAFFIC to PLAN_MODEL.OVERRIDE_DEFAULT_THROUGHPUT</comment>
+        <renameColumn tableName="PLAN_MODEL" oldColumnName="OVERRIDE_DEFAULT_TRAFFIC" newColumnName="OVERRIDE_DEFAULT_THROUGHPUT"/>
+    </changeSet>
+
+</databaseChangeLog>

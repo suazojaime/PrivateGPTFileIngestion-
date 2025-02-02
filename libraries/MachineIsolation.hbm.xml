@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <class name="minestar.mine.domain.minemodel.MachineIsolation"
+           table="MACHINE_ISOLATION">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">Information about current isolation state for a machine.</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="MACHINE_OID">
+            <!-- This should really be modelled as "foreign", but Hibernate has issues. -->
+            <generator class="assigned"/>
+        </id>
+
+        <one-to-one name="machine"
+                    class="minestar.pitlink.domain.machine.MachineReference"
+                    constrained="true"
+                    cascade="none"/>
+
+        <many-to-one name="zone"
+                     class="minestar.mine.domain.minemodel.ZoneReference"
+                     column="ZONE_OID"
+                     not-null="true">
+            <meta attribute="description">The isolation zone for the given machine.</meta>
+        </many-to-one>
+    </class>
+
+</hibernate-mapping>

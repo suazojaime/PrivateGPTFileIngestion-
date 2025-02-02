@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="bbd9171b-e4f7-4527-ac25-5da8a8a8693b" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for DELAY.ACKNOWLEDGE as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="DELAY" columnName="ACKNOWLEDGE"/>
+        </preConditions>
+        <comment>AHS-8369: AddNotNullConstraint to DELAY.ACKNOWLEDGE</comment>
+        <sql>UPDATE DELAY SET ACKNOWLEDGE = 0 WHERE ACKNOWLEDGE IS NULL</sql>
+        <addNotNullConstraint columnName="ACKNOWLEDGE" columnDataType="BOOLEAN" tableName="DELAY"/>
+        <rollback>
+            <dropNotNullConstraint tableName="DELAY" columnName="ACKNOWLEDGE" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="c8f78c78-6ef5-491f-a1ae-1387ecfe8232" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for DELAY.ENGINESTOPPED as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="DELAY" columnName="ENGINESTOPPED"/>
+        </preConditions>
+        <comment>AHS-8369: AddNotNullConstraint to DELAY.ENGINESTOPPED</comment>
+        <sql>UPDATE DELAY SET ENGINESTOPPED = 0 WHERE ENGINESTOPPED IS NULL</sql>
+        <addNotNullConstraint columnName="ENGINESTOPPED" columnDataType="BOOLEAN" tableName="DELAY"/>
+        <rollback>
+            <dropNotNullConstraint tableName="DELAY" columnName="ENGINESTOPPED" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

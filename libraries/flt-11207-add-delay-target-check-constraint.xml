@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="49820eb5-9c4a-404d-a082-4fd02bb27d0e" author="MineStar" failOnError="false">
+        <comment>FLT-11207: AddCheckConstraint to DELAY.TARGET</comment>
+        <!-- Exactly one of TARGET_MACHINE, TARGET_ROAD, TARGET_LOCATION must be specified -->
+        <sql>ALTER TABLE DELAY ADD CONSTRAINT DELAY_TARGET_CHECK CHECK
+            ((TARGET_MACHINE IS NOT NULL AND TARGET_ROAD IS NULL AND TARGET_LOCATION IS NULL)
+            OR (TARGET_MACHINE IS NULL AND TARGET_ROAD IS NOT NULL AND TARGET_LOCATION IS NULL)
+            OR (TARGET_MACHINE IS NULL AND TARGET_ROAD IS NULL AND TARGET_LOCATION IS NOT NULL))</sql>
+        <rollback>
+            <sql>ALTER TABLE DELAY DROP CONSTRAINT DELAY_TARGET_CHECK</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

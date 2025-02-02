@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Dozer Unit">
+
+    <machineClass xsi:type="auxMobileClassImpl">
+        <name>Cat834H</name>
+        <manufacturer>Caterpillar</manufacturer>
+        <description>Caterpillar 834 H Series Wheel Dozer</description>
+        <allowAllMaterials>false</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="0.793" unit="cubic metres"/>
+        <minimumRefuelAmount magnitude="0.00" unit="cubic metres"/>
+        <refuelLevel magnitude="0.0793" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.03965" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="12.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000001" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.000018" unit="cubic metres per second"/>
+    </machineClass>
+
+</machineClassExport>

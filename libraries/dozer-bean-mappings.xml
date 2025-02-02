@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <custom-converters> <!-- these are always bi-directional -->
+            <converter type="cat.util.CustomDoubleConverter">
+                <class-a>java.lang.Double</class-a>
+                <class-b>java.lang.Long</class-b>
+            </converter>
+
+        </custom-converters>
+    </configuration>
+
+
+    <mapping>
+        <class-a>minestar.mine.service.machine.MapDto</class-a>
+        <class-b>minestar.ciods.core.MapDto</class-b>
+    </mapping>
+
+    <mapping>
+        <class-a>minestar.mine.service.machine.MachineDto</class-a>
+        <class-b>minestar.ciods.machine.service.MachineDto</class-b>
+        <field>
+            <a>communicationInterfaces</a>
+            <b>communicationInterfaces</b>
+            <b-hint>minestar.ciods.core.MapDto</b-hint>
+        </field>
+    </mapping>
+
+
+</mappings>

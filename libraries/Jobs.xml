@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+    <classdef name="JobRunOptions">
+        <propertygroup name="jobRunOptions" label="Job Run Options">
+            <uigroupdef mode="tab"/>
+            <propertygroup name="runOptions" label="Monitoring Options">
+                <uigroupdef mode="box"/>
+                <propertydef name="openDetailsOnStart">
+                    <typedef><type code="boolean"/></typedef>
+                    <defaultvalue>true</defaultvalue>
+                </propertydef>
+                <propertydef name="enableExceptionDialog">
+                    <typedef><type code="boolean"/></typedef>
+                    <defaultvalue>true</defaultvalue>
+                </propertydef>
+                <propertydef name="closeWhenComplete">
+                    <typedef><type code="boolean"/></typedef>
+                </propertydef>
+            </propertygroup>
+
+			
+			
+								
+        </propertygroup>
+    </classdef>
+    <classdef name="JobTriggering">
+        <interfaceclass name="trigger"/>
+        <propertygroup name="schedulerDetails" label="Scheduler Parameters">
+            <propertydef name="jobName" label="Job Name">
+                <typedef><type code="string" /></typedef>
+				<defaultvalue type="python">str(property('name')) + '-' + strftime('%Y%m%d%H%M%S', localtime(time()))</defaultvalue>
+				<validationdef name="required" type="shared"/>
+                <description>The unique name for the job (must be unique within group).</description>
+            </propertydef>
+            <propertydef name="jobGroup" label="Job Group">
+                <typedef><type code="string"/></typedef>
+                <defaultvalue class="java.lang.String">Default</defaultvalue>
+                <validationdef name="required" type="shared"/>
+                <description>A group for the job.</description>
+            </propertydef>
+            <propertydef name="jobDescription" label="Description">
+                <typedef><type code="string"/></typedef>
+                <defaultvalue type="python">property('description')</defaultvalue>
+                <description>A one line description of the job.</description>
+            </propertydef>
+            <propertydef name="verboseLogging" label="Verbose Logging">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue>false</defaultvalue>
+            </propertydef>
+            <propertydef name="trigger.name" label="Trigger Name">
+                <typedef><type code="string" /></typedef>
+                <uidef visiblewhen='false'/>
+                <description>The unique name for the trigger (must be unique within group).</description>
+            </propertydef>
+            <propertydef name="trigger.group" label="Trigger Group">
+                <typedef><type code="string"/></typedef>
+                <uidef visiblewhen='false'/>
+                <description>A group for the trigger.</description>
+            </propertydef>
+            <propertygroup name="triggerGroup" label="Trigger Type">
+                <uigroupdef mode="box"/>
+                <propertydef name="trigger.type" label="" >
+                    <typedef><type code="int" choices='{0:"Simple",1:"Schedule",2:"Event"}'/></typedef>
+                    <uidef widget="radio" processOnChange="true"/>
+                    <defaultvalue>0</defaultvalue>
+                </propertydef>
+            </propertygroup>
+        </propertygroup>
+
+        <propertygroup name="simpleTrigger" label="Simple Trigger">
+            <uigroupdef mode="tab" visiblewhen='form.getFieldValue("trigger.type") == 0'/>
+            <propertydef name="trigger.startMode" label="Start Mode">
+                <typedef><type code="int" choices='{0:"Now",1:"At Nominated Time"}'/></typedef>
+                <uidef processOnChange="true" />
+                <defaultvalue>0</defaultvalue>
+                <validationdef name="required" type="shared"/>
+            </propertydef>
+            <propertydef name="trigger.startTime" label="Start Time">
+                <typedef>
+                    <javaclass name="java.util.Date"/>
+                </typedef>
+                <validationdef name="required" type="shared"/>
+                <validationdef type="script">
+                    <script>StartTimeValidator.py</script>
+                    <error lang="en">Start Time cannot be in the past</error>
+                </validationdef>
+                <uidef visiblewhen='form.getFieldValue("trigger.startMode") == 1'/>
+            </propertydef>
+            <propertygroup name="repeats" label="Repeats">
+                <uigroupdef mode="region"/>
+                <propertydef name="trigger.executeRule" label="Execute">
+                    <typedef><type code="int" choices='{0:"Once Only",1:"Forever",2:"Until Nominated Time",3:"Multiple Times"}'/></typedef>
+                    <uidef widget="radio" processOnChange="true"/>
+                    <defaultvalue>0</defaultvalue>
+                    <validationdef name="required" type="shared"/>
+                </propertydef>
+                <propertydef name="trigger.endTime" label="End Time">
+                    <typedef>
+                        <javaclass name="java.util.Date"/>
+                    </typedef>
+                    <uidef visiblewhen='form.getFieldValue("trigger.executeRule") == 2'/>
+                </propertydef>
+                <propertydef name="trigger.repeatInterval" label="Repeat Interval">
+                    <typedef>
+                        <type code="int"/>
+                    </typedef>
+                    <validationdef type="script">
+                        <script>RepeatIntervalCheck.py</script>
+                        <error lang="en">Repeat Interval value must be greater than 0</error>
+                    </validationdef>
+                    <uidef widget="duration" visiblewhen='form.getFieldValue("trigger.executeRule") != 0'/>
+                    <defaultvalue>60</defaultvalue>
+                </propertydef>
+                <propertydef name="trigger.repeatCount" label="Repeat Count">
+
+                    <typedef>
+                        <type code="int"/>
+                    </typedef>
+                    <uidef widget="spinner" custom='{ setMinimum:1}'
+                           visiblewhen='form.getFieldValue("trigger.executeRule") == 3'/>
+                    <defaultvalue>5</defaultvalue>
+                </propertydef>
+            </propertygroup>
+        </propertygroup>
+
+        <propertygroup name="ScheduleDrivenTrigger" >
+            <uigroupdef mode="tab" visiblewhen='form.getFieldValue("trigger.type") == 1'/>
+
+            <propertydef name="trigger.scheduleType" label="Schedule Type" >
+                <typedef><type code="int" choices='{0:"Hourly",1:"Daily",2:"Weekly",3:"Monthly",9:"Advanced"}'/></typedef>
+                <uidef processOnChange="true"/>
+                <defaultvalue>0</defaultvalue>
+                <validationdef name="required" type="shared"/>
+            </propertydef>
+
+            <propertydef name="trigger.cronStartTime" label="Activation Time">
+                <typedef><javaclass name="java.util.Date"/></typedef>
+            </propertydef>
+            <propertydef name="trigger.cronEndTime" label="End Time">
+                <typedef><javaclass name="java.util.Date"/></typedef>
+                <uidef visiblewhen="false"/>
+            </propertydef>
+
+            <propertygroup name="Times">
+                <uigroupdef mode="region"/>
+                <propertygroup name="Hours">
+                    <uigroupdef mode="box" visiblewhen='form.getFieldValue("trigger.scheduleType") != 0'/>
+                    <propertydef name="trigger.Hours.Rule" label="Rule" >
+                        <typedef><type code="int" choices='{1:"Nominated time", 2:"Time intervals", 3:"Every hour", 4:"Multiple times", 0:"N/A"}'/></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.scheduleType") == 9' processOnChange="true"/>
+                        <defaultvalue>1</defaultvalue>
+                        <validationdef name="required" type="shared"/>
+                    </propertydef>
+                    <propertydef name="trigger.Hours.Start" label="Start">
+                        <typedef><type code="int" /></typedef>
+                        <uidef widget="spinner" custom='{ setMinimum:0, setMaximum:23}' visiblewhen='form.getFieldValue("trigger.Hours.Rule") in [1,2] or form.getFieldValue("trigger.scheduleType") != 9' />
+                    </propertydef>
+                    <propertydef name="trigger.Hours.Repeat" label="Then Every">
+                        <typedef><type code="int" /></typedef>
+                        <uidef widget="spinner" custom='{ setMinimum:1, setMaximum:12}' visiblewhen='form.getFieldValue("trigger.Hours.Rule") == 2 and form.getFieldValue("trigger.scheduleType") == 9' />
+                        <defaultvalue>1</defaultvalue>
+                    </propertydef>
+                    <propertydef name="trigger.Hours.Selection" label="Selection">
+                        <typedef><type code="string" choices='choice.calHoursOfDay' /></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.Hours.Rule") == 4' widget="ordered"/>
+                    </propertydef>
+                </propertygroup>
+
+                <propertygroup name="Minutes">
+                    <uigroupdef mode="box" />
+                    <propertydef name="trigger.Minutes.Rule" label="Rule" >
+                        <typedef><type code="int" choices='{1:"Nominated time", 2:"Time intervals", 3:"Every minute", 4:"Multiple times", 0:"N/A"}'/></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.scheduleType") == 9' processOnChange="true"/>
+                        <defaultvalue>1</defaultvalue>
+                        <validationdef name="required" type="shared"/>
+                    </propertydef>
+                    <propertydef name="trigger.Minutes.Start" label="Start">
+                        <typedef><type code="int" /></typedef>
+                        <uidef widget="spinner" custom='{ setMinimum:0, setMaximum:59}' visiblewhen='form.getFieldValue("trigger.Minutes.Rule") in [1,2] or form.getFieldValue("trigger.scheduleType") != 9' />
+                    </propertydef>
+                    <propertydef name="trigger.Minutes.Repeat" label="Then Every">
+                        <typedef><type code="int" /></typedef>
+                        <uidef widget="spinner" custom='{ setMinimum:1, setMaximum:30}' visiblewhen='form.getFieldValue("trigger.Minutes.Rule") == 2 and form.getFieldValue("trigger.scheduleType") == 9' />
+                        <defaultvalue>1</defaultvalue>
+                    </propertydef>
+                    <propertydef name="trigger.Minutes.Selection" label="Selection">
+                        <typedef><type code="string" choices='choice.calMinutesOfHour' /></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.Minutes.Rule") == 4' widget="ordered"/>
+                    </propertydef>
+                </propertygroup>
+
+                <propertygroup name="Seconds">
+                    <uigroupdef mode="box" visiblewhen='form.getFieldValue("trigger.scheduleType") in [0,9]'/>
+                    <propertydef name="trigger.Seconds.Rule" label="Rule" >
+                        <typedef><type code="int" choices='{1:"Nominated time", 2:"Multiple times", 3:"Every second", 0:"N/A"}'/></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.scheduleType") == 9' processOnChange="true"/>
+                        <defaultvalue>1</defaultvalue>
+                        <validationdef name="required" type="shared"/>
+                    </propertydef>
+                    <propertydef name="trigger.Seconds.Start" label="Start">
+                        <typedef><type code="int" /></typedef>
+                        <uidef widget="spinner" custom='{ setMinimum:0, setMaximum:59}' visiblewhen='form.getFieldValue("trigger.Seconds.Rule") in [1,2] or form.getFieldValue("trigger.scheduleType") != 9' />
+                    </propertydef>
+                    <propertydef name="trigger.Seconds.Repeat" label="Then Every">
+                        <typedef><type code="int" /></typedef>
+                        <uidef widget="spinner" custom='{ setMinimum:1, setMaximum:30}' visiblewhen='form.getFieldValue("trigger.Seconds.Rule") == 2 and form.getFieldValue("trigger.scheduleType") == 9' />
+                        <defaultvalue>1</defaultvalue>
+                    </propertydef>
+                </propertygroup>
+            </propertygroup>
+
+            <propertygroup name="Dates">
+                <uigroupdef mode="collapsed" visiblewhen='form.getFieldValue("trigger.scheduleType") in [2,3,9]'/>
+                <propertygroup name="Months">
+                    <uigroupdef mode="box" visiblewhen='form.getFieldValue("trigger.scheduleType") == 9'/>
+                    <propertydef name="trigger.Months.Rule" label="Rule" >
+                        <typedef><type code="string" choices='["All", "Selected"]' /></typedef>
+                        <uidef processOnChange="true"/>
+                        <defaultvalue>All</defaultvalue>
+                        <validationdef name="required" type="shared"/>
+                    </propertydef>
+                    <propertydef name="trigger.Months.Selection" label="Selection">
+                        <typedef><type code="string" choices='choice.calMonthsOfYear' /></typedef>
+                        <uidef widget="checkbox" visiblewhen='form.getFieldValue("trigger.Months.Rule") == "Selected"' />
+                    </propertydef>
+                </propertygroup>
+                <propertygroup name="Days of Month">
+                    <uigroupdef mode="box" visiblewhen='form.getFieldValue("trigger.scheduleType") in [3,9]' />
+                    <propertydef name="trigger.DaysOfMonth.Rule" label="Rule">
+                        <typedef><type code="string" choices='["All", "Selected"]' /></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.scheduleType") == 9' processOnChange="true"/>
+                        <defaultvalue>All</defaultvalue>
+                        <validationdef name="required" type="shared"/>
+                    </propertydef>
+                    <propertydef name="trigger.DaysOfMonth.Selection" label="Selection">
+                        <typedef><type code="string" choices='choice.calDaysOfMonth' /></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.DaysOfMonth.Rule") == "Selected" or form.getFieldValue("trigger.scheduleType") == 3' widget="ordered"/>
+                    </propertydef>
+                </propertygroup>
+                <propertygroup name="Days of Week">
+                    <uigroupdef mode="box" visiblewhen='form.getFieldValue("trigger.scheduleType") in [2,9]'/>
+                    <propertydef name="trigger.DaysOfWeek.Rule" label="Rule" >
+                        <typedef><type code="string" choices='["All", "Selected"]' /></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.scheduleType") == 9' processOnChange="true"/>
+                        <defaultvalue>All</defaultvalue>
+                        <validationdef name="required" type="shared"/>
+                    </propertydef>
+                    <propertydef name="trigger.DaysOfWeek.Selection" label="Selection">
+                        <typedef><type code="string" choices='choice.calDaysOfWeek' /></typedef>
+                        <uidef visiblewhen='form.getFieldValue("trigger.DaysOfWeek.Rule") == "Selected" or form.getFieldValue("trigger.scheduleType") == 2' widget="checkbox"/>
+                    </propertydef>
+                </propertygroup>
+            </propertygroup>
+
+
+        </propertygroup>
+
+        <propertygroup name="eventDrivenTrigger" >
+            <uigroupdef mode="tab" visiblewhen='form.getFieldValue("trigger.type") == 2'/>
+            <propertygroup name="EventFilterPlugin" label="Event Filter">
+                <propertydef name="trigger.waitTime" label="Wait For">
+                    <typedef><type code="int"/></typedef><uidef widget="duration" />
+                    <description>The duration to wait for after the event before triggering.</description>
+                </propertydef>
+                <propertydef name="trigger.nonRetriggerTime" label="Do Not Retrigger For">
+                    <typedef><type code="int"/></typedef><uidef widget="duration" />
+                    <description>The duration to wait before retriggering this job for a particular machine/event combination.</description>
+                </propertydef>
+                <propertydef name="trigger.eventSourceMachines" label="Only From Machine">
+                    <typedef>
+                        <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.MobileMachine"/>
+                        <dimension name="entityOID"  />
+                    </typedef>
+                    <uidef widget="ordered" />
+                    <description>Only react to events from the nominated machines.</description>
+                </propertydef>
+                <propertydef name="trigger.eventFilter" label="Event Filter">
+                    <typedef>
+                        <javaclass name="java.util.List"/>
+                    </typedef>
+                    <uidef widget="eventFilterChooser"/>
+                    <validationdef name="required" type="shared">
+                        <error>Please select an event and optionally any selection criteria</error>
+                    </validationdef>
+                    <description>Only react to a particular event with an optional selection criteria.</description>
+                </propertydef>
+                <propertydef name="trigger.parameterMappings" label="Event Parameter Mappings">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                        <dimension name="choice"  />
+                    </typedef>
+                    <uidef widget="entrylist" custom='{rows=4,columns=20,linewrap=true}'/>
+                    <description>Parameter mappings to use when creating the job.</description>
+                </propertydef>
+            </propertygroup>
+
+        </propertygroup>
+
+        <validationgroup name="Date Range Check">
+            <propertyref name="trigger.startTime"/>
+            <propertyref name="trigger.endTime"/>
+            <validationdef type="script">
+                <script>DateRangeValidation.py</script>
+                <error lang="en">Start date must be less than end date.</error>
+            </validationdef>
+        </validationgroup>
+
+    </classdef>
+
+    <classdef name="Jobs" >
+        <propertygroup name="Jobs">
+            <propertydef name="Jobs">
+                <typedef><type code="string" choices="collection.Jobs" /></typedef>
+                <uidef widget="ordered" />
+                <description>The ordered list of jobs to execute.</description>
+            </propertydef>
+        </propertygroup>
+    </classdef>
+
+    <classdef name="JobTemplate" >
+        <propertygroup name="Job Type">
+            <uigroupdef mode="region"/>
+            <propertydef name="Jobs">
+                <typedef><type code="string" choices="system:Jobs" /></typedef>
+                <description>Choose a type of job to create.</description>
+            </propertydef>
+            <propertydef name="trigger.type">
+                <typedef><type code="int" choices='{0:"Simple",1:"Cron"}'/></typedef>
+                <uidef widget="radio"/>
+                <description>Choose a trigger mechanism.</description>
+            </propertydef>
+        </propertygroup>
+    </classdef>
+</classdefs>

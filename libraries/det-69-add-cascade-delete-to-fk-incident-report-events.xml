@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="3131202a-267b-4929-9aaf-ac404b8979c8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for INCIDENT_REPORT_EVENTS_ELT_FK of table INCIDENT_REPORT_EVENTS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="INCIDENT_REPORT_EVENTS" foreignKeyName="INCIDENT_REPORT_EVENTS_ELT_FK"/>
+        </preConditions>
+        <comment>DET-69: DropForeignKeyConstraint INCIDENT_REPORT_EVENTS_ELT_FK from INCIDENT_REPORT_EVENTS (ELT)</comment>
+        <dropForeignKeyConstraint baseTableName="INCIDENT_REPORT_EVENTS" constraintName="INCIDENT_REPORT_EVENTS_ELT_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="INCIDENT_REPORT_EVENTS" baseColumnNames="ELT" constraintName="INCIDENT_REPORT_EVENTS_ELT_FK" referencedTableName="INCIDENT_MESSAGE" referencedColumnNames="OID" onDelete="CASCADE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="737eba35-ae73-4b28-a380-13f9f3d68fda" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for INCIDENT_REPORT_EVENTS_OID_FK of table INCIDENT_REPORT_EVENTS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="INCIDENT_REPORT_EVENTS" foreignKeyName="INCIDENT_REPORT_EVENTS_OID_FK"/>
+        </preConditions>
+        <comment>DET-69: DropForeignKeyConstraint INCIDENT_REPORT_EVENTS_OID_FK from INCIDENT_REPORT_EVENTS (OID)</comment>
+        <dropForeignKeyConstraint baseTableName="INCIDENT_REPORT_EVENTS" constraintName="INCIDENT_REPORT_EVENTS_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="INCIDENT_REPORT_EVENTS" baseColumnNames="OID" constraintName="INCIDENT_REPORT_EVENTS_OID_FK" referencedTableName="INCIDENT_REPORT" referencedColumnNames="OID" onDelete="CASCADE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="9f9b369b-4669-4d9a-8d71-636221b28b7d" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for INCIDENT_REPORT_EVENTS_ELT_FK to table INCIDENT_REPORT_EVENTS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_REPORT_EVENTS"/>
+            <tableExists tableName="INCIDENT_MESSAGE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="INCIDENT_REPORT_EVENTS" foreignKeyName="INCIDENT_REPORT_EVENTS_ELT_FK"/>
+            </not>
+        </preConditions>
+        <comment>DET-69: AddForeignKeyConstraint INCIDENT_REPORT_EVENTS_ELT_FK to INCIDENT_REPORT_EVENTS (ELT)</comment>
+        <sql>DELETE FROM INCIDENT_REPORT_EVENTS WHERE ELT IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM INCIDENT_MESSAGE WHERE INCIDENT_MESSAGE.OID = INCIDENT_REPORT_EVENTS.ELT)</sql>
+        <addForeignKeyConstraint baseTableName="INCIDENT_REPORT_EVENTS" baseColumnNames="ELT" constraintName="INCIDENT_REPORT_EVENTS_ELT_FK" referencedTableName="INCIDENT_MESSAGE" referencedColumnNames="OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="INCIDENT_REPORT_EVENTS" constraintName="INCIDENT_REPORT_EVENTS_ELT_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="99b13089-c41e-477e-9c57-1c7e4b878c7a" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for INCIDENT_REPORT_EVENTS_OID_FK to table INCIDENT_REPORT_EVENTS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_REPORT_EVENTS"/>
+            <tableExists tableName="INCIDENT_REPORT"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="INCIDENT_REPORT_EVENTS" foreignKeyName="INCIDENT_REPORT_EVENTS_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>DET-69: AddForeignKeyConstraint INCIDENT_REPORT_EVENTS_OID_FK to INCIDENT_REPORT_EVENTS (OID)</comment>
+        <sql>DELETE FROM INCIDENT_REPORT_EVENTS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM INCIDENT_REPORT WHERE INCIDENT_REPORT.OID = INCIDENT_REPORT_EVENTS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="INCIDENT_REPORT_EVENTS" baseColumnNames="OID" constraintName="INCIDENT_REPORT_EVENTS_OID_FK" referencedTableName="INCIDENT_REPORT" referencedColumnNames="OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="INCIDENT_REPORT_EVENTS" constraintName="INCIDENT_REPORT_EVENTS_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
+ 

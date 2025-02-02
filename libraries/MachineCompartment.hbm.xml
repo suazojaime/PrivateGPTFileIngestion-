@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.health.domain.data" schema="model">
+
+    <class name="Compartment" table="COMPARTMENT">
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=IDX_C_EXTERNAL_ID_UNIQ
+            unique=true
+            columns=EXTERNAL_ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=IDX_COMPARTMENT_DESCRIPTION
+            columns=DESCRIPTION
+            tablespace=MW_IDXENT
+        </meta>
+         
+                  
+		<meta attribute="description">Type of compartment of a machine that contains oil. ie. Engine, Transmission</meta>
+
+
+        <id name="id" column="ID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+		<property name="externalId" column="EXTERNAL_ID" length="32">
+			<meta attribute="description">
+				ID received from external system (ie. Oil Commander) during import of record 				
+			</meta>        		
+		</property>
+		
+        <property name="description" column="DESCRIPTION" length="128" />
+    </class>
+
+    <class name="MachineCompartment" table="MACHINE_COMPARTMENT">
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=IDX_MC_EXTERNAL_ID_UNIQ
+            unique=true
+            columns=EXTERNAL_ID
+            tablespace=MW_IDXENT
+        </meta>        
+         
+                  
+		<meta attribute="description">Particular instance of a machine compartment. ie. A specific engine in a specific machine</meta>
+
+        
+        <id name="id" column="ID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+		<property name="externalId" column="EXTERNAL_ID" length="32">
+			<meta attribute="description">
+				ID received from external system (ie. Oil Commander) during import of record. Often this can be 
+				the serial number stamped on the actual machine compartment.				
+			</meta>        		
+		</property>
+		
+        <many-to-one name="machine" column="MACHINE" class="minestar.pitlink.domain.machine.MachineImpl" />
+        <many-to-one name="compartment" column="COMPARTMENT" class="minestar.health.domain.data.Compartment" >
+            <meta attribute="ignoreManyToOneLookupExpr">true</meta>
+        </many-to-one>
+        
+    </class>
+
+</hibernate-mapping>

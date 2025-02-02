@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+  <changeSet author="MineStar" id="b69ff706-7102-47c5-bce2-5378a6cd3afc" context="Autonomy/Autonomy_Management" failOnError="false">
+    <sql>ALTER TABLE gis_edge_lines SET (autovacuum_enabled = false, toast.autovacuum_enabled = false)</sql>
+    <rollback/>
+  </changeSet>
+  <changeSet author="MineStar" id="6c9e4029-6fd5-4247-a50e-a6fdd798f1ff" context="Autonomy/Autonomy_Management" failOnError="false">
+    <sql>ALTER TABLE gis_edge_mesh SET (autovacuum_enabled = false, toast.autovacuum_enabled = false)</sql>
+    <rollback/>
+  </changeSet>
+</databaseChangeLog>

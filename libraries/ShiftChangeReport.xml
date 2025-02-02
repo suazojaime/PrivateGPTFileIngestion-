@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="ShiftChangeAllocation"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="612"
+		 pageHeight="792"
+		 columnWidth="551"
+		 columnSpacing="8"
+		 leftMargin="29"
+		 rightMargin="29"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="2" />
+	<parameter name="subRepShiftChangeOperTieDownCompiled" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="subRepShiftChangeOperTieDownDS" isForPrompting="true" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="subRepShiftChangeLocDelayCompiled" isForPrompting="false" class="net.sf.jasperreports.engine.JasperReport"/>
+	<parameter name="subRepShiftChangeLocDelayDS" isForPrompting="false" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<queryString><![CDATA[select * from machine, person where machine.currentoperator = person.person_oid]]></queryString>
+	<field name="cursor" class="java.lang.Integer"/>
+		<background>
+			<band height="0"  splitType="Stretch" >
+			</band>
+		</background>
+		<title>
+			<band height="7"  splitType="Prevent" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="1"
+						y="0"
+						width="553"
+						height="6"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-1"
+						stretchType="NoStretch"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[$F{cursor}.intValue()==1 || Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<subreportParameter  name="subRepShiftChangeOperTieDownCompiled">
+						<subreportParameterExpression><![CDATA[$P{subRepShiftChangeOperTieDownCompiled}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="subRepShiftChangeOperTieDownDS">
+						<subreportParameterExpression><![CDATA[$P{subRepShiftChangeOperTieDownDS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$P{subRepShiftChangeOperTieDownDS}]]></dataSourceExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{subRepShiftChangeOperTieDownCompiled}]]></subreportExpression>
+				</subreport>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  splitType="Stretch" >
+				<printWhenExpression><![CDATA[Boolean.FALSE]]></printWhenExpression>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  splitType="Stretch" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="6"  splitType="Prevent" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="1"
+						y="1"
+						width="553"
+						height="4"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="subreport-2"
+						stretchType="NoStretch"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[$F{cursor}.intValue()==2]]></printWhenExpression>
+						</reportElement>
+					<subreportParameter  name="subRepShiftChangeLocDelayCompiled">
+						<subreportParameterExpression><![CDATA[$P{subRepShiftChangeLocDelayCompiled}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="subRepShiftChangeLocDelayDS">
+						<subreportParameterExpression><![CDATA[$P{subRepShiftChangeLocDelayDS}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[$P{subRepShiftChangeLocDelayDS}]]></dataSourceExpression>
+					<subreportExpression  class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{subRepShiftChangeLocDelayCompiled}]]></subreportExpression>
+				</subreport>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  splitType="Prevent" >
+				<printWhenExpression><![CDATA[Boolean.FALSE]]></printWhenExpression>
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="26"  splitType="Prevent" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="334"
+						y="5"
+						width="174"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+                        <paragraph lineSpacing="Single"/>
+                    </textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="508"
+						y="5"
+						width="36"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+                        <paragraph lineSpacing="Single"/>
+                    </textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="10"
+						y="4"
+						width="535"
+						height="0"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="line"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<graphicElement stretchType="NoStretch" fill="Solid">
+                        <pen lineWidth="2" lineStyle="Solid" />
+                    </graphicElement>
+				</line>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="10"
+						y="7"
+						width="209"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField"
+						stretchType="NoStretch"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None">
+						<font fontName="SansSerif" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+                        <paragraph lineSpacing="Single"/>
+                    </textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  splitType="Prevent" >
+				<printWhenExpression><![CDATA[Boolean.FALSE]]></printWhenExpression>
+			</band>
+		</summary>
+</jasperReport>

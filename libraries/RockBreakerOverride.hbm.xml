@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="historical">
+
+    <class name="minestar.production.domain.underground.rockbreaker.RockBreakerOverrideImpl"
+           proxy="minestar.production.domain.underground.rockbreaker.RockBreakerOverrideImpl"
+           table="UG_ROCK_BREAKER_OVERRIDE">
+
+        <meta attribute="alias" inherit="false">UGROCKBREAKEROVERRIDE</meta>
+        <meta attribute="description">A historical record of rockbreaker overrides.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="historical"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="RB_OVERRIDE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one name="rockBreaker"
+                     class="minestar.pitlink.domain.machine.MachineReference"
+                     column="ROCKBREAKER"
+                     not-null="true"
+                     index="IDX_RB_TIMESTAMP">
+            <meta attribute="description">
+                A reference to the rockbreaker (MSMODEL.MACHINE) that this historical record applies to.
+            </meta>
+        </many-to-one>
+
+        <property name="state"
+                  column="STATE">
+            <meta attribute="alias">STATE</meta>
+            <meta attribute="description">Rockbreaker override state (operating or not operating).</meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.production.domain.underground.rockbreaker.RockBreakerOperationalState</param>
+            </type>
+        </property>
+
+        <many-to-one name="user"
+                     class="minestar.platform.domain.user.UserReference"
+                     column="USER1"
+                     not-null="true">
+            <meta attribute="description">
+                A reference to the user (MSMODEL.USER) who applied the override.
+            </meta>
+        </many-to-one>
+
+        <property name="timestamp"
+                  type="TimestampType"
+                  column="TIMESTAMP_UTC"
+                  not-null="true"
+                  index="IDX_RB_TIMESTAMP">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="description">The timestamp of when this override became active.</meta>
+            <meta attribute="utc-description">
+                The UTC timestamp of when this override became active.
+            </meta>
+        </property>
+
+
+        <property name="expiryTimestamp"
+                  type="TimestampType"
+                  column="EXPIRY_TIMESTAMP_UTC"
+                  not-null="true">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="description">The timestamp of when this override will expire.</meta>
+            <meta attribute="utc-description">
+                The UTC timestamp of when this override will expire.
+            </meta>
+        </property>
+    </class>
+
+</hibernate-mapping>

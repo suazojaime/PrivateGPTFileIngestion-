@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1430e8e3-67f0-45a2-9f94-29a0e3e9670a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for DELAY_2R of table DELAY as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="DELAY_2R" tableName="DELAY"/>
+        </preConditions>
+        <comment>AHS-1947: DropIndex DELAY_2R from DELAY (START1_UTC,FINISH_UTC,TARGET_MACHINE)</comment>
+        <dropIndex indexName="DELAY_2R" tableName="DELAY"/>
+        <rollback>
+            <createIndex unique="false" tableName="DELAY" indexName="DELAY_2R">
+                <column name="START1_UTC"/>
+                <column name="FINISH_UTC"/>
+                <column name="TARGET_MACHINE"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="f23f7c3a-1bd0-4aaa-880f-d640e0060499" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for DELAY_FBIDX_2 of table DELAY as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="DELAY_FBIDX_2" tableName="DELAY"/>
+        </preConditions>
+        <comment>AHS-1947: DropIndex DELAY_FBIDX_2 from DELAY (STATUS,DELAYDISCRIMINATOR(TARGET_MACHINE,TARGET_ROAD,TARGET_LOCATION),START1_UTC,FINISH_UTC)</comment>
+        <dropIndex indexName="DELAY_FBIDX_2" tableName="DELAY"/>
+        <rollback>
+            <createIndex unique="false" tableName="DELAY" indexName="DELAY_FBIDX_2">
+                <column name="STATUS"/>
+                <column name="DELAYDISCRIMINATOR(TARGET_MACHINE,TARGET_ROAD,TARGET_LOCATION)"/>
+                <column name="START1_UTC"/>
+                <column name="FINISH_UTC"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="c9b5c16c-4ad7-48f6-b141-8e655514643e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for DELAY_TARGET_MACHINE to table DELAY as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="DELAY"/>
+            <not>
+                <indexExists indexName="DELAY_TARGET_MACHINE" tableName="DELAY"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1947: CreateIndex DELAY_TARGET_MACHINE on DELAY (TARGET_MACHINE,STATUS,START1_UTC)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="DELAY" indexName="DELAY_TARGET_MACHINE">
+            <column name="TARGET_MACHINE"/>
+            <column name="STATUS"/>
+            <column name="START1_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="d258ec57-3e10-4ba0-a691-93f6a1bf145b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for DELAY_TARGET_ROAD to table DELAY as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="DELAY"/>
+            <not>
+                <indexExists indexName="DELAY_TARGET_ROAD" tableName="DELAY"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1947: CreateIndex DELAY_TARGET_ROAD on DELAY (TARGET_ROAD,STATUS,START1_UTC)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="DELAY" indexName="DELAY_TARGET_ROAD">
+            <column name="TARGET_ROAD"/>
+            <column name="STATUS"/>
+            <column name="START1_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="f267a85f-1203-4c8f-bf5b-2ab27a9dd9c1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for DELAY_TARGET_LOCATION to table DELAY as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="DELAY"/>
+            <not>
+                <indexExists indexName="DELAY_TARGET_LOCATION" tableName="DELAY"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1947: CreateIndex DELAY_TARGET_LOCATION on DELAY (TARGET_LOCATION,STATUS,START1_UTC)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="DELAY" indexName="DELAY_TARGET_LOCATION">
+            <column name="TARGET_LOCATION"/>
+            <column name="STATUS"/>
+            <column name="START1_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

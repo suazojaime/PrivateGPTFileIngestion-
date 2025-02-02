@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="9a6435f5-b059-4bba-a0c5-48078e2e8567" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MINIMUM_LEVEL_RISE to table WDS_DETAILS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="WDS_DETAILS"/>
+            <not>
+                <columnExists tableName="WDS_DETAILS" columnName="MINIMUM_LEVEL_RISE"/>
+            </not>
+        </preConditions>
+        <comment>MO-2421: AddColumn WDS_DETAILS.MINIMUM_LEVEL_RISE</comment>
+        <addColumn tableName="WDS_DETAILS">
+            <column name="MINIMUM_LEVEL_RISE" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="9c68cd78-0d34-47e2-8dbc-68b6775b9c7a" author="MineStar" failOnError="true">
+    <preConditions onFailMessage="Ignored Update of MINIMUM_LEVEL_RISE column defaults as table or column(s) do not exist." onFail="MARK_RAN">
+        <tableExists tableName="WDS_DETAILS"/>
+        <columnExists tableName="WDS_DETAILS" columnName="MINIMUM_LEVEL_RISE"/>
+    </preConditions>
+
+    <comment>MO-2421: Set Minimum level rise defaults</comment>
+
+    <sql>
+        UPDATE WDS_DETAILS
+        SET MINIMUM_LEVEL_RISE = 1
+        WHERE MINIMUM_LEVEL_RISE IS NULL
+    </sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

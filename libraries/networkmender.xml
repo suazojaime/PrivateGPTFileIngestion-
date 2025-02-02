@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE networkmender SYSTEM "networkmender.dtd">
+<networkmender>
+<!--
+    <database url="jdbc:oracle:thin:@localhost:1521:MINESTAR"/>
+-->
+    <tnr>127.0.0.1</tnr>
+    <ap>127.0.0.1</ap>
+    <comms port="2000" server="127.0.0.1"/>
+    <delta count="10" level="300"/>
+    <restart frequency="100" limit="20" enable="true"/>
+<!--
+    <machines>
+        <machine name="310" radio="127.0.0.1"/>
+    </machines>
+-->
+</networkmender>

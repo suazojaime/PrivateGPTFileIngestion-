@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="dc9e1ab1-7c21-4331-a3ca-ddb9ac5feb50" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for MACHINE.LASTDURATIONBETWEENREFUELINGS as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="MACHINE" columnName="LASTDURATIONBETWEENREFUELINGS"/>
+        </preConditions>
+        <comment>AHS-7899: ChangeDataType of MACHINE.LASTDURATIONBETWEENREFUELINGS from BIGINT to DOUBLE</comment>
+        <modifyDataType columnName="LASTDURATIONBETWEENREFUELINGS" newDataType="DOUBLE" tableName="MACHINE"/>
+        <rollback>
+            <sql>UPDATE MACHINE SET LASTDURATIONBETWEENREFUELINGS = NULL</sql>
+            <modifyDataType columnName="LASTDURATIONBETWEENREFUELINGS" newDataType="BIGINT" tableName="MACHINE"/>
+        </rollback>
+    </changeSet>
+
+
+</databaseChangeLog>

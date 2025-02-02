@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="0912f687-2c2c-46d2-bf94-8c95ebb4c594" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for HISTORICAL_CHUTE_DATA as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="HISTORICAL_CHUTE_DATA"/>
+            </not>
+        </preConditions>
+        <comment>FUG-383: CreateTable HISTORICAL_CHUTE_DATA</comment>
+        <createTable tablespace="MW_ENT" remarks="A historical record of what the levels of a chute was at the end of a shift." tableName="HISTORICAL_CHUTE_DATA">
+            <column name="CHUTE_DATA_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CHUTE" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SHIFT" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CHUTE_LEVEL" type="DOUBLE" remarks="The level of the chute at the end of the shift"/>
+        </createTable>
+        <addPrimaryKey columnNames="CHUTE_DATA_OID" constraintName="HISTORICAL_CHUTE_DATA_PK" tablespace="MW_IDXENT" tableName="HISTORICAL_CHUTE_DATA"/>
+        <addUniqueConstraint columnNames="CHUTE,SHIFT" constraintName="UKB7C8F8BDC298FA3" tableName="HISTORICAL_CHUTE_DATA"/>
+        <rollback>
+            <dropTable tableName="HISTORICAL_CHUTE_DATA"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

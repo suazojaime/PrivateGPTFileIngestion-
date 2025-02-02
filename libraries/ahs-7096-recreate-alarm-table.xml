@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="9fde2522-978b-4ad6-9929-6539bd2a4871" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for ALARM_NAME of table ALARM as index does not exist." onFail="MARK_RAN">
+            <indexExists tableName="ALARM" indexName="ALARM_NAME"/>
+        </preConditions>
+        <comment>AHS-7096: DropIndex ALARM_NAME from ALARM (NAME)</comment>
+        <dropIndex tableName="ALARM" indexName="ALARM_NAME"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" tableName="ALARM" indexName="ALARM_NAME">
+                <column name="NAME"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="4246be25-10ea-4bd9-9e18-e259e053c040" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for ALARM_TYPE of table ALARM as index does not exist." onFail="MARK_RAN">
+            <indexExists tableName="ALARM" indexName="ALARM_TYPE"/>
+        </preConditions>
+        <comment>AHS-7096: DropIndex ALARM_TYPE from ALARM (ALARM_TYPE)</comment>
+        <dropIndex tableName="ALARM" indexName="ALARM_TYPE"/>
+        <rollback>
+            <!-- Index will be recreated via autoCorrect -->
+            <comment>@EmptyRollback</comment>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="466fe762-67d4-4df2-8d08-83a237545a32" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ECF_CLASS_ID of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="ECF_CLASS_ID"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.ECF_CLASS_ID</comment>
+        <dropColumn tableName="ALARM" columnName="ECF_CLASS_ID"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="ECF_CLASS_ID" type="VARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="b5ccab88-b797-4375-823a-282bba25b87a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for NAME of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.NAME</comment>
+        <dropColumn tableName="ALARM" columnName="NAME"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="NAME" type="VARCHAR(254)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="dd63119d-4ac1-401a-94ea-8103706f417d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for DESCRIPTION to MESSAGE of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="DESCRIPTION"/>
+        </preConditions>
+        <comment>AHS-7096: RenameColumn ALARM.DESCRIPTION to ALARM.MESSAGE</comment>
+        <renameColumn tableName="ALARM" oldColumnName="DESCRIPTION" newColumnName="MESSAGE"/>
+        <sql>UPDATE ALARM SET MESSAGE = 'UNKNOWN' WHERE MESSAGE IS NULL</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="MESSAGE" columnDataType="VARCHAR(4000)"/>
+        <rollback>
+            <renameColumn tableName="ALARM" oldColumnName="MESSAGE" newColumnName="DESCRIPTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="f605553a-951c-4b2e-92a6-66b8fa610325" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for ALARM_TYPE to ALARM_TYPE_OID of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="ALARM_TYPE"/>
+        </preConditions>
+        <comment>AHS-7096: RenameColumn ALARM.ALARM_TYPE to ALARM.ALARM_TYPE_OID</comment>
+        <renameColumn tableName="ALARM" oldColumnName="ALARM_TYPE" newColumnName="ALARM_TYPE_OID"/>
+        <sql>DELETE FROM ALARM WHERE ALARM_TYPE_OID IS NULL</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="ALARM_TYPE_OID" columnDataType="BIGINT"/>
+        <rollback>
+            <renameColumn tableName="ALARM" oldColumnName="ALARM_TYPE_OID" newColumnName="ALARM_TYPE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3c1390eb-a7bb-406c-9c53-7864da60689f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for PRIORITY_NAME of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="PRIORITY_NAME"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.PRIORITY_NAME</comment>
+        <dropColumn tableName="ALARM" columnName="PRIORITY_NAME"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="PRIORITY_NAME" type="VARCHAR(254)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a3a2e3dd-6765-4b4e-8872-a6aecbd3aec6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SEVERITY_NAME of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SEVERITY_NAME"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SEVERITY_NAME</comment>
+        <dropColumn tableName="ALARM" columnName="SEVERITY_NAME"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SEVERITY_NAME" type="VARCHAR(254)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="22659e88-ec1f-40fd-8be3-a8ff0779b66c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored RenameColumn for OPERATOR to OPERATOR_OID of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="OPERATOR"/>
+        </preConditions>
+        <comment>AHS-7096: RenameColumn ALARM.OPERATOR to ALARM.OPERATOR_OID</comment>
+        <renameColumn tableName="ALARM" oldColumnName="OPERATOR" newColumnName="OPERATOR_OID"/>
+    </changeSet>
+
+    <changeSet id="919a043a-9c24-4520-a673-6f2969499abd" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for MINE_CONTROLLER of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="MINE_CONTROLLER"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.MINE_CONTROLLER</comment>
+        <dropColumn tableName="ALARM" columnName="MINE_CONTROLLER"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="MINE_CONTROLLER" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="48546a24-f28c-47d0-9eb2-2c40e4bda3fc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for MINE_CONTROLLER_NAME of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="MINE_CONTROLLER_NAME"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.MINE_CONTROLLER_NAME</comment>
+        <dropColumn tableName="ALARM" columnName="MINE_CONTROLLER_NAME"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="MINE_CONTROLLER_NAME" type="VARCHAR(254)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="cff311cd-c074-4737-a04a-d66d963fa425" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for CREATION_TIME_UTC of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="CREATION_TIME_UTC"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.CREATION_TIME_UTC</comment>
+        <dropColumn tableName="ALARM" columnName="CREATION_TIME_UTC"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="CREATION_TIME_UTC" type="DATETIME2" remarks="The created timestamp"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="286ef204-a7dc-4cd6-86a0-e2fc14ce0296" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SOURCE_TYPE to table ALARM as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ALARM"/>
+            <not>
+                <columnExists tableName="ALARM" columnName="SOURCE_TYPE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7096: AddColumn ALARM.SOURCE_TYPE</comment>
+        <addColumn tableName="ALARM">
+            <column name="SOURCE_TYPE" type="TINYINT"/>
+        </addColumn>
+        <sql>UPDATE ALARM SET SOURCE_TYPE = 6</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="SOURCE_TYPE" columnDataType="TINYINT"/>
+        <sql>ALTER TABLE ALARM ADD CONSTRAINT ALARM_SOURCE_TYPE_CHECK CHECK (SOURCE_TYPE IN (0,1,2,3,4,5,6,7,8,9))</sql>
+        <rollback>
+            <dropColumn tableName="ALARM" columnName="SOURCE_TYPE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="721d38b8-d98a-4e2d-bc5b-2f7a16c3598c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SOURCE_OID to table ALARM as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ALARM"/>
+            <not>
+                <columnExists tableName="ALARM" columnName="SOURCE_OID"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7096: AddColumn ALARM.SOURCE_OID</comment>
+        <addColumn tableName="ALARM">
+            <column name="SOURCE_OID" type="BIGINT" remarks="OID of the source entity.  May be null for 'SYSTEM' generated alarms"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="905f638f-4719-4586-83aa-cd4100ed07ba" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SOURCE_NAME to table ALARM as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ALARM"/>
+            <not>
+                <columnExists tableName="ALARM" columnName="SOURCE_NAME"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7096: AddColumn ALARM.SOURCE_NAME</comment>
+        <addColumn tableName="ALARM">
+            <column name="SOURCE_NAME" type="VARCHAR(254)" remarks="Name of the source entity.  May be null for 'SYSTEM' generated alarms"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="d2491075-a41e-406d-bca1-db36764daaca" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SOURCE_SYSTEM of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SOURCE_SYSTEM"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SOURCE_SYSTEM</comment>
+        <dropColumn tableName="ALARM" columnName="SOURCE_SYSTEM"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SOURCE_SYSTEM" type="VARCHAR(254)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="e065f000-fae1-4225-b93b-94c648eeb463" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SOURCE_MACHINE of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SOURCE_MACHINE"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SOURCE_MACHINE</comment>
+        <sql>UPDATE ALARM SET SOURCE_TYPE = 3, SOURCE_OID = SOURCE_MACHINE WHERE SOURCE_MACHINE IS NOT NULL</sql>
+        <dropColumn tableName="ALARM" columnName="SOURCE_MACHINE"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SOURCE_MACHINE" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a9cb24f4-4cba-49d8-821f-e06237077ce3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SOURCE_MACHINECLASS of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SOURCE_MACHINECLASS"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SOURCE_MACHINECLASS</comment>
+        <sql>UPDATE ALARM SET SOURCE_TYPE = 4, SOURCE_OID = SOURCE_MACHINECLASS WHERE SOURCE_MACHINECLASS IS NOT NULL</sql>
+        <dropColumn tableName="ALARM" columnName="SOURCE_MACHINECLASS"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SOURCE_MACHINECLASS" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="4f0465b8-a751-40fc-b8f4-a7ce0589e7d3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SOURCE_ROAD of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SOURCE_ROAD"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SOURCE_ROAD</comment>
+        <sql>UPDATE ALARM SET SOURCE_TYPE = 5, SOURCE_OID = SOURCE_ROAD WHERE SOURCE_ROAD IS NOT NULL</sql>
+        <dropColumn tableName="ALARM" columnName="SOURCE_ROAD"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SOURCE_ROAD" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="464b3af3-8983-4be8-9c64-cf7bd81297ed" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SOURCE_LOCATION of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SOURCE_LOCATION"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SOURCE_LOCATION</comment>
+        <sql>UPDATE ALARM SET SOURCE_TYPE = 2, SOURCE_OID = SOURCE_LOCATION WHERE SOURCE_LOCATION IS NOT NULL</sql>
+        <dropColumn tableName="ALARM" columnName="SOURCE_LOCATION"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SOURCE_LOCATION" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="44b11bff-cf1e-45d9-a1e7-d5697e2d8bdb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SOURCE_WAYPOINT of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SOURCE_WAYPOINT"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SOURCE_WAYPOINT</comment>
+        <sql>UPDATE ALARM SET SOURCE_TYPE = 8, SOURCE_OID = SOURCE_WAYPOINT WHERE SOURCE_WAYPOINT IS NOT NULL</sql>
+        <dropColumn tableName="ALARM" columnName="SOURCE_WAYPOINT"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SOURCE_WAYPOINT" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="4f9df0d1-22c3-4f14-9798-98c3fc72ce08" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SOURCE_GRADEBLOCK of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SOURCE_GRADEBLOCK"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SOURCE_GRADEBLOCK</comment>
+        <sql>UPDATE ALARM SET SOURCE_TYPE = 0, SOURCE_OID = SOURCE_GRADEBLOCK WHERE SOURCE_GRADEBLOCK IS NOT NULL</sql>
+        <dropColumn tableName="ALARM" columnName="SOURCE_GRADEBLOCK"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SOURCE_GRADEBLOCK" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="642c61e1-511c-4218-b9f6-484abf84d8b5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SOURCE_USER of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="SOURCE_USER"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.SOURCE_USER</comment>
+        <sql>UPDATE ALARM SET SOURCE_TYPE = 7, SOURCE_OID = SOURCE_USER WHERE SOURCE_USER IS NOT NULL</sql>
+        <dropColumn tableName="ALARM" columnName="SOURCE_USER"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="SOURCE_USER" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="528d0cef-180a-485e-8a70-f71d94f69fae" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for DESCRIPTION_ENGLISH of table ALARM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ALARM" columnName="DESCRIPTION_ENGLISH"/>
+        </preConditions>
+        <comment>AHS-7096: DropColumn ALARM.DESCRIPTION_ENGLISH</comment>
+        <dropColumn tableName="ALARM" columnName="DESCRIPTION_ENGLISH"/>
+        <rollback>
+            <addColumn tableName="ALARM">
+                <column name="DESCRIPTION_ENGLISH" type="VARCHAR(4000)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2d22e1c7-7593-47c5-ae1f-e53eb1c9a6c8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ALARM.ALARM_TYPE_NAME as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ALARM" columnName="ALARM_TYPE_NAME"/>
+        </preConditions>
+        <comment>AHS-7096: AddNotNullConstraint to ALARM.ALARM_TYPE_NAME</comment>
+        <sql>UPDATE ALARM SET ALARM_TYPE_NAME = 'UNKNOWN' WHERE ALARM_TYPE_NAME IS NULL</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="ALARM_TYPE_NAME" columnDataType="VARCHAR(254)"/>
+        <rollback>
+            <dropNotNullConstraint tableName="ALARM" columnName="ALARM_TYPE_NAME" columnDataType="VARCHAR(254)"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="565e2bc7-ac6e-48c0-a6ac-c6d463b653b4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ALARM.PRIORITY as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ALARM" columnName="PRIORITY"/>
+        </preConditions>
+        <comment>AHS-7096: AddNotNullConstraint to ALARM.PRIORITY</comment>
+        <sql>UPDATE ALARM SET PRIORITY = 2 WHERE PRIORITY IS NULL OR PRIORITY NOT IN (2,3,4,5)</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="PRIORITY" columnDataType="TINYINT"/>
+        <sql>ALTER TABLE ALARM ADD CONSTRAINT ALARM_PRIORTY_CHECK CHECK (PRIORITY IN (2,3,4,5))</sql>
+        <rollback>
+            <dropNotNullConstraint tableName="ALARM" columnName="PRIORITY" columnDataType="TINYINT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="691356dd-1b91-47d0-8359-f5bc0d3e33a8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ALARM.SEVERITY as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ALARM" columnName="SEVERITY"/>
+        </preConditions>
+        <comment>AHS-7096: AddNotNullConstraint to ALARM.SEVERITY</comment>
+        <sql>UPDATE ALARM SET SEVERITY = 2 WHERE SEVERITY IS NULL OR SEVERITY NOT IN (2,3,4,5)</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="SEVERITY" columnDataType="TINYINT"/>
+        <sql>ALTER TABLE ALARM ADD CONSTRAINT ALARM_SEVERITY_CHECK CHECK (SEVERITY IN (2,3,4,5))</sql>
+        <rollback>
+            <dropNotNullConstraint tableName="ALARM" columnName="SEVERITY" columnDataType="TINYINT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="b92113ba-3508-4890-8421-bbc54e265e9a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ALARM.START_TIME_UTC as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ALARM" columnName="START_TIME_UTC"/>
+        </preConditions>
+        <comment>AHS-7096: AddNotNullConstraint to ALARM.START_TIME_UTC</comment>
+        <sql>UPDATE ALARM SET START_TIME_UTC = '01-JAN-1970' WHERE START_TIME_UTC IS NULL</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="START_TIME_UTC" columnDataType="DATETIME2"/>
+        <rollback>
+            <dropNotNullConstraint tableName="ALARM" columnName="START_TIME_UTC" columnDataType="DATETIME2"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="93c99584-5a58-47f1-9902-1ae02843e99d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ALARM.LAST_OCCUR_TIME_UTC as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ALARM" columnName="LAST_OCCUR_TIME_UTC"/>
+        </preConditions>
+        <comment>AHS-7096: AddNotNullConstraint to ALARM.LAST_OCCUR_TIME_UTC</comment>
+        <sql>UPDATE ALARM SET LAST_OCCUR_TIME_UTC = '01-JAN-1970' WHERE LAST_OCCUR_TIME_UTC IS NULL</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="LAST_OCCUR_TIME_UTC" columnDataType="DATETIME2"/>
+        <rollback>
+            <dropNotNullConstraint tableName="ALARM" columnName="LAST_OCCUR_TIME_UTC" columnDataType="DATETIME2"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="9eaf1b99-7f20-4762-a839-811fdac22f93" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for ALARM.ACK_TYPE as column type doesnot match" onFail="MARK_RAN">
+            <customPrecondition className="liquibase.precondition.ext.MineStarCustomPreCondition">
+                <param name="tableName" value="ALARM"/>
+                <param name="columnName" value="ACK_TYPE"/>
+                <param name="expectedType" value="varchar"/>
+            </customPrecondition>
+        </preConditions>
+        <comment>AHS-7096: ChangeDataType of ALARM.ACK_TYPE from VARCHAR(255) to TINYINT</comment>
+        <renameColumn tableName="ALARM" oldColumnName="ACK_TYPE" newColumnName="OLD_ACK_TYPE"/>
+        <addColumn tableName="ALARM">
+            <column name="ACK_TYPE" type="TINYINT"/>
+        </addColumn>
+        <sql>UPDATE ALARM SET ACK_TYPE = 1 WHERE OLD_ACK_TYPE = 'ack'</sql>
+        <sql>UPDATE ALARM SET ACK_TYPE = 2 WHERE OLD_ACK_TYPE = 'nAck'</sql>
+        <sql>UPDATE ALARM SET ACK_TYPE = 0 WHERE ACK_TYPE IS NULL</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="ACK_TYPE" columnDataType="TINYINT"/>
+        <sql>ALTER TABLE ALARM ADD CONSTRAINT ALARM_ACK_TYPE_CHECK CHECK (ACK_TYPE IN (0,1,2))</sql>
+        <dropColumn tableName="ALARM" columnName="OLD_ACK_TYPE"/>
+        <rollback>
+            <renameColumn tableName="ALARM" oldColumnName="ACK_TYPE" newColumnName="OLD_ACK_TYPE"/>
+            <addColumn tableName="ALARM">
+                <column name="ACK_TYPE" type="VARCHAR(255)"/>
+            </addColumn>
+            <sql>UPDATE ALARM SET ACK_TYPE = 'ack' WHERE OLD_ACK_TYPE = 1</sql>
+            <sql>UPDATE ALARM SET ACK_TYPE = 'nAck' WHERE OLD_ACK_TYPE = 2</sql>
+            <sql>UPDATE ALARM SET ACK_TYPE = 'uAck' WHERE ACK_TYPE IS NULL</sql>
+            <dropColumn tableName="ALARM" columnName="OLD_ACK_TYPE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="9ddef9fe-8fd1-43ff-9cd2-ce9aa4e9f747" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ALARM.OCCURRENCE_COUNT as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ALARM" columnName="OCCURRENCE_COUNT"/>
+        </preConditions>
+        <comment>AHS-7096: AddNotNullConstraint to ALARM.OCCURRENCE_COUNT</comment>
+        <sql>UPDATE ALARM SET OCCURRENCE_COUNT = 1 WHERE OCCURRENCE_COUNT IS NULL</sql>
+        <addNotNullConstraint tableName="ALARM" columnName="OCCURRENCE_COUNT" columnDataType="INT"/>
+        <rollback>
+            <dropNotNullConstraint tableName="ALARM" columnName="OCCURRENCE_COUNT" columnDataType="INT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="bc8435a4-1c12-4c4c-ad70-9595d3463737" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LOCALIZABLE_MESSAGE to table ALARM as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ALARM"/>
+            <not>
+                <columnExists tableName="ALARM" columnName="LOCALIZABLE_MESSAGE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7096: AddColumn ALARM.LOCALIZABLE_MESSAGE</comment>
+        <addColumn tableName="ALARM">
+            <column name="LOCALIZABLE_MESSAGE" type="VARCHAR(4000)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="d2df021b-2852-4263-ba88-e46d7a2ed4cb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for ALARM_END_TIME to table ALARM as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="ALARM"/>
+            <not>
+                <indexExists tableName="ALARM" indexName="ALARM_END_TIME"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7096: CreateIndex ALARM_END_TIME on ALARM (END_TIME_UTC,1)</comment>
+        <sql dbms="oracle">CREATE INDEX ALARM_END_TIME ON ALARM(END_TIME_UTC, 1) TABLESPACE MW_IDXENT</sql>
+        <sql dbms="mssql">CREATE INDEX ALARM_END_TIME ON ALARM(END_TIME_UTC)</sql>
+        <rollback>
+            <dropIndex tableName="ALARM" indexName="ALARM_END_TIME"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

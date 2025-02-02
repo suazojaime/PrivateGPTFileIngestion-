@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b5d4b134-95e4-4f0d-afc9-4a369bb46c14" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropUniqueConstraint for ORE_PASS_ROCK_BREAKER_UK of table ORE_PASS as the table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <columnExists tableName="ORE_PASS" columnName="ROCK_BREAKER"/>
+        </preConditions>
+        <comment>FUG-511: DropUniqueConstraint ORE_PASS_ROCK_BREAKER_UK from ORE_PASS (ROCK_BREAKER)</comment>
+        <dropUniqueConstraint constraintName="ORE_PASS_ROCK_BREAKER_UK" tableName="ORE_PASS"/>
+        <rollback>
+            <addUniqueConstraint columnNames="ROCK_BREAKER" constraintName="ORE_PASS_ROCK_BREAKER_UK" tableName="ORE_PASS"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

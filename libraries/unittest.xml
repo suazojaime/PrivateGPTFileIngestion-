@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<!-- MODIFICATION HISTORY
+     20011025 John Farrell       New
+-->
+
+<circuit>
+    <sources>
+        <source name="source2" class="com.mincom.env.integ.circuit.node.Heartbeat">
+            <var name="payload">"This is from the XML file every 103 seconds"</var>
+            <var name="period">103</var>
+        </source>
+        <source name="source3" class="com.mincom.env.integ.circuit.node.Heartbeat">
+            <var name="payload">"This is from the XML file every 71 seconds"</var>
+            <var name="period">71</var>
+        </source>
+        <source name="calSource" class="com.mincom.env.integ.circuit.node.CalendarNodeSource">
+            <var name="start">"start 2 minutes"</var>
+            <var name="end">"end 2 minutes"</var>
+            <var name="calendarName">twominutes</var>
+        </source>
+    </sources>
+    <nodes>
+        <node name="funnel" class="com.mincom.env.integ.connection.SimpleNode">
+        </node>
+        <node name="commandGenerator" class="com.mincom.env.integ.circuit.test.TestCommandNode">
+            <var name="command">doit</var>
+            <var name="parameterName">value</var>
+        </node>
+        <node name="whatisit" class="com.mincom.env.integ.circuit.node.ScriptedTransformation">
+            <var name="expression">"event.getClass()"</var>
+        </node>
+   </nodes>
+   <sinks>
+        <sink name="sink" class="com.mincom.env.integ.circuit.test.TestSink">
+            <inputvar name="message" input="suffix" />
+        </sink>
+        <sink name="printer" class="com.mincom.env.integ.circuit.node.PrintSink">
+        </sink>
+        <sink name="errorHandler" class="com.mincom.env.integ.circuit.node.LoggingErrorSink">
+            <var name="level">warning</var>
+        </sink>
+        <sink name="test1" class="com.mincom.env.integ.circuit.test.ScriptedUnitTestNodeSink">
+            <var name="startup">"from java.util import Map"</var>
+            <var name="expression">"isinstance(event, Map)"</var>
+        </sink>
+        <sink name="calTest" class="com.mincom.env.integ.circuit.test.CalendarNodeUnitTest">
+        </sink>
+    </sinks>
+    <connections>
+        <connect source="source2" sink="funnel" />
+        <connect source="source3" sink="funnel" />
+        <connect source="funnel" sink="sink" />
+        <connect source="funnel" sink="printer" />
+        <connect source="funnel" sink="commandGenerator" />
+        <connect source="commandGenerator" sink="test1" />
+        <connect source="commandGenerator" sink="whatisit" />
+        <connect source="whatisit" sink="printer" type="error" />
+        <connect source="calSource" sink="calTest" />
+    </connections>
+</circuit>
+

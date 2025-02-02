@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="1aa6139d-47c5-4231-9889-823481a794ff" author="MineStar" context="Platform/Platform_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for EXTERNAL_SYSTEM_TASK as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="EXTERNAL_SYSTEM_TASK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-517: CreateTable EXTERNAL_SYSTEM_TASK</comment>
+        <createTable tablespace="MW_ENT" remarks="Configuration details for a scheduled task to poll external systems" tableName="EXTERNAL_SYSTEM_TASK">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_ID" type="VARCHAR(255)" remarks="The scheduled task that this configuration applies to.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COMMS_URL" type="VARCHAR(255)" remarks="The URL of the web service to poll."/>
+            <column name="TIMEOUT" type="DOUBLE" remarks="Period of time to wait if no response from synchronous web service call."/>
+            <column name="INTERVAL" type="DOUBLE" remarks="Period of time to wait between web service calls."/>
+            <column name="STARTED" type="BOOLEAN" remarks="Whether the polling is started."/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="EXTERNAL_SYSTEM_TASK_PK" tablespace="MW_IDXENT" tableName="EXTERNAL_SYSTEM_TASK"/>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="EXTERNAL_SYSTEM_TASK" indexName="EXTERNAL_SYSTEM_TASK_ID">
+            <column name="TASK_ID"/>
+        </createIndex>
+        <rollback>
+            <dropTable tableName="EXTERNAL_SYSTEM_TASK"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

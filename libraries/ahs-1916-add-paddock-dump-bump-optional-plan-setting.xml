@@ -1,0 +1,17 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+   <changeSet id="5b8b0fe7-0ac4-442f-bcc9-893ad1065143" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PADDOCK_BUMP_OPTIONAL to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="PADDOCK_BUMP_OPTIONAL"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1916: AddColumn PLAN_MODEL.PADDOCK_BUMP_OPTIONAL</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="PADDOCK_BUMP_OPTIONAL" type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

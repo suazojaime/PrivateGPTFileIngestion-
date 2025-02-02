@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="ab32aa1d-cd0e-4478-9a79-b2c2e5e67df3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ENABLE_EMPTY_DERATE of table DERATE as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="DERATE" columnName="ENABLE_EMPTY_DERATE"/>
+        </preConditions>
+        <comment>MO-13035: DropColumn DERATE.ENABLE_EMPTY_DERATE</comment>
+        <dropColumn columnName="ENABLE_EMPTY_DERATE" tableName="DERATE"/>
+        <rollback>
+            <addColumn tableName="DERATE">
+                <column name="ENABLE_EMPTY_DERATE" type="BOOLEAN">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="f4e77cc0-d76a-4377-bad4-99ebd0de1cd6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for EMPTY_DERATE_FLAG to table DERATE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DERATE"/>
+            <not>
+                <columnExists tableName="DERATE" columnName="EMPTY_DERATE_FLAG"/>
+            </not>
+        </preConditions>
+        <comment>MO-13035: AddColumn DERATE.EMPTY_DERATE_FLAG</comment>
+        <addColumn tableName="DERATE">
+            <column name="EMPTY_DERATE_FLAG" type="BOOLEAN" defaultValue="0" remarks="If empty derate applies.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="019fbdfb-5901-4f62-9a42-4cd04fd4ba94" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for EMPTY_DERATE_VALUE to table DERATE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DERATE"/>
+            <not>
+                <columnExists tableName="DERATE" columnName="EMPTY_DERATE_VALUE"/>
+            </not>
+        </preConditions>
+        <comment>MO-13035: AddColumn DERATE.EMPTY_DERATE_VALUE</comment>
+        <addColumn tableName="DERATE">
+            <column name="EMPTY_DERATE_VALUE" type="DOUBLE" remarks="Empty derate"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

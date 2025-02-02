@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="5db3c658-1eff-49bf-9a68-51d5a6bd00f0" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_HIST as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_HIST"/>
+            </not>
+        </preConditions>
+        <comment>MO-6118: CreateTable PROD_PLAN_HIST</comment>
+        <createTable remarks="Stores historical production planning details" tableName="PROD_PLAN_HIST">
+            <column name="PLAN_HIST_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_OID" type="BIGINT" remarks="Internal OID that uniquely identifies a plan">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EXTERNAL_REF" type="VARCHAR(254)" remarks="External reference that uniquely identifies a plan">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_TIME_UTC" type="DATETIME2" remarks="Plan creation timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_TIME_UTC" type="DATETIME2" remarks="Plan updated timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLANNED_START_TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of plan starting">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLANNED_END_TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of plan ending">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTUAL_START_TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of plan starting"/>
+            <column name="ACTUAL_END_TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of plan ending"/>
+            <column name="PLAN_STATUS" type="VARCHAR(32)" remarks="Status of the plan">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_TYPE" type="VARCHAR(32)" remarks="Type of plan">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_JSON" type="CLOB" remarks="The JSON encoding of the plan">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_RESULTS_JSON" type="CLOB" remarks="The JSON encoding of the plan results"/>
+        </createTable>
+        <addPrimaryKey columnNames="PLAN_HIST_OID" constraintName="PROD_PLAN_HIST_PK" tableName="PROD_PLAN_HIST"/>
+        <createIndex unique="true" indexName="PROD_PLAN_HIST_OID" tableName="PROD_PLAN_HIST">
+            <column name="PLAN_OID"/>
+            <column name="UPDATED_TIME_UTC"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

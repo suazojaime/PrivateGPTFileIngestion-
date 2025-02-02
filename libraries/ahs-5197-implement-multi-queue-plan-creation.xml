@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="c67f112c-4d9e-4fed-b43d-37244e68c581" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PLAN_LANE_INFO_GROUPED_SPOTS as table already exists."
+                       onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PLAN_LANE_INFO_GROUPED_SPOTS"/>
+            </not>
+        </preConditions>
+        <comment>AHS-5197: CreateTable PLAN_LANE_INFO_GROUPED_SPOTS</comment>
+        <createTable tablespace="MW_ENT" remarks="The groups containing spot points in this."
+                     tableName="PLAN_LANE_INFO_GROUPED_SPOTS">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GROUP_NR" type="INT" defaultValueNumeric="0" remarks="Index of a queue lane group">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPOT_POINT_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="PLAN_LANE_INFO_GROUPED_SPOTS"
+                     indexName="PLAN_LANE_INFO_GRPD_SPTS_UIDX1">
+            <column name="PLAN_OID"/>
+            <column name="GROUP_NR"/>
+            <column name="SPOT_POINT_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="950aab1b-4c8d-4aef-934e-d07603aa7259" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_GROUPED_SPO_FK1 to table PLAN_LANE_INFO_GROUPED_SPOTS as (1) the table does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_GROUPED_SPOTS"/>
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_GROUPED_SPOTS"
+                                            foreignKeyName="PLAN_LANE_INFO_GROUPED_SPO_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-5197: AddForeignKeyConstraint PLAN_LANE_INFO_GROUPED_SPO_FK1 to PLAN_LANE_INFO_GROUPED_SPOTS
+            (SPOT_POINT_OID)
+        </comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_GROUPED_SPOTS WHERE SPOT_POINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM
+            SPOT_POINT WHERE SPOT_POINT.SPOT_POINT_OID = PLAN_LANE_INFO_GROUPED_SPOTS.SPOT_POINT_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" baseColumnNames="SPOT_POINT_OID"
+                                 constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK1" referencedTableName="SPOT_POINT"
+                                 referencedColumnNames="SPOT_POINT_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS"
+                                      constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="86dce446-76f2-4c03-98e7-783726139ad0" author="MineStar"
+               context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_GROUPED_SPO_FK2 to table PLAN_LANE_INFO_GROUPED_SPOTS as (1) the table does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_GROUPED_SPOTS"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_GROUPED_SPOTS"
+                                            foreignKeyName="PLAN_LANE_INFO_GROUPED_SPO_FK2"/>
+            </not>
+        </preConditions>
+        <comment>AHS-5197: AddForeignKeyConstraint PLAN_LANE_INFO_GROUPED_SPO_FK2 to PLAN_LANE_INFO_GROUPED_SPOTS
+            (PLAN_OID)
+        </comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_GROUPED_SPOTS WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM
+            PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_GROUPED_SPOTS.PLAN_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" baseColumnNames="PLAN_OID"
+                                 constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK2" referencedTableName="PLAN_LANE_INFO"
+                                 referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS"
+                                      constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK2"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

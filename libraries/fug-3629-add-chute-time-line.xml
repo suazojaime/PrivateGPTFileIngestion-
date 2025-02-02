@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="4cc7aed8-ae6f-4492-8b1d-2635dc3f7cc7" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for CHUTE_TIME_LINE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="CHUTE_TIME_LINE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-3629: CreateTable CHUTE_TIME_LINE</comment>
+        <createTable tablespace="MW_ENT" remarks="A historical record of when the status of a chute changed." tableName="CHUTE_TIME_LINE">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CHUTE" type="BIGINT" remarks="A reference to the chute (MSMODEL.MACHINE) that this record applies to.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)" remarks="The name of the status that the chute changed to."/>
+            <column name="COMMENTS" type="VARCHAR(255)" remarks="The comments about the status that the chute changed to."/>
+            <column name="COLOR_RED" type="INT" remarks="The red value of the color used to represent this status."/>
+            <column name="COLOR_GREEN" type="INT" remarks="The green value of the color used to represent this status."/>
+            <column name="COLOR_BLUE" type="INT" remarks="The blue value of the color used to represent this status."/>
+            <column name="OLD_NAME" type="VARCHAR(255)" remarks="The name of the status that the chute changed from."/>
+            <column name="OLD_COMMENTS" type="VARCHAR(255)" remarks="The comments about the status that the chute changed from."/>
+            <column name="OLD_COLOR_RED" type="INT" remarks="The red value of the color used to represent the last status."/>
+            <column name="OLD_COLOR_GREEN" type="INT" remarks="The green value of the color used to represent the last status."/>
+            <column name="OLD_COLOR_BLUE" type="INT" remarks="The blue value of the color used to represent the last status."/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="CHUTE_TIME_LINE_PK" tablespace="MW_IDXENT" tableName="CHUTE_TIME_LINE"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="DPTL_CHUTE" tableName="CHUTE_TIME_LINE">
+            <column name="CHUTE"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a65773ca-844d-4f0b-8e74-ab9273772bad" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for RETURN_LOADED_TRUCKS_TO_QUEUE to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="RETURN_LOADED_TRUCKS_TO_QUEUE"/>
+            </not>
+        </preConditions>
+        <comment>MO-4285: AddColumn MACHINE_IN_PIT.RETURN_LOADED_TRUCKS_TO_QUEUE</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="RETURN_LOADED_TRUCKS_TO_QUEUE" type="BOOLEAN" defaultValue="0" remarks="When true, automatically send trucks back to the queue. When false, use Manual Intervention">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropDefaultValue columnName="RETURN_LOADED_TRUCKS_TO_QUEUE" columnDataType="BOOLEAN" tableName="MACHINE_IN_PIT"/>
+            <dropColumn tableName="MACHINE_IN_PIT" columnName="RETURN_LOADED_TRUCKS_TO_QUEUE"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

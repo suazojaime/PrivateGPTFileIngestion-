@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE ChannelDefinitions [
+<!ELEMENT ChannelDefinitions (ChannelDefinition)+>
+<!ELEMENT ChannelDefinition (DisplayDefinition)*>
+<!ATTLIST ChannelDefinition
+schema CDATA #REQUIRED
+id CDATA #REQUIRED
+description CDATA #REQUIRED
+component CDATA #REQUIRED
+unit CDATA #IMPLIED
+unitType CDATA #IMPLIED
+sign CDATA #REQUIRED
+scale CDATA #REQUIRED
+offset CDATA #REQUIRED
+byteSize CDATA #REQUIRED
+minmax CDATA #REQUIRED
+>
+<!ELEMENT DisplayDefinition EMPTY>
+<!ATTLIST DisplayDefinition
+channelValue CDATA #IMPLIED
+altValue CDATA #IMPLIED
+displayString CDATA #IMPLIED
+>
+]>
+<!--
+$Revision: 1.2 $
+Version: 3.0.31
+-->
+<ChannelDefinitions>
+    <ChannelDefinition schema="MSTAR" id="0" description="GPS" component="0" unitType="unitless" scale="1.0" offset="0" byteSize="5" sign="0" minmax="0">
+    </ChannelDefinition>
+</ChannelDefinitions>
+

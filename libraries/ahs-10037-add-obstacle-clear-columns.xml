@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="bc56fe90-a7df-4bab-8ea6-338542d12643" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropNotNullConstraint for OBSTACLE_CLEAR.TIME_CLEARED_UTC as column does not exist or is already nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="OBSTACLE_CLEAR" columnName="TIME_CLEARED_UTC"/>
+        </preConditions>
+        <comment>AHS-10037: DropNotNullConstraint from OBSTACLE_CLEAR.TIME_CLEARED_UTC</comment>
+        <dropNotNullConstraint tableName="OBSTACLE_CLEAR" columnName="TIME_CLEARED_UTC" columnDataType="DATETIME2"/>
+    </changeSet>
+
+    <changeSet id="eedbfe1a-60fd-42a5-8ec5-2fb929eb7033" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropNotNullConstraint for OBSTACLE_CLEAR.INSPECTOR_NAME as column does not exist or is already nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="OBSTACLE_CLEAR" columnName="INSPECTOR_NAME"/>
+        </preConditions>
+        <comment>AHS-10037: DropNotNullConstraint from OBSTACLE_CLEAR.INSPECTOR_NAME</comment>
+        <dropNotNullConstraint tableName="OBSTACLE_CLEAR" columnName="INSPECTOR_NAME" columnDataType="VARCHAR(255)"/>
+    </changeSet>
+
+    <changeSet id="e483dde9-a972-4556-813e-213b444569b9" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for OBSTACLE_REFERENCE to table OBSTACLE_CLEAR as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="OBSTACLE_CLEAR"/>
+            <not>
+                <columnExists tableName="OBSTACLE_CLEAR" columnName="OBSTACLE_REFERENCE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10037: AddColumn OBSTACLE_CLEAR.OBSTACLE_REFERENCE</comment>
+        <addColumn tableName="OBSTACLE_CLEAR">
+            <column name="OBSTACLE_REFERENCE" type="BIGINT" remarks="Reference to the obstacle that was cleared/rejected"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="ecaafb83-ba4d-4e0e-a8d5-2cf4f92b7cac" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for LOADING_TOOL_OID to table OBSTACLE_CLEAR as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="OBSTACLE_CLEAR"/>
+            <not>
+                <columnExists tableName="OBSTACLE_CLEAR" columnName="LOADING_TOOL_OID"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10037: AddColumn OBSTACLE_CLEAR.LOADING_TOOL_OID</comment>
+        <addColumn tableName="OBSTACLE_CLEAR">
+            <column name="LOADING_TOOL_OID" type="BIGINT"
+                    remarks="The nearest loading tool to which the obstacle detection was sent for possible clearing/rejection"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="996563d8-d70d-4a74-9639-f5e2249b59dc" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for TIME_SENT_UTC to table OBSTACLE_CLEAR as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="OBSTACLE_CLEAR"/>
+            <not>
+                <columnExists tableName="OBSTACLE_CLEAR" columnName="TIME_SENT_UTC"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10037: AddColumn OBSTACLE_CLEAR.TIME_SENT_UTC</comment>
+        <addColumn tableName="OBSTACLE_CLEAR">
+            <column name="TIME_SENT_UTC" type="DATETIME2"
+                    remarks="The time that the obstacle detection was sent to the panel on the nearest loading tool."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="78964a79-23ae-4873-b3f1-1621f685eae3" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for TIME_REJECTED_UTC to table OBSTACLE_CLEAR as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="OBSTACLE_CLEAR"/>
+            <not>
+                <columnExists tableName="OBSTACLE_CLEAR" columnName="TIME_REJECTED_UTC"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10037: AddColumn OBSTACLE_CLEAR.TIME_REJECTED_UTC</comment>
+        <addColumn tableName="OBSTACLE_CLEAR">
+            <column name="TIME_REJECTED_UTC" type="DATETIME2"
+                    remarks="The time that the obstacle was rejected by the loading tool operator."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="c2d2c3d0-ea34-4cc6-87f6-3bf5397afc4a" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored CreateIndex for OBSTACLE_CLEAR_REFERENCE to table OBSTACLE_CLEAR as (1) table does not exist, or (2) index already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="OBSTACLE_CLEAR"/>
+            <not>
+                <indexExists indexName="OBSTACLE_CLEAR_REFERENCE" tableName="OBSTACLE_CLEAR"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10037: CreateIndex OBSTACLE_CLEAR_REFERENCE on OBSTACLE_CLEAR (MACHINE_CLEARED, OBSTACLE_REFERENCE)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="OBSTACLE_CLEAR_REFERENCE" tableName="OBSTACLE_CLEAR">
+            <column name="MACHINE_CLEARED"/>
+            <column name="OBSTACLE_REFERENCE"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="c2c19520-501b-4ce1-9867-a0ca6d25ff55" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for INVERSION_GOAL as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="INVERSION_GOAL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4202: CreateTable INVERSION_GOAL</comment>
+        <createTable tablespace="MW_ENT" remarks="The start of a command machine inversion maneuver." tableName="INVERSION_GOAL">
+            <column name="ROUTE_NODE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="INT" remarks="The unique, system-assigned identifier for this goal.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODEL_UPDATE_VERSION" type="BIGINT" remarks="The is a copy of the system wide version number."/>
+            <column name="IS_ACTIVE" type="BOOLEAN" remarks="Whether this load goal is active or archived. (This flag is '1' if it is active and '0' if archived.)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="POSITION_X" type="DOUBLE" remarks="The center point of the load goal."/>
+            <column name="POSITION_Y" type="DOUBLE" remarks="The center point of the load goal."/>
+            <column name="POSITION_Z" type="DOUBLE" remarks="The center point of the load goal."/>
+            <column name="DIRECTION" type="DOUBLE" remarks="The direction that the arrow is pointing away from the center point."/>
+        </createTable>
+        <addPrimaryKey columnNames="ROUTE_NODE_OID" constraintName="INVERSION_GOAL_PK" tablespace="MW_IDXENT" tableName="INVERSION_GOAL"/>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="INVERSIONGOAL_ID" tableName="INVERSION_GOAL">
+            <column name="ID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="2b67a77c-ab48-4b0d-9a4d-c06166d21432" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for INVERSION_NODE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="INVERSION_NODE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4202: CreateTable INVERSION_NODE</comment>
+        <createTable tablespace="MW_ENT" remarks="A inversion goal point." tableName="INVERSION_NODE">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ID" type="INT" remarks="The sequence ID for this node.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_ACTIVE" type="BOOLEAN" remarks="Whether this status is active or archived. (This flag is '1' if it is active and '0' if archived.)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="APPROACH" type="VARCHAR(255)" remarks="Approach Orientation"/>
+            <column name="POSITION_X" type="DOUBLE" remarks="The end position for the dump macro."/>
+            <column name="POSITION_Y" type="DOUBLE" remarks="The end position for the dump macro."/>
+            <column name="POSITION_Z" type="DOUBLE" remarks="The end position for the dump macro."/>
+            <column name="HEADING" type="DOUBLE" remarks="The heading to indicate the target direction."/>
+            <column name="ARTICULATION" type="DOUBLE" remarks="The heading to indicate the degree of articulation."/>
+            <column name="SPEED" type="DOUBLE" remarks="The speed value associated with the node."/>
+            <column name="INVERSION_GOAL_OID" type="BIGINT"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="INVERSION_NODE_PK" tablespace="MW_IDXENT" tableName="INVERSION_NODE"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="e2af02e3-4f47-44cb-8981-30427a21c0ee" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for INVERSION_GOAL_ROUTE_NODE_O_FK to table INVERSION_GOAL as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="INVERSION_GOAL"/>
+            <tableExists tableName="ROUTE_NODE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="INVERSION_GOAL" foreignKeyName="INVERSION_GOAL_ROUTE_NODE_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4202: AddForeignKeyConstraint INVERSION_GOAL_ROUTE_NODE_O_FK to INVERSION_GOAL (ROUTE_NODE_OID)</comment>
+        <sql>DELETE FROM INVERSION_GOAL WHERE ROUTE_NODE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM ROUTE_NODE WHERE ROUTE_NODE.ROUTE_NODE_OID = INVERSION_GOAL.ROUTE_NODE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="INVERSION_GOAL" baseColumnNames="ROUTE_NODE_OID" constraintName="INVERSION_GOAL_ROUTE_NODE_O_FK" referencedTableName="ROUTE_NODE" referencedColumnNames="ROUTE_NODE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="INVERSION_GOAL" constraintName="INVERSION_GOAL_ROUTE_NODE_O_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="c4e717a4-f66a-4b8e-9ed5-8ab00ac278c1" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for INVERSION_NODE_INVERSION_GO_FK to table INVERSION_NODE as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="INVERSION_NODE"/>
+            <tableExists tableName="INVERSION_GOAL"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="INVERSION_NODE" foreignKeyName="INVERSION_NODE_INVERSION_GO_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4202: AddForeignKeyConstraint INVERSION_NODE_INVERSION_GO_FK to INVERSION_NODE (INVERSION_GOAL_OID)</comment>
+        <sql>UPDATE INVERSION_NODE SET INVERSION_GOAL_OID = NULL WHERE INVERSION_GOAL_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM INVERSION_GOAL WHERE INVERSION_GOAL.ROUTE_NODE_OID = INVERSION_NODE.INVERSION_GOAL_OID)</sql>
+        <addForeignKeyConstraint baseTableName="INVERSION_NODE" baseColumnNames="INVERSION_GOAL_OID" constraintName="INVERSION_NODE_INVERSION_GO_FK" referencedTableName="INVERSION_GOAL" referencedColumnNames="ROUTE_NODE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="INVERSION_NODE" constraintName="INVERSION_NODE_INVERSION_GO_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,79 @@
+<definition>
+    <serviceTypes>
+        <serviceType name="http" defaultPort="80">
+            <param name="host" label="Hostname" default="$remoteHost"/>
+            <param name="url" label="Path" default="/"/>
+            <script>
+                <sendData>HEAD<space/><param name="url"/><space/>HTTP/1.1<crlf/>Host:<space/><param name="host"/><crlf/><crlf/></sendData>
+                <failResponse><regex pattern="HTTP/1.\d [45]\d{2}"/></failResponse>
+                <successResponse><regex pattern="HTTP/1.\d [123]\d{2}"/></successResponse>
+            </script>
+        </serviceType>
+        <serviceType name="http-regexp" defaultPort="80">
+            <param name="host" label="Hostname" default="$remoteHost"/>
+            <param name="url" label="Path" default="/"/>
+            <param name="successPattern" label="Regexp (success)" default="^.*$"/>
+            <param name="failPattern" label="Regexp (failure)" default=""/>
+            <script>
+                <sendData>GET<space/><param name="url"/><space/>HTTP/1.1<crlf/>Host:<space/><param name="host"/><crlf/><crlf/></sendData>
+                <failResponse><regex pattern="HTTP/1.\d [45]\d{2}"/></failResponse>
+                <successResponse><regex pattern="HTTP/1.\d [123]\d{2}"/></successResponse>
+                <failResponse><regex name="failPattern"/></failResponse>
+                <successResponse><regex name="okPattern"/></successResponse>
+            </script>
+        </serviceType>
+        <serviceType name="ftp" defaultPort="21">
+            <script>
+                <successResponse>220</successResponse>
+            </script>
+        </serviceType>
+        <serviceType name="oracle" defaultPort="1521" 
+            class="com.mincom.env.service.monitor.engine.OracleProbe"
+            displayIcon="@apps/package_applications"
+        >
+            <param name="host" label="Hostname" default="$remoteHost"/>
+            <param name="instance" label="Instance"/>
+            <param name="user" label="User"/>
+            <param name="password" label="Password"/>
+            <param name="sql" label="SQL" default="select sysdate from dual"/>
+        </serviceType>    
+        <serviceType name="tcp-connect" defaultPort="7">
+            <script>
+            </script>
+        </serviceType>
+        <serviceType name="script"
+                 class="com.mincom.env.service.monitor.engine.ScriptedProbeWrapper"
+                 displayIcon="@apps/package_applications"
+                 >
+            <param name="host" label="Hostname" default="$remoteHost"/>
+            <param name="scriptUrl" label="Script Url"/>
+        </serviceType>
+
+    </serviceTypes>
+    
+    <monitorTypes>
+        <monitorType name="alarm"
+            class="com.mincom.env.service.monitor.engine.AlarmMonitorProcessor"
+            upIcon="@actions/ok"
+            downIcon="@actions/stop"
+            timeoutIcon="@apps/ktimer"
+            displayIcon="@apps/bell"
+            disabledIcon="@apps/cache"
+            parameterForm="AlarmMonitorParameters"
+        >
+            <param name="alarmName" label="Alarm Name"/>
+        </monitorType>
+        <monitorType name="script"
+                 class="com.mincom.env.service.monitor.engine.ScriptedExceptionProcessorWrapper"
+                 upIcon="@actions/ok"
+                 downIcon="@actions/stop"
+                 timeoutIcon="@apps/ktimer"
+                 displayIcon="@apps/bell"
+                 disabledIcon="@apps/cache"
+                 parameterForm="EventMonitorParameters"
+                 >
+            <param name="scriptUrl" label="Script Url"/>
+        </monitorType>
+
+    </monitorTypes>
+</definition>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="3ad26894-1509-452c-a317-7ef872457fca" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for ACCESSORY_CONTROLS_TRIGGERE_FK of table ACCESSORY_CONTROLS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="ACCESSORY_CONTROLS" foreignKeyName="ACCESSORY_CONTROLS_TRIGGERE_FK"/>
+        </preConditions>
+        <comment>AHS-1829: DropForeignKeyConstraint ACCESSORY_CONTROLS_TRIGGERE_FK from ACCESSORY_CONTROLS (TRIGGERED_SCRIPT_SCRIPT)</comment>
+        <dropForeignKeyConstraint baseTableName="ACCESSORY_CONTROLS" constraintName="ACCESSORY_CONTROLS_TRIGGERE_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="ACCESSORY_CONTROLS" baseColumnNames="TRIGGERED_SCRIPT_SCRIPT" constraintName="ACCESSORY_CONTROLS_TRIGGERE_FK" referencedTableName="SCRIPT" referencedColumnNames="SCRIPT_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a5820cbd-85b4-4217-b939-341c73ce83b8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for ACCESSORY_CONTROLS_PK of table ACCESSORY_CONTROLS as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="ACCESSORY_CONTROLS_PK" tableName="ACCESSORY_CONTROLS"/>
+        </preConditions>
+        <comment>AHS-1829: DropPrimaryKey ACCESSORY_CONTROLS_PK from ACCESSORY_CONTROLS (ACCESSORY_CONTROL_OID)</comment>
+        <dropPrimaryKey constraintName="ACCESSORY_CONTROLS_PK" tableName="ACCESSORY_CONTROLS"/>
+        <rollback>
+            <addPrimaryKey columnNames="ACCESSORY_CONTROL_OID" constraintName="ACCESSORY_CONTROLS_PK" tablespace="MW_IDXENT" tableName="ACCESSORY_CONTROLS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="e5c9fbce-52b3-48e5-9a4c-9a34404d7ff8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ACCESSORY_CONTROL_OID of table ACCESSORY_CONTROLS as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ACCESSORY_CONTROLS" columnName="ACCESSORY_CONTROL_OID"/>
+        </preConditions>
+        <comment>AHS-1829: DropColumn ACCESSORY_CONTROLS.ACCESSORY_CONTROL_OID</comment>
+        <dropColumn columnName="ACCESSORY_CONTROL_OID" tableName="ACCESSORY_CONTROLS"/>
+        <rollback>
+            <addColumn tableName="ACCESSORY_CONTROLS">
+                <column name="ACCESSORY_CONTROL_OID" type="BIGINT" defaultValueNumeric="0">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+            <!-- Fabricate some OIDs -->
+            <sql>UPDATE ACCESSORY_CONTROLS SET ACCESSORY_CONTROL_OID = OID + ELEMENT_NR</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0dcc794a-98e7-45e1-b30f-f3e9cd07ab35" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for OID of table ACCESSORY_CONTROLS as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ACCESSORY_CONTROLS" columnName="OID"/>
+            <ext:columnIsNullable tableName="ACCESSORY_CONTROLS" columnName="OID"/>
+        </preConditions>
+        <comment>AHS-1829: AlterColumn ACCESSORY_CONTROLS.OID - nullability changed from true to false</comment>
+        <sql>DELETE FROM ACCESSORY_CONTROLS WHERE OID IS NULL</sql>
+        <addNotNullConstraint columnName="OID" columnDataType="BIGINT" tableName="ACCESSORY_CONTROLS"/>
+        <rollback>
+            <dropNotNullConstraint tableName="ACCESSORY_CONTROLS" columnName="OID"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="5e6cdfc1-2f57-49d5-84d6-dc2f216b4aa4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for ELEMENT_NR of table ACCESSORY_CONTROLS as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ACCESSORY_CONTROLS" columnName="ELEMENT_NR"/>
+            <ext:columnIsNullable tableName="ACCESSORY_CONTROLS" columnName="ELEMENT_NR"/>
+        </preConditions>
+        <comment>AHS-1829: AlterColumn ACCESSORY_CONTROLS.ELEMENT_NR - nullability changed from true to false</comment>
+        <sql>DELETE FROM ACCESSORY_CONTROLS WHERE ELEMENT_NR IS NULL</sql>
+        <addNotNullConstraint columnName="ELEMENT_NR" columnDataType="INT" tableName="ACCESSORY_CONTROLS"/>
+        <rollback>
+            <dropNotNullConstraint tableName="ACCESSORY_CONTROLS" columnName="ELEMENT_NR"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="94deb493-e2df-440e-b585-441ad4568cb7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for DISCRIMINATOR_ID of table ACCESSORY_CONTROLS as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ACCESSORY_CONTROLS" columnName="DISCRIMINATOR_ID"/>
+            <ext:columnIsNullable tableName="ACCESSORY_CONTROLS" columnName="DISCRIMINATOR_ID"/>
+        </preConditions>
+        <comment>AHS-1829: AlterColumn ACCESSORY_CONTROLS.DISCRIMINATOR_ID - nullability changed from true to false</comment>
+        <sql>DELETE FROM ACCESSORY_CONTROLS WHERE DISCRIMINATOR_ID IS NULL</sql>
+        <addNotNullConstraint columnName="DISCRIMINATOR_ID" columnDataType="VARCHAR(255)" tableName="ACCESSORY_CONTROLS"/>
+        <rollback>
+            <dropNotNullConstraint tableName="ACCESSORY_CONTROLS" columnName="DISCRIMINATOR_ID"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="115ec7d5-8989-4008-9d98-92e9edc2a9ef" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for ACCESSORY_CONTROLS_PK to table ACCESSORY_CONTROLS as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ACCESSORY_CONTROLS"/>
+            <not>
+                <primaryKeyExists primaryKeyName="ACCESSORY_CONTROLS_PK" tableName="ACCESSORY_CONTROLS"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1829: AddPrimaryKey ACCESSORY_CONTROLS_PK to ACCESSORY_CONTROLS (OID,ELEMENT_NR)</comment>
+        <addPrimaryKey columnNames="OID,ELEMENT_NR" constraintName="ACCESSORY_CONTROLS_PK" tablespace="MW_IDXENT" tableName="ACCESSORY_CONTROLS"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="e11431e5-70ea-4cdf-8ff1-9f84aa2e2981" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SERVER_SCRIPT_ELEMENT_SCRIP_FK of table SERVER_SCRIPT_ELEMENT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SERVER_SCRIPT_ELEMENT" foreignKeyName="SERVER_SCRIPT_ELEMENT_SCRIP_FK"/>
+        </preConditions>
+        <comment>AHS-1829: DropForeignKeyConstraint SERVER_SCRIPT_ELEMENT_SCRIP_FK from SERVER_SCRIPT_ELEMENT (SCRIPT_CALL)</comment>
+        <dropForeignKeyConstraint baseTableName="SERVER_SCRIPT_ELEMENT" constraintName="SERVER_SCRIPT_ELEMENT_SCRIP_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SERVER_SCRIPT_ELEMENT" baseColumnNames="SCRIPT_CALL" constraintName="SERVER_SCRIPT_ELEMENT_SCRIP_FK" referencedTableName="SCRIPT" referencedColumnNames="SCRIPT_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="c54e7485-4ab2-43e7-ab8c-77bf260f1a43" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for SERVER_SCRIPT_ELEMENT_PK of table SERVER_SCRIPT_ELEMENT as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="SERVER_SCRIPT_ELEMENT_PK" tableName="SERVER_SCRIPT_ELEMENT"/>
+        </preConditions>
+        <comment>AHS-1829: DropPrimaryKey SERVER_SCRIPT_ELEMENT_PK from SERVER_SCRIPT_ELEMENT (SERVER_SCRIPT_ELEMENT_OID)</comment>
+        <dropPrimaryKey constraintName="SERVER_SCRIPT_ELEMENT_PK" tableName="SERVER_SCRIPT_ELEMENT"/>
+        <rollback>
+            <addPrimaryKey columnNames="SERVER_SCRIPT_ELEMENT_OID" constraintName="SERVER_SCRIPT_ELEMENT_PK" tablespace="MW_IDXENT" tableName="SERVER_SCRIPT_ELEMENT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="ae631676-43e3-4888-bf4a-e8dfdfa8696a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SERVER_SCRIPT_ELEMENT_OID of table SERVER_SCRIPT_ELEMENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SERVER_SCRIPT_ELEMENT" columnName="SERVER_SCRIPT_ELEMENT_OID"/>
+        </preConditions>
+        <comment>AHS-1829: DropColumn SERVER_SCRIPT_ELEMENT.SERVER_SCRIPT_ELEMENT_OID</comment>
+        <dropColumn columnName="SERVER_SCRIPT_ELEMENT_OID" tableName="SERVER_SCRIPT_ELEMENT"/>
+        <rollback>
+            <addColumn tableName="SERVER_SCRIPT_ELEMENT">
+                <column name="SERVER_SCRIPT_ELEMENT_OID" type="BIGINT" defaultValueNumeric="0">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+            <!-- Fabricate some OIDs -->
+            <sql>UPDATE SERVER_SCRIPT_ELEMENT SET SERVER_SCRIPT_ELEMENT_OID = OID + ELEMENT_NR</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="d5bd1536-3eb6-4ea1-9558-8b164df919aa" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for IS_ACTIVE of table SERVER_SCRIPT_ELEMENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SERVER_SCRIPT_ELEMENT" columnName="IS_ACTIVE"/>
+        </preConditions>
+        <comment>AHS-1829: DropColumn SERVER_SCRIPT_ELEMENT.IS_ACTIVE</comment>
+        <dropColumn columnName="IS_ACTIVE" tableName="SERVER_SCRIPT_ELEMENT"/>
+        <rollback>
+            <addColumn tableName="SERVER_SCRIPT_ELEMENT">
+                <column name="IS_ACTIVE" type="BOOLEAN" defaultValueBoolean="true" remarks="Is this script active">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="21a99fd7-c530-4aa7-8927-ed3ec33e05e2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for DISCRIMINATOR_ID of table SERVER_SCRIPT_ELEMENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SERVER_SCRIPT_ELEMENT" columnName="DISCRIMINATOR_ID"/>
+            <ext:columnIsNullable tableName="SERVER_SCRIPT_ELEMENT" columnName="DISCRIMINATOR_ID"/>
+        </preConditions>
+        <comment>AHS-1829: AlterColumn SERVER_SCRIPT_ELEMENT.DISCRIMINATOR_ID - nullability changed from true to false</comment>
+        <sql>DELETE FROM SERVER_SCRIPT_ELEMENT WHERE DISCRIMINATOR_ID IS NULL</sql>
+        <addNotNullConstraint columnName="DISCRIMINATOR_ID" defaultNullValue="" columnDataType="VARCHAR(255)" tableName="SERVER_SCRIPT_ELEMENT"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SERVER_SCRIPT_ELEMENT" columnName="DISCRIMINATOR_ID"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="c2408688-0fee-4f31-a4b0-12e74887dabe" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for OID of table SERVER_SCRIPT_ELEMENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SERVER_SCRIPT_ELEMENT" columnName="OID"/>
+            <ext:columnIsNullable tableName="SERVER_SCRIPT_ELEMENT" columnName="OID"/>
+        </preConditions>
+        <comment>AHS-1829: AlterColumn SERVER_SCRIPT_ELEMENT.OID - nullability changed from true to false</comment>
+        <sql>DELETE FROM SERVER_SCRIPT_ELEMENT WHERE OID IS NULL</sql>
+        <addNotNullConstraint columnName="OID" columnDataType="BIGINT" tableName="SERVER_SCRIPT_ELEMENT"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SERVER_SCRIPT_ELEMENT" columnName="OID"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="1caacd94-145c-4b87-a782-63c72bc5301b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for ELEMENT_NR of table SERVER_SCRIPT_ELEMENT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SERVER_SCRIPT_ELEMENT" columnName="ELEMENT_NR"/>
+            <ext:columnIsNullable tableName="SERVER_SCRIPT_ELEMENT" columnName="ELEMENT_NR"/>
+        </preConditions>
+        <comment>AHS-1829: AlterColumn SERVER_SCRIPT_ELEMENT.ELEMENT_NR - nullability changed from true to false</comment>
+        <sql>DELETE FROM SERVER_SCRIPT_ELEMENT WHERE ELEMENT_NR IS NULL</sql>
+        <addNotNullConstraint columnName="ELEMENT_NR" columnDataType="INT" tableName="SERVER_SCRIPT_ELEMENT"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SERVER_SCRIPT_ELEMENT" columnName="ELEMENT_NR"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="4ce86115-e917-4d9c-90b2-4a5ccdaa65db" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for SERVER_SCRIPT_ELEMENT_PK to table SERVER_SCRIPT_ELEMENT as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SERVER_SCRIPT_ELEMENT"/>
+            <not>
+                <primaryKeyExists primaryKeyName="SERVER_SCRIPT_ELEMENT_PK" tableName="SERVER_SCRIPT_ELEMENT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1829: AddPrimaryKey SERVER_SCRIPT_ELEMENT_PK to SERVER_SCRIPT_ELEMENT (OID,ELEMENT_NR)</comment>
+        <sql>DELETE FROM SERVER_SCRIPT_ELEMENT WHERE OID NOT IN (SELECT SERVER_SCRIPT_OID FROM SERVER_SCRIPT)</sql>
+        <addPrimaryKey columnNames="OID,ELEMENT_NR" constraintName="SERVER_SCRIPT_ELEMENT_PK" tablespace="MW_IDXENT" tableName="SERVER_SCRIPT_ELEMENT"/>
+        <rollback>
+            <dropPrimaryKey tableName="SERVER_SCRIPT_ELEMENT"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="1ba78ed1-5aad-4899-a564-235fc9d19a8c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for SCRIPT_1 of table SCRIPT as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="SCRIPT_1" tableName="SCRIPT"/>
+        </preConditions>
+        <comment>AHS-1829: DropIndex SCRIPT_1 from SCRIPT (ID)</comment>
+        <dropIndex tableName="SCRIPT" indexName="SCRIPT_1"/>
+        <rollback>
+            <createIndex unique="true" tablespace="MW_IDXENT" tableName="SCRIPT" indexName="SCRIPT_1">
+                <column name="ID"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="014062f2-8167-43f8-97b8-8dcec4508daa" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SCRIPT_ID to table SCRIPT as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="SCRIPT"/>
+            <not>
+                <indexExists indexName="SCRIPT_ID" tableName="SCRIPT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1829: CreateUniqueIndex SCRIPT_ID on SCRIPT (ID)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="SCRIPT" indexName="SCRIPT_ID">
+            <column name="ID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="139101c3-b56a-4b36-a595-5cdf14dde3cb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SCRIPT_NAME to table SCRIPT as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="SCRIPT"/>
+            <not>
+                <indexExists indexName="SCRIPT_NAME" tableName="SCRIPT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1829: CreateUniqueIndex SCRIPT_NAME on SCRIPT (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="SCRIPT" indexName="SCRIPT_NAME">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="62237be5-80fa-49ce-a687-df734c0bece7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SERVER_SCRIPT_NAME to table SERVER_SCRIPT as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="SERVER_SCRIPT"/>
+            <not>
+                <indexExists indexName="SERVER_SCRIPT_NAME" tableName="SERVER_SCRIPT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1829: CreateUniqueIndex SERVER_SCRIPT_NAME on SERVER_SCRIPT (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="SERVER_SCRIPT" indexName="SERVER_SCRIPT_NAME">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

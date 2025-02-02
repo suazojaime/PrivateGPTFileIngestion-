@@ -1,0 +1,1 @@
+Mincom Chat is a simple Enterprise Bus client.

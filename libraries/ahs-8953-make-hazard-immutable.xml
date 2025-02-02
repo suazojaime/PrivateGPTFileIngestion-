@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="8c26659a-7c3d-44fd-ac84-6eed2f52ce33" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for HAZARD_1 of table HAZARD as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="HAZARD_1" tableName="HAZARD"/>
+        </preConditions>
+        <comment>AHS-8953: DropIndex HAZARD_1 from HAZARD (ID)</comment>
+        <dropIndex tableName="HAZARD" indexName="HAZARD_1"/>
+        <rollback>
+            <createIndex unique="true" indexName="HAZARD_1" tableName="HAZARD">
+                <column name="ID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="94700e7a-cca8-4086-8980-8c2de4559828" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for HAZARD_ID to table HAZARD as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HAZARD"/>
+            <not>
+                <indexExists indexName="HAZARD_ID" tableName="HAZARD"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8953: CreateUniqueIndex HAZARD_ID on HAZARD (ID)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="HAZARD_ID" tableName="HAZARD">
+            <column name="ID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="4069ff1e-87eb-4e6c-8d4e-37560e16e8ac" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for HAZARDTYPE_1 of table HAZARD_TYPE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="HAZARDTYPE_1" tableName="HAZARD_TYPE"/>
+        </preConditions>
+        <comment>AHS-8953: DropIndex HAZARDTYPE_1 from HAZARD_TYPE (ID)</comment>
+        <dropIndex tableName="HAZARD_TYPE" indexName="HAZARDTYPE_1"/>
+        <rollback>
+            <createIndex unique="true" indexName="HAZARDTYPE_1" tableName="HAZARD_TYPE">
+                <column name="ID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="f4e3ce43-3de0-4fdf-9a6c-d772da41ba95" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for DISCRIMINATOR_ID of table HAZARD_TYPE as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="HAZARD_TYPE" columnName="DISCRIMINATOR_ID"/>
+        </preConditions>
+        <comment>AHS-8953: DropColumn HAZARD_TYPE.DISCRIMINATOR_ID</comment>
+        <dropColumn columnName="DISCRIMINATOR_ID" tableName="HAZARD_TYPE"/>
+        <rollback>
+            <addColumn tableName="HAZARD_TYPE">
+                <column name="DISCRIMINATOR_ID" type="VARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="e1e55c30-89e9-4869-b086-2b67e89418c5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for HAZARDTYPE_ID to table HAZARD_TYPE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HAZARD_TYPE"/>
+            <not>
+                <indexExists indexName="HAZARDTYPE_ID" tableName="HAZARD_TYPE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8953: CreateUniqueIndex HAZARDTYPE_ID on HAZARD_TYPE (ID)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="HAZARDTYPE_ID" tableName="HAZARD_TYPE">
+            <column name="ID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="b0d045d8-2acd-4424-8b67-389fb0dfd215" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for HAZARDTYPE_NAME to table HAZARD_TYPE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HAZARD_TYPE"/>
+            <not>
+                <indexExists indexName="HAZARDTYPE_NAME" tableName="HAZARD_TYPE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8953: CreateUniqueIndex HAZARDTYPE_NAME on HAZARD_TYPE (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="HAZARDTYPE_NAME" tableName="HAZARD_TYPE">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="4aee6b2a-d4af-46e5-ae8d-76749ee3d66b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for NAME of table BLEND as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="NAME" tableName="BLEND"/>
+        </preConditions>
+        <comment>FLT-7670: DropIndex NAME from BLEND (NAME)</comment>
+        <dropIndex indexName="NAME" tableName="BLEND"/>
+        <rollback>
+            <createIndex unique="true" tablespace="MW_IDXENT" tableName="BLEND" indexName="NAME">
+                <column name="NAME"/>
+            </createIndex>
+        </rollback>
+        <modifySql applyToRollback="true" dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="ae3b20b6-2453-47c9-a24f-21d1a4880a74" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for BLEND.NAME as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="BLEND" columnName="NAME"/>
+        </preConditions>
+        <comment>FLT-7670: AddNotNullConstraint to BLEND.NAME</comment>
+        <addNotNullConstraint columnName="NAME" columnDataType="VARCHAR(254)" tableName="BLEND"/>
+    </changeSet>
+
+    <changeSet id="5fe75ade-4dac-4fc9-9284-f2a3e012050d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateUniqueIndex for BLEND_NAME to table BLEND as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="BLEND"/>
+            <not>
+                <indexExists indexName="BLEND_NAME" tableName="BLEND"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7670: CreateUniqueIndex BLEND_NAME on BLEND (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="BLEND" indexName="BLEND_NAME">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="d951f01c-39fd-4f5e-bddc-98c5a9337b40" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropPrimaryKey for BLEND_CRITERIA_DISCRETE_PK of table BLEND_CRITERIA_DISCRETE as primaryKey does not exist."
+                onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="BLEND_CRITERIA_DISCRETE_PK" tableName="BLEND_CRITERIA_DISCRETE"/>
+        </preConditions>
+        <comment>FLT-7670: DropPrimaryKey BLEND_CRITERIA_DISCRETE_PK from BLEND_CRITERIA_DISCRETE (BLEND_OID,GRADE_OID,GRADE_VALUE,MINIMUM_VALUE,MAXIMUM_VALUE)</comment>
+        <dropPrimaryKey constraintName="BLEND_CRITERIA_DISCRETE_PK" tableName="BLEND_CRITERIA_DISCRETE"/>
+        <rollback>
+            <addPrimaryKey columnNames="BLEND_OID,GRADE_OID,GRADE_VALUE,MINIMUM_VALUE,MAXIMUM_VALUE"
+                           constraintName="BLEND_CRITERIA_DISCRETE_PK" tableName="BLEND_CRITERIA_DISCRETE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="0c362825-ba97-4fc8-9dce-7823f00e61cf" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddPrimaryKey for BLEND_CRITERIA_DISCRETE_PK to table BLEND_CRITERIA_DISCRETE as table does not exist or primaryKey already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="BLEND_CRITERIA_DISCRETE"/>
+            <not>
+                <primaryKeyExists primaryKeyName="BLEND_CRITERIA_DISCRETE_PK" tableName="BLEND_CRITERIA_DISCRETE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7670: AddPrimaryKey BLEND_CRITERIA_DISCRETE_PK to BLEND_CRITERIA_DISCRETE (BLEND_OID,GRADE_OID,GRADE_VALUE)</comment>
+        <sql dbms="oracle">DELETE FROM BLEND_CRITERIA_DISCRETE WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID,
+            ROW_NUMBER() OVER (PARTITION BY BLEND_OID, GRADE_OID, GRADE_VALUE ORDER BY ROWID) RN FROM
+            BLEND_CRITERIA_DISCRETE) WHERE RN &lt;&gt; 1)
+        </sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY BLEND_OID, GRADE_OID, GRADE_VALUE ORDER BY
+            %%physloc%%) AS ROW_NUM FROM BLEND_CRITERIA_DISCRETE) DELETE FROM CTE WHERE ROW_NUM &gt; 1
+        </sql>
+        <addPrimaryKey columnNames="BLEND_OID,GRADE_OID,GRADE_VALUE" constraintName="BLEND_CRITERIA_DISCRETE_PK"
+                       tablespace="MW_IDXENT" tableName="BLEND_CRITERIA_DISCRETE"/>
+        <rollback>
+            <dropPrimaryKey constraintName="BLEND_CRITERIA_DISCRETE_PK" tableName="BLEND_CRITERIA_DISCRETE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="1b35814c-40ad-4965-a5b8-0a95c6abf81e" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for DELAYCLASS.INFIELD as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="DELAYCLASS" columnName="INFIELD"/>
+        </preConditions>
+        <comment>AHS-7886: DropDefaultValue 'true' from DELAYCLASS.INFIELD</comment>
+        <dropDefaultValue columnName="INFIELD" columnDataType="BOOLEAN" tableName="DELAYCLASS"/>
+        <rollback>
+            <addDefaultValue columnName="INFIELD" columnDataType="BOOLEAN" defaultValueBoolean="true" tableName="DELAYCLASS"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

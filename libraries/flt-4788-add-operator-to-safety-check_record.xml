@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="0cd1a7a2-60af-4617-b4cc-c6ad5952c63a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for OPERATOR_OID to table SAFETY_CHECK_RECORD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SAFETY_CHECK_RECORD"/>
+            <not>
+                <columnExists tableName="SAFETY_CHECK_RECORD" columnName="OPERATOR_OID"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4788:Safety records deleted without customers knowledge</comment>
+        <addColumn tableName="SAFETY_CHECK_RECORD">
+            <column name="OPERATOR_OID" type="BIGINT" remarks="OID of the operator"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

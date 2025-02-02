@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="2f7d6932-8770-4480-8561-c818b083a892" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropUniqueConstraint for FUTURE_DRAW_CARD_SHIFT_UK of table FUTURE_DRAW_CARD as the table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="FUTURE_DRAW_CARD"/>
+        </preConditions>
+        <comment>FUG-5972: DropUniqueConstraint FUTURE_DRAW_CARD_SHIFT_UK from FUTURE_DRAW_CARD (SHIFT)</comment>
+        <dropUniqueConstraint constraintName="FUTURE_DRAW_CARD_SHIFT_UK" tableName="FUTURE_DRAW_CARD"/>
+        <rollback>
+            <addUniqueConstraint columnNames="SHIFT" constraintName="FUTURE_DRAW_CARD_SHIFT_UK" tableName="FUTURE_DRAW_CARD"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="4d4b62dc-2537-4595-b227-024255735f61" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for SHIFT of table FUTURE_DRAW_CARD as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="FUTURE_DRAW_CARD" columnName="SHIFT"/>
+        </preConditions>
+        <comment>FUG-5972: DropColumn FUTURE_DRAW_CARD.SHIFT</comment>
+        <dropColumn columnName="SHIFT" tableName="FUTURE_DRAW_CARD"/>
+        <rollback>
+            <addColumn tableName="FUTURE_DRAW_CARD">
+                <column name="SHIFT" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="6788c20b-e7d8-4bc2-92d9-9d76f536f735" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SHIFT_TYPE to table FUTURE_DRAW_CARD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="FUTURE_DRAW_CARD"/>
+            <not>
+                <columnExists tableName="FUTURE_DRAW_CARD" columnName="SHIFT_TYPE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5972: AddColumn FUTURE_DRAW_CARD.SHIFT_TYPE</comment>
+        <addColumn tableName="FUTURE_DRAW_CARD">
+            <column name="SHIFT_TYPE" type="INT" remarks="A reference to a planned shift that the information in this draw card will apply to. (Not applicable if this draw card is for the entire day.)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

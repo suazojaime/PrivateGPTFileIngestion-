@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="c045a982-2eec-4095-9f90-41cda3c81a59" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for WDS_SPRAY_HEAD as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="WDS_SPRAY_HEAD"/>
+        </preConditions>
+        <comment>MO-537: DropTable WDS_SPRAY_HEAD</comment>
+        <dropTable tableName="WDS_SPRAY_HEAD"/>
+        <rollback>
+            <createTable tableName="WDS_SPRAY_HEAD">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="SPRAY_HEAD_ID" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="SPRAY_HEAD_NAME" type="VARCHAR(255)"/>
+                <column name="START_X_OFFSET" type="DOUBLE"/>
+                <column name="START_Y_OFFSET" type="DOUBLE"/>
+                <column name="END_X_OFFSET" type="DOUBLE"/>
+                <column name="END_Y_OFFSET" type="DOUBLE"/>
+                <column name="DISPLAY_ID" type="VARCHAR(255)">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addForeignKeyConstraint baseTableName="WDS_SPRAY_HEAD" baseColumnNames="OID" constraintName="WDS_SPRAY_HEAD_OID_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="de6cf663-5d84-439d-a4d4-1ae2bad6c57b" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for SPRAY_HEAD_GROUP as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SPRAY_HEAD_GROUP"/>
+            </not>
+        </preConditions>
+        <comment>MO-537: CreateTable SPRAY_HEAD_GROUP</comment>
+        <createTable tablespace="MW_OBJ" remarks="Spray Head groups define the association between spray heads and machine class." tableName="SPRAY_HEAD_GROUP">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="SPRAY_HEAD_GROUP_PK" tablespace="MW_IDXOBJ" tableName="SPRAY_HEAD_GROUP"/>
+        <addUniqueConstraint columnNames="NAME" constraintName="SPRAY_HEAD_GROUP_NAME_UK" tableName="SPRAY_HEAD_GROUP"/>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="43ba726e-5ba4-4962-a4a2-1d06e359ce64" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for SPRAY_HEAD_GROUP_ALLOCATION as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SPRAY_HEAD_GROUP_ALLOCATION"/>
+            </not>
+        </preConditions>
+        <comment>MO-537: CreateTable SPRAY_HEAD_GROUP_ALLOCATION</comment>
+        <createTable tablespace="MW_ENT" tableName="SPRAY_HEAD_GROUP_ALLOCATION">
+            <column name="SPRAY_HEAD_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPRAY_HEAD_GROUP_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="SPRAY_HEAD_OID,SPRAY_HEAD_GROUP_OID" constraintName="SPRAY_HEAD_GROUP_ALLOCATION_PK" tableName="SPRAY_HEAD_GROUP_ALLOCATION"/>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="bd149fb0-89cb-45a5-be61-8631df604dd0" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for WDS_SPRAY_HEADS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="WDS_SPRAY_HEADS"/>
+            </not>
+        </preConditions>
+        <comment>MO-537: CreateTable WDS_SPRAY_HEADS</comment>
+        <createTable remarks="A list of assigned watering spray heads." tableName="WDS_SPRAY_HEADS">
+            <column name="WDS_SPRAY_HEAD_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ID" type="VARCHAR(255)" remarks="The spray head UI display identifier">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPRAY_HEAD_ID" type="INT" remarks="The spray head identifier">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPRAY_HEAD_NAME" type="VARCHAR(255)" remarks="The spray head descriptive name"/>
+            <column name="START_X_OFFSET" type="DOUBLE" remarks="The start x-coordinate offset from the centre of rear axle"/>
+            <column name="START_Y_OFFSET" type="DOUBLE" remarks="The start y-coordinate offset from the centre of rear axle"/>
+            <column name="END_X_OFFSET" type="DOUBLE" remarks="The end x-coordinate offset from the centre of rear axle"/>
+            <column name="END_Y_OFFSET" type="DOUBLE" remarks="The end y-coordinate offset from the centre of rear axle"/>
+        </createTable>
+        <addPrimaryKey columnNames="WDS_SPRAY_HEAD_OID" constraintName="WDS_SPRAY_HEADS_PK" tableName="WDS_SPRAY_HEADS"/>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="MACHINECLASS_SPRAYHEADID_UQ" tableName="WDS_SPRAY_HEADS">
+            <column name="MACHINE_CLASS_OID"/>
+            <column name="SPRAY_HEAD_ID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="f91eb2b4-598b-4972-b5ab-4bec46da98aa" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPRAY_HEAD_GROUP_ALLOCATIO_FK1 to table SPRAY_HEAD_GROUP_ALLOCATION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPRAY_HEAD_GROUP_ALLOCATION" columnName="SPRAY_HEAD_GROUP_OID"/>
+            <columnExists tableName="SPRAY_HEAD_GROUP" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPRAY_HEAD_GROUP_ALLOCATION" foreignKeyName="SPRAY_HEAD_GROUP_ALLOCATIO_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-537: AddForeignKeyConstraint SPRAY_HEAD_GROUP_ALLOCATIO_FK1 to SPRAY_HEAD_GROUP_ALLOCATION (SPRAY_HEAD_GROUP_OID)</comment>
+        <sql>DELETE FROM SPRAY_HEAD_GROUP_ALLOCATION WHERE SPRAY_HEAD_GROUP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPRAY_HEAD_GROUP WHERE SPRAY_HEAD_GROUP.OID = SPRAY_HEAD_GROUP_ALLOCATION.SPRAY_HEAD_GROUP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPRAY_HEAD_GROUP_ALLOCATION" baseColumnNames="SPRAY_HEAD_GROUP_OID" constraintName="SPRAY_HEAD_GROUP_ALLOCATIO_FK1" referencedTableName="SPRAY_HEAD_GROUP" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="725a0c47-e22e-455d-88fb-a6686c4d7961" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPRAY_HEAD_GROUP_ALLOCATIO_FK2 to table SPRAY_HEAD_GROUP_ALLOCATION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPRAY_HEAD_GROUP_ALLOCATION" columnName="SPRAY_HEAD_OID"/>
+            <columnExists tableName="WDS_SPRAY_HEADS" columnName="WDS_SPRAY_HEAD_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPRAY_HEAD_GROUP_ALLOCATION" foreignKeyName="SPRAY_HEAD_GROUP_ALLOCATIO_FK2"/>
+            </not>
+        </preConditions>
+        <comment>MO-537: AddForeignKeyConstraint SPRAY_HEAD_GROUP_ALLOCATIO_FK2 to SPRAY_HEAD_GROUP_ALLOCATION (SPRAY_HEAD_OID)</comment>
+        <sql>DELETE FROM SPRAY_HEAD_GROUP_ALLOCATION WHERE SPRAY_HEAD_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM WDS_SPRAY_HEADS WHERE WDS_SPRAY_HEADS.WDS_SPRAY_HEAD_OID = SPRAY_HEAD_GROUP_ALLOCATION.SPRAY_HEAD_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPRAY_HEAD_GROUP_ALLOCATION" baseColumnNames="SPRAY_HEAD_OID" constraintName="SPRAY_HEAD_GROUP_ALLOCATIO_FK2" referencedTableName="WDS_SPRAY_HEADS" referencedColumnNames="WDS_SPRAY_HEAD_OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="6db4c532-c95c-40af-bbaa-1d6a8f80dead" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for WDS_SPRAY_HEADS_MACHINE_CLA_FK to table WDS_SPRAY_HEADS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="WDS_SPRAY_HEADS" columnName="MACHINE_CLASS_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="WDS_SPRAY_HEADS" foreignKeyName="WDS_SPRAY_HEADS_MACHINE_CLA_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-537: AddForeignKeyConstraint WDS_SPRAY_HEADS_MACHINE_CLA_FK to WDS_SPRAY_HEADS (MACHINE_CLASS_OID)</comment>
+        <sql>DELETE FROM WDS_SPRAY_HEADS WHERE MACHINE_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = WDS_SPRAY_HEADS.MACHINE_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="WDS_SPRAY_HEADS" baseColumnNames="MACHINE_CLASS_OID" constraintName="WDS_SPRAY_HEADS_MACHINE_CLA_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="WDS_SPRAY_HEADS" constraintName="WDS_SPRAY_HEADS_MACHINE_CLA_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

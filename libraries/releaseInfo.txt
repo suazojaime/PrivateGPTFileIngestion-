@@ -1,0 +1,12 @@
+#MineStar build numbers and information
+upgradeServicePackBuildNumber=3_0-447
+DATE=Tue 16 July 2024 07:06:55PM CDT
+upgradeServicePackBranch=
+MAJOR=5.11
+upgradeServicePackFromVersion=3.0
+upgradeServicePackStartTag=BRANCH_300GA
+upgradeServicePackEndTag=
+HOST=${hostname}
+MAJOR_SHORT=511
+MINOR=31
+REVISION=44

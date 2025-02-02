@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.mine.domain.material" schema="historical">
+
+    <class name="ProcessorName" table="DEST_BLEND_PROCESSOR_DETAIL">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A processor id and name record</meta>
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="OID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        <property
+                name="processorOID"
+                type="java.lang.Long"
+                column="PROCESSOR_OID"
+                not-null="true"
+                >
+            <meta attribute="description">The processor oid in external system</meta>
+        </property>
+        <property
+                name="processorName"
+                type="java.lang.String"
+                column="PROCESSOR_NAME"
+                length="1016"
+                not-null="false"
+                >
+            <meta attribute="description">The processor name</meta>
+        </property>
+
+        <many-to-one
+                class="minestar.mine.domain.material.DestinationBlendDetail"
+                name="destinationBlendDetail"
+                column="DESTINATION_BLEND_DETAIL_OID"
+                not-null="true"/>
+
+    </class>
+</hibernate-mapping>

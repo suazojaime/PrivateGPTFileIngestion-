@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ssma-script-file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\Schemas\O2SSConsoleScriptSchema.xsd">
+
+  <config>
+    <output-providers>
+      <output-window suppress-messages="true"
+                     destination="stdout"/>
+      <upgrade-project action="yes"/>
+      <data-migration-connection source-use-last-used="true"
+                                 target-server="target_historicaldb"/>
+
+      <progress-reporting enable="true"
+                          report-messages="true"
+                          report-progress="every-20%"/>
+
+     <object-overwrite action="skip" />
+
+     <log-verbosity level="debug"/>
+
+      </output-providers>
+  </config>
+  
+  <script-commands>
+    <create-new-project project-folder="$project_folder$"
+                        project-name="$project_name$"
+                        overwrite-if-exists="true" />
+
+    <connect-source-database server="source_historicaldb" />
+
+    <connect-target-database server="target_historicaldb" />
+	
+    <map-schema source-schema="$SQLServerHistoricalUserName$"
+                sql-server-schema="$SQLServerHistoricalUserName$.dbo" />
+   
+   <synchronize-target object-name="$SQLServerHistoricalUserName$.dbo"
+                        on-error="fail-script"
+                        report-errors-to="$SynchronizationReports$" />
+   
+    <migrate-data object-name="$SQLServerHistoricalUserName$.Tables"
+                  object-type="category"
+                  write-summary-report-to="$SummaryReports$"
+                  report-errors="true"
+                  verbose="true" />
+    
+    <save-project />
+
+    <close-project />
+
+  </script-commands>
+  
+</ssma-script-file>

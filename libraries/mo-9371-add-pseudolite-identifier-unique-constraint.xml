@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a3fd4955-b41f-4f4c-b4e4-67e12d520094" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateUniqueFilteredIndex for PSEUDOLITE_ID of table MACHINE index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="PSEUDOLITE_ID_UK" tableName="MACHINE"/>
+            </not>
+        </preConditions>
+        <comment>MO-9371: CreateUniqueFilteredIndex PSEUDOLITE_ID_UK for PSEUDOLITE_ID on MACHINE table</comment>
+        <ext:createFilteredIndex indexName="PSEUDOLITE_ID_UK" tableName="MACHINE" tablespace="MW_IDXENT"
+                                 filter="PSEUDOLITE_ID IS NOT NULL" unique="true" >
+            <column name="PSEUDOLITE_ID"/>
+        </ext:createFilteredIndex>
+        <rollback>
+            <dropIndex indexName="PSEUDOLITE_ID_UK" tableName="MACHINE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="42ff333a-cd49-4521-92e4-9d089a65a913" author="MineStar" failOnError="false">
+        <comment>MO-9371: Update discriminators</comment>
+        <update tableName="MACHINE">
+            <column name="ECF_CLASS_ID" value="XAEntity.Machine.FixedPlant.Infrastructure.Pseudolite"/>
+            <where>ECF_CLASS_ID='XAEntity.Machine.Pseudolite'</where>
+        </update>
+        <update tableName="MACHINECLASS">
+            <column name="ECF_CLASS_ID" value="XAEntity.MachineClass.FixedPlantClass.InfrastructureClass.PseudoliteClass"/>
+            <where>ECF_CLASS_ID='XAEntity.MachineClass.FixedPlantClass.PseudoliteClass'</where>
+        </update>
+        <update tableName="MACHINECATEGORY">
+            <column name="ECF_CLASS_ID" value="XAEntity.MachineCategory.InfrastructureCategory.PseudoliteCategory"/>
+            <where>ECF_CLASS_ID='XAEntity.MachineCategory.PseudoliteCategory'</where>
+        </update>
+        <rollback>
+            <update tableName="MACHINE">
+                <column name="ECF_CLASS_ID" value="XAEntity.Machine.Pseudolite"/>
+                <where>ECF_CLASS_ID='XAEntity.Machine.FixedPlant.Infrastructure.Pseudolite'</where>
+            </update>
+            <update tableName="MACHINECLASS">
+                <column name="ECF_CLASS_ID" value="XAEntity.MachineClass.FixedPlantClass.PseudoliteClass"/>
+                <where>ECF_CLASS_ID='XAEntity.MachineClass.FixedPlantClass.InfrastructureClass.PseudoliteClass'</where>
+            </update>
+            <update tableName="MACHINECATEGORY">
+                <column name="ECF_CLASS_ID" value="XAEntity.MachineCategory.PseudoliteCategory"/>
+                <where>ECF_CLASS_ID='XAEntity.MachineCategory.InfrastructureCategory.PseudoliteCategory'</where>
+            </update>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
+

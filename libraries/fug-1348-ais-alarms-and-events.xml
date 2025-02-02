@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="6a64964f-4dd3-49af-a1d1-85c2950067cc" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ALARM_STATUS of table AIS_SUBPANEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="AIS_SUBPANEL" columnName="ALARM_STATUS"/>
+        </preConditions>
+        <comment>FUG-1348: DropColumn AIS_SUBPANEL.ALARM_STATUS</comment>
+        <dropColumn columnName="ALARM_STATUS" tableName="AIS_SUBPANEL"/>
+        <rollback>
+            <addColumn tableName="AIS_SUBPANEL">
+                <column name="ALARM_STATUS" type="INT" remarks="Alarm status of the sub panel"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

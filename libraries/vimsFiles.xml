@@ -1,0 +1,987 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE Messages SYSTEM "vimsFiles.dtd">
+<?xml-stylesheet type="text/xsl" href="vimsFiles.xsl"?>
+
+<!-- $Id: vimsFiles.xml,v 1.20 2007/03/21 04:18:25 darrylc Exp $ -->
+<!--
+    $Log: vimsFiles.xml,v $
+    Revision 1.20  2007/03/21 04:18:25  darrylc
+    Add cycle reconstruction
+
+    Revision 1.19  2006/11/20 00:26:36  darrylc
+    Fix definition of short version of vimsFile to include optional ascii header
+
+    Revision 1.18  2006/11/08 01:43:17  darrylc
+    Added xsl
+
+    Revision 1.17  2006/05/02 05:38:37  darrylc
+    VIMS 6.0.2 support
+
+    Revision 1.14  2005/11/10 05:48:56  darrylc
+    Reintroduce asciiHeader and fix vimsxp so that it displays offsets into bytes correctly
+
+    Revision 1.12  2005/10/31 05:42:04  darrylc
+    Add vims ascii header support
+
+    Revision 1.11  2005/10/03 06:21:10  darrylc
+    Fix calculation of secondsBefore where overflow == 0
+
+    Revision 1.10  2005/09/29 00:17:48  darrylc
+    Fix parsing of Snapshot files - try to account for all possible start/end time configurations
+
+    Revision 1.9  2005/08/12 01:37:36  darrylc
+    Fixes to trends to allow correct decoding of headers
+
+    Revision 1.8  2005/07/06 00:37:27  darrylc
+    Fix start and end index calculation for files > 0 in snapshots
+
+    Revision 1.7  2005/06/16 03:27:38  darrylc
+    Diambiguate datatype names using id
+
+    Revision 1.5  2004/11/10 05:52:49  darrylc
+    Vims 3.0.22 with corrected histogram cell indices
+
+    Revision 1.4  2004/06/08 04:03:41  darrylc
+    Added calculated fields for second pass
+
+    Revision 1.3  2004/05/25 02:02:20  darrylc
+    Misc fixes to get VimsImport working under 1.3.0.1
+
+    Revision 1.2  2003/11/02 23:27:31  darrylc
+    Fixes to DL & ER files
+
+    Revision 1.1  2003/10/26 22:22:35  darrylc
+    TPI & fixes from 1.2.3.8
+
+-->
+
+<Messages>
+
+    <Type name="asciiHeader">
+        <Field name="parameters" format="VimsAsciiHeader" >
+            <Field name="serialNumber" format="VimsAsciiNameValuePair" value="Serial Number" />
+            <Field name="equipmentNumber" format="VimsAsciiNameValuePair" value="Equipment Number" />
+            <Field name="modelNumber" format="VimsAsciiNameValuePair" value="Model Number" />
+            <Field name="hardwarePN" format="VimsAsciiNameValuePair" value="Hardware P/N" />
+            <Field name="hardwareVersion" format="VimsAsciiNameValuePair" value="Hardware Version" />
+            <Field name="sourceCodePN" format="VimsAsciiNameValuePair" value="Source Code P/N" />
+            <Field name="sourceCodeVersion" format="VimsAsciiNameValuePair" value="Source Code Version" />
+            <Field name="configurationPN" format="VimsAsciiNameValuePair" value="Configuration P/N" />
+            <Field name="configurationVersion" format="VimsAsciiNameValuePair" value="Configuration Version" />
+            <Field name="downloadTime" format="VimsAsciiNameValuePair" value="Download Time" />
+            <Field name="serviceMeterHours" format="VimsAsciiNameValuePair" value="Service Meter Hours" units="hour" unitType="service meter hours"/>
+            <Field name="resetPerformed" format="VimsAsciiNameValuePair" value="Reset Performed" />
+            <Field name="lastResetTime" format="VimsAsciiNameValuePair" value="Last Reset Time" />
+            <Field name="targetPayload" format="VimsAsciiNameValuePair" value="Target Payload (Ton)" units="ton" unitType="mass" />
+            <Field name="payloadOverload" format="VimsAsciiNameValuePair" value="Payload Overload %"  units="percent" unitType="ratio" />
+            <Field name="secondGearReweigh" format="VimsAsciiNameValuePair" value="Second Gear Reweigh" />
+            <Field name="conditionalDLOGEnable" format="VimsAsciiNameValuePair" value="Conditional DLOG Enable" />
+            <Field name="conditionalDLOGTime" format="VimsAsciiNameValuePair" value="Conditional DLOG Time (min)" units="minute" unitType="duration" />
+            <Field name="scoreboardSetting" format="VimsAsciiNameValuePair" value="Scoreboard Setting" />
+            <Field name="lastPassIndicator" format="VimsAsciiNameValuePair" value="Last Pass Indicator" />
+        </Field>
+    </Type>
+
+    <Message name="cfghdr" id="999">
+        <Field name="versionNumber" format="AsciiN" length="6"/>
+        <Field name="configurationPartNumber" format="AsciiN" length="14"/>
+        <Field name="serialNumber" format="AsciiN" length="20" mapping="Machine:serialNumber"/>
+        <Field name="modelNumber" format="AsciiN" length="16"/>
+        <Field name="equipmentNumber" format="AsciiN" length="16"/>
+        <Field name="softwareVersionNumber" format="AsciiN" length="7"/>
+        <Field name="hardwareVersionNumber" format="AsciiN" length="7"/>
+        <Field name="primaryLanguage" format="AsciiN" length="16"/>
+        <Field name="secondaryLanguage" format="AsciiN" length="16"/>
+        <Field name="serialPortDevice" format="U8"/>
+        <Field name="serialPortBaudRate" format="U8"/>
+        <Field name="isbRevisionNumber" format="AsciiN" length="4"/>
+        <Field name="unused0" format="U32"/>
+        <Field name="unused1" format="U32"/>
+        <Field name="unused2" format="U32"/>
+        <Field name="deviceIdApplicationLevel" format="U16"/>
+        <Field name="deviceIdServiceLevel" format="U16"/>
+        <Field name="harnessCodeResponse" format="U8"/>
+        <Field name="unused3" format="U8"/>
+
+        <Field name="trendIdCount" format="U16"/>
+        <Field name="trends" format="Block" count="trendIdCount">
+            <Field name="trendId" format="I32"/>
+        </Field>
+        <Field name="cumulativeIdCount" format="U16"/>
+        <Field name="cumulatives" format="Block" count="cumulativeIdCount">
+            <Field name="cumulativeId" format="I32"/>
+        </Field>
+        <Field name="histogramIdCount" format="U16"/>
+        <Field name="histograms" format="Block" count="histogramIdCount">
+            <Field name="histogramId" format="I32"/>
+        </Field>
+        <Field name="channelIdCount" format="U16"/>
+        <Field name="channels" format="Block" count="channelIdCount">
+            <Field name="channelId" format="I32"/>
+        </Field>
+    </Message>
+
+    <Type name="vimsHeader">
+        <Field name="flag" format="U8"/>
+        <Field name="ablHeader" format="Block" indicator="flag" indicatorValue="100">
+            <Field name="count" format="U16" littleEndian="true"/>
+            <Field name="configIds" format="Block" count="count">
+                <Field name="configID" format="U32"/>
+            </Field>
+            <Field name="headerID" format="U8"/>
+        </Field>
+        <Field name="headerID" format="Var" value="(flag == 100) ? ablHeader\headerID : flag"/>
+        <Field name="aid" format="Enum" length="8">
+            <Enum value="2" name="Continuous Data Logger" />
+            <Enum value="3" name="Data Logger" />
+            <Enum value="4" name="Event Recorder" />
+            <Enum value="5" name="Event Chronological List" />
+            <Enum value="7" name="Histograms" />
+            <Enum value="8" name="Cumulative Data" />
+            <Enum value="9" name="TPMS Payload Data" />
+            <Enum value="10" name="Trend Data" />
+            <Enum value="12" name="Event Summary" />
+            <Enum value="13" name="PCS Payload Data" />
+        </Field>
+        <Field name="serialNumber" format="AsciiN" length="20" mapping="Machine:serialNumber"/>
+        <Field name="configurationVersion" format="AsciiN" length="6"/>
+        <Field name="softwareVersion" format="AsciiN" length="7"/>
+        <Field name="smu" format="AsciiN" length="32" units="second" unitType="service meter hours"/>
+        <Field name="modelNumber" format="AsciiN" length="16"/>
+        <Field name="downloadDate" format="VTIME6"/>
+        <Field name="lastResetDate" format="VTIME4"/>
+        <Field name="version105" format="Var" value="headerID == 31"/>
+        <Field name="sourceCodePN" format="AsciiN" length="16" indicator="version105" indicatorValue="true" />
+        <Field name="configurationPN" format="AsciiN" length="16" indicator="version105" indicatorValue="true" />
+        <Field name="equipmentNumber" format="AsciiN" length="16" indicator="version105" indicatorValue="true" />
+        <Field name="hardwarePN" format="AsciiN" length="14" indicator="version105" indicatorValue="true" />
+        <Field name="hardwareVersion" format="AsciiN" length="3" indicator="version105" indicatorValue="true" />
+        <Field name="targetPayload" format="U16" scale="0.1" units="ton" unitType="mass" indicator="version105" indicatorValue="true" />
+        <Field name="payloadOverloadPercent" format="U16" scale="0.1" units="percent" unitType="ratio" indicator="version105" indicatorValue="true" />
+        <Field name="secondGearReweigh" format="I8" indicator="version105" indicatorValue="true" />
+        <Field name="conditionalDLOG" format="I8" indicator="version105" indicatorValue="true" />
+        <Field name="conditionalDLOGTime" format="U16" units="second" unitType="duration" indicator="version105" indicatorValue="true" />
+        <Field name="scoreboardSetting" format="I8" indicator="version105" indicatorValue="true" />
+        <Field name="lastPassIndicator" format="I8" indicator="version105" indicatorValue="true" />
+        <Field name="delimiter" format="U8"/>
+    </Type>
+
+    <Type name="dlHeader">
+        <Field name="size" format="U32"/>
+        <Field name="downloadDate" format="VTIME4"/>
+        <Field name="resetDate" format="VTIME4"/>
+        <Field name="time" format="U16"/>
+        <Field name="files" format="U8"/>
+        <Field name="status" format="U8"/>
+        <Field name="unused" format="AsciiN" length="8"/>
+    </Type>
+
+
+    <Type name="erHeader">
+        <Field name="size" format="U32"/>
+        <Field name="previousDownloadDate" format="VTIME4"/>
+        <Field name="resetDate" format="VTIME4"/>
+        <Field name="startAddress" format="U32"/>
+        <Field name="count" format="U8"/>
+        <Field name="currentWorkingBuffer" format="U8"/>
+        <Field name="unused" format="AsciiN" length="6"/>
+    </Type>
+
+    <Type name="ecHeader">
+        <Field name="size" format="U32"/>
+        <Field name="previousDownloadDate" format="VTIME4"/>
+        <Field name="resetDate" format="VTIME4"/>
+        <Field name="level0" format="U16"/>
+        <Field name="level1" format="U16"/>
+        <Field name="level2" format="U16"/>
+        <Field name="level3" format="U16"/>
+        <Field name="eventCount" format="U16"/>
+        <Field name="activeCount" format="U16"/>
+    </Type>
+
+    <Type name="cuHeader">
+        <Field name="size" format="U32"/>
+        <Field name="previousDownloadDate" format="VTIME4"/>
+        <Field name="resetDate" format="VTIME4"/>
+        <Field name="resetSMH" format="U32" units="second" unitType="service meter hours"/>
+        <Field name="unused" format="AsciiN" length="8"/>
+    </Type>
+
+    <Type name="hsHeader">
+        <Field name="size" format="U32"/>
+        <Field name="previousDownloadDate" format="VTIME4"/>
+        <Field name="resetDate" format="VTIME4"/>
+        <Field name="resetSMH" format="U32" units="second" unitType="service meter hours"/>
+        <Field name="unused" format="AsciiN" length="8"/>
+    </Type>
+
+    <Type name="paHeader">
+        <Field name="size" format="U32"/>
+        <Field name="previousDownloadDate" format="VTIME4"/>
+        <Field name="resetDate" format="VTIME4"/>
+        <Field name="lastEntry" format="U16"/>
+        <Field name="overflow" format="U8"/>
+        <Field name="version" format="U8"/>
+        <Field name="payloadWeight" format="U16"/>
+        <Field name="totalWeight" format="U32"/>
+        <Field name="totalCycles" format="U16"/>
+    </Type>
+
+    <Type name="pcHeader">
+        <Field name="size" format="U32"/>
+        <Field name="previousDownloadDate" format="VTIME4"/>
+        <Field name="resetDate" format="VTIME4"/>
+        <Field name="overflow" format="U8"/>
+        <Field name="percentFree" format="U8"/>
+        <Field name="unused" format="AsciiN" length="10"/>
+    </Type>
+
+    <Type name="trHeader">
+        <Field name="size" format="U32"/>
+        <Field name="previousDownloadDate" format="VTIME4"/>
+        <Field name="resetDate" format="VTIME4"/>
+        <Field name="downloadSMH" format="U32" units="second" unitType="service meter hours"/>
+        <Field name="resetSMH" format="U32" units="second" unitType="service meter hours"/>
+        <Field name="unused" format="AsciiN" length="2"/>
+        <Field name="numberOfTrendBanks" format="U8"/>
+        <Field name="trendTableVersion" format="U8"/>
+    </Type>
+
+    <Type name="gpsInfo">
+        <Field name="size" format="U32"/>
+        <Field name="gpsData" format="Block" count="(size-4)/14">
+            <Field name="point" format="Block">
+            <Field name="x" format="I32" units="metre" unitType="length"/>
+            <Field name="y" format="I32" units="metre" unitType="length"/>
+            <Field name="z" format="I32" units="metre" unitType="length"/>
+            <Field name="confidenceCode" format="U8"/>
+            <Field name="unused" format="U8"/>
+        </Field>
+        </Field>
+    </Type>
+
+    <Message name="vimsFile" id="0">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+    </Message>
+
+    <Message name="dlFile" id="1">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="dlHeader"/>
+        <Field name="channelCount" format="Var" value="(vimsHeader\softwareVersion >= 10) ? 200 : 120"/>
+        <Field name="files" format="Block" count="header\files">
+            <Field name="file" format="Block">
+                <Field name="duration" format="U16" units="second" unitType="duration"/>
+                <Field name="activationTime" format="VTIME6"/>
+                <Field name="smu" format="U32" units="second" unitType="service meter hours"/>
+                <Field name="operatorID" format="AsciiN" length="7"/>
+                <Field name="unused" format="U8"/>
+                <Field name="data" format="Block" count="duration">
+                        <Field name="sample" format="Block" count="channelCount">
+                        <Field name="channel" format="U16"/>
+                    </Field>
+                </Field>
+            </Field>
+        </Field>
+    </Message>
+
+    <Message name="clFile" id="9">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="dlHeader"/>
+        <Field name="channelCount" format="Var" value="(vimsHeader\softwareVersion >= 10) ? 200 : 120"/>
+        <Field name="files" format="Block" count="header\files">
+            <Field name="file" format="Block">
+                <Field name="duration" format="U16" units="second" unitType="duration"/>
+                <Field name="activationTime" format="VTIME6"/>
+                <Field name="smu" format="U32" units="second" unitType="service meter hours"/>
+                <Field name="operatorID" format="AsciiN" length="7"/>
+                <Field name="unused" format="U8"/>
+                <Field name="data" format="Block" count="duration">
+                        <Field name="sample" format="Block" count="channelCount">
+                        <Field name="channel" format="U16"/>
+                    </Field>
+                </Field>
+            </Field>
+        </Field>
+    </Message>
+
+    <Message name="erFile" id="2">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="erHeader"/>
+        <Field name="channelCount" format="Var" value="(vimsHeader\softwareVersion >= 10) ? 200 : 120"/>
+        <Field name="bufferLength" format="Var" value="channelCount * 720"/>
+        <Field name="files" format="Block" count="header\count">
+            <Field name="file" format="Block">
+                <Field name="time" format="VTIME6"/>
+                <Field name="smu" format="U32" units="second" unitType="service meter hours"/>
+                <Field name="gpsIndex" format="I16" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/>
+                <Field name="fileHeaderLength" format="Var" value="(vimsHeader\softwareVersion >= 10.3) ? 26 : 24"/>
+                <Field name="first" format="U16"/>
+                <Field name="channel" format="U8"/>
+                <Field name="warn" format="U8"/>
+                <Field name="start" format="U32"/>
+                <Field name="startAddress" format="Var" value="(start - header\startAddress) + header.start"/>
+                <Field name="startIndex" format="Var" value="((start - header\startAddress) - header.length - fileHeaderLength) / channelCount / 2 - (file.index * 360)"/>
+                <Field name="end" format="U32"/>
+                <Field name="endAddress" format="Var" value="(end - header\startAddress) + header.start"/>
+                <Field name="endIndex" format="Var" value="((end - header\startAddress) - header.length - fileHeaderLength) / channelCount / 2 - (file.index * 360)"/>
+                <Field name="status" format="U8"/>
+                <Field name="overflow" format="U8"/>
+                <Field name="startOfFlightRecorder" format="Var" value="overflow.start - header.start + 1"/>
+                <Field name="secondsBefore" format="Var" value="(overflow != 0) ? 300 : (((start - header\startAddress - startOfFlightRecorder)/channelCount)/2)"/>
+                <Field name="secondsAfter" format="Var" value="(end > start) ? (((end - start)/channelCount)/2) : (((end - start + bufferLength)/channelCount)/2)"/>
+                <Field name="data" format="Block" count="360">
+                    <Field name="sample" format="Block" count="channelCount">
+                        <Field name="channel" format="U16"/>
+                    </Field>
+                </Field>
+            </Field>
+        </Field>
+        <!-- <Field name="gpsInfo" format="gpsInfo" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/> -->
+    </Message>
+
+    <Message name="ecFile" id="3">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="ecHeader"/>
+        <Field name="rawEventCount" format="Var" value="header\eventCount+header\activeCount" />
+        <Field name="cappedEventCount" format="Var" value="(rawEventCount >= 500) ? 500 : rawEventCount" />
+        <Field name="events" format="Block" count="cappedEventCount">
+            <Field name="event" format="Block">
+                <Field name="masterEventNumber" format="U16"/>
+                <Field name="time" format="VTIME6"/>
+                <Field name="smu" format="U32" units="second" unitType="service meter hours"/>
+                <Field name="operatorID" format="AsciiN" length="7"/>
+                <Field name="channel" format="U8"/>
+                <Field name="component" format="Block" indicator="channel == 255" indicatorValue="true">
+                    <Field name="cid" format="U16"/>
+                    <Field name="mid" format="U8"/>
+                    <Field name="fmi" format="U8"/>
+                </Field>
+                <Field name="summary" format="Block" indicator="channel == 255" indicatorValue="false">
+                    <Field name="first" format="I16"/>
+                    <Field name="worst" format="I16"/>
+                </Field>
+                <Field name="ackTime" format="U32" units="second" unitType="duration"/>
+                <Field name="ackCount" format="U8"/>
+                <Field name="warnCat" format="Enum" length="8">
+                    <Enum value="1" name="level1"/>
+                    <Enum value="2" name="level2"/>
+                    <Enum value="3" name="level3"/>
+                </Field>
+                <Field name="duration" format="U32" units="second" unitType="duration" scale="0.25"/>
+                <Field name="gpsIndex" format="I16" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/>
+            </Field>
+        </Field>
+        <!-- <Field name="gpsInfo" format="gpsInfo" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/> -->
+    </Message>
+
+    <Message name="hsFile" id="4">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="hsHeader"/>
+        <Field name="histograms" format="Block" count="...">
+            <Field name="histogram" format="Histogram">
+                <Field name="fsize" format="F32" indicator="vimsHeader\softwareVersion >= 10.5" indicatorValue="false"/>
+                <Field name="usize" format="U32" indicator="vimsHeader\softwareVersion >= 10.5" indicatorValue="true"/>
+                <Field name="size" format="Var" value="(vimsHeader\softwareVersion >= 10.5) ? usize : fsize" />
+                <Field name="errorCount" format="U32"/>
+                <Field name="unused" format="U32"/>
+                <Field name="cells" format="Block" count="(size-12)/4">
+                    <Field name="cell" format="Block">
+                        <Field name="index" format="Var" value="cell.index"/>
+                        <Field name="lower" format="Var" value="0"/>
+                        <Field name="upper" format="Var" value="0"/>
+                        <Field name="fcount" format="F32" indicator="vimsHeader\softwareVersion >= 10.5" indicatorValue="false"/>
+                        <Field name="ucount" format="U32" indicator="vimsHeader\softwareVersion >= 10.5" indicatorValue="true"/>
+                        <Field name="count" format="Var" value="(vimsHeader\softwareVersion >= 10.5) ? ucount : fcount"/>
+                        <Field name="percentage" format="Var" value="0"/>
+                    </Field>
+                </Field>
+            </Field>
+        </Field>
+    </Message>
+
+
+    <Message name="cuFile" id="5">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="cuHeader"/>
+        <Field name="cumulatives" format="Block" count="...">
+            <Field name="cumulative" format="Block">
+                    <Field name="errorCount" format="U32"/>
+                    <Field name="value" format="Cumulative"/>
+            </Field>
+        </Field>
+    </Message>
+
+    <Message name="paFile" id="6">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="paHeader"/>
+        <Field name="cycles" format="Block" count="(header\lastEntry > 2400) ? 2400 : header\lastEntry">
+            <Field name="cycle" format="Block">
+                <Field name="time" format="VTIME6"/>
+                <Field name="smu" format="U32" units="second" unitType="service meter hours"/>
+                <Field name="payloadWeight" format="U16" units="tonne" unitType="mass" scale="0.1"/>
+                <Field name="loadingTime" format="U16" units="second" unitType="duration" scale="0.25"/>
+                <Field name="stoppedEmptyTime" format="U16" units="second" unitType="duration" scale="0.25"/>
+                <Field name="travelingEmptyTime" format="U16" units="second" unitType="duration" scale="0.25"/>
+                <Field name="travelingEmptyDistance" format="U16" units="mile" unitType="length" scale="0.1"/>
+                <Field name="stoppedLoadedTime" format="U16" units="second" unitType="duration" scale="0.25"/>
+                <Field name="travelingLoadedTime" format="U16" units="second" unitType="duration" scale="0.25"/>
+                <Field name="travelingLoadedDistance" format="U16" units="mile" unitType="length" scale="0.1"/>
+                <Field name="startSmu" format="Var" units="second" unitType="service meter hours" value="smu"/>
+                <Field name="endSmu" format="Var" units="second" unitType="service meter hours" value="smu + (stoppedEmptyTime + travelingEmptyTime + stoppedLoadedTime + travelingLoadedTime + loadingTime)"/>
+                <Field name="loaderPassCount" format="U8"/>
+                <Field name="transmissionShifts" format="U8"/>
+                <Field name="fuelUsedInCycle" format="F32" units="gallon" unitType="liquid volume"/>
+                <Field name="operatorId" format="AsciiN" length="8"/>
+                <Field name="eventMask" format="U16"/>
+                <Field name="secondGearReweighFlag" format="I8" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/>
+                <Field name="unused" format="U8" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/>
+                <Field name="carryback" format="U16" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/>
+                <Field name="loadingGPSIndex" format="U16" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/>
+                <Field name="dumpingGPSIndex" format="U16" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/>
+            </Field>
+        </Field>
+        <!-- <Field name="gpsInfo" format="gpsInfo" indicator="vimsHeader\softwareVersion >= 10.3" indicatorValue="true"/> -->
+    </Message>
+
+    <Message name="trFile" id="7">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="trHeader"/>
+        <Field name="banks" format="Block" count="header\numberOfTrendBanks">
+            <Field name="bank" format="Block">
+                <Field name="sizeOfBank" format="U32"/>
+                <Field name="sizeOfTrendHeader" format="U16"/>
+                <Field name="futureKeyFields" format="U8"/>
+                <Field name="trendType" format="U8"/>
+                <Field name="trendDataFormat" format="U8"/>
+                <Field name="trendCountFormat" format="U8"/>
+                <Field name="trendPeriod" format="U32"/>
+                <Field name="numberOfTrends" format="U16"/>
+                <Field name="sizeOfVector" format="U16"/>
+                <Field name="sampleRate" format="U32"/>
+                <Field name="trendHeaders" format="Block" count="numberOfTrends">
+                    <Field name="trendHeader" format="Block">
+                        <Field name="dataTextDescPri" format="AsciiN" length="20"/>
+                        <Field name="dataTextDescSec" format="AsciiN" length="20"/>
+                        <Field name="dataConditionsDescPri" format="AsciiN" length="20"/>
+                        <Field name="dataConditionsDescSec" format="AsciiN" length="20"/>
+                        <Field name="unitsConversionId" format="U16"/>
+                        <Field name="additiveFactor" format="U16"/>
+                        <Field name="multiplicativeFactor" format="F32"/>
+                        <Field name="sampleType" format="U8"/>
+                        <Field name="unused" format="AsciiN" length="3"/>
+                    </Field>
+                </Field>
+                <Field name="trendDefinitions" format="TrendHelper"/>
+                <Field name="vectors" format="Block" count="(sizeOfBank-sizeOfTrendHeader)/sizeOfVector">
+                    <Field name="vector" format="Block">
+                        <Field name="time" format="VTIME6"/>
+                        <Field name="smu" format="U32" units="second" unitType="service meter hours"/>
+                        <Field name="dataPoints" format="Block" count="numberOfTrends">
+                            <Field name="dataPoint" format="Block">
+                                <Field name="data" format="TrendByte" indicator="trendDataFormat" indicatorValue="1"/>
+                                <Field name="data" format="TrendByte" indicator="trendDataFormat" indicatorValue="2"/>
+                                <Field name="data" format="TrendByte" indicator="trendDataFormat" indicatorValue="3"/>
+                                <Field name="data" format="TrendShort" indicator="trendDataFormat" indicatorValue="4"/>
+                                <Field name="data" format="TrendShort" indicator="trendDataFormat" indicatorValue="5"/>
+                                <Field name="data" format="TrendShort" indicator="trendDataFormat" indicatorValue="6"/>
+                                <Field name="data" format="TrendByte" indicator="trendDataFormat" indicatorValue="7"/>
+                                <Field name="data" format="TrendShort" indicator="trendDataFormat" indicatorValue="8"/>
+                                <Field name="count" format="U8" indicator="trendCountFormat" indicatorValue="1"/>
+                                <Field name="count" format="U16" indicator="trendCountFormat" indicatorValue="2"/>
+                            </Field>
+                        </Field>
+                    </Field>
+                </Field>
+            </Field>
+        </Field>
+    </Message>
+
+    <Message name="pcFile" id="8">
+        <Field name="asciiHeader" format="asciiHeader"/>
+        <Field name="vimsHeader" format="vimsHeader"/>
+        <Field name="header" format="pcHeader"/>
+        <Field name="srcVersion" format="AsciiN" length="4"/>
+        <Field name="totalTruckCount" format="U16"/>
+        <Field name="totalCycleCount" format="U32"/>
+        <Field name="totalStatusCount" format="U16"/>
+        <Field name="truckRecordSize" format="U16"/>
+        <Field name="cycleRecordSize" format="U16"/>
+        <Field name="statusRecordSize" format="U16"/>
+        <Field name="totalLoadTime" format="U32"/>
+        <Field name="totalLoadWeight" format="U32"/>
+        <Field name="materialLoadWeights" format="Block" count="21" >
+                <Field name="materialLoadWeight" format="U32"/>
+        </Field>
+        <Field name="materialCycleCounts" format="Block" count="21">
+                <Field name="materialCycleCount" format="U32"/>
+        </Field>
+
+        <Field name="truckData" format="Block" count="totalTruckCount">
+            <Field name="truck" format="Block">
+                <Field name="cycleCount" format="U16"/>
+                <Field name="statusCount" format="U16"/>
+                <Field name="loadsiteId" format="U8"/>
+                <Field name="materialId" format="U8"/>
+                <Field name="operatorId" format="AsciiN" length="7"/>
+                <Field name="digability" format="U8"/>
+                <Field name="time" format="VTIME6"/>
+                <Field name="smu" format="U32" units="second" unitType="service meter hours"/>
+                <Field name="truckId" format="AsciiN" length="8"/>
+                <Field name="blastNumber" format="U16"/>
+                <Field name="bktVolume" format="U16" scale="0.00390625" units="cubic metres" unitType="volume"/>
+                <Field name="cycleData" format="Block" count="cycleCount">
+                    <Field name="cycle" format="Block">
+                        <Field name="bucketWeight" format="U16" scale="0.00390625" units="tonne" unitType="mass"/>
+                        <Field name="weighTime" format="U16" units="second" unitType="duration"/>
+                        <Field name="gpsData1" format="U16" indicator="vimsHeader\softwareVersion >= 10.1" indicatorValue="false"/>
+                        <Field name="gpsData2" format="U16" indicator="vimsHeader\softwareVersion >= 10.1" indicatorValue="false"/>
+                        <Field name="gpsData3" format="U16" indicator="vimsHeader\softwareVersion >= 10.1" indicatorValue="false"/>
+                        <Field name="travelLoadedTime" format="U8" indicator="vimsHeader\softwareVersion >= 10.1" indicatorValue="false"/>
+                        <Field name="travelEmptyTime" format="U8" indicator="vimsHeader\softwareVersion >= 10.1" indicatorValue="false"/>
+                        <Field name="digTime" format="U8" indicator="vimsHeader\softwareVersion >= 10.1" indicatorValue="false"/>
+                        <Field name="dumpTime" format="U8" indicator="vimsHeader\softwareVersion >= 10.1" indicatorValue="false"/>
+                        <Field name="bucketStatus" format="U8"/>
+                        <Field name="rawFuelUsed" format="U8"/>
+                        <Field name="fuelUsed" format="Var" value="rawFuelUsed * 0.02" units="litre" unitType="liquid volume" indicator="rawFuelUsed == 255" indicatorValue="false"/>
+                    </Field>
+                </Field>
+                <Field name="statusData" format="Block" count="statusCount">
+                    <Field name="status" format="Block">
+                        <Field name="statusId" format="U8"/>
+                        <Field name="mode" format="U8"/>
+                        <Field name="time" format="VTIME6"/>
+                        <Field name="smu" format="U32" units="second" unitType="service meter hours"/>
+                    </Field>
+                </Field>
+            </Field>
+        </Field>
+
+        <Field name="generalConfig" format="Block">
+            <Field name="inactive" format="U8"/>
+            <Field name="version" format="U8"/>
+            <Field name="dispMode" format="U8"/>
+            <Field name="idQryOrder" format="U8"/>
+            <Field name="storeTruckIdEt" format="U16"/>
+            <Field name="truckIdTimeoutEt" format="U16"/>
+            <Field name="tempStrEt" format="U16"/>
+            <Field name="autoDelayEt" format="U16"/>
+        </Field>
+        <Field name="printerConfig" format="Block">
+            <Field name="prefix" format="AsciiN" length="96"/>
+            <Field name="carriageCtrl" format="U8"/>
+            <Field name="hdrLineCnt" format="U8"/>
+            <Field name="ftrLineCnt" format="U8"/>
+            <Field name="formFeed" format="U8"/>
+            <Field name="colWidth" format="U8"/>
+            <Field name="printTrkTicket" format="U8"/>
+            <Field name="printTrkTicketPrefix" format="U8"/>
+            <Field name="printTrkTicketTime" format="U8"/>
+            <Field name="printTrkTicketTrkId" format="U8"/>
+            <Field name="printTrkTicketBktWt" format="U8"/>
+            <Field name="printTrkTicketTotWt" format="U8"/>
+            <Field name="printTrkTicketLoadsite" format="U8"/>
+            <Field name="printTrkTicketMtl" format="U8"/>
+            <Field name="printTrkTicketOperId" format="U8"/>
+            <Field name="printTrkTicketBlastNum" format="U8"/>
+            <Field name="printCurrShiftTrkData" format="U8"/>
+            <Field name="printPrevShiftTrkData" format="U8"/>
+            <Field name="printCurrOperTrkData" format="U8"/>
+            <Field name="printPrevOperTrkData" format="U8"/>
+            <Field name="printCurrDayTrkData" format="U8"/>
+            <Field name="printPrevDayTrkData" format="U8"/>
+            <Field name="connected" format="U8"/>
+        </Field>
+        <Field name="bucketConfig" format="Block">
+            <Field name="maxVol" format="U16" units="cubic metres" unitType="volume" scale="0.00390625"/>
+            <Field name="maxWt" format="U16" units="tonne" unitType="mass" scale="0.00390625"/>
+            <Field name="unused" format="U16"/>
+            <Field name="desc" format="AsciiN" length="20"/>
+        </Field>
+        <Field name="shiftConfig" format="Block">
+            <Field name="days" format="Block" count="7">
+                <Field name="day" format="Block">
+                    <Field name="shifts" format="Block" count="4">
+                        <Field name="shift" format="Block">
+                            <Field name="startHour" format="I8"/>
+                            <Field name="startMinute" format="I8"/>
+                            <Field name="endHour" format="I8"/>
+                            <Field name="endMinute" format="I8"/>
+                        </Field>
+                    </Field>
+                </Field>
+            </Field>
+        </Field>
+        <Field name="materialConfig" format="Block">
+            <Field name="count" format="U8"/>
+            <Field name="unused" format="U8"/>
+            <Field name="configs" format="Block" count="21">
+                <Field name="config" format="Block">
+                    <Field name="primaryLanguage" format="AsciiN" length="16"/>
+                    <Field name="secondaryLanguage" format="AsciiN" length="16"/>
+                    <Field name="bankDensity" format="U16" units="tonnes per cubic metre" unitType="density"/>
+                    <Field name="looseDensity" format="U16" units="tonnes per cubic metre" unitType="density"/>
+                </Field>
+            </Field>
+        </Field>
+        <Field name="loadSiteConfig" format="Block">
+            <Field name="count" format="U8"/>
+            <Field name="unused" format="U8"/>
+            <Field name="configs" format="Block" count="41">
+                <Field name="config" format="Block">
+                    <Field name="primaryLanguage" format="AsciiN" length="16"/>
+                    <Field name="secondaryLanguage" format="AsciiN" length="16"/>
+                </Field>
+            </Field>
+        </Field>
+        <Field name="statusConfig" format="Block">
+            <Field name="count" format="U8"/>
+            <Field name="unused" format="U8"/>
+            <Field name="configs" format="Block" count="41">
+                <Field name="config" format="Block">
+                    <Field name="primaryLanguage" format="AsciiN" length="16"/>
+                    <Field name="secondaryLanguage" format="AsciiN" length="16"/>
+                </Field>
+            </Field>
+        </Field>
+        <Field name="truckConfig" format="Block">
+            <Field name="count" format="U8"/>
+            <Field name="unused" format="U8"/>
+            <Field name="defMaxWt" format="U32" units="tonne" unitType="mass" scale="0.00390625"/>
+            <Field name="configs" format="Block" count="50">
+                <Field name="config" format="Block">
+                    <Field name="truckCharId" format="AsciiN" length="8"/>
+                    <Field name="truckModel" format="AsciiN" length="6"/>
+                    <Field name="truckType" format="AsciiN" length="2"/>
+                    <Field name="truckMaxWeight" format="U32" units="tonne" unitType="mass" scale="0.00390625"/>
+                </Field>
+            </Field>
+        </Field>
+        <Field name="reserved" format="Block" count="460">
+            <Field name="byte" format="U8"/>
+        </Field>
+    </Message>
+
+    <Message name="cnfFile" id="9">
+        <Field name="channels" format="Block" count="...">
+            <Field name="channel" format="I32" littleEndian="true"/>
+        </Field>
+    </Message>
+
+    <Type name="StandardParameterDefinitionBlock">
+        <Field name="uid" format="U32"/>
+        <Field name="uidid" format="U8"/>
+        <Field name="size" format="U8"/>
+        <Field name="type" format="Enum" length="8">
+            <Enum value="0" name="Reserved0"/>
+            <Enum value="1" name="Reserved1"/>
+            <Enum value="2" name="Reserved2"/>
+            <Enum value="3" name="String"/>
+            <Enum value="4" name="Boolean"/>
+            <Enum value="5" name="Reserved5"/>
+            <Enum value="6" name="Unsigned_8"/>
+            <Enum value="7" name="Signed_8"/>
+            <Enum value="8" name="Unsigned_16_MSB"/>
+            <Enum value="9" name="Unsigned_16_LSB"/>
+            <Enum value="10" name="Signed_16_MSB"/>
+            <Enum value="11" name="Signed_16_LSB"/>
+            <Enum value="12" name="Unsigned_32_MSB"/>
+            <Enum value="13" name="Unsigned_32_LSB"/>
+            <Enum value="14" name="Signed_32_MSB"/>
+            <Enum value="15" name="Signed_32_LSB"/>
+            <Enum value="16" name="Signed_64"/>
+            <Enum value="17" name="Reserved17"/>
+            <Enum value="18" name="Reserved18"/>
+            <Enum value="19" name="Timestamp_SHM"/>
+            <Enum value="20" name="Signed64Double"/>
+            <Enum value="21" name="Signed32Float"/>
+            <Enum value="22" name="GPS_STAMP"/>
+            <Enum value="23" name="CDL_TIMESTAMP"/>
+        </Field>
+
+
+        <Field name="color" format="Enum" length="8">
+            <Enum value="0" name="Default"/>
+            <Enum value="1" name="Min"/>
+            <Enum value="2" name="Max"/>
+            <Enum value="3" name="Average"/>
+            <Enum value="4" name="Last"/>
+            <Enum value="5" name="Current"/>
+            <Enum value="6" name="Last_Download"/>
+            <Enum value="7" name="Last_Reset"/>
+            <Enum value="8" name="Trigger_Condition"/>
+            <Enum value="9" name="Activation"/>
+            <Enum value="10" name="First_Acknowledge"/>
+            <Enum value="11" name="Trend_Point"/>
+            <Enum value="12" name="Payload_Cycle"/>
+            <Enum value="13" name="Payload_Status"/>
+            <Enum value="14" name="Report"/>
+            <Enum value="15" name="Loading"/>
+            <Enum value="16" name="Stopped_Empty"/>
+            <Enum value="17" name="Travelling_Empty"/>
+            <Enum value="18" name="Stopped_Loaded"/>
+            <Enum value="19" name="Travelling_Loaded"/>
+            <Enum value="20" name="Dumping"/>
+            <Enum value="21" name="Truck_Payload_Cycle"/>
+            <Enum value="22" name="Loader_Payload_Cycle"/>
+            <Enum value="23" name="Binary"/>
+            <Enum value="24" name="ASCII"/>
+            <Enum value="25" name="UniCode"/>
+            <Enum value="26" name="Expression_Evaluator"/>
+            <Enum value="27" name="Payload_Load_Pass"/>
+            <Enum value="28" name="Cycle_Timer"/>
+            <Enum value="29" name="Lift_Trigger"/>
+            <Enum value="30" name="Tilt_Trigger"/>
+            <Enum value="31" name="Torque_Trigger"/>
+            <Enum value="32" name="Deceleration_Trigger"/>
+        </Field>
+        <Field name="dataSource" format="U16"/>
+    </Type>
+
+    <Type name="V2ParameterDefinitionBlock">
+        <Field name="recordType" format="U8" />
+        <Field name="recordSize" format="U16" />
+
+        <Field name="uid" format="U32" indicator="(recordType == 170)" indicatorValue="true"/>
+        <Field name="uid" format="U16" indicator="(recordType == 238)" indicatorValue="true"/>
+        <Field name="uidid" format="U8" indicator="(recordType == 170)" indicatorValue="true"/>
+        <Field name="size" format="U8"/>
+        <Field name="type" format="Enum" length="8" indicator="(recordType == 170 || recordType == 221|| recordType == 187 || recordType == 204))" indicatorValue="true">
+            <Enum value="0" name="Reserved0"/>
+            <Enum value="1" name="Reserved1"/>
+            <Enum value="2" name="Reserved2"/>
+            <Enum value="3" name="String"/>
+            <Enum value="4" name="Boolean"/>
+            <Enum value="5" name="Reserved5"/>
+            <Enum value="6" name="Unsigned_8"/>
+            <Enum value="7" name="Signed_8"/>
+            <Enum value="8" name="Unsigned_16_MSB"/>
+            <Enum value="9" name="Unsigned_16_LSB"/>
+            <Enum value="10" name="Signed_16_MSB"/>
+            <Enum value="11" name="Signed_16_LSB"/>
+            <Enum value="12" name="Unsigned_32_MSB"/>
+            <Enum value="13" name="Unsigned_32_LSB"/>
+            <Enum value="14" name="Signed_32_MSB"/>
+            <Enum value="15" name="Signed_32_LSB"/>
+            <Enum value="16" name="Signed_64"/>
+            <Enum value="17" name="Reserved17"/>
+            <Enum value="18" name="Reserved18"/>
+            <Enum value="19" name="Timestamp_SHM"/>
+            <Enum value="20" name="Signed64Double"/>
+            <Enum value="21" name="Signed32Float"/>
+            <Enum value="22" name="GPS_STAMP"/>
+            <Enum value="23" name="CDL_TIMESTAMP"/>
+        </Field>
+
+
+        <Field name="color" format="Enum" length="8" indicator="(recordType == 170 || recordType == 221|| recordType == 187 || recordType == 204))" indicatorValue="true">
+            <Enum value="0" name="Default"/>
+            <Enum value="1" name="Min"/>
+            <Enum value="2" name="Max"/>
+            <Enum value="3" name="Average"/>
+            <Enum value="4" name="Last"/>
+            <Enum value="5" name="Current"/>
+            <Enum value="6" name="Last_Download"/>
+            <Enum value="7" name="Last_Reset"/>
+            <Enum value="8" name="Trigger_Condition"/>
+            <Enum value="9" name="Activation"/>
+            <Enum value="10" name="First_Acknowledge"/>
+            <Enum value="11" name="Trend_Point"/>
+            <Enum value="12" name="Payload_Cycle"/>
+            <Enum value="13" name="Payload_Status"/>
+            <Enum value="14" name="Report"/>
+            <Enum value="15" name="Loading"/>
+            <Enum value="16" name="Stopped_Empty"/>
+            <Enum value="17" name="Travelling_Empty"/>
+            <Enum value="18" name="Stopped_Loaded"/>
+            <Enum value="19" name="Travelling_Loaded"/>
+            <Enum value="20" name="Dumping"/>
+            <Enum value="21" name="Truck_Payload_Cycle"/>
+            <Enum value="22" name="Loader_Payload_Cycle"/>
+            <Enum value="23" name="Binary"/>
+            <Enum value="24" name="ASCII"/>
+            <Enum value="25" name="UniCode"/>
+            <Enum value="26" name="Expression_Evaluator"/>
+            <Enum value="27" name="Payload_Load_Pass"/>
+            <Enum value="28" name="Cycle_Timer"/>
+            <Enum value="29" name="Lift_Trigger"/>
+            <Enum value="30" name="Tilt_Trigger"/>
+            <Enum value="31" name="Torque_Trigger"/>
+            <Enum value="32" name="Deceleration_Trigger"/>
+        </Field>
+
+        <Field name="Units" format="U16" indicator="(recordType == 187)" indicatorValue="true"/>
+        <Field name="SPN" format="U32" indicator="(recordType == 221)" indicatorValue="true"/>
+        <Field name="DataPage" format="U8" indicator="(recordType == 221)" indicatorValue="true"/>
+        <Field name="dataSource" format="U16" indicator="(recordType == 170 || recordType == 221 ||recordType == 187 || recordType == 204)" indicatorValue="true"/>
+        <Field name="Offset" format="F32" indicator="(recordType == 187)" indicatorValue="true"/>
+        <Field name="Scale" format="F32" indicator="(recordType == 187)" indicatorValue="true"/>
+        <Field name="Min-Valid" format="F64" indicator="(recordType == 187)" indicatorValue="true"/>
+        <Field name="Max-Valid" format="F64" indicator="(recordType == 187)" indicatorValue="true"/>
+        <Field name="namelength" format="U8" indicator="(recordType == 187 || recordType == 204)" indicatorValue="true"/>
+        <Field name="name" format="VariableSize" indicator="(recordType == 187 || recordType == 204)" length="namelength" indicatorValue="true"/>
+        <Field name="statesCount" format="U8" indicator="(recordType == 204)" indicatorValue="true"/>
+        <Field name="states" format="Block" count="statesCount" indicator="(recordType == 204)" indicatorValue="true">
+        <Field name="value" format="VariableSize" length="size" indicator="(recordType == 204)" indicatorValue="true"/>
+        <Field name="strlength" format="U8" indicator="(recordType == 204)" indicatorValue="true"/>
+        <Field name="stateStr" format="VariableSize" indicator="(recordType == 204)" length="strlength" indicatorValue="true"/>
+        </Field>
+    </Type>
+
+    <Message name="Vims3GFile" id="82">
+        <Field name="vimsBlocks" format="Block" count="..." countWhile="(blockMarker == 80) || (blockMarker == 82)">
+            <Field name="vimsBlock" format="Block">
+                <Field name="blockMarker" format="U8" />
+                <Field name="blockVersion" format="U8" indicator="(blockMarker == 80) || (blockMarker == 82)" indicatorValue="true"/>
+                <Field name="parameterDescriptionsCount" format="U16" indicator="blockMarker" indicatorValue="80"/>
+                <Field name="parameterDescriptions" format="Block" count="parameterDescriptionsCount" indicator="blockMarker" indicatorValue="80">
+                        <Field name="parameterDescription" format="StandardParameterDefinitionBlock" indicator="(blockVersion == 1)" indicatorValue="true"/>
+                        <Field name="parameterDescription" format="V2ParameterDefinitionBlock" indicator="(blockVersion == 2)" indicatorValue="true"/>
+                </Field>
+                <Field name="firstParameterIndex" format="U16" indicator="blockMarker" indicatorValue="82"/>
+                <Field name="lastParameterIndex" format="U16" indicator="blockMarker" indicatorValue="82"/>
+                <Field name="recordSetSize" format="U32" indicator="(blockMarker == 82) &amp;&amp;  (blockVersion == 1) " indicatorValue="true"/>
+                <Field name="recordSetCount" format="U32" indicator="(blockMarker == 82) &amp;&amp; (blockVersion == 1) " indicatorValue="true"/>
+
+                <Field name="recordSetSize" format="U16" indicator="(blockMarker == 82) &amp;&amp; (blockVersion == 2) " indicatorValue="true"/>
+                <Field name="recordSetCount" format="U16" indicator="(blockMarker == 82) &amp;&amp; (blockVersion == 2) " indicatorValue="true"/>
+
+                <Field name="recordSets" format="Block" count="recordSetCount" indicator="blockMarker" indicatorValue="82">
+                    <Field name="recordSet" format="Block" count="((lastParameterIndex+1) - firstParameterIndex)" indicatorValue="recordSetCount > 0">
+                        <Field name="record" format="Vims3GParameterRecord" />
+                    </Field>
+                </Field>
+            </Field>
+        </Field>
+
+    </Message>
+
+    <Message name="ChannelDef" id="99">
+        <Field name="parameterDescription" format="V2ParameterDefinitionBlock"/>
+    </Message>
+
+    <!--
+    <Type name="productLinkHeader">
+        <Field name="transactionType" format="U8" description="Data transaction identifier"/>
+        <Field name="transactionSubType" format="U8" description="Data transaction sub-type"/>
+        <Field name="transactionVersion" format="U8" description="Data transaction version"/>
+        <Field name="fileId" format="Var" value="((transactionType*256)+"/>
+    </Type>
+
+    <Type name="productLinkStartStopTimes2">
+        <Field name="timestamp" format="ORBCOMM" description="Suppliedby the onboard clock."/>
+        <Field name="latitude" format="U24" units="degrees" unitType="plane angle" description="Current latitude as supplied by GPS"/>
+        <Field name="longitude" format="U24" units="degrees" unitType="plane angle" description="Current longitude as supplied by GPS "/>
+        <Field name="locationType" format="Enum" length="8" description="Source of location data: 1 = GPS 5 = Invalid">
+                <Enum name="gps" value="1"/>
+                <Enum name="invalid" value="5"/>
+        </Field>
+        <Field name="serviceMeterHours" format="U24" units="hour" unitType="duration" description="Total number of service meter hours"/>
+        <Field name="pl201StatusBytes" format="U16" description="Status Byte 1 and Status Byte 2  (See Status Byte Definitions)"/>
+        <Field name="inclusiveProductWatchID" format="U8" description="If particular ID defined, transmit 0x01 0xFF; else transmit 0x00"/>
+        <Field name="exclusiveProductWatchID" format="U8" description="If particular ID defined, transmit 0x01 0xFF; else transmit 0x00"/>
+        <Field name="timeBasedProductWatchID" format="U8" description="If particular ID defined, transmit 0x01 0xFF; else transmit 0x00"/>
+        <Field name="fuelConsumption" format="U32" units="gallon" unitType="liquid volume" scale="0.125" description="Total fuel consumption (in 1/8 gallons). "/>
+        <Field name="fuelLevel" format="U8" units="percent" unitType="ratio" description="Percentage of fuel remaining"/>
+        <Field name="totalIdleTime" format="U32" units="hour" unitType="duration" scale="0.05" description="Total amount of engine idle time (0.05 hours/bit)"/>
+        <Field name="totalMaximumFuel" format="U32"  units="gallon" unitType="liquid volume" scale="0.125" description="Total maximum fuel (in 1/8 gallons). "/>
+        <Field name="numberOfEngineStarts" format="U16" units="count" unitType="unitless" description="Total number of engine starts"/>
+        <Field name="totalEngineRevolutions" format="U32" units="count" unitType="unitless" scale="4" description="Total number of engine revolutions (4 revolutions/bit)"/>
+        <Field name="totalIdleFuel" format="U32" units="gallon" unitType="liquid volume" scale="0.125" description="Total fuel used at idle time (in 1/8 gallons)"/>
+        <Field name="totalStartStopRecords" format="U8" description="Total number of Start/Stop records"/>
+        <Field name="startStopRecords" format="Block" count="totalStartStopRecords">
+            <Field name="startStopRecord" format="Block">
+                <Field name="startTime" format="ORBCOMM" description="Supplied by the onboard clock. The timestamp when the equipment is started (i.e. engine on)"/>
+                <Field name="mssKeyID0" format="U32" description="The Machine Security System Operator ID. If FF FF FF FF then no information available."/>
+                <Field name="mssKeyID1" format="U32" description="The Machine Security System Operator ID. If FF FF FF FF then no information available."/>
+                <Field name="stopTime" format="ORBCOMM" description="Supplied by the onboard clock. The timestamp when the equipment is stopped (i.e. engine off)."/>
+            </Field>
+        </Field>
+    </Type>
+
+    <Type name="productLinkCumulative1">
+        <Field name="timestamp" format="ORBCOMM" description="Supplied by the onboard clock."/>
+        <Field name="latitude" format="U24" units="degrees" unitType="plane angle" description="Current latitude as supplied by GPS"/>
+        <Field name="longitude" format="U24" units="degrees" unitType="plane angle" description="Current longitude as supplied by GPS "/>
+        <Field name="locationType" format="Enum" length="8" description="Source of location data: 1 = GPS 5 = Invalid">
+                <Enum name="gps" value="1"/>
+                <Enum name="invalid" value="5"/>
+        </Field>
+        <Field name="serviceMeterHours" format="U24" units="hour" unitType="duration" description="Total number of service meter hours"/>
+        <Field name="pl201StatusBytes" format="U16" description="Status Byte 1 and Status Byte 2  (See Status Byte Definitions)"/>
+        <Field name="inclusiveProductWatchID" format="U8" description="If particular ID defined, transmit 0x01 0xFF; else transmit 0x00"/>
+        <Field name="exclusiveProductWatchID" format="U8" description="If particular ID defined, transmit 0x01 0xFF; else transmit 0x00"/>
+        <Field name="timeBasedProductWatchID" format="U8" description="If particular ID defined, transmit 0x01 0xFF; else transmit 0x00"/>
+        <Field name="fuelConsumption" format="U32" units="gallon" unitType="liquid volume" scale="0.125" description="Total fuel consumption (in 1/8 gallons). "/>
+        <Field name="fuelLevel" format="U8" units="percent" unitType="ratio" description="Percentage of fuel remaining"/>
+        <Field name="totalIdleTime" format="U32" units="hour" unitType="duration" scale="0.05" description="Total amount of engine idle time (0.05 hours/bit)"/>
+        <Field name="totalMaximumFuel" format="U32" units="gallon" unitType="liquid volume" scale="0.125" description="Total maximum fuel (in 1/8 gallons). "/>
+        <Field name="numberOfEngineStarts" format="U16" units="count" unitType="unitless" description="Total number of engine starts"/>
+        <Field name="totalEngineRevolutions" format="U32" units="count" unitType="unitless" scale="4" description="Total number of engine revolutions (4 revolutions/bit)"/>
+        <Field name="totalIdleFuel" format="U32" units="gallon" unitType="liquid volume" scale="0.125" description="Total fuel used at idle time (in 1/8 gallons)"/>
+    </Type>
+
+    <Type name="productLinkConfigurableParameter1">
+        <Field name="timestamp" format="ORBCOMM" description="Supplied by the onboard clock." />
+        <Field name="parameterCount" format="U8" description="Number of Configurable Parameter Responses in message" />
+        <Field name="parameters" format="Block" count="parameterCount">
+            <Field name="parameter" format="Block">
+                <Field name="parameterId" format="U32" description="Parameter for which data follows" />
+                <Field name="parameterType" format="Enum" length="8" description="$01 = OneTime $02 = Cumulative $03 = Histogram Minimum $04 = Histogram Maximum $05 = Histogram Averaging" >
+                        <Enum name="oneTime" value="1"/>
+                        <Enum name="cumulative" value="2"/>
+                        <Enum name="histogramMinimum" value="3"/>
+                        <Enum name="histogramMaximum" value="4"/>
+                        <Enum name="histogramAverage" value="5"/>
+                </Field>
+                <Field name="captureTimestamp" format="ORBCOMM" description="Timestamp when last data point was actually captured on the data link" />
+                <Field name="captureSMU" format="U24" units="hour" unitType="duration" description="SMU when last data point was actually captured on the data link" />
+                <Field name="mid" format="U8" description="ECM from which data for this parameter was captured" />
+                <Field name="dataLength" format="U8" description="Length of an individual data point for this parameter" />
+                <Field name="data" format="Block" count="dataLength">
+                    <Field name="datum" format="U8"/>
+                </Field>
+            </Field>
+        </Field>
+    </Type>
+
+    <Type name="productLinkBlockDataTransfer1">
+        <Field name="timestamp" format="ORBCOMM" description="Onboard Timestamp"/>
+        <Field name="smu" format="U24" units="second" unitType="service meter hours" description="Service Meter Units"/>
+        <Field name="blocks" format="Block" count="...">
+            <Field name="block" format="Block">
+                <Field name="mid" format="U8" description="Module ID"/>
+                <Field name="fileType" format="U16" description="File Type"/>
+                <Field name="dataIndex" format="U32" description="Data Index"/>
+                <Field name="status" format="U8" description="Status/Error Code"/>
+                <Field name="size" format="U24" description="Size"/>
+                <Field name="rawData" format="Block" count="size">
+                    <Field name="data" format="U8" />
+                </Field>
+            </Field>
+        </Field>
+    </Type>
+
+
+    <Message name="productLinkFile" id="10">
+        <Field name="header" format="productLinkHeader"/>
+        <Field name="data" format="productLinkStartStopTimes2"
+            indicator="header\transactionType == 0x42 && header\transactionSubType == 0x00 && header\transactionVersion == 0x02" indicatorValue="true"/>
+        <Field name="data" format="productLinkCumulative1"
+            indicator="header\transactionType == 0x42 && header\transactionSubType == 0x01 && header\transactionVersion == 0x01" indicatorValue="true"/>
+        <Field name="data" format="productLinkConfigurableParameter1"
+            indicator="header\transactionType == 0x43 && header\transactionSubType == 0x00 && header\transactionVersion == 0x01" indicatorValue="true"/>
+        <Field name="data" format="productLinkBlockDataTransfer1"
+            indicator="header\transactionType == 0x41" indicatorValue="true"/>
+    </Message>
+    -->
+
+</Messages>

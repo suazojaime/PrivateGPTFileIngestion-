@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="714719c0-223f-4047-b302-a69498d9ea30" author="MineStar" context="Underground/Underground_Management"
+               failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for ROUTE_ARC as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ROUTE_ARC"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4355: CreateTable ROUTE_ARC</comment>
+        <createTable tablespace="MW_ENT"
+                     remarks="If route does not travel in a straight-line, describes the arcs that form the path of the route"
+                     tableName="ROUTE_ARC">
+            <column name="ROUTE_PATH_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CENTER_X" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CENTER_Y" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CENTER_Z" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RADIUS" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="START_ANGLE" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EXTENT_ANGLE" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LIST_INDEX" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ROUTE_PATH_OID,LIST_INDEX" constraintName="ROUTE_ARC_PK" tablespace="MW_IDXENT"
+                       tableName="ROUTE_ARC"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="c4caab4b-ff29-457f-bafc-07ff1e073fd0" author="MineStar" context="Underground/Underground_Management"
+               failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for ROUTE_PATH as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ROUTE_PATH"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4355: CreateTable ROUTE_PATH</comment>
+        <createTable tablespace="MW_ENT"
+                     remarks="If a route does not travel in a straight-line, this class describes the arcs that form the path of the route. There may be arcs that are specific to a machine class."
+                     tableName="ROUTE_PATH">
+            <column name="ROUTE_PATH_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS_OID" type="BIGINT" remarks="Machine class that route path applies to"/>
+            <column name="ROUTE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ROUTE_PATH_OID" constraintName="ROUTE_PATH_PK" tablespace="MW_IDXENT"
+                       tableName="ROUTE_PATH"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="e2b49eb1-c58a-4b3c-83a9-21bae88d5a43" author="MineStar" context="Underground/Underground_Management"
+               failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for ROUTE_ARC_ROUTE_PATH_OID_FK to table ROUTE_ARC as (1) the table does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_ARC"/>
+            <tableExists tableName="ROUTE_PATH"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ROUTE_ARC"
+                                            foreignKeyName="ROUTE_ARC_ROUTE_PATH_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4355: AddForeignKeyConstraint ROUTE_ARC_ROUTE_PATH_OID_FK to ROUTE_ARC (ROUTE_PATH_OID)</comment>
+        <sql>DELETE FROM ROUTE_ARC WHERE ROUTE_PATH_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM ROUTE_PATH WHERE
+            ROUTE_PATH.ROUTE_PATH_OID = ROUTE_ARC.ROUTE_PATH_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="ROUTE_ARC" baseColumnNames="ROUTE_PATH_OID"
+                                 constraintName="ROUTE_ARC_ROUTE_PATH_OID_FK" referencedTableName="ROUTE_PATH"
+                                 referencedColumnNames="ROUTE_PATH_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ROUTE_ARC" constraintName="ROUTE_ARC_ROUTE_PATH_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="769c15af-28ba-4592-9dff-b616223475a0" author="MineStar" context="Underground/Underground_Management"
+               failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for ROUTE_PATH_MACHINE_CLASS_OI_FK to table ROUTE_PATH as (1) the table does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_PATH"/>
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ROUTE_PATH"
+                                            foreignKeyName="ROUTE_PATH_MACHINE_CLASS_OI_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4355: AddForeignKeyConstraint ROUTE_PATH_MACHINE_CLASS_OI_FK to ROUTE_PATH (MACHINE_CLASS_OID)
+        </comment>
+        <sql>UPDATE ROUTE_PATH SET MACHINE_CLASS_OID = NULL WHERE MACHINE_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT
+            'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = ROUTE_PATH.MACHINE_CLASS_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="ROUTE_PATH" baseColumnNames="MACHINE_CLASS_OID"
+                                 constraintName="ROUTE_PATH_MACHINE_CLASS_OI_FK" referencedTableName="MACHINECLASS"
+                                 referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ROUTE_PATH" constraintName="ROUTE_PATH_MACHINE_CLASS_OI_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="35aad841-567c-4851-bd69-d21563af6c8d" author="MineStar" context="Underground/Underground_Management"
+               failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for ROUTE_PATH_ROUTE_OID_FK to table ROUTE_PATH as (1) the table does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_PATH"/>
+            <tableExists tableName="ROUTE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ROUTE_PATH" foreignKeyName="ROUTE_PATH_ROUTE_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4355: AddForeignKeyConstraint ROUTE_PATH_ROUTE_OID_FK to ROUTE_PATH (ROUTE_OID)</comment>
+        <sql>DELETE FROM ROUTE_PATH WHERE ROUTE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM ROUTE WHERE
+            ROUTE.ROUTE_OID = ROUTE_PATH.ROUTE_OID)
+        </sql>
+        <addForeignKeyConstraint baseTableName="ROUTE_PATH" baseColumnNames="ROUTE_OID"
+                                 constraintName="ROUTE_PATH_ROUTE_OID_FK" referencedTableName="ROUTE"
+                                 referencedColumnNames="ROUTE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ROUTE_PATH" constraintName="ROUTE_PATH_ROUTE_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="8cefd539-1385-440b-b959-da8e3fbc4822" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for OUTSTANDING_TRUCKS to table PLAN_MODEL as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="OUTSTANDING_TRUCKS"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8349: AddColumn PLAN_MODEL.OUTSTANDING_TRUCKS</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="OUTSTANDING_TRUCKS" type="INT"
+                    remarks="The number of trucks allowed to be en-route to a dump even when all dump points are occupied"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

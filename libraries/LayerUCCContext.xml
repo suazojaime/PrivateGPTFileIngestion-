@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- internal cache beans, not available for remoting or serviceFactory -->
+    <bean id="layerGroupCollectionCacheImpl" class="minestar.mine.uifacade.layer.collection.LayerGroupCollectionCache"
+          lazy-init="true" parent="cacheParent">
+        <property name="userLayerService" ref="userLayerServiceImpl"/>
+    </bean>
+
+    <!-- must have this -->
+    <bean id="layerUCCImpl" class="minestar.mine.uifacade.layer.impl.LayerUCCImpl" lazy-init="true">
+        <property name="displayablePlanCache" ref="displayablePlanCacheImpl"/>
+        <property name="hazardLayoutService" ref="hazardLayoutServiceImpl"/>
+        <property name="layerDefinitionService" ref="layerDefinitionServiceImpl"/>
+        <property name="materialManagementService" ref="materialManagementServiceImpl"/>
+        <property name="mineLayoutService" ref="mineLayoutServiceImpl"/>
+        <property name="zoneLayoutService" ref="zoneLayoutServiceImpl"/>
+        <property name="userContext" ref="userContextImpl"/>
+        <property name="userLayerService" ref="userLayerServiceImpl"/>
+        <property name="userLayerGroupCache" ref="layerGroupCollectionCacheImpl"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerLayerUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Layer UCC"/>
+        <constructor-arg value="minestar.mine.uifacade.layer.LayerUCCFacade"/>
+        <constructor-arg ref="layerUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="layerUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="layerUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="layerUCC"/>
+        <property name="service" ref="layerUCCProxy"/>
+        <property name="serviceInterface" value="minestar.mine.uifacade.layer.LayerUCCFacade"/>
+    </bean>
+
+</beans>

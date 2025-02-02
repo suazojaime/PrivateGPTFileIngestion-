@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- 4.1 Base schema -->
+    <include file="db/changelog/4_1/platform/platform-tables.xml"/>
+    <include file="db/changelog/4_1/platform/delay-functions.xml"/>
+    <include file="db/changelog/4_1/platform/time-functions.xml"/>
+    <include file="db/changelog/4_1/platform/migration-functions.xml"/>
+    <include file="db/changelog/4_1/model/model-tables.xml"/>
+
+    <!-- This 5.2 changeset needs to go here as the SEQUENCE_VALUE table is used to generate OIDs and IDs needed by
+         some other changesets -->
+    <include file="db/changelog/5_2/model/updates/ahs-8356-create-sequence-value-table.xml"/>
+
+    <!-- 4.1 Schema changes -->
+    <include file="db/changelog/4_1/platform/updates/flt-1277-drop-invalid-database-object-table.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1263-remove-intensity-options-for-the-headlight-script-element.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1303-make-shift-name-index-nonunique.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1373-add-not-null-constraints-to-location.xml"/>
+    <include file="db/changelog/4_1/model/updates/fug-268-add-properties-to-chutes.xml"/>
+    <include file="db/changelog/4_1/model/updates/flt-1400-add-scale-machine.xml"/>
+    <include file="db/changelog/4_1/model/updates/ux-354-add-columns-userlayer-default-group.xml"/>
+    <include file="db/changelog/4_1/model/updates/ux-354-add-not-null-constraints-to-defaul-group.xml"/>
+    <include file="db/changelog/4_1/model/updates/hlt-396-add-casacade-delete-to-hist-entities.xml"/>
+    <include file="db/changelog/4_1/model/updates/fug-305-drop-machine-lost-record-table.xml"/>
+    <include file="db/changelog/4_1/model/updates/fug-312-add-rock-breaker-to-ore-pass.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1706-add-adjusted-spot-point.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1746-fix-material-hierarchy-relationships.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1735-ensure-delay-class-has-delay-group.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1829-make-script-classes-immutable.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1916-add-paddock-dump-bump-optional-plan-setting.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1762-add-throughput-optimisation-for-plan-advanced-settings.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1709-add-column-isHighwallDirectionClockwise.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-2002-remove-plan-version-and-dates.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-352-remove-plan-status.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-1995-add-plan-availability.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-2230-add-delay-category-not-null-constraints.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-2221-remove-orphaned-dump-groups.xml"/>
+    <include file="db/changelog/4_1/model/updates/hlt-521-system-channel-polling-machine-configs.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-2219-add-dump-plan-auto-recovery-script.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-2346-remove-dodgy-locks.xml"/>
+    <include file="db/changelog/4_1/model/updates/ahs-2430-make-cusp-deconfliction-option-in-load-plan-setting-a-single-checkbox.xml"/>
+    <include file="db/changelog/4_1/model/updates/hlt-952-increase-width-of-moduleDef-name.xml"/>
+    <include file="db/changelog/4_1/model/updates/flt-6954-make-existing-grades-active.xml"/>
+
+    <!-- 4.2 Schema changes    -->
+    <include file="db/changelog/4_2/model/updates/hlt-548-increase-width-of-moduleDef-name.xml"/>
+    <include file="db/changelog/4_2/model/updates/fug-387-remove-rf-tag-and-wifi-access-point.xml"/>
+    <include file="db/changelog/4_2/model/updates/fug-268-move-chute-properties.xml"/>
+    <include file="db/changelog/4_2/model/updates/fug-312-add-ug-rockbreaker.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-2452-highwall-dump-points-may-require-verification.xml"/>
+    <include file="db/changelog/4_2/model/updates/fug-344-fug-387-add-sensor-table.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-2540-dump-points-verified-property-should-be-nullable.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-2583-add-not-null-constraints-to-plan-advanced-settings.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-2547-add-new-columns-to-plan-model.xml"/>
+    <include file="db/changelog/4_2/model/updates/fug-310-add-area-map-table.xml"/>
+    <include file="db/changelog/4_2/model/updates/flt-1380-add-displayOrder-column-to-fuelAndLubeType.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-2746-add-not-null-constraints-to-machine-type.xml"/>
+    <include file="db/changelog/4_2/model/updates/flt-1131-add-nextoid-function.xml"/>
+    <include file="db/changelog/4_2/model/updates/flt-1131-insert-root-workgroup.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-2927-Implement-Reassignment-Lanes.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-2984-add-editable-flag-to-zones.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-2985-add-editable-flag-to-lanes.xml"/>
+    <include file="db/changelog/4_2/model/updates/fug-385-make-wet-muck-office-msg-urgent.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-3043-drop-lane-planning-errors-column.xml"/>
+    <include file="db/changelog/4_2/model/updates/ahs-3170-lane-travel-data-lane-column-should-not-allow-null.xml"/>
+    <include file="db/changelog/4_2/model/updates/pm-858-add-column-external-reference.xml"/>
+
+    <!-- 4.3 Schema changes    -->
+    <include file="db/changelog/4_3/model/updates/ahs-3460-disable-editing-on-crusher-lanes-and-points.xml"/>
+    <include file="db/changelog/4_3/model/updates/ahs-3671-add-manned-flag-column-autonomous-flag-column.xml"/>
+    <include file="db/changelog/4_3/model/updates/ahs-3673-add-model-update-version-column-to-lane.xml"/>
+    <include file="db/changelog/4_3/model/updates/ahs-3732-add-create-and-update-date-columns-to-lane.xml"/>
+    <include file="db/changelog/4_3/model/updates/ahs-3863-machineclass-category-not-null.xml"/>
+    <include file="db/changelog/4_3/model/updates/ahs-3928-add-has-ever-been-manned-flag-column.xml"/>
+
+    <!-- 4.4 Schema changes    -->
+    <include file="db/changelog/4_4/model/updates/fug-490-add-antenna-model-to-rfrn.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4334-use-zone-reference-in-plans.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4376-add-zone-name-index.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4384-allow-queuing-near-end-of-queue-lane.xml"/>
+    <include file="db/changelog/4_4/model/updates/fug-511-drop-orepass-rockbreaker-unique-constraint.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4499-allow-default-cusp-preference.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4647-allow-three-point-turns.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4500-persist-cusp-preferences.xml"/>
+    <include file="db/changelog/4_4/model/updates/fug-517-add-external-system-task.xml"/>
+    <include file="db/changelog/4_4/model/updates/fug-534-add-load-goal.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4501-allow-cusp-boundary-to-be-manipulated-by-user.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4521-add-traction-level-to-derate.xml"/>
+    <include file="db/changelog/4_4/model/updates/fug-541-add-dump-goal.xml"/>
+    <include file="db/changelog/4_4/model/updates/hlt-802-add-vims-def-indexes.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3201-add-stock-pile-increment.xml"/>
+    <include file="db/changelog/4_4/model/updates/fug-714-load-goal-model-version.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4965-add-spotting-times-for-processors.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4758-remove-unused-zones.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-2726-add-is_active_to_grade.xml"/>
+    <include file="db/changelog/4_4/model/updates/hlt-817-add-pollingId-measure-def-config.xml"/>
+    <include file="db/changelog/4_4/model/updates/hlt-804-new-columns-for-user-defined-vims-definitions.xml"/>
+    <include file="db/changelog/4_4/model/updates/fug-796-dump-goal-model-version.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4957-plans-with-multiple-queues.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3295-stockpile-management.xml"/>
+    <include file="db/changelog/4_4/model/updates/3295-stockpile-management-gb-group.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3178-lhd-processor-and-recipe-association.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3222-model-update-version.xml"/>
+    <include file="db/changelog/4_4/model/updates/fug-833-3rd-party-interfaces-add-username-password-and-parameters.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-4919-add-plan-small_area_optimizations.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-5063-remove-plan-lane-extension.xml"/>
+    <include file="db/changelog/4_4/model/updates/ahs-5197-implement-multi-queue-plan-creation.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3385-terrain-material-design.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3530-default-terrain-group-id.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3612-stockpile-context-at-group.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3761-grade-block-groups-gis-updates.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3969-grade-block-group-terrain-sync.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3979-remove-duplicate-road-segments.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-3858-update-useclasspayload_to_notnullable.xml" />
+    <include file="db/changelog/4_4/model/updates/flt-4106-archive-support-for-loader-recipe.xml" />
+    <include file="db/changelog/4_4/model/updates/ahs-6678-change-storage-of-plan-info-queue-lanes.xml"/>
+    <include file="db/changelog/4_4/model/updates/flt-5122-terrain-sync-ok-mods.xml"/>
+
+    <!--4.5  Schema changes   -->
+    <include file="db/changelog/4_5/model/updates/fug-823-add-assignable-columns-for-dumpgoal.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1193-add-opc-entities.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1209-add-routes.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1356-add-zone-machine-relation-table.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1662-add-joined-underground-panel.hbm.xml"/>
+
+    <include file="db/changelog/4_5/model/updates/fug-1170-add-ais-barriers.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1159-create-ais-sub-panel-entity.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1728-associate-goal-to-route-node.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1667-add-assigned-joined-panel-column.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1667-add-name-to-joined-panel.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1544-add-final-position-to-dump-goal.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1348-ais-alarms-and-events.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1663-change-RB-Location.xml"/>
+
+    <include file="db/changelog/4_5/model/updates/ahs-6053-add-per-plan-dump-order-priority-advanced-setting.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2197-archive-ais-entities.xml"/>
+    <include file="db/changelog/4_5/model/updates/ahs-4557-designate-static-lanes-as-members-of-a-plan.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2203-remove-active-draw-card-count-columns.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2203-remove-future-draw-card-count-columns.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-588-create-underground-dxf-map.xml"/>
+    <include file="db/changelog/4_5/model/updates/ahs-5374-change-lanes-to-prevent-autonomous-travel-where-no-machine-class-travel-data.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2374-associate-infrastructure-zones.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1355-create-command-walls.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-1355-add-notes-field-to-wall.xml"/>
+    <include file="db/changelog/4_5/model/updates/ahs-6331-add-model_update_version-column-to-plan-model.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2205-add-route-wall-association.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2814-add-passable-column-in-zone-machine-relation.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2365-add-bidirectional-flag.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2365-add-active-flag-to-routes.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2365-ensure-defaultvalues.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-2778-ability-to-place-an-ais-barrier-on-delay.xml"/>
+    <include file="db/changelog/4_5/model/updates/fug-998-add-external-ref-to-drawpoint-orepass.xml"/>
+    <include file="db/changelog/4_5/model/updates/flt-4596-load-mining-blocks-support.xml"/>
+    <include file="db/changelog/4_5/model/updates/ahs-6823-change-storage-of-plan-lane-info-grouped-spots.xml"/>
+
+    <!-- 4.6 changes -->
+    <include file="db/changelog/4_6/model/updates/flt-4438-dest-blend.xml"/>
+    <include file="db/changelog/4_6/model/updates/flt-4688-loader-recipe-isVolume.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-3529-add-chute-hazard-status.xml"/>
+    <include file="db/changelog/4_6/model/updates/flt-4478-add-useloaderpayload-column-for-payload-integration.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-3547-add-model-version-number-orepasses-drawpoints-panels.xml"/>
+    <include file="db/changelog/4_6/model/updates/flt-4817-computation-method-default-to-rolling.xml"/>
+    <include file="db/changelog/4_6/model/updates/flt-4731-remove-stopped-destination-blends.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-3630-remove-type-from-undergroundChute.xml"/>
+    <include file="db/changelog/4_6/model/updates/ahs-7093-add-user-constraints.xml"/>
+    <include file="db/changelog/4_6/model/updates/ahs-7096-add-alarm-type-constraints.xml"/>
+    <include file="db/changelog/4_6/model/updates/ahs-7096-drop-alarm-group-table.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-3923-delete-opc-entities.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-3833-add-model-version-number-to-barriers.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-3833-remove-connection-string-from-barriers.xml"/>
+    <include file="db/changelog/4_6/model/updates/ahs-7102-add-support-for-pbkdf2.xml"/>
+    <include file="db/changelog/4_6/model/updates/ahs-7102-fix-typo-in-authentication-spec.xml"/>
+    <include file="db/changelog/4_6/model/updates/ahs-6803-add-planning-constraints.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-4207-remove-duplicate-columns-from-zonemachinerelation.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-4207-convert-ug-zones.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-4201-added-hint-and-bias-to-routes.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-4202-add-inversion-goal.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-4273-remove-uniqueness-constraint-on-chute-status.xml"/>
+    <include file="db/changelog/4_6/model/updates/fug-4273-remove-uniqueness-constraint-on-drawpoint-status.xml"/>
+    <include file="db/changelog/4_6/model/updates/ahs-7360-narrow-area-planning.xml"/>
+
+    <!-- 4.7 changes -->
+    <include file="db/changelog/4_7/model/updates/fug-4355-add-route-arcs.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-898-add-dumpgoal-attributes.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-4364-add-machine-polytope.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-4344-add-loadgoal-auto-bucket-position.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-4272-rename-tempclose-flags.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-3835-add-external-ref-to-ug-panel.xml"/>
+    <include file="db/changelog/4_7/model/updates/flt-5286-add-durations-to-loader-recipes.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-4364-add-original-filename-column.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-4200-add-manual-flag-to-routes.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-4200-add-maximum-artic-angle-to-lhd.xml"/>
+    <include file="db/changelog/4_7/model/updates/flt-5543-add-job-code-active.xml"/>
+    <include file="db/changelog/4_7/model/updates/fug-4267-add-machine-travel-direction-to-inversion-node.xml"/>
+
+    <!-- 5.0 changes -->
+    <include file="db/changelog/5_0/model/updates/ahs-7468-modify-lane-travel-data.xml"/>
+    <include file="db/changelog/5_0/model/updates/ahs-7510-add-use-max-curvature-to-lane.xml"/>
+    <include file="db/changelog/5_0/model/updates/flt-5804-add-destinationblend-observational.xml"/>
+    <include file="db/changelog/5_0/model/updates/ahs-7551-add-use-max-curvature-to-lane-point.xml"/>
+
+    <!-- 5.1 changes -->
+    <include file="db/changelog/5_1/model/updates/ahs-7563-tidy-up-machinestate.xml"/>
+    <include file="db/changelog/5_1/model/updates/fug-3368-add-artic-offset.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7698-activity-model-changes.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7698-jobcode-model-changes.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7753-add-person-macpassword-index.xml"/>
+    <include file="db/changelog/5_1/model/updates/hlt-1251-increase-width-of-histDef-name.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7648-alter-grade-constraints.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7648-add-grade-block-constraints.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7648-add-grade-block-group-constraints.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7648-add-material-constraints.xml"/>
+    <include file="db/changelog/5_1/model/updates/flt-6072-add-account-expire-to-user.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7809-modify-spot-point-lane-data.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7829-add-zone-outside-aoz-flag.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7878-modify-fuel-type-constraints.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7886-modify-delay-category-constraints.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7893-alter-delay-activity-constraints.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7886-modify-delay-group-constraints.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7789-alter-machine-class.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7789-alter-derate.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7789-alter-machine-type.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7789-alter-machine-class-icon.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-7789-alter-machine-dimension.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-8029-drop-machine-dimension.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-8030-drop-coasting-fuel-burn-data.xml"/>
+    <include file="db/changelog/5_1/model/updates/ahs-8126-add-hazard-type-outside-aoz-flag.xml"/>
+
+    <!-- 5.2 changes -->
+    <include file="db/changelog/5_2/model/updates/ahs-8101-alter-message-tables.xml"/>
+    <include file="db/changelog/5_2/model/updates/ahs-7886-alter-delayclass.xml"/>
+    <include file="db/changelog/5_2/model/updates/flt-6427-delay-group-contain-lists.xml"/>
+    <include file="db/changelog/5_2/model/updates/fug-4500-migrate-panel-status.xml"/>
+    <include file="db/changelog/5_2/model/updates/ahs-7789-drop-processor-queue-table.xml"/>
+    <include file="db/changelog/5_2/model/updates/ahs-8409-alter-transport-vehicle.xml"/>
+    <include file="db/changelog/5_2/model/updates/ahs-8345-add-plan-association-table.xml"/>
+    <include file="db/changelog/5_2/model/updates/ahs-8359-spoil-pile-management.xml"/>
+    <include file="db/changelog/5_2/model/updates/ahs-8356-add-plan-layer-update-version.xml"/>
+    <include file="db/changelog/5_2/model/updates/ahs-8349-add-outstanding-trucks-to-plan-model.xml"/>
+    <include file="db/changelog/5_2/model/updates/fug-5199-add-model-update-version-to-sensor.xml"/>
+    <include file="db/changelog/5_2/model/updates/ahs-8567-add-cascade-delete-foreign-key-on-entry-lanes.xml"/>
+
+    <!-- 5.3 changes -->
+    <include file="db/changelog/5_3/model/updates/ahs-8771-modify-safety-check-item-constraints.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-8317-add-widening-type.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-7899-fix-machine-refuelling.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-8953-make-hazard-immutable.xml"/>
+    <include file="db/changelog/5_3/model/updates/flt-6864-drop-job-code-assoc-trigger.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-8967-add-check-constraint-for-loadingtooloperatingmode.xml"/>
+    <include file="db/changelog/5_3/model/updates/flt-6246-add-truck-times-to-loading-tool.xml"/>
+    <include file="db/changelog/5_3/model/updates/flt-6836-add-timeActiveStatusChange-to-roadSegment.xml"/>
+    <include file="db/changelog/5_3/model/updates/fug-5332-create-ignore-heading-field-for-machine-type.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-8949-support-dual-sided-loading-through-cable-bridge.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9083-add-spot-point-layer-update-version.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9174-associate-lane-with-machine-class.xml"/>
+    <include file="db/changelog/5_3/model/updates/flt-7030-delete-quartz-data.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9073-make-spoil-pile-plan-reference-optional.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9058-add-login-userid-index.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9074-add-spoil-pile-layer-update-version.xml"/>
+    <include file="db/changelog/5_3/model/updates/flt-7115-add-shift-roster-table.xml"/>
+    <include file="db/changelog/5_3/model/updates/fug-5667-create-discrete-grades-table.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9147-associate-plan-with-machine-classes.xml"/>
+    <include file="db/changelog/5_3/model/updates/fug-5667-fix-primary-key-length.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9258-add-path-plan-vehicle-config-to-truck-class.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9176-add-path-plan-addl-width-to-truck-class.xml"/>
+    <include file="db/changelog/5_3/model/updates/fug-5676-create-payload-priorities-tables.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9287-scheduled-assignment-changes.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9219-add-layer-update-versions.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9372-add-region-table.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9219-init-layer-update-version-if-not-set.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9421-add-filtered-derate-indexes.xml"/>
+    <include file="db/changelog/5_3/model/updates/ahs-9450-add-region-layer-update-version.xml"/>
+    <include file="db/changelog/5_3/model/updates/cfd-753-add-line-work.xml"/>
+    <include file="db/changelog/5_3/model/updates/fug-5763-change-underground-person-to-user-ref.xml"/>
+    <include file="db/changelog/5_3/model/updates/flt-7392-increase-layerupdateversion-chunksize.xml"/>
+    <include file="db/changelog/5_3/model/updates/flt-7606-add-tbl_choicelist-indexes.xml"/>
+
+    <!-- 5.4 changes -->
+    <include file="db/changelog/5_4/model/updates/flt-7669-alter-blend-material-criteria.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7670-alter-blend-discrete-criteria.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7671-alter-blend-continuous-critieria.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7687-alter-loader-recipe.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7769-add-shift-indexes.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7832-change-lane-reassignment.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-10299-add-lock-username.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7919-add-name-to-shiftroster.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8045-add-layer-revision-to-fuel.xml"/>
+    <include file="db/changelog/5_4/model/updates/det-324-add-column-display-color-alpha-to-zone.xml"/>
+    <include file="db/changelog/5_4/model/updates/fug-5579-replace-external-config-with-external-token.xml"/>
+    <include file="db/changelog/5_4/model/updates/fug-5579-add-request-field-to-barriers.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8036-add-layer-update-version-to-machine-class.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7939-drop-active-date-nullable-to-shiftroster.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-10013-add-cable-bridge-avoidance-radius.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-10013-remove-cable-bridge-avoidance-location.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8038-add-layer-update-version-to-job-code.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8047-add-layer-update-version-to-person.xml"/>
+    <include file="db/changelog/5_4/model/updates/fug-5972-change-future-drawcard-to-use-shift-type.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8035-add-layer-update-version-to-machine.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-10761-remove-person-crew-version.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8040-add-layer-update-version-to-delay-type.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8042-add-layer-update-version-to-std-msg.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7901-add-EMT-firstResponder-busDriver.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7918-delete-futureShift-data.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-7538-add-class-id-column-to-user1.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8044-add-layer-update-version-to-safety-check-list.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-10760-add-column-for-loader-obstacle-clearing.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8478-remove-permissions-table.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-10853-add-speed-control-column-to-dbr.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-9993-add-material-mix-to-dump-point.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8413-add-notnull-to-user-discriminator.xml"/>
+    <include file="db/changelog/5_4/model/updates/flt-8304-add-reporting-date-to-shift.xml"/>
+    <include file="db/changelog/5_4/model/updates/fug-6036-add-macros-for-command-for-underground.xml"/>
+    <include file="db/changelog/5_4/model/updates/fug-5989-draw-card-create-update-timestamps.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-11067-add-model-layer-update-version-to-scripts.xml"/>
+    <include file="db/changelog/5_4/model/updates/ahs-10755-remove-non-null-constraint-spoilpile-machine.xml"/>
+    <include file="db/changelog/5_4/model/updates/fug-6011-clean-up-ug-table-inconsistancies.xml"/>
+
+    <!-- 5.5 changes -->
+    <include file="db/changelog/5_5/model/updates/fug-5565-goal-are-not-route-nodes.xml"/>
+    <include file="db/changelog/5_5/model/updates/fug-2774-add-lhd-restrictions.xml"/>
+    <include file="db/changelog/5_5/model/updates/fug-2775-add-lhd-scheduled-assignments.xml"/>
+    <include file="db/changelog/5_5/model/updates/ahs-11837-update-machinecategory-name.xml"/>
+    <include file="db/changelog/5_5/model/updates/ahs-10280-plan-model-changes.xml"/>
+    <include file="db/changelog/5_5/model/updates/flt-7905-add-comment-to-job-code.xml"/>
+    <include file="db/changelog/5_5/model/updates/ahs-11541-add-column-avoid-cusping-into-boundary.xml"/>
+    <include file="db/changelog/5_5/model/updates/ahs-12049-change-plan-zone-foreign-keys.xml"/>
+    <include file="db/changelog/5_5/model/updates/flt-9813-add-layer-update-version-to-hazard-type.xml"/>
+    <include file="db/changelog/5_5/model/updates/flt-8037-add-layer-update-version-to-activity.xml"/>
+    <include file="db/changelog/5_5/model/updates/ahs-12112-store-material-mix-in-wfs.xml"/>
+    <include file="db/changelog/5_5/model/updates/ahs-4506-simplify-dump-plan-advanced-settings-for-throughput.xml"/>
+    <include file="db/changelog/5_5/model/updates/flt-10464-set-default-loadingtool-useclasstrucktimes.xml"/>
+    <include file="db/changelog/5_5/model/updates/fug-6892-load-goal-needs-a-final-point.xml"/>
+    <include file="db/changelog/5_5/model/updates/mo-13865-change-discriminator-for-loading-bays.xml"/>
+
+    <!-- 5.6 changes -->
+    <include file="db/changelog/5_6/model/updates/ahs-13357-update-non-zero-infrastructure-machine-type-performance-values.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-12144-add-column-use-vims-tkph-info.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-13113-add-columns-related-to-diesel-exhaust-fluid-level.xml"/>
+    <include file="db/changelog/5_6/model/updates/apx-149-create-system-settings.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-13023-migrate-aux-water-trucks.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-12745-add-wds-details-table.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-12874-add-water-delivery-rates.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-13039-add-column-water-refill-station-plan.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-13038-create-water-refill-station-machines.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-12875-add-watering-spray-head-table.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-13025-add-staffed-avoidance-data-columns.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-6944-change-panel-to-area.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-10102-orepass-blocked-status-change-to-hung-up-and-closed.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-6955-add-machine-class-association-to-operating-status.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-10121-remove-auto-bucket.xml"/>
+    <include file="db/changelog/5_6/model/updates/flt-10365-add-mobile-processor-class.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-6309-create-pin-and-sign.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-13349-add-staffed-centre-of-avoidance-area-to-machine-type.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-6958-aims-area-modified-date.xml"/>
+    <include file="db/changelog/5_6/model/updates/ahs-13353-add-location-layer-update-version.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-6957-rename-lhd-assignment-to-ug.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-6959-aims-machine-statuses.xml"/>
+    <include file="db/changelog/5_6/model/updates/fug-10204-rename-barrier-to-entry.xml"/>
+    <include file="db/changelog/5_6/model/updates/mo-1681-rename-operatingstatus-class-from-panel-to-area.xml"/>
+
+    <!-- 5.7 changes -->
+    <include file="db/changelog/5_7/model/updates/ahs-13437-add-warning-and-critical-def-level-columns.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-779-define-watering-circuit-tables.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-2930-rename_parkup_station_to_layover_station.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-1279-add-data-bridge-related-columns.xml"/>
+	<include file="db/changelog/5_7/model/updates/mo-208-create-water-depletion-profile.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-537-spray-head-groupings.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-1508-refill-and-refuel-thresholds-for-water-truck.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-1792-prod-plan-v2-schema.xml"/>
+    <include file="db/changelog/5_7/model/updates/hlt-1943-create-table-for-machine-models.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2435-prod-plan-v2-schema-update.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-1553-fix-blend-error-when-grade-changes-remove-columns.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-2462-add-machine-automation-config.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-2351-update-productivity-and-nominal-rate.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-2354-wrs-latency.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-2421-min-level-rise.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-2573-add-machine-enabled-features.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2559-reference-warnings.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-2390-add-columns-for-watering-control-zone.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2708-prod-plan-comment-rename.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2159-operational-task-table.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-3187-remove-spray-head-offsets.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2741-prod-plan-sources.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2769-prod-plan-comment-column-type-change.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-2943-right-panel-comment-order.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-1991-add-remain-autonomous-column-to-plan.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2743-prod-plan-v2-update-job-table.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-1798-add-prod-plan-non-production-tasks.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2742-prod-plan-dumps.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2782-extra-operational-task-column.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-3124-prod-plan-v2-operational-task-start-end-date.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-3507-prod-plan-source-stockpile-geometry-column-nullable.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-3347-make-planoid-optional-in-operational-task.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-3569-plan-management-refactoring-comments-and-entities.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-2780-production-task-db-table-prod-plan-production-task.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-3618-add-awt-plan-lanes.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-3915-add-watering-circuit-leg-fields.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-943-set-iezs-to-not-automatically-managed.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-4189-simplify-prod-plan-comments.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/mo-4256-add-notes.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/pmm-28-add-plan-summary.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/pmm-34-add-plan-metrics.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-4271-add-plan-AWT-Uturn-lane-option.xml"/>
+    <!--  This will be removed and merged into one  -->
+    <include file="db/changelog/5_7/model/updates/pmm-115-remove-v2-prefix-from-plan-management-tables.xml"/>
+    <include file="db/changelog/5_7/model/updates/mo-4279-simplify-wds-details.xml"/>
+
+    <!-- 5.7.1 changes -->
+    <include file="db/changelog/5_7_1/model/updates/mo-5830-prod-plan-tasks-in-json.xml"/>
+    <include file="db/changelog/5_7_1/model/updates/mo-5852-create-table-for-prod-plan-endorsement.xml"/>
+    <include file="db/changelog/5_7_1/model/updates/mo-6035-rename-prod-plan-production-task.xml"/>
+    <include file="db/changelog/5_7_1/model/updates/mo-6183-add-version-to-prod-plan-task.xml"/>
+    <include file="db/changelog/5_7_1/model/updates/mo-6057-rockbreaker-crusher-association.xml"/>
+
+    <!-- 5.7.2 changes -->
+    <include file="db/changelog/5_7_2/model/updates/mo-6780-prod-plan-source-stockpile-geometry-column-nullable.xml"/>
+    <include file="db/changelog/5_7_2/model/updates/mo-6862-create-layover-machines.xml"/>
+    <include file="db/changelog/5_7_2/model/updates/mo-6583-add-accounting-code-column-to-prod-plan-job.xml"/>
+    <include file="db/changelog/5_7_2/model/updates/mo-6873-create-edit-layover-plan.xml"/>
+    <include file="db/changelog/5_7_2/model/updates/mo-5500-add-draw-point-ref-to-ore-pass.xml"/>
+
+
+    <!-- 5.7.3 changes -->
+    <include file="db/changelog/5_7_3/model/updates/mo-5919-configure-processor-as-crusher-and-to-have-rock-breaker.xml"/>
+    <include file="db/changelog/5_7_3/model/updates/mo-6498-tidy-up-prod-plan-tables.xml"/>
+    <include file="db/changelog/5_7_3/model/updates/mo-7126-migrate-operational-task-delays.xml"/>
+    <include file="db/changelog/5_7_3/model/updates/mo-7479-drop-task-to-plan-column.xml"/>
+    <include file="db/changelog/5_7_3/model/updates/mo-7068-drop-prod-plan-metrics.xml"/>
+    <include file="db/changelog/5_7_3/model/updates/mo-7617-drop-prod-plan-task-uuid-index.xml"/>
+    <include file="db/changelog/5_7_3/model/updates/mo-9484-update-layovers.xml"/>
+
+    <!-- Actions to execute post schema changes -->
+
+    <!-- 5.9 changes -->
+
+    <include file="db/changelog/5_9/model/updates/mo-9442-add-load-plan-type-column.xml"/>
+
+    <!-- 5.10 changes -->
+    <include file="db/changelog/5_10/model/updates/mo-4982-add-model-version-number-areamap.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9807-add-narrow-area-planning-type.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9571-add-automatedloadoutunit-capacity-tab.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9526-add-column-to-machine-table.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9806-add-additional-narrow-area-template-width.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9995-add-column-to-machine-table.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9371-add-pseudolite-identifier-column-to-machines.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9811-add-perception-verification-stats.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9371-add-pseudolite-identifier-unique-constraint.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-10001-rename-columns-machine-table.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-10001-add-column-payload-services-plan.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9621-add-columns-to-plan-model.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9469-add-simultaneous-dumping-column.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-10266-add-column-aodv-detected.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9571-add-capacity-table.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9326-delete-orphan-data-from-plan-lane-tables.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-10405-remove-column-lime-silo-machine-table.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-10844-update-allow-on-traffic-machine-table.xml"/>
+	<include file="db/changelog/5_10/model/updates/mo-11048-add-column-to-spot-point.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-9648-add-lock-fields.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-11157-add-exclusion-zone-ref-column-for-pseudolites.xml" />
+    <include file="db/changelog/5_10/model/updates/mo-11704-drop-login-userid-status-index.xml" />
+    <include file="db/changelog/5_10/model/updates/mo-15446-update-standardmessage-luv.xml"/>
+    <include file="db/changelog/5_10/model/updates/mo-10900-move-metadata-to-its-own-table.xml" />
+	<include file="db/changelog/5_10/model/updates/mo-11934-add-system-entity-reference-table.xml" />
+    <include file="db/changelog/5_10/model/updates/mo-11935-add-link-system-entity-references-table.xml" />
+    <include file="db/changelog/5_10/model/updates/mo-15398-migrate-aodv-category-name.xml"/>
+
+    <!-- 5.11 changes -->
+    <include file="db/changelog/5_11/model/updates/mo-12035-add-stop-duration-on-machine.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-11975-add-aux-machine-id-to-ms-locks-layer.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-13035-add-empty-derate-to-truck-classes.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-13158-add-columns-for-zone-loaded-speed-limit-notes.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-13576-drop-capacity-table.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-13205-add-supported-fuels-table.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-10904-add-lime-silo-to-material-services.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-12796-add-high-performance-dbr.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-12903-Class-level-addition-in-Tope-Configurator-to-Support-Survey-Point-Configuration.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-13273-add-column-survey-point-configuration.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-13206-database-changes-to-the-addition-of-refuel-time-electric-column-in-fuel-bays.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-13096-address-security-vulnerability-for-org-quartz-scheduler-quartz.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-14148-add-region-active.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-14411-add-default-value-to-sched1.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-15044-add-barrier-zone-column.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-13903-modify-scales-to-payload-services.xml"/>
+    <include file="db/changelog/5_11/model/updates/mo-17243-update-foreign-key-constraint-in-lane-reassignment-info.xml"/>
+
+    <!-- Extensions - see ~/config/ext/Platform/Platform_Management/xml/db/changelog/model-extensions.xml -->
+    <include file="model-extensions.xml"/>
+
+</databaseChangeLog>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!--
+        MineStar supports "extension" modules which may require their own tables.
+        The XFS is used to merge the changelogs for extension modules into this file.
+
+        For example, ~/config/ext/Health/Health_Management/xml/db/changelog/reporting-extensions.xml
+    -->
+
+</databaseChangeLog>

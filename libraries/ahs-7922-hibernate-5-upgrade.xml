@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    
+    <changeSet id="e7dd3db0-358e-40f7-a7a3-ced4cb5cb156" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for CYCLEACTIVITYCOMPONENT.START_TIME_UTC as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="CYCLEACTIVITYCOMPONENT" columnName="START_TIME_UTC"/>
+        </preConditions>
+        <comment>AHS-7922: DropDefaultValue '01-JAN-1970' from CYCLEACTIVITYCOMPONENT.START_TIME_UTC</comment>
+        <dropDefaultValue columnName="START_TIME_UTC" columnDataType="DATETIME2" tableName="CYCLEACTIVITYCOMPONENT"/>
+        <rollback>
+            <addDefaultValue columnName="START_TIME_UTC" columnDataType="DATETIME2" defaultValue="01-JAN-1970" tableName="CYCLEACTIVITYCOMPONENT"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="e77a8299-f812-4f8c-b6d8-070d5e9f8bbc" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for CYCLEDELAY.START_TIME_UTC as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="CYCLEDELAY" columnName="START_TIME_UTC"/>
+        </preConditions>
+        <comment>AHS-7922: DropDefaultValue '01-JAN-1970' from CYCLEDELAY.START_TIME_UTC</comment>
+        <dropDefaultValue columnName="START_TIME_UTC" columnDataType="DATETIME2" tableName="CYCLEDELAY"/>
+        <rollback>
+            <addDefaultValue columnName="START_TIME_UTC" columnDataType="DATETIME2" defaultValue="01-JAN-1970" tableName="CYCLEDELAY"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="f94fd34a-1914-4f29-95f9-2e926e30ed5e" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for CYCLEROADSEGMENT.START_TIME_UTC as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="CYCLEROADSEGMENT" columnName="START_TIME_UTC"/>
+        </preConditions>
+        <comment>AHS-7922: DropDefaultValue '01-JAN-1970' from CYCLEROADSEGMENT.START_TIME_UTC</comment>
+        <dropDefaultValue columnName="START_TIME_UTC" columnDataType="DATETIME2" tableName="CYCLEROADSEGMENT"/>
+        <rollback>
+            <addDefaultValue columnName="START_TIME_UTC" columnDataType="DATETIME2" defaultValue="01-JAN-1970" tableName="CYCLEROADSEGMENT"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="9448cd97-4ede-40e1-af59-57b23af2b766" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for SCALE_READING.STATUS as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="SCALE_READING" columnName="STATUS"/>
+        </preConditions>
+        <comment>AHS-7922: AddNotNullConstraint to SCALE_READING.STATUS</comment>
+        <sql>UPDATE SCALE_READING SET STATUS = 0 WHERE STATUS IS NULL</sql>
+        <addNotNullConstraint columnName="STATUS" columnDataType="SMALLINT" tableName="SCALE_READING"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SCALE_READING" columnName="STATUS" columnDataType="SMALLINT"/>
+        </rollback>
+    </changeSet>
+    
+</databaseChangeLog>

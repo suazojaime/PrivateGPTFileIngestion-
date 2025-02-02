@@ -1,0 +1,786 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="historical">
+
+    <class
+        name="minestar.assignment.domain.ShiftChange"
+        table="SHIFTCHANGE"
+        discriminator-value="XAEntity.ShiftChange"
+        >
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=SHIFTCHANGE_DATE_GROUP
+            columns=SHIFTDATE_UTC, SHIFTCHANGEGROUP
+            tablespace=MW_IDXENT
+            unique=true
+        </meta>
+
+        <meta attribute="description">A shift change</meta>
+        
+        <id
+            name="OID"
+            type="java.lang.Long"
+            column="SHIFTCHANGE_OID"
+            >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID" not-null="false"/>
+
+        <!-- Entity Properties -->
+        <version name="version">
+            <meta attribute="description">The version number for optimistic locking</meta>
+        </version>
+
+        <property name="shiftDate"
+                  type="TimestampType"
+                  column="SHIFTDATE_UTC"
+                  not-null="true">
+            <meta attribute="utc-description">The utc date of the shift.</meta>
+            <meta attribute="description">The date of the shift.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="timestamp">true</meta>
+        </property>
+
+        <property
+            name="shiftIdentifier"
+            type="java.lang.String"
+            column="SHIFTIDENTIFIER"
+            length="254"
+            >
+            <meta attribute="description">Identifier of the shift usually Day or Night.</meta>
+        </property>
+
+        <many-to-one
+            name="supervisorRef"
+            class="minestar.machinetracking.domain.PersonReference"
+            column="SUPERVISOR"
+            not-found="ignore"
+            >
+            <meta attribute="alias">supervisor</meta>
+            <meta attribute="description">Supervisor responsible for the shift change.</meta>
+        </many-to-one>
+
+        <property
+            name="comments"
+            type="java.lang.String"
+            column="COMMENTS"
+            length="4000"
+            >
+            <meta attribute="description">Comments displayed on the top of the allocation monitor.</meta>
+        </property>
+
+        <many-to-one
+            name="shiftChangeCrewRef"
+            class="minestar.platform.domain.roster.CrewReference"
+            column="CREW_OID"
+        	not-found="ignore"
+            >
+            <meta attribute="alias">shiftChangeCrew</meta>
+            <meta attribute="manyToOne">minestar.platform.domain.roster.Crew</meta>
+            <meta attribute="description">The crew for this shift change.</meta>
+        </many-to-one>
+
+        <many-to-one
+            name="shiftChangeGroupRef"
+            class="minestar.assignment.domain.AssGroupReference"
+            column="SHIFTCHANGEGROUP"
+            not-found="ignore">
+            <meta attribute="description">The Shift Change Group for this Shift Change.</meta>
+        </many-to-one>
+
+        <property
+            name="isAutoTieDownAssign"
+            type="java.lang.Boolean"
+            column="ISAUTOTIEDOWNASSIGN"
+            >
+            <meta attribute="description">Should scheduled assignments be created for tie-down at the end of the current shift.</meta>
+        </property>
+
+        <many-to-one
+            name="onAssignmentDelayTypeRef"
+            column="ONASSIGNMENTDELAYTYPE"
+            class="minestar.production.domain.DelayClassReference"
+            not-found="ignore"
+            >
+            <meta attribute="description">When starting the tie-down Scheduled Assignment put the machine on this delay type.</meta>
+        </many-to-one>
+
+        <many-to-one
+            name="onArrivalDelayTypeRef"
+            column="ONARRIVALDELAYTYPE"
+            class="minestar.production.domain.DelayClassReference"
+            not-found="ignore"
+            >
+            <meta attribute="description">At completion of the tie-down Scheduled Assignment put the machine on this delay type.</meta>
+        </many-to-one>
+
+        <many-to-one
+            name="onLogoutDelayTypeRef"
+            column="ONLOGOUTDELAYTYPE"
+            class="minestar.production.domain.DelayClassReference"
+            not-found="ignore"
+            >
+            <meta attribute="description">When machines with no onboard hardware are logged out, put the machine on this delay type.</meta>
+        </many-to-one>
+
+        <property
+            name="arriveAfter"
+            column="ARRIVEAFTER"
+            >
+            <meta attribute="description">For the tie-down Scheduled Assignment, use this as the arrive after time.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property
+            name="arriveAt"
+            column="ARRIVEAT"
+            >
+            <meta attribute="description">For the tie-down Scheduled Assignment, use this as the arrive at time.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property
+            name="arriveBefore"
+            column="ARRIVEBEFORE"
+            >
+            <meta attribute="description">For the tie-down Scheduled Assignment, use this as the arrive before time.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property
+            name="isAutoLogout"
+            type="java.lang.Boolean"
+            column="ISAUTOLOGOUT"
+            >
+            <meta attribute="description">Should machines with no onboard hardware are be automatically logged out at the end of the current shift.</meta>
+        </property>
+
+        <property
+            name="autoLogoutDuration"
+            column="AUTOLOGOUTDURATION"
+            >
+            <meta attribute="description">How long before the shift change time should machines with no onboard hardware are be automatically logged out.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <property
+            name="isAutoLogin"
+            type="java.lang.Boolean"
+            column="ISAUTOLOGIN"
+            >
+            <meta attribute="description">Should machines with no onboard hardware are be automatically logged in at the start of the next shift.</meta>
+        </property>
+
+        <property
+            name="autoLoginDuration"
+            column="AUTOLOGINDURATION"
+            >
+            <meta attribute="description">How long after the shift change time should machines with no onboard hardware are to be automatically logged in.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <set name="personnelAllocations"  table="SHIFT_CHANGE_PERSONNEL_ALLOC" cascade="all-delete-orphan">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The person machine allocations that make up this shift change.</meta>
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.assignment.domain.ShiftChangePersonnelAllocation" column="ALLOCATION_OID"/>
+        </set>
+
+        <set name="unallocatedPersonnel"  table="SHIFT_CHANGE_UNALLOC_PERSON">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The personnel not yet allocated to a machine.</meta>
+            <meta attribute="view-reference">minestar.machinetracking.domain.PersonImpl</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.machinetracking.domain.PersonReference" column="PERSON_OID" not-found="ignore"/>
+        </set>
+
+        <set name="unallocatedMachineRefs"  table="SHIFT_CHANGE_UNALLOC_MACHINE">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The machines not yet allocated an operator.</meta>
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        <map name="absentPersonnel"
+            table="SHIFT_CHANGE_ABSENT_PERSONNEL">
+            <meta attribute="description">The absent personnel for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=SC_ABSENT_PERSONNEL_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias">id</meta>
+
+            <key column="OID" not-null="true"/>
+            <map-key-many-to-many class="minestar.machinetracking.domain.PersonReference" column="PERSON_OID"/>
+            <many-to-many class="minestar.platform.domain.calendar.AbsenceType" column="ABSENCE_TYPE_OID" not-found="ignore"/>
+        </map>
+
+        <!-- Deprecated-->
+        <set name="excludedPersonnel"  table="SHIFT_CHANGE_EXCLUDED_PERSON">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The personnel not yet allocated to a machine.</meta>
+            <meta attribute="view-reference">minestar.machinetracking.domain.PersonImpl</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.machinetracking.domain.PersonReference" column="PERSON_OID" not-found="ignore"/>
+        </set>
+
+        <set name="overTimePersonnel"  table="SHIFT_CHANGE_OVERTIME_PERSON">
+            <meta attribute="description">The overtime personnel for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="view-reference">minestar.machinetracking.domain.PersonImpl</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.machinetracking.domain.PersonReference" column="PERSON_OID" not-found="ignore"/>
+        </set>
+
+        <map name="personnelComments"
+            table="SHIFT_CHANGE_PERSONNEL_COMMENT">
+            <meta attribute="description">Personnel comments for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=SC_PERSONNEL_COMMENT_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias">id</meta>
+
+            <key column="OID" not-null="true"/>
+            <map-key-many-to-many class="minestar.machinetracking.domain.PersonReference" column="PERSON_OID"/>
+            <element type="java.lang.String" length="1000" column="PERSONNEL_COMMENT"/>
+        </map>
+
+        <map name="actualOperators"
+            table="SHIFT_CHANGE_ACTUAL_OPERATOR"
+          >
+            <meta attribute="description">The actual operators for the shift</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=SC_ACTUAL_OPERATOR_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID" not-null="true"/>
+            <map-key-many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID"/>
+            <many-to-many class="minestar.machinetracking.domain.PersonReference" column="PERSON_OID" not-found="ignore"/>
+        </map>
+
+
+        <set name="predictedTieDowns" table="SHIFT_CHANGE_PREDICTED_TD" cascade="all-delete-orphan">
+            <meta attribute="description">The predicted tie downs for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.assignment.domain.tiedown.PredictedTieDown"/>
+        </set>
+
+        <set name="actualTieDowns" table="SHIFT_CHANGE_ACTUAL_TD" cascade="all-delete-orphan">
+             <meta attribute="description">The actual tie downs for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.assignment.domain.tiedown.ActualTieDown"/>
+        </set>
+
+        <set name="transportAllocations"  table="SHIFT_CHANGE_TRANSPORT_ALLOC" cascade="all-delete-orphan">
+            <meta attribute="description">The transport allocations for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.assignment.domain.ShiftChangeTransportAllocation" column="ALLOCATION_OID"/>
+        </set>
+
+        <set name="unallocatedTransportRefs"  table="SHIFT_CHANGE_UNALLOC_TRANSPORT">
+            <meta attribute="description">The unallocated transports for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.assignment.domain.TransportVehicleReference" column="VEHICLE_OID" not-found="ignore"/>
+        </set>
+
+        <set name="strandedMachineRefs"  table="SHIFT_CHANGE_STRANDED_MACHINE">
+            <meta attribute="description">The stranded machines for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        <set name="tieDownAllocations"  table="SHIFT_CHANGE_TIEDOWN_ALLOC" cascade="all-delete-orphan">
+            <meta attribute="description">The tie down allocations for the shift</meta>                        
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.assignment.domain.ShiftChangeTieDownAllocation" column="ALLOCATION_OID"/>
+        </set>
+
+     </class>
+
+    <class
+        name="minestar.assignment.domain.ShiftChangeAllocation"
+        table="SHIFTCHANGEALLOCATION"
+        discriminator-value="XAEntity.ShiftChangeAllocation"
+        >
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=SHIFTCHANGEALLOCATION_1
+            columns=ECF_CLASS_ID, SHIFTCHANGEALLOCATION_OID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A shift change allocation</meta>
+        
+        <id
+            name="OID"
+            type="java.lang.Long"
+            column="SHIFTCHANGEALLOCATION_OID"
+            >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID" not-null="false"/>
+
+        <property
+            name="shiftDate"
+            type="TimestampType"
+            column ="SHIFTDATE_UTC"
+            >
+            <meta attribute="utc-description">The utc date of the shift allocation</meta>
+        	<meta attribute="description">The date of the shift allocation</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+            name="isManual"
+            type="java.lang.Boolean"
+            column="ABSOLUTE"
+            >
+        	<meta attribute="description">Is this allocation manual.</meta>
+        </property>
+
+        <set name="licensedMachineRefs"  table="SHIFT_CHANGE_ALLOC_LICENCE">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The shift change licenses</meta>           
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        <subclass name="minestar.assignment.domain.ShiftChangePersonnelAllocation"
+            discriminator-value="XAEntity.ShiftChangeAllocation.Personnel">
+ 			<meta attribute="description">The personnel allocated to a shift change</meta>
+
+            <!-- Entity Properties -->
+            <many-to-one
+                name="personRef"
+                column="PERSON"
+                class="minestar.machinetracking.domain.PersonReference"
+                not-found="ignore"
+                >
+                <meta attribute="alias">person</meta>
+                <meta attribute="description">The person for this allocation.</meta>
+            </many-to-one>
+
+            <many-to-one
+                name="machineRef"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="MACHINE"
+                not-found="ignore"
+                >
+                <meta attribute="description">The machine for this allocation.</meta>
+            </many-to-one>
+
+            <property
+                name="allocationPriority"
+                type="java.lang.Integer"
+                column="ALLOCATIONPRIORITY"
+                >
+        	 <meta attribute="description">The priority of the shift change allocation</meta>
+            </property>
+
+            <property
+                name="allocationComment"
+                type="java.lang.String"
+                column="ALLOCATIONCOMMENT"
+                length="254"
+                >
+         	 <meta attribute="description">The comment of the shift change allocation</meta>
+            </property>
+
+            <subclass name="minestar.assignment.domain.UndergroundShiftChangePersonnelAllocation"
+                    discriminator-value="XAEntity.ShiftChangeAllocation.Personnel.Underground">
+
+                <property name="areaOID"
+                          type="java.lang.Long"
+                          column="PANEL_OID">
+                    <meta attribute="description">Underground area that person and machine is allocated to</meta>
+                </property>
+
+            </subclass>
+
+        </subclass>
+
+        <subclass name="minestar.assignment.domain.ShiftChangeTransportAllocation"
+            discriminator-value="XAEntity.ShiftChangeAllocation.Transport">
+            <meta attribute="classdef" inherit="false">Entity.ShiftChangeAllocation.Transport</meta>
+ 			<meta attribute="description">The transport allocated to a shift change</meta>
+
+            <!-- Entity Properties -->
+            <many-to-one
+                name="transportVehicleRef"
+                column="TRANSPORT_VEHICLE"
+                class="minestar.assignment.domain.TransportVehicleReference"
+                not-found="ignore"
+                >
+                <meta attribute="description">The transport vehicle of this shift change allocation.</meta>
+            </many-to-one>
+
+            <many-to-one
+                name="driversMachineRef"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="DRIVERSMACHINE"
+                not-found="ignore"
+                >
+                <meta attribute="description">The machine allocated to the driver of the transport vehicle.</meta>
+            </many-to-one>
+
+        <set name="machineRefs"  table="SHIFT_CHANGE_ALLOC_MACHINE">
+            <meta attribute="alias">allocatedMachines</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+			<meta attribute="description">TThe machines allocated to this transport vehicle.</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        <set name="manualMachineRefs" table="SHIFT_CHANGE_ALLOC_MANUAL">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The machines manually allocated to this transport vehicle.</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+        </set>
+
+        </subclass>
+
+        <subclass name="minestar.assignment.domain.ShiftChangeTieDownAllocation"
+            discriminator-value="XAEntity.ShiftChangeAllocation.TieDown">
+ 			<meta attribute="description">The shift change tie down allocation</meta>
+        
+ 			<property name="penaltyDuration" column="PENALTY">
+                <meta attribute="description">The time penalty for using this tie down compared to other tie down locations.</meta>
+                <meta attribute="unitType">duration</meta>
+                <type name="quantity">
+                    <param name="unitType">duration</param>
+                </type>
+             </property>
+        
+            <many-to-one
+                name="locationRef"
+                column="LOCATION"
+                class="minestar.mine.domain.minemodel.LocationReference"
+                not-found="ignore"
+                >
+                <meta attribute="description">The location for this tie-down. Tie down can be to a loading tool or a location.</meta>
+            </many-to-one>
+
+            <many-to-one
+                name="loadingToolRef"
+                column="LOADINGTOOL"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                not-found="ignore"
+                >
+                <meta attribute="description">The loading tool for this tie-down. Tie down can be to a loading tool or a location.</meta>
+            </many-to-one>
+        
+            <set name="machineRefs"  table="SHIFT_CHANGE_TIEDOWN_MACHINE">
+                <meta attribute="alias">tiedownMachines</meta>
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    tablespace=MW_IDXENT
+                </meta>
+                <meta attribute="description">The machines who have been allocated to this tie down.</meta>
+
+                <key column="OID" not-null="true"/>
+                <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID" not-found="ignore"/>
+            </set>
+
+        </subclass>
+    </class>
+
+    <class name="minestar.assignment.domain.tiedown.ActualTieDown"
+           table="SHIFTCHANGE_A_TIEDOWN"
+           discriminator-value="XAEntity.ActualTieDown">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">The shift change actual tie down.</meta>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="SHIFTCHANGE_A_TIEDOWN_OID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID" not-null="false"/>
+
+        <many-to-one
+                name="truckRef"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="TRUCK"
+                not-found="ignore"
+                >
+            <meta attribute="description">The truck that actually tied down.</meta>
+        </many-to-one>
+
+        <property
+                name="gpsPosition"
+                type="XYZCoordinate"
+                >
+            <meta attribute="description">The xyz position that the truck that actually tied down.</meta>
+            <column name="GPS_POSITION_X"/>
+            <column name="GPS_POSITION_Y"/>
+            <column name="GPS_POSITION_Z"/>
+        </property>
+
+        <many-to-one
+                name="assignedLocationRef"
+                class="minestar.mine.domain.minemodel.LocationReference"
+                column="ASSIGNED_LOCATION"
+                not-found="ignore"
+                >
+            <meta attribute="description">The location the truck was assigned to tie down.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="assignedMachineRef"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="ASSIGNED_LOADING_TOOL"
+                not-found="ignore"
+                >
+            <meta attribute="description">The loading tool where the truck was assigned to tie down.</meta>
+        </many-to-one>
+        <property
+                name="timeOfAssignment"
+                type="TimestampType"
+                column="TIME_OF_ASSIGNMENT_UTC"
+          >
+            <meta attribute="utc-description">The utc time of assignment.</meta>
+        	<meta attribute="description">The time of assignment.</meta>
+            <meta attribute="view-localtime">true</meta>
+         </property>
+        <many-to-one
+                name="lastServerRef"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="LAST_SERVER"
+                not-found="ignore"
+                >
+            <meta attribute="description">The last server (loading tool or processor) where the truck received its tie down assignment.</meta>
+        </many-to-one>
+        <property
+                name="timeArrived"
+                type="TimestampType"
+                column ="TIME_ARRIVED_UTC"
+                >
+             <meta attribute="utc-description">The arrived utc time</meta>
+        	<meta attribute="description">The time arrived.</meta>
+        <meta attribute="view-localtime">true</meta>
+        </property>
+    </class>
+
+
+    <class name="minestar.assignment.domain.tiedown.PredictedTieDown"
+           table="SHIFTCHANGE_P_TIEDOWN"
+           discriminator-value="XAEntity.PredictedTieDown">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">The shift change predicted tie down allocation</meta>
+        
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="SHIFTCHANGE_P_TIEDOWN_OID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID" not-null="false"/>
+
+        <many-to-one
+                name="truckRef"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="TRUCK"
+                not-found="ignore"
+                >
+            <meta attribute="description">The truck for this tie down.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="tieDownLocationRef"
+                class="minestar.mine.domain.minemodel.LocationReference"
+                column="TIEDOWN_LOCATION"
+                not-found="ignore"
+                >
+            <meta attribute="description">The location the truck was predicted to tie down.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="tieDownLoadingToolRef"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="TIEDOWN_MACHINE"
+                not-found="ignore"
+                >
+            <meta attribute="description">The loading tool the truck was predicted to tie down.</meta>
+        </many-to-one>
+
+        <property
+                name="reason"
+                type="com.mincom.works.shiftchange.PredictedTieDownReason$UserType"
+                column="REASON">
+            <meta attribute="description">The reason code for the prediction, 0 = Unknown, 1 = Only Option, 2 = Run Constrained, 3 = Predicted, 4 = Assigned, 5 = IAssignment Predicted")</meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

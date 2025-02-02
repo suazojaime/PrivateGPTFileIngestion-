@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.machinetracking.domain.OperatorShift"
+           table="OPERATORSHIFT">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">
+            Information about who was operating which machine and when.
+        </meta>
+
+        <id name="OID" type="long" column="OPERATORSHIFT_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one name="machine" class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE" not-null="true" not-found="ignore"/>
+
+        <many-to-one name="operator" class="minestar.machinetracking.domain.PersonReference" column="OPERATOR" not-null="true" not-found="ignore"/>
+
+        <property name="login" type="TimestampType" column ="LOGIN_UTC" not-null="true">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The login utc time.</meta>
+            <meta attribute="description">The login time.</meta>
+        </property>
+
+        <property name="logout" type="TimestampType" column ="LOGOUT_UTC">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The logout utc time.</meta>
+            <meta attribute="description">The logout time.</meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

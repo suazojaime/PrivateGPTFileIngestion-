@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.underground.metadata.MetadataImpl"
+           proxy="minestar.mine.domain.minemodel.underground.metadata.Metadata"
+           table="METADATA"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">METADATA</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">
+            A Metadata entity
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=METADATA_METADATA_SCHEMA
+            unique=false
+            columns=SCHEMA_OID
+            tablespace=MW_IDXENT
+        </meta>
+
+        <!-- Create foreign keys with 'on delete cascade' at the database level. -->
+        <meta attribute="foreign-key">
+            on-delete=CASCADE
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="SCHEMA_NAME"
+                  length="254"
+                  not-null="true">
+            <meta attribute="description">The name of the schema used for defining this data.</meta>
+        </property>
+
+        <many-to-one name="schemaOID"
+                     class="minestar.mine.domain.minemodel.underground.metadata.MetadataSchemaReference"
+                     column="SCHEMA_OID"
+                     not-null="true"
+                     lazy="false">
+            <meta attribute="alias">schemaOID</meta>
+            <meta attribute="description">
+                The OID of the schema used for defining this data.
+            </meta>
+        </many-to-one>
+
+        <property name="data"
+                  type="java.lang.String"
+                  column="DATA"
+                  length="4000"
+                  not-null="true">
+            <meta attribute="description">The configured data set/s which conform to the schema specified.</meta>
+        </property>
+
+        <property name="goalOID"
+                  type="java.lang.Long"
+                  column="GOAL_OID">
+            <meta attribute="description">The goal OID which this metadata may relate to </meta>
+
+        </property>
+
+        <property name="active"
+                  type="java.lang.Boolean"
+                  column="IS_ACTIVE">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">
+                Whether this area is active or archived.
+                (This flag is '1' if it is active and '0' if archived.)
+            </meta>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  type="java.lang.Long"
+                  column="MODEL_UPDATE_VERSION">
+            <meta attribute="description">The is a copy of the system wide version number.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <property name="lastModifiedDate"
+                  type="TimestampType"
+                  column="LAST_MODIFIED_DATE_UTC">
+            <meta attribute="alias" inherit="false">LAST_MODIFIED_TIME</meta>
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="description">The timestamp of when this area map was last modified by a user.</meta>
+            <meta attribute="utc-description">
+                The UTC timestamp of when this area map was last modified by a user.
+            </meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+    </class>
+
+
+</hibernate-mapping>

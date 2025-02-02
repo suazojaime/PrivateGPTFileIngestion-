@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="bac72755-ef7a-418b-b82d-746970b7bea1" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for BCP_STATE_TAG of table UG_AIS_BARRIER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UG_AIS_BARRIER" columnName="BCP_STATE_TAG"/>
+        </preConditions>
+        <comment>FUG-3923: DropColumn UG_AIS_BARRIER.BCP_STATE_TAG</comment>
+        <dropColumn columnName="BCP_STATE_TAG" tableName="UG_AIS_BARRIER"/>
+        <rollback>
+            <addColumn tableName="UG_AIS_BARRIER">
+                <column name="BCP_STATE_TAG" type="VARCHAR(254)" remarks="OPC Tag representing the BCP activated/deactivated value">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="0522716a-baec-4cf0-a239-2ffcae8a3ac2" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for BCP_BARRIER_STATE_TAG of table UG_AIS_BARRIER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UG_AIS_BARRIER" columnName="BCP_BARRIER_STATE_TAG"/>
+        </preConditions>
+        <comment>FUG-3923: DropColumn UG_AIS_BARRIER.BCP_BARRIER_STATE_TAG</comment>
+        <dropColumn columnName="BCP_BARRIER_STATE_TAG" tableName="UG_AIS_BARRIER"/>
+        <rollback>
+            <addColumn tableName="UG_AIS_BARRIER">
+                <column name="BCP_BARRIER_STATE_TAG" type="VARCHAR(254)" remarks="OPC Tag representing the barrier open/closed value">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="953ccd3e-be57-4106-8dae-f7111e428a41" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for BCP_OPEN_TAG of table UG_AIS_BARRIER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UG_AIS_BARRIER" columnName="BCP_OPEN_TAG"/>
+        </preConditions>
+        <comment>FUG-3923: DropColumn UG_AIS_BARRIER.BCP_OPEN_TAG</comment>
+        <dropColumn columnName="BCP_OPEN_TAG" tableName="UG_AIS_BARRIER"/>
+        <rollback>
+            <addColumn tableName="UG_AIS_BARRIER">
+                <column name="BCP_OPEN_TAG" type="VARCHAR(254)" remarks="OPC Tag for sending barrier open commands">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="e8e1dcff-4f66-40d0-b19c-b0da4c62f2e1" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for BCP_CLOSE_TAG of table UG_AIS_BARRIER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UG_AIS_BARRIER" columnName="BCP_CLOSE_TAG"/>
+        </preConditions>
+        <comment>FUG-3923: DropColumn UG_AIS_BARRIER.BCP_CLOSE_TAG</comment>
+        <dropColumn columnName="BCP_CLOSE_TAG" tableName="UG_AIS_BARRIER"/>
+        <rollback>
+            <addColumn tableName="UG_AIS_BARRIER">
+                <column name="BCP_CLOSE_TAG" type="VARCHAR(254)" remarks="OPC Tag for sending barrier close commands">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="b28f1875-e6b4-47f0-ad04-09d13a5624cc" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for PERSONNEL_CLOSE_INHIBIT_TAG of table UG_AIS_BARRIER as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="UG_AIS_BARRIER" columnName="PERSONNEL_CLOSE_INHIBIT_TAG"/>
+        </preConditions>
+        <comment>FUG-3923: DropColumn UG_AIS_BARRIER.PERSONNEL_CLOSE_INHIBIT_TAG</comment>
+        <dropColumn columnName="PERSONNEL_CLOSE_INHIBIT_TAG" tableName="UG_AIS_BARRIER"/>
+        <rollback>
+            <addColumn tableName="UG_AIS_BARRIER">
+                <column name="PERSONNEL_CLOSE_INHIBIT_TAG" type="VARCHAR(254)" remarks="OPC Tag for sending personnel barrier close inhibit commands">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="f4367a2c-7be7-4b02-98a2-9bea2673e141" author="MineStar" context="Platform/Platform_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for OPC_DATA as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="OPC_DATA"/>
+        </preConditions>
+        <comment>FUG-3923: DropTable OPC_DATA</comment>
+        <dropTable tableName="OPC_DATA"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="452377f3-a801-4bca-bb93-677ba99b0bf5" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ARM_STATUS_TAG of table AIS_SUBPANEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="AIS_SUBPANEL" columnName="ARM_STATUS_TAG"/>
+        </preConditions>
+        <comment>FUG-3923: DropColumn AIS_SUBPANEL.ARM_STATUS_TAG</comment>
+        <dropColumn columnName="ARM_STATUS_TAG" tableName="AIS_SUBPANEL"/>
+        <rollback>
+            <addColumn tableName="AIS_SUBPANEL">
+                <column name="ARM_STATUS_TAG" type="VARCHAR(254)" remarks="Arm Status Tag representing the sub panel status">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

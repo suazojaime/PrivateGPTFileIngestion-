@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b1168453-90a7-4413-8892-59e58ea66179" author="MineStar" context="Underground/Underground_Management"  failOnError="false">
+        <preConditions onFailMessage="Ignored DropUniqueConstraint for CHUTE_HAZARD_STATUS_NAME_UK of table CHUTE_HAZARD_STATUS as the table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="CHUTE_HAZARD_STATUS"/>
+        </preConditions>
+        <comment>FUG-4273: DropUniqueConstraint CHUTE_HAZARD_STATUS_NAME_UK from CHUTE_HAZARD_STATUS (NAME)</comment>
+        <dropUniqueConstraint constraintName="CHUTE_HAZARD_STATUS_NAME_UK" tableName="CHUTE_HAZARD_STATUS"/>
+        <rollback>
+            <addUniqueConstraint columnNames="NAME" constraintName="CHUTE_HAZARD_STATUS_NAME_UK" tableName="CHUTE_HAZARD_STATUS"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

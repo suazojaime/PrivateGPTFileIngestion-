@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="66c03fe4-4236-11ea-b77f-2e728ce88125" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for USER1_USERID_CLASS_ID of table USER1 as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="USER1_USERID_CLASS_ID" tableName="USER1"/>
+        </preConditions>
+        <comment>FLT-8413: DropIndex USER1_USERID_CLASS_ID from USER1 (USERID,CLASS_ID)</comment>
+        <dropIndex indexName="USER1_USERID_CLASS_ID" tableName="USER1"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+        <modifySql applyToRollback="true" dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="63299c2d-259d-421d-a56d-0eec1daf49a0" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for USER1.CLASS_ID as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="USER1" columnName="CLASS_ID"/>
+        </preConditions>
+        <comment>FLT-8413: AddNotNullConstraint to USER1.CLASS_ID</comment>
+        <sql>UPDATE USER1 SET CLASS_ID = 'MineStarUser' WHERE CLASS_ID IS NULL AND AUTHENTICATION IS NOT NULL</sql>
+        <sql>UPDATE USER1 SET CLASS_ID = 'LdapUser' WHERE CLASS_ID IS NULL</sql>
+        <addNotNullConstraint columnName="CLASS_ID" columnDataType="VARCHAR(254)" tableName="USER1"/>
+        <rollback>
+            <dropNotNullConstraint tableName="USER1" columnName="CLASS_ID" columnDataType="VARCHAR(254)"/>
+        </rollback>
+    </changeSet>
+
+    <!--
+        When migrating database before 4.1, the autoCorrect operation is done before applying liquibase changeset.
+        The issue is that autoCorrect operation will create the CLASS_ID column with not-null constraints,
+        making the change set above not run.
+        This change set is to insert 'MineStarUser' to the CLASS_ID column where not-null constraints have already
+        been applied and CLASS_ID has empty strings.
+    -->
+    <changeSet id="6f005f2f-298e-4905-be99-50cf51090add" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored inserting values to USER1.CLASS_ID as database is not SQL Server or it does not have empty strings"
+                onFail="MARK_RAN">
+            <dbms type="mssql"/>
+            <ext:columnIsNotNullable tableName="USER1" columnName="CLASS_ID"/>
+            <sqlCheck expectedResult="1">SELECT CASE WHEN EXISTS (SELECT * FROM USER1 WHERE CLASS_ID = '') THEN 1 ELSE 0 END</sqlCheck>
+        </preConditions>
+        <comment>FLT-8413: Insert 'MineStarUser' default value to USER1.CLASS_ID</comment>
+        <sql>UPDATE USER1 SET CLASS_ID = 'MineStarUser' WHERE CLASS_ID = ''</sql>
+        <rollback>
+            <sql>UPDATE USER1 SET CLASS_ID = ''</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="92cc048f-399c-43c6-bd6b-90e7b3a6b125" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored CreateUniqueIndex for USER1_USERID_CLASS_ID to table USER1 as (1) table does not exist, or (2) index already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="USER1"/>
+            <not>
+                <indexExists indexName="USER1_USERID_CLASS_ID" tableName="USER1"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8413: CreateUniqueIndex USER1_USERID_CLASS_ID on USER1 (USERID,CLASS_ID)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT"
+                                 indexName="USER1_USERID_CLASS_ID" tableName="USER1">
+            <column name="USERID"/>
+            <column name="CLASS_ID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

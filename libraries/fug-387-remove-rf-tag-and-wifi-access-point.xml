@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="17f94288-2146-4b69-9af6-8b0b17082a21" author="MineStar">
+        <comment>FUG-387 Remove RF Tags and Wifi Access Points</comment>
+        <sql>delete from machine_in_pit where class_name = 'RFTagInPit'</sql>
+        <sql>delete from machine_in_pit where class_name = 'WifiAccessPointInPit'</sql>
+        <!-- This cannot be rolled back - the data is gone -->
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

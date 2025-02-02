@@ -1,0 +1,1577 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!-- Copyright (c) 2018, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+    <classdef name="Synchronize VIMS Clock with Office">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>SendVimsClockUpdate</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vimsWirelessOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>The machines to be configured</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="extendOptions" label="Extend Options">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="includeTimezoneInfo" label="Include time zone Information">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+            </propertydef>
+            <propertydef name="inUtcTime" label="Send time in UTC">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="executorOptions">
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>HealthJobService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Synchronize VIMS Clock with Office time.
+        </description>
+    </classdef>
+
+    <classdef name="Configure VIMS Wireless Messaging">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="vertical" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false" />
+                <defaultvalue>SendBroadcastSet</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vimsWirelessOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>The machines to be configured</description>
+            </propertydef>
+            <propertydef name="activate" label="Action">
+                <typedef>
+                    <type code="boolean" choices='{Boolean(true):"Activate", Boolean(false):"Deactivate"}'/>
+                </typedef>
+                <uidef widget="radio"/>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Indicates whether the unsolicited wireless messaging should be activated or deactivated</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="executorOptions">
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>HealthJobService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Configure the VIMS box to send VIMS health and production messages direct to the office.  Used for Health-ONLY sites.  Not to be used in conjuction with CD550 or CAES.
+        </description>
+    </classdef>
+
+
+    <classdef name="Legacy Configure VIMS Wireless Messaging">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="vertical" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false" />
+                <defaultvalue>SendBroadcastSet</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vimsWirelessOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>The machines to be configured</description>
+            </propertydef>
+            <propertydef name="activate" label="Action">
+                <typedef>
+                    <type code="boolean" choices='{Boolean(true):"Activate", Boolean(false):"Deactivate"}'/>
+                </typedef>
+                <uidef widget="radio"/>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Indicates whether the unsolicited wireless messaging should be activated or deactivated</description>
+            </propertydef>
+            <propertydef name="locationIncluded" label="Location">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                <description>Include location in messages, if available</description>
+            </propertydef>
+            <propertydef name="broadcastIncluded" label="Include Broadcast Entries">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                <description>Include Broadcast entries in messages</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="executorOptions">
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>HealthJobService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Configure the VIMS box to send VIMS health and production messages direct to the office.  Used for Health-ONLY sites.  Not to be used in conjuction with CD550 or CAES.
+        </description>
+    </classdef>
+
+
+    <classdef name="DataLogger Activate">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>DatalogActivate</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vimsWirelessOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>The machines to be activated or deactivated</description>
+            </propertydef>
+            <propertydef name="activate" label="Action">
+                <typedef>
+                    <type code="boolean" choices='{Boolean(true):"Activate", Boolean(false):"Deactivate"}'/>
+                </typedef>
+                <uidef widget="radio"/>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Indicates whether the datalogger should be activated or deactivated</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="executorOptions">
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>HealthJobService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+            <propertydef name="ftp.delayBetweenScriptsSeconds" label="Delay between attempts">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Activate or deactivate a Datalogger on a VIMS ABL enabled machine.
+        </description>
+    </classdef>
+
+
+    <classdef name="Snapshot Activate">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>SnapshotActivate</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vimsWirelessOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>The machines to be affected</description>
+            </propertydef>
+            <propertydef name="activate" label="Action">
+                <typedef>
+                    <type code="boolean" choices='{Boolean(true):"Activate", Boolean(false):"Deactivate"}'/>
+                </typedef>
+                <uidef visiblewhen="false"/>
+                <uidef widget="radio"/>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Indicates whether the snapshot should be activated or deactivated</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="executorOptions">
+            <propertydef name="executorName" access="readonly">
+                <defaultvalue>HealthJobService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+            <propertydef name="ftp.delayBetweenScriptsSeconds" label="Delay between attempts">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Manually trigger a Snapshot on a VIMS ABL enabled machine.
+        </description>
+    </classdef>
+
+
+    <classdef name="VIMS Legacy File Download">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>DownloadVimsFiles</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vimsWirelessOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Files will only be downloaded from included machines</description>
+            </propertydef>
+            <propertydef name="fileList" label="">
+                <typedef>
+                    <javaclass name="java.util.List"/>
+                </typedef>
+                <uidef widget="onboardFileDownload"/>
+                <description>Selected file types will be downloaded</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="extendedOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="useMachinePush" label="Machine to send file">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Files will be sent to office by capable machines. If option is not enabled or machine is not capable then files will be downloaded from machine.</description>
+            </propertydef>
+            <propertydef name="onceOnly" label="Download once">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Download at most one copy of each file for each machine into the unprocessed directory</description>
+            </propertydef>
+            <propertydef name="ftp.username" label="Username">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">secret</defaultvalue>
+            </propertydef>
+            <propertydef name="ftp.password" label="Password">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">squirrel</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef widget="directorySelectorHealth"/>
+                <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="download" label="Downloaded Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">download</defaultvalue>
+                <description>Subdirectory for raw downloaded files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="executorOptions">
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>HealthExecutionService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+            <propertydef name="retryWaitSeconds" label="Delay between attempts">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Download VIMS data files from a VIMS ABL enabled machine.
+        </description>
+    </classdef>
+
+
+    <classdef name="VIMS File Download">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Pitlink Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.VimsDownloadJob</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.vimsWirelessMachine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='vimsWirelessOnly="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Files will only be downloaded from included machines</description>
+            </propertydef>
+            <propertydef name="fileList" label="">
+                <typedef>
+                    <javaclass name="java.util.List"/>
+                </typedef>
+                <uidef widget="onboardFileDownload"/>
+                <description>Selected file types will be downloaded</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="extendedOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="requestDelay" label="Request delay">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">0</defaultvalue>
+                <description>The delay in seconds between file download requests. Values higher than 30 will be regarded as a delay of 30, zero or less than 0 will be regarded as 0.</description>
+            </propertydef>
+            <propertydef name="onceOnly" label="Download once">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Download at most one copy of each file for each machine into the unprocessed directory</description>
+            </propertydef>
+            <propertydef name="ftp.username" label="Username">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">secret</defaultvalue>
+            </propertydef>
+            <propertydef name="ftp.password" label="Password">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef widget="jobPassword" custom="length=30,buttonVisible=false"/>
+                <defaultvalue class="java.lang.String">squirrel</defaultvalue>
+            </propertydef>
+            <propertygroup name="setClockOptions" label="Set Clock Options (ignored if Set Clock is disabled)">
+                <uigroupdef mode="box"/>
+                <propertydef name="includeTimezoneInfo" label="Include time zone Information">
+                    <typedef>
+                        <type code="boolean"/>
+                    </typedef>
+                    <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                </propertydef>
+                <propertydef name="inUtcTime" label="Send time in UTC">
+                    <typedef>
+                        <type code="boolean"/>
+                    </typedef>
+                    <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                </propertydef>
+            </propertygroup>
+        </propertygroup>
+
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef widget="directorySelectorHealth"/>
+                <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="download" label="Downloaded Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">download</defaultvalue>
+                <description>Subdirectory for raw downloaded files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+        </propertygroup>
+
+
+        <propertygroup name="executorOptions">
+            <uigroupdef visiblewhen="false"/>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+            <propertydef name="retryWaitSeconds" label="Delay between attempts">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <description>
+            Download VIMS data files from a VIMS ABL or VIMS 3G enabled machine.
+        </description>
+    </classdef>
+
+    <classdef name="VIMS File Copy">
+         <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+         <privilege>Pitlink Health Data Management</privilege>
+         <tag>user</tag>
+         <propertygroup name="copyToImportStaging">
+             <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+             <propertydef name="jobUrl">
+                 <uidef visiblewhen="false"/>
+                 <defaultvalue>minestar.health.jobs.VimsFileCopyJob</defaultvalue>
+             </propertydef>
+             <propertydef name="import.machines" label="">
+                 <typedef>
+                     <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.Machine"/>
+                     <dimension name="entityOID"/>
+                 </typedef>
+                 <uidef widget="machineSelector" custom='{allMobile="true",contextMenu="false"}'/>
+                 <description>Select all machines to copy files from machines that exists in MineStar. Select nothing to copy files from any machine.</description>
+             </propertydef>
+             <propertydef name="import.fileTypes" label="">
+                 <typedef>
+                     <javaclass name="java.util.List"/>
+                 </typedef>
+                 <uidef widget="vimsFileImport"/>
+                 <description>Select nothing to copy files of any type</description>
+             </propertydef>
+         </propertygroup>
+         <propertygroup name="copyToUploadStaging">
+             <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+             <propertydef name="upload.machines" label="">
+                 <typedef>
+                     <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.Machine"/>
+                     <dimension name="entityOID"/>
+                 </typedef>
+                 <uidef widget="machineSelector" custom='{allMobile="true",contextMenu="false"}'/>
+                 <description>Select all machines to copy files from machines that exists in MineStar. Select nothing to copy files from any machine.</description>
+             </propertydef>
+             <propertydef name="upload.fileTypes" label="">
+                 <typedef>
+                     <javaclass name="java.util.List"/>
+                 </typedef>
+                 <uidef widget="vimsFileImport"/>
+                 <description>Select nothing to copy files of any type</description>
+             </propertydef>
+         </propertygroup>
+         <propertygroup name="directoryOptions">
+             <propertydef name="directory" label="Base Directory">
+                 <typedef>
+                     <type code="string"/>
+                 </typedef>
+                 <uidef widget="directorySelectorHealth"/>
+                 <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                 <description>Base directory for files.</description>
+             </propertydef>
+             <propertydef name="unprocessed" label="Unprocessed Files">
+                 <typedef>
+                     <type code="string"/>
+                 </typedef>
+                 <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                 <description>Subdirectory for unprocessed files.</description>
+             </propertydef>
+             <propertydef name="importStaging" label="Import Staging">
+                 <typedef>
+                     <type code="string"/>
+                 </typedef>
+                 <defaultvalue class="java.lang.String">importStaging</defaultvalue>
+                 <description>Subdirectory for files staging to be imported</description>
+             </propertydef>
+             <propertydef name="uploadStaging" label="Upload Staging">
+                 <typedef>
+                     <type code="string"/>
+                 </typedef>
+                 <defaultvalue class="java.lang.String">uploadStaging</defaultvalue>
+                 <description>Folder(s) for files staging to be uploaded.  Separate multiple folder names by commas.</description>
+             </propertydef>
+             <propertydef name="ignoredFiles" label="Ignored Files">
+                 <typedef>
+                     <type code="string"/>
+                 </typedef>
+                 <defaultvalue class="java.lang.String">ignoredFiles</defaultvalue>
+                 <description>Subdirectory for files ignored</description>
+             </propertydef>
+             <propertydef name="deleteFiles" label="Delete files after they have been copied to designated folders.">
+                 <typedef>
+                     <type code="boolean" />
+                 </typedef>
+                 <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+             </propertydef>
+         </propertygroup>
+        <propertygroup name="executorOptions">
+            <uigroupdef visiblewhen="false"/>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <description>
+            Copy VIMS files to designated folders
+        </description>
+     </classdef>
+
+    <classdef name="VIMS File Upload">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Pitlink Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.VimsUploadJob</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.Machine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='allMobile="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Only files from selected machines will be uploaded.</description>
+            </propertydef>
+            <propertydef name="fileTypes" label="">
+                <typedef>
+                    <javaclass name="java.util.List"/>
+                </typedef>
+                <uidef widget="vimsFileUpload"/>
+                <description>Only files of selected types will be uploaded.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="uploadOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="uploadedAction" label="Action after successful upload" >
+                <typedef>
+                    <type code="string" choices='{
+                           "delete":"Delete files",
+	                        "move":"Move files to designated folder"
+	                    	}' />
+                </typedef>
+                <defaultvalue>move</defaultvalue>
+                <description>The designated folder for the 'Move File' option can be changed in 'Directory Options' tab</description>
+            </propertydef>
+            <propertydef name="verbose" label="Verbose">
+                <typedef>
+                    <type code="boolean" />
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+            </propertydef>
+            <propertygroup name="location1" label="Location 1">
+                <propertydef name="ftp.protocol1" label="Protocol" >
+                    <typedef>
+                        <type code="string" choices='{
+	                        "ftp":"File Transfer Protocol (FTP)",
+	                        "sftp":"Secure File Transfer Protocol (SFTP)"
+	                    	}' />
+                    </typedef>
+                    <defaultvalue>ftp</defaultvalue>
+                    <description>Please note host key checking is not supported for SFTP transfer</description>
+                </propertydef>
+                <propertydef name="ftp.host1" label="Network Address">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <description>Port number is supported e.g. "127.0.0.1:21", default to 21 for FTP and 22 for SFTP if not specified</description>
+                    <validationdef name="required"/>
+                </propertydef>
+                <propertydef name="ftp.username1" label="Username">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <defaultvalue class="java.lang.String">username</defaultvalue>
+                </propertydef>
+                <propertydef name="ftp.password1" label="Password">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <!--<uidef widget="jobPassword" custom="length=30"/>-->
+                </propertydef>
+                <propertydef name="ftp.remotePath1" label="Destination FTP path">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <description>By default files are transferred to root folder of FTP server</description>
+                    <defaultvalue class="java.lang.String">/</defaultvalue>
+                </propertydef>
+                <propertygroup name="ftp.fileNameSchemeGroup1" label="Destination file naming">
+                    <uigroupdef mode="region"/>
+                    <propertydef name="ftp.fileNameScheme1" label="Destination file name scheme">
+                        <typedef>
+                            <type code="string" choices='{
+                            "eca":"Caterpillar Equipment Care Advisor compatible",
+                            "vims":"Caterpillar MineStar / VIMS / VIMspc standard"
+                        }' />
+                        </typedef>
+                        <uidef widget="combo"/>
+                        <description>
+                            Naming scheme to use for files uploaded to destination
+                        </description>
+                    </propertydef>
+                    <propertydef name="ftp.filePrefix1" label="Destination file name prefix">
+                        <typedef>
+                            <type code="string"/>
+                        </typedef>
+                        <defaultvalue class="java.lang.String"></defaultvalue>
+                    </propertydef>
+                </propertygroup>
+            </propertygroup>
+            <propertygroup name="location2" label="Location 2">
+                <propertydef name="location2Activate" label="Deprecated, no longer Used" >
+                    <typedef>
+                        <type code="boolean" />
+                    </typedef>
+                    <uidef processOnChange="true" />
+                </propertydef>
+                <propertydef name="ftp.protocol2" label="Protocol" >
+                    <typedef>
+                        <type code="string" choices='{
+	                        "ftp":"File Transfer Protocol (FTP)",
+	                        "sftp":"Secure File Transfer Protocol (SFTP)"
+	                    	}' />
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location2Activate') == true"/>
+                    <defaultvalue>ftp</defaultvalue>
+                    <description>Please note host key checking is not supported for SFTP transfer</description>
+                </propertydef>
+                <propertydef name="ftp.host2" label="Network Address">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location2Activate') == true"/>
+                    <defaultvalue class="java.lang.String"></defaultvalue>
+                    <description>Port number is supported e.g. "127.0.0.1:21", default to 21 for FTP and 22 for SFTP if not specified</description>
+                    <validationdef name="required"/>
+                </propertydef>
+                <propertydef name="ftp.username2" label="Username">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location2Activate') == true"/>
+                    <defaultvalue class="java.lang.String">username</defaultvalue>
+                </propertydef>
+                <propertydef name="ftp.password2" label="Password">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location2Activate') == true"/>
+                    <!--<uidef widget="jobPassword" custom="length=30" visiblewhen="form.getFieldValue('location2Activate') == true"/> -->
+                </propertydef>
+                <propertydef name="ftp.remotePath2" label="Destination FTP path">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location2Activate') == true"/>
+                    <description>By default files are transferred to root folder of FTP server</description>
+                    <defaultvalue class="java.lang.String">/</defaultvalue>
+                </propertydef>
+
+                <propertygroup name="ftp.fileNameSchemeGroup2" label="Destination file naming">
+                    <uigroupdef mode="region" visiblewhen="form.getFieldValue('location2Activate') == true"/>
+                    <propertydef name="ftp.fileNameScheme2" label="Destination file name scheme">
+                        <typedef>
+                            <type code="string" choices='{
+                            "eca":"Caterpillar Equipment Care Advisor compatible",
+                            "vims":"Caterpillar MineStar / VIMS / VIMspc standard"
+                        }' />
+                        </typedef>
+                        <uidef widget="combo"/>
+                        <description>
+                            Naming scheme to use for files uploaded to destination
+                        </description>
+                    </propertydef>
+                    <propertydef name="ftp.filePrefix2" label="Destination file name prefix">
+                        <typedef>
+                            <type code="string"/>
+                        </typedef>
+                        <defaultvalue class="java.lang.String"></defaultvalue>
+                    </propertydef>
+                </propertygroup>
+            </propertygroup>
+            <propertygroup name="location3" label="Location 3">
+                <propertydef name="location3Activate" label="Deprecated, no Longer Used" >
+                    <typedef>
+                        <type code="boolean" />
+                    </typedef>
+                    <uidef processOnChange="true" />
+                </propertydef>
+                <propertydef name="ftp.protocol3" label="Protocol" >
+                    <typedef>
+                        <type code="string" choices='{
+	                        "ftp":"File Transfer Protocol (FTP)",
+	                        "sftp":"Secure File Transfer Protocol (SFTP)"
+	                    	}' />
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location3Activate') == true"/>
+                    <defaultvalue>ftp</defaultvalue>
+                    <description>Please note host key checking is not supported for SFTP transfer</description>
+                </propertydef>
+                <propertydef name="ftp.host3" label="Network Address">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location3Activate') == true"/>
+                    <description>Port number is supported e.g. "127.0.0.1:21", default to 21 for FTP and 22 for SFTP if not specified</description>
+                    <validationdef name="required"/>
+                </propertydef>
+                <propertydef name="ftp.username3" label="Username">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location3Activate') == true"/>
+                    <defaultvalue class="java.lang.String">username</defaultvalue>
+                </propertydef>
+                <propertydef name="ftp.password3" label="Password">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location3Activate') == true"/>
+                    <!--<uidef widget="jobPassword" custom="length=30" visiblewhen="form.getFieldValue('location3Activate') == true"/>-->
+                </propertydef>
+                <propertydef name="ftp.remotePath3" label="Destination FTP path">
+                    <typedef>
+                        <type code="string"/>
+                    </typedef>
+                    <uidef visiblewhen="form.getFieldValue('location3Activate') == true"/>
+                    <description>By default files are transferred to root folder of FTP server</description>
+                    <defaultvalue class="java.lang.String">/</defaultvalue>
+                </propertydef>
+                <propertygroup name="ftp.fileNameSchemeGroup3" label="Destination file naming" >
+                    <uigroupdef mode="region" visiblewhen="form.getFieldValue('location3Activate') == true"/>
+                    <propertydef name="ftp.fileNameScheme3" label="Destination file name scheme">
+                        <typedef>
+                            <type code="string" choices='{
+                            "eca":"Caterpillar Equipment Care Advisor compatible",
+                            "vims":"Caterpillar MineStar / VIMS / VIMspc standard"
+                        }' />
+                        </typedef>
+                        <uidef widget="combo"/>
+                        <description>
+                            Naming scheme to use for files uploaded to destination
+                        </description>
+                    </propertydef>
+                    <propertydef name="ftp.filePrefix3" label="Destination file name prefix">
+                        <typedef>
+                            <type code="string"/>
+                        </typedef>
+                        <defaultvalue class="java.lang.String"></defaultvalue>
+                    </propertydef>
+                </propertygroup>
+            </propertygroup>
+        </propertygroup>
+
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef widget="directorySelectorHealth"/>
+                <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+            <propertydef name="uploadStagingDir" label="Upload Staging">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">uploadStaging</defaultvalue>
+                <description>Subdirectory for files waiting to be uploaded.</description>
+            </propertydef>
+            <propertydef name="uploadedDir" label="Uploaded Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">uploaded</defaultvalue>
+                <description>Subdirectory for files successfully uploaded (Files are moved to this folder if 'Move Files' option is selected in the job configuration page).</description>
+            </propertydef>
+            <propertydef name="uploadFailedDir" label="Files failed to upload">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">uploadFailed</defaultvalue>
+                <description>Subdirectory for files failed to upload to any one of the FTP locations</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="executorOptions">
+            <uigroupdef visiblewhen="false"/>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+            <propertydef name="retryCount" label="Number of times to retry">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+            <propertydef name="retryWaitSeconds" label="Delay between attempts">
+                <typedef>
+                    <type code="int"/>
+                </typedef>
+                <defaultvalue class="java.lang.Integer">5</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <description>
+            Upload VIMS data files.
+        </description>
+    </classdef>
+
+    <classdef name="VIMS Data Import">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.VimsImportJob</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.Machine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='{allMobile="true",contextMenu="false"}' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Only files from selected machines will be imported.</description>
+            </propertydef>
+            <propertydef name="fileTypes" label="">
+                <typedef>
+                    <javaclass name="java.util.List"/>
+                </typedef>
+                <uidef widget="vimsFileImport"/>
+                <description>Only files of selected types will be imported.</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="extendedOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="verbose" label="Verbose">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Produce more verbose output</description>
+            </propertydef>
+
+            <propertydef name="autoCreate" label="Auto-create">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Automatically create a machine record when processing a file from an unknown machine.</description>
+            </propertydef>
+            <propertydef name="concurrentProcessing" label="Process files concurrently">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Process files concurrently. If enabled processes large file sets quicker but uses more computing resources.</description>
+            </propertydef>
+            <propertydef name="deleteFirst" label="Delete existing records">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                <description>Delete any existing matching records before importing to refresh data.</description>
+            </propertydef>
+
+            <propertydef name="asaCalculation" label="Perform FPO Calculation">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                <description>Process datalogs to calculate FPO Haul Road Condition Index.</description>
+            </propertydef>
+
+            <propertydef name="ignoreOperator" label="Ignore operator">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Ignore operator-related information</description>
+            </propertydef>
+
+            <propertydef name="createServiceMeterReading" label="Create Service Meter Reading">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Creates Service Meter Reading objects from available SMU data.</description>
+            </propertydef>
+
+            <propertydef name="importAllData" label="Import all data in files">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                <description>Forces import of ALL data in files.  By default, only data recorded since last download is imported.  Enabling import of all data will increase database size and potentially cause duplicate data to be recorded if files are not reset regularly.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef widget="directorySelectorHealth"/>
+                <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="processed" label="Processed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">processed</defaultvalue>
+                <description>Subdirectory for processed files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+            <propertydef name="badFiles" label="Bad Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">badFiles</defaultvalue>
+                <description>Subdirectory for bad files.</description>
+            </propertydef>
+            <propertydef name="ascFiles" label="ASCII Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">ascFiles</defaultvalue>
+                <description>Subdirectory for exported ASCII files.</description>
+            </propertydef>
+            <propertydef name="sortByType" label="Sort files by type">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>After processing, move file into subdirectory for specific file type.</description>
+            </propertydef>
+            <propertydef name="sortByMachine" label="Sort files by Machine">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>After processing, move file into subdirectory for specific machine.</description>
+            </propertydef>
+            <propertydef name="includeSubdirectories" label="Include unprocessed files in sub-folders">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Import files from sub-folder of the unprocessed folder.</description>
+            </propertydef>
+            <propertydef name="deleteSubdirectories" label="Delete unprocessed sub-folders after import">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Deletes sub-folder of the unprocessed folder after import.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="executorOptions">
+            <uigroupdef visiblewhen="false"/>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <description>
+            Import VIMS files into the MineStar database.
+        </description>
+    </classdef>
+
+    <classdef name="VIMS Current Status">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.VimsCurrentStatusJob</defaultvalue>
+            </propertydef>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.Machine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='allMobile="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Vims Current Status will be fetched only from selected machines.
+                    Maximum 20 machines can be selected.</description>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Trigger the VimsCurrentStatusRequest, or legacy VIMS fuel level request, for selected machines.
+        </description>
+    </classdef>
+
+
+    <classdef name="Fluid Management Data Import">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.FluidAnalysisImportJob</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.Machine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='allMobile="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Only files from selected machines will be imported.</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="extendedOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="dateFormat" label="Date Format">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">dd-MMM-yyyy</defaultvalue>
+                <description>Date format used in files to import. See SimpleDateFormat (http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html) for date format patterns.</description>
+            </propertydef>
+            <propertydef name="verbose" label="Verbose">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Produce more verbose output</description>
+            </propertydef>
+
+            <propertydef name="autoCreate" label="Auto-create">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>Automatically create a machine record when processing a file from an unknown machine.</description>
+            </propertydef>
+
+        </propertygroup>
+
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef widget="directorySelectorHealth"/>
+                <defaultvalue type="python">interpretPath('{MSTAR_FLUID_IMPORT}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="processed" label="Processed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">processed</defaultvalue>
+                <description>Subdirectory for processed files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+            <propertydef name="badFiles" label="Bad Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">badFiles</defaultvalue>
+                <description>Subdirectory for bad files.</description>
+            </propertydef>
+
+        </propertygroup>
+
+        <propertygroup name="executorOptions">
+            <uigroupdef visiblewhen="false"/>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <description>
+            Import Fluid Management files into the MineStar database.
+        </description>
+    </classdef>
+
+
+    <classdef name="Health DSI Data Deletion">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="vertical" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.DeleteDsiDataJob</defaultvalue>
+            </propertydef>
+            <propertydef name="dsiTypes" label="">
+                <typedef>
+                    <javaclass name="java.util.List"/>
+                </typedef>
+                <uidef widget="healthFmiDeletePanel"/>
+                <description>Select nothing to copy files of any type</description>
+            </propertydef>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <description>
+            Delete DSI from MineStar database.
+        </description>
+    </classdef>
+
+    <classdef name="Health VP3 Cycle Generator">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="periodOptions">
+            <uigroupdef layout="vertical" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.CycleGeneratorJob</defaultvalue>
+            </propertydef>
+            <propertygroup name="retentionPeriod" label="VIMS VP3 Data Post Processing Duration">
+                <uigroupdef mode="region"/>
+                <propertydef name="retainedPeriod" label="">
+                    <typedef>
+                        <type code="string" choices='{
+                            "Shift":"Shift",
+                            "Last 1":"Last Week",
+                            "Last 2":"Last 2 Weeks",
+                            "Last 3":"Last 3 Weeks",
+                            "Last 4":"Last 4 Weeks",
+                            "Last 12":"Last 3 Months",
+                            "Last 26":"Last 6 Months",
+                            "Last 52":"Last 12 Months",
+                             "year":"Year",
+                            "half":"Half",
+                            "quarter":"Quarter",
+                            "month":"Month",
+                            "week":"Week",
+                            "day":"Day",
+                            "none":"All Data"
+                        }' />
+                    </typedef>
+                    <uidef widget="combo"/>
+                    <description>
+                        VIms Post Processing data limit, Earlier data will not be considered.
+                    </description>
+                    <validationdef name="required"/>
+                </propertydef>
+            </propertygroup>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+
+        </propertygroup>
+
+        <description>
+            Health VP3 Cycle Generator.
+        </description>
+    </classdef>
+
+    <classdef name="Health Data Deletion">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>Health Data Management</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef layout="vertical" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.DeleteDataSetsJob</defaultvalue>
+            </propertydef>
+            <propertygroup name="dataSetTypes" label="DataSets">
+                <uigroupdef mode="region"/>
+                <propertydef name="fileTypes" label="Types">
+                    <typedef>
+                        <javaclass name="java.util.Set" choices='{"Trend":"Trends",
+                        "Cumulative":"Cumulatives",
+                        "Histogram":"Histograms",
+                        "Snapshot":"Snapshots",
+                        "Datalog":"Datalogs",
+                        "Continuous":"Continuous Datalogs",
+                        "Polled":"Polled Data",
+                        "ASA":"Asa Data"}' />
+                    </typedef>
+                    <uidef widget="checkbox"/>
+
+                    <description>Only files of selected types will be deleted.</description>
+                </propertydef>
+            </propertygroup>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="machineOptions">
+            <uigroupdef layout="vertical" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertygroup name="machines" label="Machines">
+                <uigroupdef mode="region"/>
+                <propertydef name="machines" label="">
+                    <typedef>
+                        <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.Machine"/>
+                        <dimension name="entityOID"/>
+                    </typedef>
+                    <uidef widget="machineSelector" custom='allMobile="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                    <description>Only dataset from selected machines will be deleted. If no machines are selected, datasets for all machines are deleted.</description>
+                </propertydef>
+            </propertygroup>
+        </propertygroup>
+
+        <propertygroup name="periodOptions">
+            <uigroupdef layout="vertical" layoutInfo='{rowSpec="fill:default:grow"}'/>
+            <propertygroup name="retentionPeriod">
+                <uigroupdef mode="region"/>
+                <propertydef name="retainedPeriod" label="">
+                    <typedef>
+                        <type code="string" choices='{
+                            "Shift":"Shift",
+                            "Last 1":"Last Week",
+                            "Last 2":"Last 2 Weeks",
+                            "Last 3":"Last 3 Weeks",
+                            "Last 4":"Last 4 Weeks",
+                            "Last 12":"Last 3 Months",
+                            "Last 26":"Last 6 Months",
+                            "Last 52":"Last 12 Months",
+                             "year":"Year",
+                            "half":"Half",
+                            "quarter":"Quarter",
+                            "month":"Month",
+                            "week":"Week",
+                            "day":"Day",
+                            "none":"Do not retain any data"
+                        }' />
+                    </typedef>
+                    <uidef widget="combo"/>
+                    <description>
+                        Retain data for this period.  Earlier data will be deleted.
+                    </description>
+                    <validationdef name="required"/>
+                </propertydef>
+            </propertygroup>
+
+        </propertygroup>
+
+        <description>
+            Delete VIMS data from MineStar database.
+        </description>
+    </classdef>
+
+    <classdef name="SmartSignal Export">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>HealthDataManagement.SmartSignalExport</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <uigroupdef visiblewhen="false"/>
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.SmartSignalExportJob</defaultvalue>
+            </propertydef>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef widget="directorySelectorHealth"/>
+                <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="processed" label="Processed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">processed</defaultvalue>
+                <description>Subdirectory for processed files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+            <propertydef name="badFiles" label="Bad Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">badFiles</defaultvalue>
+                <description>Subdirectory for bad files.</description>
+            </propertydef>
+            <propertydef name="ascFiles" label="ASCII Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">ascFiles</defaultvalue>
+                <description>Subdirectory for exported ASCII files.</description>
+            </propertydef>
+            <propertydef name="sortByType" label="Sort files by type">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>After processing, move file into subdirectory for specific file type.</description>
+            </propertydef>
+
+            <propertydef name="sortByMachine" label="Sort files by Machine">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>After processing, move file into subdirectory for specific machine.</description>
+            </propertydef>
+
+        </propertygroup>
+
+        <description>
+            Export Datalog and Snapshot files in the VIMS unprocessed directory as SmartSignal ASC files .
+        </description>
+    </classdef>
+
+    <classdef name="FPO Haul Road Index Calculator">
+        <implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>
+        <privilege>ASA Calculation</privilege>
+        <tag>user</tag>
+        <propertygroup name="standardOptions">
+            <propertydef name="jobUrl">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>minestar.health.jobs.ASACalculationJob</defaultvalue>
+            </propertydef>
+            <propertydef name="executorName" access="readonly">
+                <uidef visiblewhen="false"/>
+                <defaultvalue>JobExecutionService</defaultvalue>
+            </propertydef>
+            <propertydef name="machines" label="">
+                <typedef>
+                    <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.Machine"/>
+                    <dimension name="entityOID"/>
+                </typedef>
+                <uidef widget="machineSelector" custom='allMobile="true"' visiblewhen='form.getFieldValue("trigger.type") in [None,0,1]'/>
+                <description>Only files from selected machines will be processed.</description>
+            </propertydef>
+            <propertydef name="fpoFromDB" label="Calculate from Database">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                <description>FPO Calculation from Database/VIMS Files</description>
+            </propertydef>
+            <propertydef name="deleteFirst" label="Delete existing records (Applicable only in case of FPO from files)">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">false</defaultvalue>
+                <description>Delete any existing matching records before importing to refresh data.</description>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="directoryOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="directory" label="Base Directory">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <uidef widget="directorySelectorHealth"/>
+                <defaultvalue type="python">interpretPath('{MSTAR_VIMS}')</defaultvalue>
+                <description>Base directory for files.</description>
+            </propertydef>
+            <propertydef name="processed" label="Processed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">processed</defaultvalue>
+                <description>Subdirectory for processed files.</description>
+            </propertydef>
+            <propertydef name="unprocessed" label="Unprocessed Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">unprocessed</defaultvalue>
+                <description>Subdirectory for unprocessed files.</description>
+            </propertydef>
+            <propertydef name="badFiles" label="Bad Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">badFiles</defaultvalue>
+                <description>Subdirectory for bad files.</description>
+            </propertydef>
+            <propertydef name="ascFiles" label="ASCII Files">
+                <typedef>
+                    <type code="string"/>
+                </typedef>
+                <defaultvalue class="java.lang.String">ascFiles</defaultvalue>
+                <description>Subdirectory for exported ASCII files.</description>
+            </propertydef>
+            <propertydef name="sortByType" label="Sort files by type">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>After processing, move file into subdirectory for specific file type.</description>
+            </propertydef>
+            <propertydef name="sortByMachine" label="Sort files by Machine">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <description>After processing, move file into subdirectory for specific machine.</description>
+            </propertydef>
+            <propertydef name="includeSubdirectories" label="Include unprocessed files in sub-folders">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Import files from sub-folder of the unprocessed folder.</description>
+            </propertydef>
+            <propertydef name="deleteSubdirectories" label="Delete unprocessed sub-folders after import">
+                <typedef>
+                    <type code="boolean"/>
+                </typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Deletes sub-folder of the unprocessed folder after import.</description>
+            </propertydef>
+        </propertygroup>
+        <description>
+            Process datalogs to calculate FPO 1.5 Haul Road Condition Index.
+        </description>
+    </classdef>
+    <!--<classdef name="VIMS PC Report">-->
+    <!--<implclass name='{parametersProcessor:com.mincom.integ.cat.vims.JobParametersProcessor}'/>-->
+    <!--<privilege>Health Data Management</privilege>-->
+    <!--<tag>user</tag>-->
+    <!--<propertygroup name="standardOptions">-->
+    <!--<uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>-->
+    <!--<propertydef name="jobUrl">-->
+    <!--<uidef visiblewhen="false"/>-->
+    <!--<defaultvalue>minestar.health.jobs.HealthEventReportJob</defaultvalue>-->
+    <!--</propertydef>-->
+
+    <!--<propertydef name="reportPanel" label="">-->
+    <!--<typedef>-->
+    <!--<javaclass name="java.util.Map"/>-->
+    <!--</typedef>-->
+    <!--<uidef widget="eventReportPanel"/>-->
+    <!--</propertydef>-->
+    <!--</propertygroup>-->
+
+    <!--<propertygroup name="executorOptions">-->
+    <!--<propertydef name="executorName" access="readonly">-->
+    <!--<defaultvalue>JobExecutionService</defaultvalue>-->
+    <!--</propertydef>-->
+    <!--</propertygroup>-->
+
+    <!--<description>-->
+    <!--Generate a Health Event Report.-->
+    <!--</description>-->
+    <!--</classdef>-->
+
+</classdefs>

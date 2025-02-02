@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+
+    <classdef name="ExportSets" >
+        <propertygroup name="dataSpecs" label="Datasets">
+            <uigroupdef mode="region"/>
+            <propertydef name="dataSets" label="">
+                <uidef widget="collection" mode="detail" option="-d" custom='{itemClassDef="DataSet.DataSet", setMaximiseHeight="true", setMaxHeightFactor=Double(0.8)}' />
+            </propertydef>
+        </propertygroup>
+    </classdef>
+
+    <classdef name="DataSet">
+        <propertydef name="entryPoints" label="$item.label">
+            <typedef><javaclass name="java.util.Set" choices="$item.entryPoints" /></typedef>
+            <uidef widget="checkbox"/>
+        </propertydef>
+    </classdef>
+</classdefs>

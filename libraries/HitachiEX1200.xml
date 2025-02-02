@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Shovel Classes">
+
+    <machineClass xsi:type="shovelClassImpl">
+        <name>HitachiEX1200-6</name>
+        <manufacturer>Hitachi</manufacturer>
+        <description>Hitachi EX1200-6 Series Shovel</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="1.47" unit="cubic metres"/>
+        <minimumRefuelAmount magnitude="0.00" unit="cubic metres"/>
+        <refuelLevel magnitude="0.147" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.0735" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="24.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000001" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.000017" unit="cubic metres per second"/>
+        <maximumSpeed magnitude="0.972222" unit="metres per second"/>
+        <dipperCapacity magnitude="0.00" unit="cubic metres"/>
+        <dipperLoadCapacity magnitude="5.20" unit="cubic metres"/>
+        <reachRadius magnitude="13.36" unit="metre"/>
+    </machineClass>
+
+</machineClassExport>
+

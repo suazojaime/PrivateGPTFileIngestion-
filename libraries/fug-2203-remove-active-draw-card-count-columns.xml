@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="69eb63b3-e29f-433c-9271-0f04bb5b5b7c" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LOAD_TARGET_COUNT of table ADC_ENTRY as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ADC_ENTRY" columnName="LOAD_TARGET_COUNT"/>
+        </preConditions>
+        <comment>FUG-2203: DropColumn ADC_ENTRY.LOAD_TARGET_COUNT</comment>
+        <dropColumn columnName="LOAD_TARGET_COUNT" tableName="ADC_ENTRY"/>
+        <rollback>
+            <addColumn tableName="ADC_ENTRY">
+                <column name="LOAD_TARGET_COUNT" type="INT" remarks="The number of loads to take"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="efa107cc-6a3a-43c7-8908-75bf41b0cff7" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for EXTRA_ALLOWED_COUNT of table ADC_ENTRY as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="ADC_ENTRY" columnName="EXTRA_ALLOWED_COUNT"/>
+        </preConditions>
+        <comment>FUG-2203: DropColumn ADC_ENTRY.EXTRA_ALLOWED_COUNT</comment>
+        <dropColumn columnName="EXTRA_ALLOWED_COUNT" tableName="ADC_ENTRY"/>
+        <rollback>
+            <addColumn tableName="ADC_ENTRY">
+                <column name="EXTRA_ALLOWED_COUNT" type="INT" remarks="The number of extra loads that can be taken"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

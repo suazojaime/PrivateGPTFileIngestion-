@@ -1,0 +1,122 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="321fa5f2-5f14-4f20-a7cf-cc384df61fa6" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for MATERIAL to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="MATERIAL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddColumn MACHINE.MATERIAL</comment>
+        <addColumn tableName="MACHINE">
+            <column name="MATERIAL" type="BIGINT" remarks="The material in the chute"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE" columnName="MATERIAL"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="1c5bab8b-e2a9-47f9-bb32-2a8b9ab145df" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CHUTE_TOTAL_CAPACITY to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="CHUTE_TOTAL_CAPACITY"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddColumn MACHINE.CHUTE_TOTAL_CAPACITY</comment>
+        <addColumn tableName="MACHINE">
+            <column name="CHUTE_TOTAL_CAPACITY" type="DOUBLE" remarks="The amount of ore that the chute can hold"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE" columnName="CHUTE_TOTAL_CAPACITY"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="d6920de2-c266-48e4-89b8-898e32999389" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CHUTE_ASSIGN_CAPACITY_LIMIT to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="CHUTE_ASSIGN_CAPACITY_LIMIT"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddColumn MACHINE.CHUTE_ASSIGN_CAPACITY_LIMIT</comment>
+        <addColumn tableName="MACHINE">
+            <column name="CHUTE_ASSIGN_CAPACITY_LIMIT" type="DOUBLE" remarks="The minimum level that the chute should hold before a truck can be assigned to it."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE" columnName="CHUTE_ASSIGN_CAPACITY_LIMIT"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="fda3628c-f150-4575-b705-3b7a0e05afc8" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CHUTE_TYPE to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="CHUTE_TYPE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddColumn MACHINE.CHUTE_TYPE</comment>
+        <addColumn tableName="MACHINE">
+            <column name="CHUTE_TYPE" type="VARCHAR(255)" remarks="The type of the chute"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE" columnName="CHUTE_TYPE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="23e362dc-2a84-4156-bf7f-598bc707ddf6" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CHUTE_ASSIGN_PRIORITY to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="CHUTE_ASSIGN_PRIORITY"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddColumn MACHINE.CHUTE_ASSIGN_PRIORITY</comment>
+        <addColumn tableName="MACHINE">
+            <column name="CHUTE_ASSIGN_PRIORITY" type="INT" remarks="The priority order of the chute when assigning trucks to take from it."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE" columnName="CHUTE_ASSIGN_PRIORITY"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="933aa5bf-ad84-4302-97dd-d2f99259ddfe" author="MineStar" context="Underground/Underground_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CHUTE to table ORE_PASS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <not>
+                <columnExists tableName="ORE_PASS" columnName="CHUTE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddColumn ORE_PASS.CHUTE</comment>
+        <addColumn tableName="ORE_PASS">
+            <column name="CHUTE" type="BIGINT" remarks="Reference to chute that ore pass dumps into."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="ORE_PASS" columnName="CHUTE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="7f3550c3-f8d5-4be0-b045-eb6190154312" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_MATERIAL_FK to table MACHINE as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <tableExists tableName="MATERIAL"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE" foreignKeyName="MACHINE_MATERIAL_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddForeignKeyConstraint MACHINE_MATERIAL_FK to MACHINE (MATERIAL)</comment>
+        <sql>UPDATE MACHINE SET MATERIAL = NULL WHERE MATERIAL IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MATERIAL WHERE MATERIAL.MATERIAL_OID = MACHINE.MATERIAL)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE" baseColumnNames="MATERIAL" constraintName="MACHINE_MATERIAL_FK" referencedTableName="MATERIAL" referencedColumnNames="MATERIAL_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE" constraintName="MACHINE_MATERIAL_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="7f504102-cb98-44d7-9fcc-271cf5711963" author="MineStar" context="Underground/Underground_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ORE_PASS_CHUTE_FK to table ORE_PASS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_CHUTE_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddForeignKeyConstraint ORE_PASS_CHUTE_FK to ORE_PASS (CHUTE)</comment>
+        <sql>UPDATE ORE_PASS SET CHUTE = NULL WHERE CHUTE IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = ORE_PASS.CHUTE)</sql>
+        <addForeignKeyConstraint baseTableName="ORE_PASS" baseColumnNames="CHUTE" constraintName="ORE_PASS_CHUTE_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_CHUTE_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

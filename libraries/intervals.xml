@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:widget="http://www.minestar.au.cat.com/namespace/widget"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.minestar.au.cat.com/namespace/widget http://www.minestar.au.cat.com/namespace/widget.xsd
+       ">
+
+    <!--
+    The following list of intervals are used in the example dashboards provided with MineStar.
+    -->
+
+    <widget:interval id="truckTotalShiftTonnageCritical" order="1" lower="0" upper="75000" colour="criticalColour"/>
+    <widget:interval id="truckTotalShiftTonnageAbnormal" order="2" lower="75000" upper="80000" colour="abnormalColour"/>
+    <widget:interval id="truckTotalShiftTonnageNormal" order="3" lower="80000" upper="100000" colour="normalColour"/>
+
+    <widget:interval id="lhdTotalShiftTonnageCritical" order="1" lower="0" upper="75000" colour="criticalColour"/>
+    <widget:interval id="lhdTotalShiftTonnageAbnormal" order="2" lower="75000" upper="80000" colour="abnormalColour"/>
+    <widget:interval id="lhdTotalShiftTonnageNormal" order="3" lower="80000" upper="100000" colour="normalColour"/>
+
+    <widget:interval id="truckTotalAvailabilityCritical" order="1" lower="0" upper="85" colour="criticalColour"/>
+    <widget:interval id="truckTotalAvailabilityAbnormal" order="2" lower="85" upper="90" colour="abnormalColour"/>
+    <widget:interval id="truckTotalAvailabilityNormal" order="3" lower="90" upper="100" colour="normalColour"/>
+
+    <widget:interval id="truckTotalUseOfAvailabilityCritical" order="1" lower="0" upper="85" colour="criticalColour"/>
+    <widget:interval id="truckTotalUseOfAvailabilityAbnormal" order="2" lower="85" upper="90" colour="abnormalColour"/>
+    <widget:interval id="truckTotalUseOfAvailabilityNormal" order="3" lower="90" upper="100" colour="normalColour"/>
+
+    <widget:interval id="lhdTotalAvailabilityCritical" order="1" lower="0" upper="85" colour="criticalColour"/>
+    <widget:interval id="lhdTotalAvailabilityAbnormal" order="2" lower="85" upper="90" colour="abnormalColour"/>
+    <widget:interval id="lhdTotalAvailabilityNormal" order="3" lower="90" upper="100" colour="normalColour"/>
+
+    <widget:interval id="lhdTotalUseOfAvailabilityCritical" order="1" lower="0" upper="85" colour="criticalColour"/>
+    <widget:interval id="lhdTotalUseOfAvailabilityAbnormal" order="2" lower="85" upper="90" colour="abnormalColour"/>
+    <widget:interval id="lhdTotalUseOfAvailabilityNormal" order="3" lower="90" upper="100" colour="normalColour"/>
+
+    <widget:interval id="truckTotalTonsPerOperHourCritical" order="1" lower="0" upper="150" colour="criticalColour"/>
+    <widget:interval id="truckTotalTonsPerOperHourAbnormal" order="2" lower="150" upper="250" colour="abnormalColour"/>
+    <widget:interval id="truckTotalTonsPerOperHourNormal" order="3" lower="250" upper="400" colour="normalColour"/>
+
+    <widget:interval id="lhdTotalTonsPerOperHourCritical" order="1" lower="0" upper="150" colour="criticalColour"/>
+    <widget:interval id="lhdTotalTonsPerOperHourAbnormal" order="2" lower="150" upper="250" colour="abnormalColour"/>
+    <widget:interval id="lhdTotalTonsPerOperHourNormal" order="3" lower="250" upper="400" colour="normalColour"/>
+
+    <widget:interval id="truckTonsMinedPerHourInShiftTarget" name="Target" order="1" lower="2250" upper="2300" colour="normalColour"/>
+
+    <widget:interval id="lhdTonsMinedPerHourInShiftTarget" name="Target" order="1" lower="2250" upper="2300" colour="normalColour"/>
+
+</beans>

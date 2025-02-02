@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a07b577d-c034-48f4-9747-2e6b277efed9" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for LAYOVER_ALLOWED_CLASS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LAYOVER_ALLOWED_CLASS"/>
+            </not>
+        </preConditions>
+        <comment>MO-6862: CreateTable LAYOVER_ALLOWED_CLASS</comment>
+        <createTable tablespace="MW_ENT" remarks="The layover allowed classes" tableName="LAYOVER_ALLOWED_CLASS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,MACHINE_CLASS_OID" constraintName="LAYOVER_ALLOWED_CLASS_PK" tablespace="MW_IDXENT" tableName="LAYOVER_ALLOWED_CLASS"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="9cc6ed5e-1a13-4b6e-aa5f-f7038ff5dfea" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for LAYOVER_ALLOWED_CLASS_MACHI_FK to table LAYOVER_ALLOWED_CLASS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="LAYOVER_ALLOWED_CLASS" columnName="MACHINE_CLASS_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="LAYOVER_ALLOWED_CLASS" foreignKeyName="LAYOVER_ALLOWED_CLASS_MACHI_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-6862: AddForeignKeyConstraint LAYOVER_ALLOWED_CLASS_MACHI_FK to LAYOVER_ALLOWED_CLASS (MACHINE_CLASS_OID)</comment>
+        <sql>DELETE FROM LAYOVER_ALLOWED_CLASS WHERE MACHINE_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = LAYOVER_ALLOWED_CLASS.MACHINE_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="LAYOVER_ALLOWED_CLASS" baseColumnNames="MACHINE_CLASS_OID" constraintName="LAYOVER_ALLOWED_CLASS_MACHI_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="LAYOVER_ALLOWED_CLASS" constraintName="LAYOVER_ALLOWED_CLASS_MACHI_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="c0fcb58f-4583-4239-97b8-bc286508cd5c" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for LAYOVER_ALLOWED_CLASS_OID_FK to table LAYOVER_ALLOWED_CLASS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="LAYOVER_ALLOWED_CLASS" columnName="OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="LAYOVER_ALLOWED_CLASS" foreignKeyName="LAYOVER_ALLOWED_CLASS_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-6862: AddForeignKeyConstraint LAYOVER_ALLOWED_CLASS_OID_FK to LAYOVER_ALLOWED_CLASS (OID)</comment>
+        <sql>DELETE FROM LAYOVER_ALLOWED_CLASS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = LAYOVER_ALLOWED_CLASS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="LAYOVER_ALLOWED_CLASS" baseColumnNames="OID" constraintName="LAYOVER_ALLOWED_CLASS_OID_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="LAYOVER_ALLOWED_CLASS" constraintName="LAYOVER_ALLOWED_CLASS_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

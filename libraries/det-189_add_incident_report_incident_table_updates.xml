@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="199d22d1-ca47-4f7e-a9f1-2f8038282509" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for EVENT_HANDLE to table INCIDENT_REPORT_INCIDENT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_REPORT_INCIDENT"/>
+            <not>
+                <columnExists tableName="INCIDENT_REPORT_INCIDENT" columnName="EVENT_HANDLE"/>
+            </not>
+        </preConditions>
+        <comment>DET-189: AddColumn INCIDENT_REPORT_INCIDENT.EVENT_HANDLE</comment>
+        <addColumn tableName="INCIDENT_REPORT_INCIDENT">
+            <column name="EVENT_HANDLE" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="0909dc82-b172-4eb3-b0f6-499c3abb27ae" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for REPORT_EVENT_HANDLE to table INCIDENT_REPORT_INCIDENT as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_REPORT_INCIDENT"/>
+            <not>
+                <indexExists indexName="REPORT_EVENT_HANDLE" tableName="INCIDENT_REPORT_INCIDENT"/>
+            </not>
+        </preConditions>
+        <comment>DET-189: CreateIndex REPORT_EVENT_HANDLE on INCIDENT_REPORT_INCIDENT (INCIDENT_REPORT_INCIDENT,EVENT_HANDLE)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="REPORT_EVENT_HANDLE" tableName="INCIDENT_REPORT_INCIDENT">
+            <column name="INCIDENT_REPORT_OID"/>
+            <column name="EVENT_HANDLE"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

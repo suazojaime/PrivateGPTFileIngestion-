@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Changesets to add the storage of actuals data for plans so it is immutable when the plan goes finalized -->
+    <changeSet id="ea9ff067-3295-477a-94f4-270fcb0fd451" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_METRIC as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_METRIC"/>
+            </not>
+        </preConditions>
+        <comment>PMM-34: CreateTable PROD_PLAN_METRIC</comment>
+        <createTable tablespace="MW_ENT" tableName="PROD_PLAN_METRIC">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="METRIC_TYPE" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFERENCE_ID" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column name="PLANNED_MASS" type="DOUBLE"/>
+            <column name="ACTUAL_MASS" type="DOUBLE"/>
+        </createTable>
+        <modifySql dbms="mssql">
+            <regExpReplace replace=" ON MW_[A-Z]+" with=""/>
+        </modifySql>
+     </changeSet>
+
+    <changeSet id="271cb896-5836-4c2e-813e-a644639a131b" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored dropNotNullConstraint PROD_PLAN_METRIC.PLAN_OID as it is already nullable" onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT is_nullable
+                FROM sys.columns
+                WHERE object_id = OBJECT_ID('PROD_PLAN_METRIC')
+                AND name = 'PLAN_OID'
+            </sqlCheck>
+        </preConditions>
+        <comment>PMM-233: dropNotNullConstraint PROD_PLAN_METRIC.PLAN_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_METRIC" columnName="PLAN_OID" columnDataType="BIGINT" />
+        <rollback/>
+    </changeSet>
+     
+     <changeSet id="44ea0775-1019-4c3d-9ae0-02267714ea49" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKeyConstraint for PROD_PLAN_METRIC_PK to table PROD_PLAN_METRIC as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_METRIC" columnName="OID"/>
+            <not>
+                <primaryKeyExists primaryKeyName="PROD_PLAN_METRIC_PK" tableName="PROD_PLAN_METRIC"/>
+            </not>
+        </preConditions>
+        <comment>PMM-34: PROD_PLAN_METRIC primary key</comment>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_METRIC_PK" tableName="PROD_PLAN_METRIC"/>
+     </changeSet>
+     
+     <changeSet id="c334159a-9543-4fe1-97b2-195554a8f607" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_METRIC_FK1 to table PROD_PLAN_METRIC as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_METRIC" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_METRIC" foreignKeyName="PROD_PLAN_METRIC_FK1"/>
+            </not>
+        </preConditions>
+        <comment>PMM-34: AddForeignKeyConstraint PROD_PLAN_METRIC_FK1 to PROD_PLAN_METRIC (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_METRIC WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_METRIC.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_METRIC" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_METRIC_FK1" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_METRIC" constraintName="PROD_PLAN_METRIC_FK1"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="248855ef-ed2d-4b1f-bae5-915b02deb61f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID to table PROD_PLAN_METRIC as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_METRIC"/>
+            <not>
+                <indexExists indexName="PLAN_OID_IDX" tableName="PROD_PLAN_METRIC"/>
+            </not>
+        </preConditions>
+        <comment>PMM-34: CreateIndex PLAN_OID_IDX on PROD_PLAN_METRIC (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_METRIC" indexName="PLAN_OID_IDX">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

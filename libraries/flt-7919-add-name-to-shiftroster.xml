@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2018, Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="0b884c65-134c-4124-953a-ceb8f0b8c56a" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for IS_ACTIVE to table SHIFT_ROSTER as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="SHIFT_ROSTER"/>
+            <not>
+                <columnExists tableName="SHIFT_ROSTER" columnName="IS_ACTIVE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7919: AddColumn SHIFT_ROSTER.IS_ACTIVE</comment>
+        <addColumn tableName="SHIFT_ROSTER">
+            <column name="IS_ACTIVE" type="BOOLEAN" defaultValueBoolean="false" remarks="Is this shift roster active">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="8a4da4f8-7fa5-4acf-82ca-6df648a6b3b6" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for NAME to table SHIFT_ROSTER as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="SHIFT_ROSTER"/>
+            <not>
+                <columnExists tableName="SHIFT_ROSTER" columnName="NAME"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7919: AddColumn SHIFT_ROSTER.NAME</comment>
+        <!-- Add the NAME column as nullable, the default value is null -->
+        <addColumn tableName="SHIFT_ROSTER">
+            <column name="NAME" type="VARCHAR(254)" remarks="The name of the shift roster."/>
+        </addColumn>
+        <!-- put a unique value in the NAME column -->
+        <sql>UPDATE SHIFT_ROSTER SET NAME = OID</sql>
+        <!-- change the NAME column to not be nullable -->
+        <addNotNullConstraint columnName="NAME" columnDataType="VARCHAR(254)" tableName="SHIFT_ROSTER"/>
+        <!-- Define explicit rollback since there are multiple steps in the change set. -->
+        <rollback>
+            <dropColumn tableName="SHIFT_ROSTER" columnName="NAME"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="b3a98247-4f38-4679-8528-24ed4275fec9" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored CreateUniqueIndex for SHIFTROSTER_NAME to table SHIFT_ROSTER as (1) table does not exist, or (2) index already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="SHIFT_ROSTER"/>
+            <columnExists tableName="SHIFT_ROSTER" columnName="NAME"/>
+            <not>
+                <indexExists indexName="SHIFTROSTER_NAME" tableName="SHIFT_ROSTER"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7919: CreateUniqueIndex SHIFTROSTER_NAME on SHIFT_ROSTER (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXOBJ" indexName="SHIFTROSTER_NAME" tableName="SHIFT_ROSTER">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

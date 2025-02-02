@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:widget="http://www.minestar.au.cat.com/namespace/widget"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.minestar.au.cat.com/namespace/widget http://www.minestar.au.cat.com/namespace/widget.xsd
+       ">
+
+    <widget:guiPage id="ProductionRequestGoalsDashboard" name="Production Request Goals"
+                    guiGroup="productionRequirementsTargetMonitorGroup" displayGroup="Dashboards"
+                    privilegeName="Assignment Controls">
+        <widget:access>user</widget:access>
+        <widget:access>internal</widget:access>
+    </widget:guiPage>
+
+    <widget:guiPage id="BlendingGoalsDashboard" name="Blending Goals" guiGroup="blendingTargetMonitorGroup"
+                    displayGroup="Dashboards" privilegeName="Assignment Controls">
+        <widget:access>user</widget:access>
+        <widget:access>internal</widget:access>
+    </widget:guiPage>
+
+    <widget:guiGroup id="productionRequirementsTargetMonitorGroup" groupMode="plain" orientation="horizontal">
+        <widget:componentRef ref="productionRequirementsTargetMonitor"/>
+    </widget:guiGroup>
+
+    <widget:guiGroup id="blendingTargetMonitorGroup" groupMode="plain" orientation="horizontal">
+        <widget:componentRef ref="blendingTargetMonitor"/>
+    </widget:guiGroup>
+
+    <widget:meterChart id="productionRequirementsTargetMonitor" dataSet="shiftDataSet" dataSource="productionTargets"
+                       domain="properties"
+                       width="180" height="260" borderThickness="0" titleFontSize="10"
+                       titleAreaPercent="40" intervalThickness="10"
+                       dialColour="meterDial" needleColour="meterNeedle"
+                       valueColour="meterValue" tickColour="white" tickLabelColour="white" tickLabelsVisible="false"
+                       minValue="0" maxValue="100" tickIncrement="10">
+        <widget:intervalRef ref="TooLowOutsideTolerance"/>
+        <widget:intervalRef ref="TooLowWithinTolerance"/>
+        <widget:intervalRef ref="Target"/>
+        <widget:intervalRef ref="TooHighWithinTolerance"/>
+        <widget:intervalRef ref="TooHighOutsideTolerance"/>
+    </widget:meterChart>
+
+    <widget:meterChart id="blendingTargetMonitor" dataSet="abgShiftDataSet" dataSource="blendingTargets"
+                       domain="properties"
+                       width="180" height="200" borderThickness="0" titleFontSize="10"
+                       titleAreaPercent="30" intervalThickness="10"
+                       dialColour="meterDial" needleColour="meterNeedle"
+                       valueColour="meterValue" tickColour="white" tickLabelColour="white" tickLabelsVisible="false"
+                       minValue="0" maxValue="100" tickIncrement="10" multiChartGroupMode="region"
+                       subTitle="$Group"
+            >
+        <widget:intervalRef ref="TooLowOutsideTolerance"/>
+        <widget:intervalRef ref="TooLowWithinTolerance"/>
+        <widget:intervalRef ref="Target"/>
+        <widget:intervalRef ref="TooHighWithinTolerance"/>
+        <widget:intervalRef ref="TooHighOutsideTolerance"/>
+    </widget:meterChart>
+
+    <widget:interval id="TooLowOutsideTolerance" order="1" lower="0" upper="10" colour="criticalColour"/>
+    <widget:interval id="TooLowWithinTolerance" order="2" lower="10" upper="20" colour="abnormalColour"/>
+    <widget:interval id="Target" order="3" lower="10" upper="80" colour="normalColour"/>
+    <widget:interval id="TooHighWithinTolerance" order="4" lower="80" upper="90" colour="abnormalColour"/>
+    <widget:interval id="TooHighOutsideTolerance" order="5" lower="90" upper="100" colour="criticalColour"/>
+
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) 2018, Caterpillar, Inc.
+  -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="ec4eace3-a28d-437f-b405-42c77799a966" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table HAZARD_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="HAZARD_TYPE"/>
+            <not>
+                <columnExists tableName="HAZARD_TYPE" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>FLT-9813: AddColumn HAZARD_TYPE.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="HAZARD_TYPE">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0" remarks="The layer update version when the delay type was created/modified.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="8123ab81-fd95-420d-afa6-19a5cab0305a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table HAZARD_TYPE as table or column does not exist." onFail="MARK_RAN">
+            <tableExists tableName="HAZARD_TYPE"/>
+            <columnExists tableName="HAZARD_TYPE" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>FLT-9813: Initialize HAZARD_TYPE.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="HazardType"/>
+            <param name="table" value="HAZARD_TYPE"/>
+            <param name="oidColumn" value="HAZARDTYPE_OID"/>
+            <param name="activeColumn" value="IS_ACTIVE"/>
+            <param name="supportsArchiving" value="true"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE HAZARD_TYPE SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

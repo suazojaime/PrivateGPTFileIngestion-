@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+         <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+         <changeSet id="2de73e71-8d49-4d70-a0c5-a9e3a59710bd" author="MineStar" failOnError="false">
+             <preConditions onFailMessage="Ignored AddColumn for USER_NAME to table ALARM as table does not exist or column already exists." onFail="MARK_RAN">
+                 <tableExists tableName="ALARM"/>
+                 <not>
+                     <columnExists tableName="ALARM" columnName="USER_NAME"/>
+                 </not>
+             </preConditions>
+             <comment>MO-8492: AddColumn ALARM.USER_NAME</comment>
+             <addColumn tableName="ALARM">
+                 <column name="USER_NAME" type="VARCHAR(254)" remarks="Name of the user done a action on Alarm"/>
+             </addColumn>
+         </changeSet>
+         </databaseChangeLog>

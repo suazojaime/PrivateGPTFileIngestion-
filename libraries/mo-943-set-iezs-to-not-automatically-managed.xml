@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="b5b5bbda-56d3-44c4-a76e-f887e47ae176" author="MineStar" context="Underground/Underground_Management" failOnError="false" >
+        <comment>MO-943: Set IEZs to NOT automatically managed</comment>
+        <sql>UPDATE ZONE SET AUTO_MANAGED = 0 WHERE ZONE_OID IN (SELECT ZONE_OID FROM ZONE_MACHINE_RELATION WHERE ZONE_TYPE = 5)</sql>
+        <rollback>
+            <sql>UPDATE ZONE SET AUTO_MANAGED = 1 WHERE ZONE_OID IN (SELECT ZONE_OID FROM ZONE_MACHINE_RELATION WHERE ZONE_TYPE = 5)</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

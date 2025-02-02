@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="8d501801-c9fe-4ad6-98a4-6992d9597f1c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SOURCE_ID to table GENERIC_USER_LOCKS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="GENERIC_USER_LOCKS"/>
+            <not>
+                <columnExists tableName="GENERIC_USER_LOCKS" columnName="SOURCE_ID"/>
+            </not>
+        </preConditions>
+        <comment>MO-11975: AddColumn GENERIC_USER_LOCKS.SOURCE_ID</comment>
+        <addColumn tableName="GENERIC_USER_LOCKS">
+            <column name="SOURCE_ID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

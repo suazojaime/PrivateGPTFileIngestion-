@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.health.domain.data" schema="historical">
+
+    <class name="DataTypeMapping" table="DATATYPEMAPPING">
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=COLUMN_MAPPING_UNIQ
+            unique=true
+            columns=DATATYPEOID,PROPERTYNAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="healthHistorical"/>
+
+        <id name="oid">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="family" column="FAMILY" type="string" length="32">
+        </property>
+
+        <property name="dataTypeOid" column="DATATYPEOID" type="string" length="255">
+        </property>
+
+        <property name="dataType" column="DATATYPE" type="string" length="32">
+        </property>
+
+        <property name="dataTypeId" column="DATATYPEID" type="long">
+        </property>
+
+        <property name="dataTypeSubId" column="DATATYPESUBID" type="short">
+        </property>
+
+        <property name="propertyName" column="PROPERTYNAME" type="string" length="32">
+        </property>
+
+        <property name="tableName" column="TABLENAME" type="string" length="32">
+        </property>
+
+        <property name="columnName" column="COLUMNNAME" type="string" length="32">
+        </property>
+
+        <property name="alternateName" column="ALTNAME" type="string" length="128">
+        </property>
+
+    </class>
+</hibernate-mapping>

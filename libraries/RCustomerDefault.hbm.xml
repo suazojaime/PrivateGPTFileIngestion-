@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+    <class
+            name="minestar.platform.domain.lookup.RCustomerDefault"
+            table="R_CUSTOMER_DEFAULTS"
+    >
+        <meta attribute="table">
+            tablespace=MW_ECF
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <composite-id>
+            <key-property
+                    name="locale"
+                    column="LOCALE"
+                    type="java.lang.String"
+                    length="32"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="name"
+                    column="NAME"
+                    type="java.lang.String"
+                    length="32"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="result"
+                    column="RESULT"
+                    type="java.lang.String"
+                    length="512"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+        </composite-id>
+
+    </class>
+</hibernate-mapping>

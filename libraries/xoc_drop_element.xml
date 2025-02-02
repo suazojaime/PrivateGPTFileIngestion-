@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE transformation SYSTEM "transformation.dtd">
+
+<transformation>
+    <name lang="en">Drop from an XOC File</name>
+    <description lang="en">
+This transformation drops all elements with a given name from an XOC file.
+    </description>
+    <propertydef name="tag">
+        <typedef><type code="string" /></typedef>
+        <description lang="en">The tag to be removed.</description>
+    </propertydef>
+    <content value="false" />
+</transformation>

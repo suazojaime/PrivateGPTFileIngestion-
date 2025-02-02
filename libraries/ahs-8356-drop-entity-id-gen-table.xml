@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="e6812472-4af8-4ab1-96fc-1956666081b2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for ENTITY_ID_GEN as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ENTITY_ID_GEN"/>
+        </preConditions>
+        <comment>AHS-8356: DropTable ENTITY_ID_GEN</comment>
+        <dropTable tableName="ENTITY_ID_GEN"/>
+        <rollback>
+            <createTable tablespace="MW_ECF" tableName="ENTITY_ID_GEN">
+                <column name="ENTITY_ID_GEN_PK" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="TYPE_ID" type="VARCHAR(255)"/>
+                <column name="DISCRIMINATOR_ID" type="VARCHAR(255)"/>
+                <column name="NEXT_VAL" type="BIGINT"/>
+                <column name="LOCKING_VERSION" type="BIGINT"/>
+            </createTable>
+            <addPrimaryKey columnNames="ENTITY_ID_GEN_PK" constraintName="ENTITY_ID_GEN_PK" tablespace="MW_IDXECF" tableName="ENTITY_ID_GEN"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

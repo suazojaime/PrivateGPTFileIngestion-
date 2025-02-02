@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="e813eb8d-fb93-4f82-8920-43448c095e75" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for MINESTAR_SOURCE_REF_OID of table PROD_PLAN_JOB as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_JOB" columnName="MINESTAR_SOURCE_REF_OID"/>
+        </preConditions>
+        <comment>MO-1754: DropColumn PROD_PLAN_JOB.MINESTAR_SOURCE_REF_OID</comment>
+        <dropColumn columnName="MINESTAR_SOURCE_REF_OID" tableName="PROD_PLAN_JOB"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_JOB">
+                <column name="MINESTAR_SOURCE_REF_OID" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="eafc3e72-679e-4884-9526-2416cebd625a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for MINESTAR_DUMP_REF_OID of table PROD_PLAN_JOB as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_JOB" columnName="MINESTAR_DUMP_REF_OID"/>
+        </preConditions>
+        <comment>MO-1754: DropColumn PROD_PLAN_JOB.MINESTAR_DUMP_REF_OID</comment>
+        <dropColumn columnName="MINESTAR_DUMP_REF_OID" tableName="PROD_PLAN_JOB"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_JOB">
+                <column name="MINESTAR_DUMP_REF_OID" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="aea44a67-e25d-40a4-ae18-369f8efe94ff" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for MINESTAR_EQUIPMENT_REF_OID of table PROD_PLAN_JOB as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_JOB" columnName="MINESTAR_EQUIPMENT_REF_OID"/>
+        </preConditions>
+        <comment>MO-1754: DropColumn PROD_PLAN_JOB.MINESTAR_EQUIPMENT_REF_OID</comment>
+        <dropColumn columnName="MINESTAR_EQUIPMENT_REF_OID" tableName="PROD_PLAN_JOB"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_JOB">
+                <column name="MINESTAR_EQUIPMENT_REF_OID" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="2e1fafb8-5e39-4231-b445-73a9710586c6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MATERIAL_OID to table PROD_PLAN_JOB as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB" columnName="MATERIAL_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-1754: AddColumn PROD_PLAN_JOB.MATERIAL_OID</comment>
+        <addColumn tableName="PROD_PLAN_JOB">
+            <column name="MATERIAL_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="f50aa59d-702c-43d4-b512-cdfaf0f1c774" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SOURCE_OID to table PROD_PLAN_JOB as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB" columnName="SOURCE_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-1754: AddColumn PROD_PLAN_JOB.SOURCE_OID</comment>
+        <addColumn tableName="PROD_PLAN_JOB">
+            <column name="SOURCE_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="a3c4f8df-9afd-4a32-8706-ad92e3ae30e2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DUMP_OID to table PROD_PLAN_JOB as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB" columnName="DUMP_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-1754: AddColumn PROD_PLAN_JOB.DUMP_OID</comment>
+        <addColumn tableName="PROD_PLAN_JOB">
+            <column name="DUMP_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="63b0d33e-cffe-4a49-a9c8-0a6fcdfe7176" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for EQUIPMENT_OID to table PROD_PLAN_JOB as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB" columnName="EQUIPMENT_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-1754: AddColumn PROD_PLAN_JOB.EQUIPMENT_OID</comment>
+        <addColumn tableName="PROD_PLAN_JOB">
+            <column name="EQUIPMENT_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="52874ba8-bfaa-4a3b-a602-3ab423e4e5ad" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for USE_MAX_CURVATURE to table PLAN_LANE_POINTS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_POINTS"/>
+            <not>
+                <columnExists tableName="PLAN_LANE_POINTS" columnName="USE_MAX_CURVATURE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7551: AddColumn PLAN_LANE_POINTS.USE_MAX_CURVATURE</comment>
+        <addColumn tableName="PLAN_LANE_POINTS">
+            <column name="USE_MAX_CURVATURE" type="BOOLEAN" remarks="The lanes can be traversed using a maximum curvature turn"/>
+        </addColumn>
+        <sql>UPDATE PLAN_LANE_POINTS SET USE_MAX_CURVATURE = 0</sql>
+        <addNotNullConstraint tableName="PLAN_LANE_POINTS" columnName="USE_MAX_CURVATURE" columnDataType="BOOLEAN"/>
+        <rollback>
+            <dropColumn tableName="PLAN_LANE_POINTS" columnName="USE_MAX_CURVATURE"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

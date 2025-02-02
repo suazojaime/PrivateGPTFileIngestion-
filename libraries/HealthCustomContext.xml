@@ -1,0 +1,49 @@
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                                                http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    Definitions that can be configured based on the context in which they are loaded.
+    This is used in an offline context.  Ie, outside of MineTracking
+    -->
+    <bean id="definitionServiceImpl" class="minestar.health.impl.definition.DefinitionServiceImpl" lazy-init="true">
+        <constructor-arg name="sessionFactory" ref="minestarSessionFactory" />
+        <constructor-arg name="txManager" ref="minestarTransactionManager"/>
+    </bean>
+
+
+    <bean id="healthServiceImpl" class="minestar.health.service.health.HealthServiceImpl" lazy-init="true">
+        <property name="dataSetDao" ref="dataSetDao" />
+        <property name="histogramCellDefDao" ref="histogramCellDefDao" />
+        <property name="tkphLimitDao" ref="tkphLimitDao" />
+        <property name="measurePoller" ref="measurePollerImpl"/>
+        <property name="measureBroadcastRequestor" ref="measureBroadcastRequestor"/>
+        <property name="machineModelDao" ref="machineModelDao"/>
+    </bean>
+
+    <bean id="measurePollerImpl" class="minestar.health.util.polling.MeasurePoller" lazy-init="true">
+        <property name="healthService" ref="healthServiceImpl"/>
+        <property name="commsAdaptorExecutor" ref="legacyCommsAdapterExecutor"/>
+    </bean>
+
+    <bean id="telemetryServiceImpl" class="minestar.health.impl.telemetry.TelemetryServiceImpl" lazy-init="true">
+        <property name="definitionService" ref="definitionServiceImpl"/>
+        <property name="telemetryListenerFactory" ref="telemetryListenerFactory"/>
+        <!-- Do not assign a machineStartupService, as it won't be running
+                Also don't bother with a telemetryExecutor or a broadcaseHeartbeatChecker, as they aren't needed offline
+        <property name="telemetryExecutor" ref="minestarTaskScheduler"/>
+        <property name="broadcastHeartbeatChecker" ref="broadcastHeartbeatChecker"/>
+        -->
+        <property name="notification" ref="notification"/>
+    </bean>
+
+
+    <bean id="measureBroadcastRequestor" class="minestar.health.util.polling.MeasureBroadcastRequestorImpl" lazy-init="true" >
+        <property name="definitionService" ref="definitionServiceImpl"/>
+        <property name="telemetryService" ref="telemetryServiceImpl"/>
+    </bean>
+
+</beans>

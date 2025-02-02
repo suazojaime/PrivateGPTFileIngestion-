@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class
+            name="minestar.mine.domain.RoadTravelCondition"
+            table="ROAD_TRAVEL_CONDITION"
+    >
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=ROAD_TRAVEL_CONDITION_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A road travel condition</meta>
+
+        <!-- cache usage="read-write" region="model-versioned"/>-->
+        <id
+                name="OID"
+                column="OID"
+                type="java.lang.Long"
+        >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <version name="version" access="field">
+            <meta attribute="description">Road travel condition version</meta>
+        </version>
+
+        <property
+                name="name"
+                type="java.lang.String"
+                column="NAME"
+                not-null="true"
+        >
+            <meta attribute="description">The name of the condition</meta>
+        </property>
+        <property
+                name="current"
+                type="java.lang.Boolean"
+                column="IS_CURRENT"
+        >
+            <meta attribute="description">Is the condition current</meta>
+            <meta attribute="alias">isCurrent</meta>
+        </property>
+        <property
+                name="adjustmentFactor"
+                column="ADJUSTMENT_FACTOR"
+                not-null="true"
+        >
+            <meta attribute="unitType">ratio</meta>
+            <meta attribute="description">The adjustment factor of the condition</meta>
+            <type name="quantity">
+                <param name="unitType">ratio</param>
+            </type>
+        </property>
+        <property
+                name="speedAlarmFactor"
+                column="SPEED_ALARM_FACTOR"
+        >
+            <meta attribute="unitType">ratio</meta>
+            <meta attribute="description">The speed alarm factor of the condition</meta>
+            <type name="quantity">
+                <param name="unitType">ratio</param>
+            </type>
+        </property>
+    </class>
+
+</hibernate-mapping>

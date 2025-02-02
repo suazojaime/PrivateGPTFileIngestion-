@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class
+            name="minestar.platform.domain.environment.Temp"
+            table="TEMP"
+            schema="platform"
+    >
+        <meta attribute="table">
+            tablespace=MW_ECF
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXECF
+        </meta>
+        <id
+                name="tempOid"
+                column="TEMP_OID"
+                type="java.lang.Long"
+        >
+        </id>
+    </class>
+
+    <class
+            name="minestar.platform.domain.environment.TempCycle"
+            table="TEMP_CYCLE"
+            schema="historical"
+    >
+        <meta attribute="table">
+            tablespace=MW_USR
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_USR
+        </meta>
+        <composite-id>
+            <key-property
+                    name="cycleOid"
+                    column="CYCLE_OID"
+                    type="java.lang.Long"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="ecfClassId"
+                    column="ECF_CLASS_ID"
+                    type="java.lang.String"
+                    length="254"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="primaryMachine"
+                    column="PRIMARYMACHINE"
+                    type="java.lang.String"
+                    length="254"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="endTime"
+                    type="TimestampType"
+            >
+                <meta attribute="use-in-equals">true</meta>
+                <meta attribute="view-localtime">true</meta>
+                <column name="ENDTIME_UTC" default="01-JAN-1970"/>
+            </key-property>
+        </composite-id>
+    </class>
+
+    <class
+            name="minestar.platform.domain.environment.TempEvent"
+            table="TEMP_EVENT"
+            schema="historical"
+    >
+        <meta attribute="table">
+            tablespace=MW_USR
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_USR
+        </meta>
+        <composite-id>
+            <key-property
+                    name="eventOid"
+                    column="EVENT_OID"
+                    type="java.lang.Long"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="ecfClassId"
+                    column="ECF_CLASS_ID"
+                    type="java.lang.String"
+                    length="254"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="machine"
+                    column="MACHINE_OID"
+                    type="java.lang.String"
+                    length="254"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="timestamp"
+                    type="TimestampType"
+            >
+                <meta attribute="use-in-equals">true</meta>
+                <meta attribute="view-localtime">true</meta>
+                <column name="TIMESTAMP_UTC" default="01-JAN-1970"/>
+            </key-property>
+        </composite-id>
+    </class>
+</hibernate-mapping>

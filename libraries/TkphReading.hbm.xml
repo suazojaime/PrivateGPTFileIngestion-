@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical" default-access="field" default-lazy="false">
+    <class
+            name="minestar.assignment.domain.tkph.TkphReading"
+            table="TKPH_READING"
+            >
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=TKPH_READING_MACHINE_TIME
+            columns=MACHINE_OID, READING_TIME_UTC
+            tablespace=MW_IDXENT
+            unique=true
+        </meta>
+
+        <meta attribute="description">A TKPH reading.</meta>
+
+        <cache usage="read-write" region="historical"/>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="TPKH_READING_OID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one
+                name="machine"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                column="MACHINE_OID"
+                not-null="true"
+                >
+            <meta attribute="description">Machine reading taken from</meta>
+        </many-to-one>
+        <property
+                name="readingTime"
+                type="TimestampType"
+                column="READING_TIME_UTC"
+                not-null="true"
+                >
+            <meta attribute="utc-description">The utc Time that the reading was taken</meta>
+            <meta attribute="description">Time that the reading was taken</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        <property name="tkphActivity"
+                  type="minestar.assignment.persistence.tkph.TkphActivityEnumUserType"
+                  column="TKPH_ACTIVITY"
+                  not-null="true">
+            <meta attribute="description">The activity machine was undertaking when reading was taken.
+                Valid values are: DYNAMIC_3_HOUR, DYNAMIC_4_HOUR, DYNAMIC_5_HOUR, DYNAMIC_LAST_CYCLE, VIMS, EXTERNAL</meta>
+        </property>
+        <property name="tkphValue"
+                  column="TKPH_VALUE"
+                  not-null="true">
+            <meta attribute="description">The reading value</meta>
+            <meta attribute="unitType">mass speed</meta>
+            <type name="quantity">
+                <param name="unitType">mass speed</param>
+            </type>
+        </property>
+        <property name="tkphMaxValue"
+                  column="TKPH_MAX_VALUE">
+            <meta attribute="description">The max reading value</meta>
+            <meta attribute="unitType">mass speed</meta>
+            <type name="quantity">
+                <param name="unitType">mass speed</param>
+            </type>
+        </property>
+    </class>
+</hibernate-mapping>

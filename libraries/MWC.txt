@@ -1,0 +1,11 @@
+# About the MWC.mic file and generated minestar image files in this directory
+
+- Images were created using Microsoft Image Composer, open file MWC.mic
+- Editing of text is performed by actually replacing the text frames with new ones
+- Minestar text is Eras DemiITC, 36 pt, Pure White
+- Version text is Eras DemiITC, 22 pt, Black
+- CopyRight text is Eras DemiITC, 8 pt, Light Grey
+- First do a Save to keep the MWC.mic modifications
+- Perform Save As JPEG for 24 bit image
+- Perform Save As CompuServer GIF for 8 bit image
+- Fine adjustment of text box position via cursor keys

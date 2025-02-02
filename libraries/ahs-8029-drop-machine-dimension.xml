@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="3f723dfd-b74f-4732-9ef9-1bc7b9e827c6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for DIMENSION_AVOIDANCE_POINTS as table does not exist."
+                       onFail="MARK_RAN">
+            <tableExists tableName="DIMENSION_AVOIDANCE_POINTS"/>
+        </preConditions>
+        <comment>AHS-8029: DropTable DIMENSION_AVOIDANCE_POINTS</comment>
+        <dropTable tableName="DIMENSION_AVOIDANCE_POINTS"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="List of avoidance polygon points" tableName="DIMENSION_AVOIDANCE_POINTS">
+                <column name="DIMENSION_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="X_MAGNITUDE" type="DOUBLE"/>
+                <column name="Y_MAGNITUDE" type="DOUBLE"/>
+                <column name="Z_MAGNITUDE" type="DOUBLE"/>
+                <column name="POINT_NR" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="DIMENSION_OID,POINT_NR" constraintName="DIMENSION_AVOIDANCE_POINTS_PK" tablespace="MW_IDXENT" tableName="DIMENSION_AVOIDANCE_POINTS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="265f0d15-6c0e-46e2-bec9-6a974c90170b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for DIMENSION_BODY_POINTS as table does not exist."
+                       onFail="MARK_RAN">
+            <tableExists tableName="DIMENSION_BODY_POINTS"/>
+        </preConditions>
+        <comment>AHS-8029: DropTable DIMENSION_BODY_POINTS</comment>
+        <dropTable tableName="DIMENSION_BODY_POINTS"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="List of body polygon points" tableName="DIMENSION_BODY_POINTS">
+                <column name="DIMENSION_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="X_MAGNITUDE" type="DOUBLE"/>
+                <column name="Y_MAGNITUDE" type="DOUBLE"/>
+                <column name="Z_MAGNITUDE" type="DOUBLE"/>
+                <column name="POINT_NR" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="DIMENSION_OID,POINT_NR" constraintName="DIMENSION_BODY_POINTS_PK" tablespace="MW_IDXENT" tableName="DIMENSION_BODY_POINTS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="d0b38e9b-a00e-44ad-ac47-41eb1ef835f7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for MACHINE_DIMENSION as table does not exist."
+                       onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_DIMENSION"/>
+        </preConditions>
+        <comment>AHS-8029: DropTable MACHINE_DIMENSION</comment>
+        <dropTable tableName="MACHINE_DIMENSION"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="A dimension record for a machine or class of machine." tableName="MACHINE_DIMENSION">
+                <column name="DIMENSION_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ID" type="BIGINT" remarks="An automatically generated unique ID value for this dimension.">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="OVERALLLENGTH" type="DOUBLE" remarks="The overall length value for the truck class."/>
+                <column name="GPS_OFFSET_X" type="DOUBLE" remarks="The offset of the gps relative to the right rear."/>
+                <column name="GPS_OFFSET_Y" type="DOUBLE" remarks="The offset of the gps relative to the right rear."/>
+                <column name="GPS_OFFSET_Z" type="DOUBLE" remarks="The offset of the gps relative to the right rear."/>
+                <column name="WIDTH" type="DOUBLE" remarks="The width value for the truck class."/>
+                <column name="BODYRADIUS" type="DOUBLE" remarks="The body radius value for the Machine class."/>
+                <column name="AVOIDANCERADIUS" type="DOUBLE" remarks="The avoidance radius value for the Machine class."/>
+                <column name="MACHINETYPECATEGORY" type="VARCHAR(255)">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="DIMENSION_OID" constraintName="MACHINE_DIMENSION_PK" tablespace="MW_IDXENT" tableName="MACHINE_DIMENSION"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

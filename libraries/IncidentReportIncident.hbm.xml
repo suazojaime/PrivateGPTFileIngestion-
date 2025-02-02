@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.mine.service.incident.impl.IncidentReportIncident" table="INCIDENT_REPORT_INCIDENT">
+        <meta attribute="table">tablespace=MW_OBJ</meta>
+        <meta attribute="primary-key">tablespace=MW_IDXOBJ</meta>
+
+        <meta attribute="index" inherit="false">
+            name=INCIDENT_REPORT_INCIDENT
+            columns=INCIDENT_REPORT_OID,INCIDENT_OID
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="foreign-key">
+            on-delete=CASCADE
+        </meta>
+
+        <meta attribute="description">Records the status of an incident in an incident report.</meta>
+
+        <meta attribute="view-master">true</meta>
+
+        <meta attribute="viewproperty-incidentOid" inherit="true">
+            type=string
+            description=The OID of the incident
+            expression=lookupResource.incidentReportIncident.incidentOid.query
+        </meta>
+
+        <meta attribute="viewproperty-incidentReportOid" inherit="true">
+            type=string
+            description=The OID of the incident report
+            expression=lookupResource.incidentReportIncident.incidentReportOid.query
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=REPORT_EVENT_HANDLE
+            unique=false
+            columns=INCIDENT_REPORT_OID,EVENT_HANDLE
+            tablespace=MW_IDXENT
+        </meta>
+
+        <composite-id>
+            <key-many-to-one name="incidentReport" column="INCIDENT_REPORT_OID" class="minestar.mine.service.incident.report.IncidentReport">
+                <meta attribute="description">Unique identifier for the Incident Report.</meta>
+            </key-many-to-one>
+            <key-many-to-one name="incident" column="INCIDENT_OID" class="minestar.mine.service.incident.impl.AbstractIncidentMessage">
+                <meta attribute="description">Unique identifier for the Incident.</meta>
+            </key-many-to-one>
+        </composite-id>
+
+        <property name="eventHandle" type="java.lang.Long" column="EVENT_HANDLE"/>
+
+        <property name="status" type="java.lang.Integer" column="STATUS">
+            <meta attribute="description">Complete = 1, Incomplete = 2, No Data = 3.</meta>
+        </property>
+    </class>
+</hibernate-mapping>

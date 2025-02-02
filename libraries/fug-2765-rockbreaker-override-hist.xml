@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="2537cba4-809a-46b3-92b6-45d6423fba18" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for UG_ROCK_BREAKER_OVERRIDE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="UG_ROCK_BREAKER_OVERRIDE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2765: CreateTable UG_ROCK_BREAKER_OVERRIDE</comment>
+        <createTable tablespace="MW_ENT" remarks="A historical record of rockbreaker overrides." tableName="UG_ROCK_BREAKER_OVERRIDE">
+            <column name="RB_OVERRIDE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ROCKBREAKER" type="BIGINT" remarks="A reference to the rockbreaker (MSMODEL.MACHINE) that this historical record applies to.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATE" type="INT" remarks="Rockbreaker override state (operating or not operating)."/>
+            <column name="USER1" type="BIGINT" remarks="A reference to the user (MSMODEL.USER) who applied the override.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of when this override became active.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EXPIRY_TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of when this override will expire.">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="RB_OVERRIDE_OID" constraintName="UG_ROCK_BREAKER_OVERRIDE_PK" tablespace="MW_IDXENT" tableName="UG_ROCK_BREAKER_OVERRIDE"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="a72092bc-30b1-40e3-827d-9e8f0e2d7b0e" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for IDX_RB_TIMESTAMP to table UG_ROCK_BREAKER_OVERRIDE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="UG_ROCK_BREAKER_OVERRIDE"/>
+            <not>
+                <indexExists indexName="IDX_RB_TIMESTAMP" tableName="UG_ROCK_BREAKER_OVERRIDE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2765: CreateIndex IDX_RB_TIMESTAMP on UG_ROCK_BREAKER_OVERRIDE (ROCKBREAKER,TIMESTAMP_UTC)</comment>
+        <createIndex unique="false" tableName="UG_ROCK_BREAKER_OVERRIDE" indexName="IDX_RB_TIMESTAMP">
+            <column name="ROCKBREAKER"/>
+            <column name="TIMESTAMP_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="b27238d3-3520-4a9f-89f2-fd2f6f6c02bb" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for IDX_CHUTE_TIMESTAMP to table HISTORICAL_CHUTE_OVERRIDE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HISTORICAL_CHUTE_OVERRIDE"/>
+            <not>
+                <indexExists indexName="IDX_CHUTE_TIMESTAMP" tableName="HISTORICAL_CHUTE_OVERRIDE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2764: CreateIndex IDX_CHUTE_TIMESTAMP on HISTORICAL_CHUTE_OVERRIDE (CHUTE,TIMESTAMP_UTC)</comment>
+        <createIndex unique="false" tableName="HISTORICAL_CHUTE_OVERRIDE" indexName="IDX_CHUTE_TIMESTAMP">
+            <column name="CHUTE"/>
+            <column name="TIMESTAMP_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

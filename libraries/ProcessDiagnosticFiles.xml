@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<circuit>
+
+    &JobExecutors;
+
+    <nodes>
+        <node name="startNode" class="com.mincom.env.integ.circuit.node.NullJobExecutionNode">
+            <var name="isDefaultStartNode">true</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="downloadSurveyFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isEndNode">true</var>
+            <var name="executor">fieldFtpExecutor</var>
+            <var name="defaultJobUrl">com.mincom.integ.field.nodes.FileStatus2FtpJob</var>
+            <var name="jobClass">com.mincom.integ.field.nodes.FileStatus2FtpJob</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+    </nodes>
+    <connections>
+        <connect source="startNode" sink="downloadSurveyFiles" />
+    </connections>
+</circuit>
+

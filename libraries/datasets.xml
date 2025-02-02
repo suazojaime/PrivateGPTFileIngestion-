@@ -1,0 +1,156 @@
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<!DOCTYPE DataSets SYSTEM "DataSets.dtd">
+<DataSets>
+    <DataSet name="AlarmInformation" description="Alarm Type Information" schema="model">
+        <EntryPoint name="Alarm Types" class="minestar.platform.domain.alarm.AlarmType"/>
+    </DataSet>
+
+    <DataSet name="Users" description="MineStar Users and Login Information" schema="model">
+        <EntryPoint name="Users" class="minestar.platform.domain.user.MineStarUser"/>
+    </DataSet>
+
+    <DataSet name="PersonnelInformation" description="Personnel, Licenses, Crews, Shifts" schema="model">
+        <EntryPoint name="Crews" class="minestar.platform.domain.roster.CrewImpl"/>
+        <EntryPoint name="Shifts" class="minestar.platform.domain.calendar.Shift"/>
+        <EntryPoint name="Absence Types" class="minestar.platform.domain.calendar.AbsenceType"/>
+        <EntryPoint name="Work Groups" class="minestar.machinetracking.domain.WorkGroupImpl"/>
+        <EntryPoint name="People" class="minestar.machinetracking.domain.PersonImpl"/>
+        <!--<StopPoint parentClass="com.mincom.works.cc.personnel.MachineLicence" property="peopleHoldingLicence"/>-->
+    </DataSet>
+
+    <DataSet name="MachineInformation" description="Machines, Machine Classes, Safety Check Lists, Loader Recipes" schema="model">
+        <EntryPoint name="Trucks" class="minestar.pitlink.domain.machine.TruckImpl"/>
+        <EntryPoint name="Shovels" class="minestar.pitlink.domain.machine.ShovelImpl"/>
+        <EntryPoint name="Loaders" class="minestar.pitlink.domain.machine.LoaderImpl"/>
+        <EntryPoint name="Processors" class="minestar.pitlink.domain.machine.FixedProcessorImpl"/>
+        <EntryPoint name="Fuel Bays" class="minestar.pitlink.domain.machine.FuelBayImpl"/>
+        <EntryPoint name="Water Refill Station" class="minestar.pitlink.domain.machine.AutonomousWaterRefillStationImpl"/>
+        <EntryPoint name="Pseudolite" class="minestar.pitlink.domain.machine.PseudoliteImpl"/>
+        <EntryPoint name="Layover" class="minestar.pitlink.domain.machine.LayoverImpl"/>
+        <EntryPoint name="Payload Service" class="minestar.pitlink.domain.machine.PayloadServiceImpl"/>
+        <EntryPoint name="Loadout Units" class="minestar.pitlink.domain.machine.LoadoutUnitImpl"/>
+        <EntryPoint name="Automated Loadout Units" class="minestar.pitlink.domain.machine.AutomatedLoadoutUnitImpl"/>
+        <EntryPoint name="Transport Vehicles" class="minestar.assignment.domain.TransportVehicle"/>
+        <EntryPoint name="Fleets" class="minestar.pitlink.domain.machine.Fleet"/>
+        <EntryPoint name="Mobile Categories" class="minestar.pitlink.domain.machine.MobileCategoryImpl"/>
+        <EntryPoint name="Fixed Plant Categories" class="minestar.pitlink.domain.machine.FixedPlantCategoryImpl"/>
+        <EntryPoint name="Truck Classes" class="minestar.pitlink.domain.machine.TruckClassImpl"/>
+        <EntryPoint name="Aux Fixed Plant Classes" class="minestar.pitlink.domain.machine.AuxFixedPlantClass"/>
+        <EntryPoint name="Fixed Plant Fuel Bay Classes" class="minestar.pitlink.domain.machine.FuelBayClassImpl"/>
+        <EntryPoint name="Fixed Plant Water Refill Station Classes" class="minestar.pitlink.domain.machine.AutonomousWaterRefillStationClassImpl"/>
+        <EntryPoint name="Fixed Plant Pseudolite Classes" class="minestar.pitlink.domain.machine.PseudoliteClassImpl"/>
+        <EntryPoint name="Fixed Plant Layover Classes" class="minestar.pitlink.domain.machine.LayoverClassImpl"/>
+        <EntryPoint name="Fixed Plant PayloadService Classes" class="minestar.pitlink.domain.machine.PayloadServiceClassImpl"/>
+        <EntryPoint name="Auxiliary Mobile Machine Classes" class="minestar.pitlink.domain.machine.AuxMobileClassImpl"/>
+        <EntryPoint name="Fixed Plant Processor Classes" class="minestar.pitlink.domain.machine.FixedProcessorClassImpl"/>
+        <EntryPoint name="Mobile Processor Classes" class="minestar.pitlink.domain.machine.MobileProcessorClassImpl"/>
+        <EntryPoint name="Loader Classes" class="minestar.pitlink.domain.machine.LoaderClassImpl"/>
+        <EntryPoint name="Shovel Classes" class="minestar.pitlink.domain.machine.ShovelClassImpl"/>
+        <EntryPoint name="Loadout Unit Classes" class="minestar.pitlink.domain.machine.LoadoutUnitClassImpl"/>
+        <EntryPoint name="Automated Loadout Unit Classes" class="minestar.pitlink.domain.machine.AutomatedLoadoutUnitClassImpl"/>
+        <EntryPoint name="Safety Check Items" class="minestar.pitlink.domain.safety.SafetyCheckItem"/>
+        <EntryPoint name="Safety Check Actions" class="minestar.pitlink.domain.safety.SafetyCheckAction"/>
+        <EntryPoint name="Loader Recipes" class="minestar.production.domain.LoaderRecipe"/>
+        <StopPoint parentClass="minestar.production.domain.ToolKeyDef" property="parent"/>
+        <EntryPoint name="Blasthole Drills" class="minestar.pitlink.domain.machine.BlastholeDrillImpl"/>
+        <EntryPoint name="BlastholeDrill Category" class="minestar.pitlink.domain.machine.BlastholeDrillCategoryImpl"/>
+        <EntryPoint name="Blast Hole Drill" class="minestar.pitlink.domain.machine.BlastholeDrillClassImpl"/>
+        <EntryPoint name="Draglines" class="minestar.pitlink.domain.machine.DraglineImpl"/>
+        <EntryPoint name="Dragline Category" class="minestar.pitlink.domain.machine.DraglineCategoryImpl"/>
+        <EntryPoint name="Dragline Classes" class="minestar.pitlink.domain.machine.DraglineClassImpl"/>
+        <EntryPoint name="Fuel and Lube Types" class="minestar.production.domain.fuel.FuelAndLubeType"/>
+        <EntryPoint name="Infrastructure" class="minestar.pitlink.domain.machine.InfrastructureImpl"/>
+        <EntryPoint name="Chute" class="minestar.pitlink.domain.machine.ChuteImpl"/>
+        <EntryPoint name="Chute Category" class="minestar.pitlink.domain.machine.ChuteCategoryImpl"/>
+        <EntryPoint name="Chute Classes" class="minestar.pitlink.domain.machine.ChuteClassImpl"/>
+        <EntryPoint name="Conveyor" class="minestar.pitlink.domain.machine.ConveyorImpl"/>
+        <EntryPoint name="Conveyor Category" class="minestar.pitlink.domain.machine.ConveyorCategoryImpl"/>
+        <EntryPoint name="Conveyor Classes" class="minestar.pitlink.domain.machine.ConveyorClassImpl"/>
+        <EntryPoint name="Command Proxy" class="minestar.pitlink.domain.machine.CommandProxyImpl"/>
+        <EntryPoint name="Command Proxy Category" class="minestar.pitlink.domain.machine.CommandProxyCategoryImpl"/>
+        <EntryPoint name="Command Proxy Classes" class="minestar.pitlink.domain.machine.CommandProxyClassImpl"/>
+        <EntryPoint name="Rock Breaker" class="minestar.pitlink.domain.machine.RockBreakerImpl"/>
+        <EntryPoint name="Rock Breaker Category" class="minestar.pitlink.domain.machine.RockBreakerCategoryImpl"/>
+        <EntryPoint name="Rock Breaker Classes" class="minestar.pitlink.domain.machine.RockBreakerClassImpl"/>
+        <EntryPoint name="Barrier" class="minestar.pitlink.domain.machine.EntryImpl"/>
+        <EntryPoint name="Barrier Category" class="minestar.pitlink.domain.machine.EntryCategoryImpl"/>
+        <EntryPoint name="Barrier Classes" class="minestar.pitlink.domain.machine.EntryClassImpl"/>
+        <EntryPoint name="Load Haul Dump Classes" class="minestar.pitlink.domain.machine.LoadHaulDumpClassImpl"/>
+        <EntryPoint name="Secondary Breakage Unit Classes" class="minestar.pitlink.domain.machine.SecondaryBreakageUnitClassImpl"/>
+        <EntryPoint name="Water Truck" class="minestar.pitlink.domain.machine.WaterTruckImpl"/>
+        <EntryPoint name="Water Classes" class="minestar.pitlink.domain.machine.WaterTruckClassImpl"/>
+        <EntryPoint name="Loading Bay" class="minestar.pitlink.domain.machine.LoadingBayImpl"/>
+        <EntryPoint name="Loading Bay Category" class="minestar.pitlink.domain.machine.LoadingBayCategoryImpl"/>
+        <EntryPoint name="Loading Bay Classes" class="minestar.pitlink.domain.machine.LoadingBayClassImpl"/>
+        <EntryPoint name="External Categories" class="minestar.pitlink.domain.machine.ExternalMachineCategoryImpl"/>
+        <EntryPoint name="Data Bridge" class="minestar.pitlink.domain.machine.DataBridgeImpl"/>
+        <EntryPoint name="Data Bridge Classes" class="minestar.pitlink.domain.machine.DataBridgeClassImpl"/>
+    </DataSet>
+
+    <DataSet name="MessageInformation" description="Standard Messages" schema="model">
+        <EntryPoint name="Message Groups" class="minestar.pitlink.domain.MessageGroup"/>
+        <EntryPoint name="Standard Messages" class="minestar.pitlink.domain.StandardMessage"/>
+    </DataSet>
+
+    <DataSet name="MineLayout" description="Waypoints, Roads, Locations" schema="model">
+        <EntryPoint name="Waypoints" class="minestar.mine.domain.minemodel.WaypointImpl"/>
+        <EntryPoint name="Road Segments" class="minestar.mine.domain.minemodel.RoadSegmentImpl"/>
+        <EntryPoint name="Locations" class="minestar.mine.domain.minemodel.LocationImpl"/>
+        <EntryPoint name="Road Travel Conditions" class="minestar.mine.domain.RoadTravelCondition"/>
+    </DataSet>
+
+    <DataSet name="MaterialInformation" description="Materials, Grades, Mining Blocks" schema="model">
+        <EntryPoint name="Material Groups" class="minestar.machinetracking.domain.MaterialGroupImpl"/>
+        <EntryPoint name="Materials" class="minestar.machinetracking.domain.MaterialImpl"/>
+        <EntryPoint name="Material Mixes" class="minestar.machinetracking.domain.MaterialMix"/>
+        <EntryPoint name="Discrete Grades" class="minestar.production.domain.grade.DiscreteGrade"/>
+        <EntryPoint name="Continuous Grades" class="minestar.production.domain.grade.ContinuousGrade"/>
+        <EntryPoint name="Mining Block Groups" class="minestar.mine.domain.material.GradeBlockGroupImpl"/>
+        <EntryPoint name="Mining Blocks" class="minestar.mine.domain.material.GradeBlockImpl"/>
+        <EntryPoint name="Blends" class="minestar.mine.domain.material.Blend"/>
+    </DataSet>
+
+    <DataSet name="ProductionInformation" description="Activities, Delay Classes, Job Codes, Production Request Templates" schema="model">
+        <EntryPoint name="Activity Groups" class="minestar.production.domain.ActivityGroup"/>
+        <EntryPoint name="Activities" class="minestar.production.domain.Activity"/>
+        <EntryPoint name="Delay Classes" class="minestar.production.domain.DelayClass"/>
+        <EntryPoint name="Delay Groups" class="minestar.production.domain.DelayGroup"/>
+        <EntryPoint name="Job Code Classes" class="minestar.production.domain.JobCodeClass"/>
+        <EntryPoint name="Job Code Groups" class="minestar.production.domain.JobCodeGroup"/>
+        <EntryPoint name="Job Codes" class="minestar.production.domain.JobCode"/>
+        <EntryPoint name="Production Request Templates" class="minestar.assignment.domain.planning.ProductionRequestTemplateImpl"/>
+    </DataSet>
+
+    <DataSet name="AssignmentInformation" description="Scheduled Assignments, Assignment Groups" schema="model">
+        <!-- scheduled assignment exports can't work because of the broken data modelling -->
+        <EntryPoint name="Assignment Groups" class="minestar.assignment.domain.AssGroup"/>
+    </DataSet>
+
+    <DataSet name="UndergroundInformation"
+             description="Map details required for synchronising Fleet for Underground systems"
+             schema="model">
+        <EntryPoint name="Waypoints"
+                    class="minestar.mine.domain.minemodel.WaypointImpl"
+                    filter="IS_ACTIVE = '1'"/>
+        <EntryPoint name="RFRNodes"
+                    class="minestar.machinetracking.domain.sensor.RFRNodeImpl"
+                    filter="IS_ACTIVE = '1'"/>
+        <EntryPoint name="PositionOfInterests"
+                    class="minestar.mine.domain.minemodel.PositionOfInterestImpl"
+                    filter="IS_ACTIVE = '1'"/>
+    </DataSet>
+
+    <DataSet name ="AllModelEntities" description="Everything in the Mine Model" schema="model">
+        <DataSet name="AlarmInformation"/>
+        <DataSet name="Users"/>
+        <DataSet name="PersonnelInformation"/>
+        <DataSet name="MachineInformation"/>
+        <DataSet name="MessageInformation"/>
+        <DataSet name="MineLayout"/>
+        <DataSet name="MaterialInformation"/>
+        <DataSet name="ProductionInformation"/>
+        <DataSet name="AssignmentInformation"/>
+    </DataSet>
+
+</DataSets>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+<!-- $Id: MachineAlarms.xml,v 1.2 2005-02-24 02:04:38 markb Exp $ -->
+
+<circuit>
+    <sources>
+        <!--<source name="machineEvents" class="com.mincom.works.cc.machine.MachineNodeSource">-->
+        <!--</source>-->
+    </sources>
+    <nodes>
+        <node name="payloadStateNode" class="com.mincom.works.cc.machine.node.PayloadStateNode"/>
+    </nodes>
+    <sinks>
+    </sinks>
+    <connections>
+        <!--<connect source="machineEvents" sink="payloadStateNode" />-->
+    </connections>
+</circuit>

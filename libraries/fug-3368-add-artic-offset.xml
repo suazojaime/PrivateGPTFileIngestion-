@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="528637a7-5339-499e-a55a-7113ff598d65" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ARTIC_OFFSET_X to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="ARTIC_OFFSET_X"/>
+            </not>
+        </preConditions>
+        <comment>FUG-3368: AddColumn MACHINE_TYPE.ARTIC_OFFSET_X</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="ARTIC_OFFSET_X" type="DOUBLE" remarks="The offset of the articulation point relative to the right rear. Currently only applicable to LHDs"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="9a6604d3-7d01-4e25-9a23-fee2b1db953f" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ARTIC_OFFSET_Y to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="ARTIC_OFFSET_Y"/>
+            </not>
+        </preConditions>
+        <comment>FUG-3368: AddColumn MACHINE_TYPE.ARTIC_OFFSET_Y</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="ARTIC_OFFSET_Y" type="DOUBLE" remarks="The offset of the articulation point relative to the right rear. Currently only applicable to LHDs"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="cd1736fa-fd28-479e-8018-164249f7a86c" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ARTIC_OFFSET_Z to table MACHINE_TYPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_TYPE"/>
+            <not>
+                <columnExists tableName="MACHINE_TYPE" columnName="ARTIC_OFFSET_Z"/>
+            </not>
+        </preConditions>
+        <comment>FUG-3368: AddColumn MACHINE_TYPE.ARTIC_OFFSET_Z</comment>
+        <addColumn tableName="MACHINE_TYPE">
+            <column name="ARTIC_OFFSET_Z" type="DOUBLE" remarks="The offset of the articulation point relative to the right rear. Currently only applicable to LHDs"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

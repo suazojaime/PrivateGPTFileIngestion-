@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet id="cf4929d4-1b13-4741-b819-675aed0fe9fb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_HIGH_PERFORMANCE_ALLOWED to table gis_region as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_region"/>
+            <not>
+                <columnExists tableName="gis_region" columnName="IS_HIGH_PERFORMANCE_ALLOWED"/>
+            </not>
+        </preConditions>
+        <comment>MO-12796 AddColumn IS_HIGH_PERFORMANCE_ALLOWED to table gis_region</comment>
+        <addColumn tableName="gis_region">
+            <column name="IS_HIGH_PERFORMANCE_ALLOWED" type="BOOL"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

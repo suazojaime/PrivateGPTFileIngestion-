@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b8e48bac-ba0e-4878-9c1a-a3da6c303fca" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for UG_LOC_WARNING to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="UG_LOC_WARNING"/>
+            </not>
+        </preConditions>
+        <comment>FUG-458: AddColumn MACHINE_IN_PIT.UG_LOC_WARNING</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="UG_LOC_WARNING" type="VARCHAR(255)" remarks="The last localization warning sent by the LHD."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE_IN_PIT" columnName="UG_LOC_WARNING"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

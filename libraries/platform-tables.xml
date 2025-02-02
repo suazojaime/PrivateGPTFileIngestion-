@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="46036bca-3e0f-415e-aa15-d9db2c633fab" author="MineStar" context="Platform/Platform_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for TEMP as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TEMP"/>
+            </not>
+        </preConditions>
+        <comment>Base 4.1 CreateTable TEMP</comment>
+        <createTable tablespace="MW_ECF" tableName="TEMP">
+            <column name="TEMP_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="TEMP_OID" constraintName="TEMP_PK" tablespace="MW_IDXECF" tableName="TEMP"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

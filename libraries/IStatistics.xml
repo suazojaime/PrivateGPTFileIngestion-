@@ -1,0 +1,142 @@
+<?xml version="1.0" standalone="no"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<statistics>
+
+    <stat name="Idle">
+        <count/>
+        <average duration="60000" reset="3600000"/>
+        <max duration="60000" reset="3600000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="ActionFinished">
+        <count/>
+        <average duration="60000" reset="3600000"/>
+        <max duration="60000" reset="3600000"/>
+    </stat>
+
+    <stat name="ActionStarted">
+        <count/>
+        <average duration="60000" reset="3600000"/>
+    </stat>
+
+    <stat name="ActionQueued">
+        <count/>
+        <average duration="60000" reset="3600000"/>
+    </stat>
+
+    <stat name="assignments">
+        <count/>
+        <average duration="60000" reset="900000"/>
+        <max duration="60000" reset="3600000"/>
+    </stat>
+
+
+
+    <!-- ================================ -->
+    <!-- One <stat> for each known action -->
+    <!-- ================================ -->
+    <stat name="EndService">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="RequestAssignment">
+        <count/>
+        <average duration="900000" reset="3600000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="StartService">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="Waypoint">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="Arrived">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="OffCourse">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="RcmInitialisation">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="RcmUpdate">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="AssignmentModelReserveDssModel">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="AssignmentModelReleaseDssModel">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+    <stat name="AssignmentModelComputeProductionPlan">
+        <count/>
+        <average duration="60000"/>
+        <substat name="ms">
+            <average reset="3600000"/>
+            <max reset="3600000"/>
+        </substat>
+    </stat>
+
+</statistics>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="28b6ea39-b60f-4bd4-b730-47d6c27e61b9" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for ORE_PASS_CHUTE_FK of table ORE_PASS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_CHUTE_FK"/>
+        </preConditions>
+        <comment>FUG-268: DropForeignKeyConstraint ORE_PASS_CHUTE_FK from ORE_PASS (CHUTE)</comment>
+        <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_CHUTE_FK"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="4431ea95-cb6e-4e71-9bc2-b0aa6b0e6ec7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for CHUTE_ASSIGN_CAPACITY_LIMIT of table MACHINE as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE" columnName="CHUTE_ASSIGN_CAPACITY_LIMIT"/>
+        </preConditions>
+        <comment>FUG-268: DropColumn MACHINE.CHUTE_ASSIGN_CAPACITY_LIMIT</comment>
+        <dropColumn columnName="CHUTE_ASSIGN_CAPACITY_LIMIT" tableName="MACHINE"/>
+        <rollback>
+            <addColumn tableName="MACHINE">
+                <column name="CHUTE_ASSIGN_CAPACITY_LIMIT" type="DOUBLE" remarks="The minimum level that the chute should hold before a truck can be assigned to it."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="e90c6af8-1798-4c78-b26b-e27dd83b626a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for CHUTE_TYPE of table MACHINE as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE" columnName="CHUTE_TYPE"/>
+        </preConditions>
+        <comment>FUG-268: DropColumn MACHINE.CHUTE_TYPE</comment>
+        <dropColumn columnName="CHUTE_TYPE" tableName="MACHINE"/>
+        <rollback>
+            <addColumn tableName="MACHINE">
+                <column name="CHUTE_TYPE" type="VARCHAR(255)" remarks="The type of the chute"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="0cded6ec-b41c-4e0d-8e7e-267f2d421288" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for CHUTE_ASSIGN_PRIORITY of table MACHINE as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE" columnName="CHUTE_ASSIGN_PRIORITY"/>
+        </preConditions>
+        <comment>FUG-268: DropColumn MACHINE.CHUTE_ASSIGN_PRIORITY</comment>
+        <dropColumn columnName="CHUTE_ASSIGN_PRIORITY" tableName="MACHINE"/>
+        <rollback>
+            <addColumn tableName="MACHINE">
+                <column name="CHUTE_ASSIGN_PRIORITY" type="INT" remarks="The priority order of the chute when assigning trucks to take from it."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="09cc043d-31d5-483c-a1fb-e49eaa27a130" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for UG_CHUTE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="UG_CHUTE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: CreateTable UG_CHUTE</comment>
+        <createTable tablespace="MW_ENT" remarks="Represents a chute in the haulage level of an underground mine." tableName="UG_CHUTE">
+            <column name="CHUTE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TYPE" type="VARCHAR(255)" remarks="The type of the chute"/>
+            <column name="ASSIGN_PRIORITY" type="INT" remarks="The priority order of the chute when assigning trucks to take from it"/>
+            <column name="ASSIGN_CAPACITY_LIMIT" type="DOUBLE" remarks="The minimum level that the chute should hold before a truck can be assigned to it"/>
+        </createTable>
+        <addPrimaryKey columnNames="CHUTE_OID" constraintName="UG_CHUTE_PK" tablespace="MW_IDXENT" tableName="UG_CHUTE"/>
+        <rollback>
+            <dropTable tableName="UG_CHUTE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="13e4710d-187e-4573-9a7d-67ede0f2fe5c" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for UG_CHUTE_CHUTE_OID_FK to table UG_CHUTE as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="UG_CHUTE"/>
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="UG_CHUTE" foreignKeyName="UG_CHUTE_CHUTE_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddForeignKeyConstraint UG_CHUTE_CHUTE_OID_FK to UG_CHUTE (CHUTE_OID)</comment>
+        <sql>DELETE FROM UG_CHUTE WHERE CHUTE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = UG_CHUTE.CHUTE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="UG_CHUTE" baseColumnNames="CHUTE_OID" constraintName="UG_CHUTE_CHUTE_OID_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="UG_CHUTE" constraintName="UG_CHUTE_CHUTE_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="5ce20bc9-13ac-4d97-ae65-fa64e5198e4e" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ORE_PASS_CHUTE_FK to table ORE_PASS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <tableExists tableName="UG_CHUTE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_CHUTE_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-268: AddForeignKeyConstraint ORE_PASS_CHUTE_FK to ORE_PASS (CHUTE)</comment>
+        <sql>UPDATE ORE_PASS SET CHUTE = NULL WHERE CHUTE IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM UG_CHUTE WHERE UG_CHUTE.CHUTE_OID = ORE_PASS.CHUTE)</sql>
+        <addForeignKeyConstraint baseTableName="ORE_PASS" baseColumnNames="CHUTE" constraintName="ORE_PASS_CHUTE_FK" referencedTableName="UG_CHUTE" referencedColumnNames="CHUTE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_CHUTE_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

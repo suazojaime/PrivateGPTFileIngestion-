@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="9932e8e3-67f0-43a2-9f94-29a1e3e9670a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for HEALTH_EVENT_UNIQ of table HEALTH_EVENT as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="HEALTH_EVENT_UNIQ" tableName="HEALTH_EVENT"/>
+        </preConditions>
+        <comment>HLT-965: DropIndex HEALTH_EVENT_UNIQ from HEALTH_EVENT (MACHINE_OID,NAME,MID,SOURCE_TIMESTAMP_UTC)</comment>
+        <dropIndex indexName="HEALTH_EVENT_UNIQ" tableName="HEALTH_EVENT"/>
+        <rollback>
+            <createIndex unique="true" tablespace="MW_IDXENT" tableName="HEALTH_EVENT" indexName="HEALTH_EVENT_UNIQ">
+                <column name="MACHINE_OID"/>
+                <column name="NAME"/>
+                <column name="MID"/>
+                <column name="SOURCE_TIMESTAMP_UTC"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="c9b5c16c-9ad9-49f9-b141-8e655514623e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for HEALTH_EVENT_UNIQ to table HEALTH_EVENT as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HEALTH_EVENT"/>
+            <not>
+                <indexExists indexName="HEALTH_EVENT_UNIQ" tableName="HEALTH_EVENT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1947: CreateIndex HEALTH_EVENT_UNIQ on HEALTH_EVENT (MACHINE_OID,NAME,MID,SOURCE_TIMESTAMP_UTC,HELEVEL)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="HEALTH_EVENT" indexName="HEALTH_EVENT_UNIQ">
+            <column name="MACHINE_OID"/>
+            <column name="NAME"/>
+            <column name="MID"/>
+            <column name="SOURCE_TIMESTAMP_UTC"/>
+            <column name="HELEVEL"/>
+        </createIndex>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+
+</databaseChangeLog>

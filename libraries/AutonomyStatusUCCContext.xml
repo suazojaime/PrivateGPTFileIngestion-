@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="siteWideStopCacheImpl" class="minestar.autonomy.uifacade.status.collection.SiteWideStopCache"
+          lazy-init="true"  parent="cacheParent">
+        <property name="laneUsageService" ref="laneUsageServiceImpl"/>
+        <property name="userService" ref="userServiceImpl"/>
+    </bean>
+
+    <bean id="speedDerateCacheImpl" class="minestar.autonomy.uifacade.status.collection.SpeedDerateCache"
+          lazy-init="true" parent="cacheParent">
+        <property name="speedManagementService" ref="speedManagementServiceImpl"/>
+    </bean>
+
+    <bean id="autonomousMachineSpeedLimitingEventCacheImpl" class="minestar.autonomy.uifacade.status.collection.AutonomousMachineSpeedLimitingEventCache"
+          lazy-init="true" parent="cacheParent">
+    </bean>
+
+    <bean id="followingVehicleEventCacheImpl" class="minestar.autonomy.uifacade.status.collection.FollowingVehicleEventCache"
+          lazy-init="true" parent="cacheParent">
+    </bean>
+
+    <bean id="machineStoppedByObstacleCache" class="minestar.autonomy.uifacade.status.collection.MachineStoppedByObstacleCache"
+          lazy-init="true" parent="cacheParent">
+        <property name="notification" ref="notification"/>
+    </bean>
+
+    <bean id="truckBodyInformationCache" class="minestar.autonomy.uifacade.status.collection.TruckBodyInformationCache"
+          lazy-init="true" parent="cacheParent">
+    </bean>
+
+    <bean id="machineHealthEventCache" class="minestar.autonomy.uifacade.status.collection.MachineHealthEventCache"
+          lazy-init="true" parent="cacheParent">
+    </bean>
+
+    <bean id="stoppedMachineCacheImpl" class="minestar.autonomy.uifacade.status.collection.StoppedMachineCache"
+          lazy-init="true"  parent="cacheParent">
+        <property name="hazardLayoutService" ref="hazardLayoutServiceImpl"/>
+    </bean>
+    
+    <bean id="assignEventsCacheImpl" class="minestar.assignment.uifacade.status.collection.AssignEventCache"
+          lazy-init="true"  parent="cacheParent">
+    </bean>
+
+    <bean id="diagnosticMessageCacheImpl" class="minestar.autonomy.uifacade.status.collection.DiagnosticMessageCache"
+          lazy-init="true"  parent="cacheParent">
+        <property name="machineDiagnosticsService" ref="machineDiagnosticsServiceImpl" />
+    </bean>
+
+    <bean id="machineSpeedLimitedDoFactoryImpl" class="minestar.autonomy.uifacade.status.collection.MachineSpeedLimitedDoFactory"
+          lazy-init="true">
+    </bean>
+
+    <bean id="autonomousTruckStatusCacheImpl" class="minestar.autonomy.uifacade.status.collection.AutonomousTruckStatusCache"
+          lazy-init="true" depends-on="registerMineFleetService">
+        <property name="delayManagementService" ref="delayManagementServiceImpl"/>
+        <property name="pitModelService" ref="pitModelServiceImpl" />
+        <property name="laneUsageService" ref="laneUsageServiceImpl"/>
+        <property name="machineSpeedLimitedDoFactory" ref="machineSpeedLimitedDoFactoryImpl"/>
+        <property name="autonomousMachineSpeedLimitingEventCache" ref="autonomousMachineSpeedLimitingEventCacheImpl"/>
+        <property name="autonomousStateService" ref="autonomousStateServiceImpl"/>
+        <property name="machineHealthEventCache" ref="machineHealthEventCache" />
+        <property name="siteWideStopCache" ref="siteWideStopCacheImpl" />
+        <property name="mineFleetService" ref="mineFleetServiceImpl" />
+        <property name="autStopTestService" ref="autStopTestServiceImpl" />
+        <property name="clearObstacleDetectionService" ref="clearObstacleDetectionServiceImpl" />
+        <property name="notification" ref="notification"/>
+        <property name="machineIsolationService" ref="machineIsolationServiceImpl"/>
+        <property name="machineModeService" ref="machineModeServiceImpl"/>
+        <property name="autonomyStatus2UCC" ref="autonomyStatus2UCCImpl"/>
+        <property name="truckBodyInformationCache" ref="truckBodyInformationCache"/>
+        <property name="machineStoppedByObstacleCache" ref="machineStoppedByObstacleCache"/>
+    </bean>
+
+    <bean id="uiCacheManagerImpl" class="minestar.uifacade.common.UICacheManagerImpl"
+          lazy-init="true" init-method="startListening" depends-on="registerMineFleetService">
+        <property name="siteWideStopCache" ref="siteWideStopCacheImpl"/>
+        <property name="speedDerateCache" ref="speedDerateCacheImpl"/>
+        <property name="autonomousTruckStatusCache" ref="autonomousTruckStatusCacheImpl"/>
+        <property name="autonomousMachineSpeedLimitingEventCache" ref="autonomousMachineSpeedLimitingEventCacheImpl"/>
+        <property name="FollowingVehicleEventCache" ref="followingVehicleEventCacheImpl"/>
+        <property name="assignEventCache" ref="assignEventsCacheImpl" />
+        <property name="diagnosticMessageCache" ref="diagnosticMessageCacheImpl" />
+        <property name="mineFleetService" ref="mineFleetServiceImpl" />
+        <property name="onboardHardwareService" ref="onboardHardwareServiceImpl"/>
+        <property name="notification" ref="notification"/>
+        <property name="truckBodyInformationCache" ref="truckBodyInformationCache"/>
+        <property name="machineStoppedByObstacleCache" ref="machineStoppedByObstacleCache"/>
+        <property name="autMsgMaker" ref="autonomousStateUpdateDtoMsgMakerImpl"/>
+    </bean>
+
+    <bean id="autonomyStatus2UCCImpl" class="minestar.autonomy.uifacade.status.impl.AutonomyStatus2UCCImpl"
+          init-method="init"
+          destroy-method="destroy"
+          lazy-init="true">
+        <property name="notification" ref="notification"/>
+        <property name="machineSpeedLimitedDoFactory" ref="machineSpeedLimitedDoFactoryImpl"/>
+        <property name="uiCacheManager" ref="uiCacheManagerImpl" />
+        <property name="autonomousStateService" ref="autonomousStateServiceImpl"/>
+        <property name="machineStartupService" ref="machineStartupServiceImpl"/>
+        <property name="vimsSensorStatusService" ref="vimsSensorStatusServiceImpl"/>
+        <property name="laneTravelService" ref="laneTravelServiceImpl"/>
+        <property name="laneUsageService" ref="laneUsageServiceImpl"/>
+        <property name="pitModelService" ref="pitModelServiceImpl"/>
+        <property name="userService" ref="userServiceImpl"/>
+        <property name="hazardLayoutService" ref="hazardLayoutServiceImpl"/>
+        <property name="AStopTestService" ref="autStopTestServiceImpl"/>
+        <property name="machineIsolationService" ref="machineIsolationServiceImpl"/>
+        <property name="machineFuelInformationService" ref="machineFuelServiceImpl"/>
+        <property name="machineModeService" ref="machineModeServiceImpl"/>
+        <property name="mineFleetService" ref="mineFleetServiceImpl"/>
+        <property name="modeReservationService" ref="modeReservationServiceImpl"/>
+        <property name="modeMessageService" ref="modeMessageServiceImpl"/>
+        <property name="engineShutdownService" ref="engineShutdownServiceImpl"/>
+        <property name="truckSnapshotService" ref="truckSnapshotServiceImpl"/>
+        <property name="fireSuppressionService" ref="fireSuppressionServiceImpl"/>
+        <property name="delayManagementService" ref="delayManagementServiceImpl" />
+        <property name="assignmentRequestService" ref="assignmentRequestServiceImpl"/>
+        <property name="definitionService" ref="definitionServiceImpl"/>
+        <property name="securityService" ref="securityServiceImpl"/>
+        <property name="lockController" ref="lockControllerImpl" />
+        <property name="planAssociationService" ref="planAssociationServiceImpl" />
+        <property name="incidentManagementService" ref="incidentManagementServiceImpl"/>
+        <property name="unobservedCellsService" ref="unobservedCellsServiceImpl"/>
+        <property name="obstacleService" ref="obstacleServiceImpl"/>
+        <property name="auditLogger" ref="auditLogger"/>
+    </bean>
+
+    <bean id="mineStarSecurityContextUtilHelper" class="minestar.platform.domain.security.MineStarSecurityContextUtilHelper" />
+
+    <bean id="registerAutonomyStatus2UCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Autonomy Status UCC"/>
+        <constructor-arg value="minestar.autonomy.uifacade.status2.AutonomyStatus2UCCFacade"/>
+        <constructor-arg ref="autonomyStatus2UCCImpl"/>
+    </bean>
+
+
+    <bean id="autonomyStatus2UCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="autonomyStatus2UCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="autonomyStatus2UCC"/>
+        <property name="service" ref="autonomyStatus2UCCProxy"/>
+        <property name="serviceInterface" value="minestar.autonomy.uifacade.status2.AutonomyStatus2UCCFacade"/>
+    </bean>
+
+
+    <bean id="machineModeChangeUCCFacadeImpl" class="minestar.autonomy.uifacade.mode.MachineModeChangeUCCFacadeImpl"
+          lazy-init="true">
+        <property name="coreMachineFinder" ref="mineFleetServiceImpl"/>
+        <property name="modeReservationService" ref="modeReservationServiceImpl"/>
+        <property name="modeMessageService" ref="modeMessageServiceImpl"/>
+        <property name="userUCCFacade" ref="userUCCImpl"/>
+    </bean>
+
+    <bean id="machineModeChangeUCCFacadeImplProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="machineModeChangeUCCFacadeImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="machineModeChangeUCC"/>
+        <property name="service" ref="machineModeChangeUCCFacadeImplProxy"/>
+        <property name="serviceInterface" value="minestar.autonomy.uifacade.mode.MachineModeChangeUCCFacade"/>
+    </bean>
+
+</beans>

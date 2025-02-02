@@ -1,0 +1,28 @@
+<?xml version="1.0"  encoding="ISO-8859-1"?>
+<!--<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">-->
+
+<!--
+The jetty specific WAR config.
+
+Define the application explicity, rather than via the war file name.
+This allows build/version numbers to appear in the filename.
+-->
+
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+  <!--<Call class="org.eclipse.jetty.util.log.Log" name="debug"><Arg>executing jetty-web.xml</Arg></Call>-->
+  <Set name="contextPath">/minestar</Set>
+  <!-- 
+  	This is so that IE will download the .air file as a .air file rather than .zip file
+  -->
+  <Get name="MimeTypes">
+  	<Call name="addMimeMapping">
+  		<Arg>air</Arg>
+  		<Arg>application/vnd.adobe.air-application-installer-package+zip</Arg>
+  	</Call>
+  </Get>
+  <Get name="sessionHandler">
+    <Set name="secureRequestOnly">true</Set>
+    <Set name="httpOnly">true</Set>
+  </Get>
+
+</Configure>

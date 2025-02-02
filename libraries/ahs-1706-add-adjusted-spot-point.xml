@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="eb780749-ffa2-40d5-a8d3-d18de2b2c4f5" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_X of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_X"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_X</comment>
+        <dropColumn columnName="PLANNED_X" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="b7bf0fb8-1892-4d7f-a1ea-7ee576741398" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_Y of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_Y"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_Y</comment>
+        <dropColumn columnName="PLANNED_Y" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="8846d706-9dcb-414a-a1fd-9ae138d68152" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_Z of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_Z"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_Z</comment>
+        <dropColumn columnName="PLANNED_Z" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="1445c796-2a84-419c-97e4-fdb515b76268" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_HEADING of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_HEADING"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_HEADING</comment>
+        <dropColumn columnName="PLANNED_HEADING" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="002446f4-cff9-4048-a198-f992e4fae762" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_POSITION_TOL of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_POSITION_TOL"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_POSITION_TOL</comment>
+        <dropColumn columnName="PLANNED_POSITION_TOL" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="c53ac0b4-3de8-4924-a589-97273051e67d" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_HEADING_TOL of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_HEADING_TOL"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_HEADING_TOL</comment>
+        <dropColumn columnName="PLANNED_HEADING_TOL" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="b70a2990-66a0-4d37-9c0d-df6786ccd136" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_REF_POINT of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_REF_POINT"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_REF_POINT</comment>
+        <dropColumn columnName="PLANNED_REF_POINT" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="8ff31448-da34-464f-adf9-7e16e9723611" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_ENTER_FWD of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_ENTER_FWD"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_ENTER_FWD</comment>
+        <dropColumn columnName="PLANNED_ENTER_FWD" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="bcaa4543-1147-4fe9-9956-c0f1b5bd041e" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored DropColumn for PLANNED_EXIT_FWD of table SPOT_POINT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="PLANNED_EXIT_FWD"/>
+        </preConditions>
+        <comment>AHS-1706: DropColumn SPOT_POINT.PLANNED_EXIT_FWD</comment>
+        <dropColumn columnName="PLANNED_EXIT_FWD" tableName="SPOT_POINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="dd756cef-4927-4b22-aa7e-091622a0792b" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_X to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_X"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_X</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_X" type="DOUBLE" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="d3b9c470-2835-40b0-96ae-50236e4401ed" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_Y to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_Y"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_Y</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_Y" type="DOUBLE" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="6cc039ac-bc64-4f24-987b-10c5a0dfb974" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_Z to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_Z"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_Z</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_Z" type="DOUBLE" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="bbce055b-235b-4028-8647-e08d575ef0dc" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_HEADING to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_HEADING"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_HEADING</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_HEADING" type="DOUBLE" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3fe9b882-92d8-4080-90c7-1446d4bf88dc" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_POSITION_TOL to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_POSITION_TOL"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_POSITION_TOL</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_POSITION_TOL" type="DOUBLE" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="863349d8-12f9-4beb-a92c-49f37033849e" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_HEADING_TOL to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_HEADING_TOL"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_HEADING_TOL</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_HEADING_TOL" type="DOUBLE" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="45e9f7cd-729c-4dbe-a542-9cedc991db42" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_REF_POINT to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_REF_POINT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_REF_POINT</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_REF_POINT" type="INT" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="169db3a5-160e-417c-a22a-9f8e26712da7" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_ENTER_FWD to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_ENTER_FWD"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_ENTER_FWD</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_ENTER_FWD" type="BOOLEAN" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="33c8e945-c471-4619-9003-b624d2021684" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ADJUSTED_EXIT_FWD to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ADJUSTED_EXIT_FWD"/>
+            </not>
+        </preConditions>
+        <comment>AHS-1706: AddColumn SPOT_POINT.ADJUSTED_EXIT_FWD</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ADJUSTED_EXIT_FWD" type="BOOLEAN" remarks="The &quot;adjusted&quot; staging point for the spot position.  This should fit within tolerances of the &quot;designed&quot; staging point."/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

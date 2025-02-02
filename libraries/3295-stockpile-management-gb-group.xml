@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="838fad6a-79c7-4928-9992-20d695a6237d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for WAYPOINT_OID to table GRADEBLOCK_GROUP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK_GROUP"/>
+            <not>
+                <columnExists tableName="GRADEBLOCK_GROUP" columnName="WAYPOINT_OID"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddColumn GRADEBLOCK_GROUP.WAYPOINT_OID</comment>
+        <addColumn tableName="GRADEBLOCK_GROUP">
+            <column name="WAYPOINT_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="100396b9-c8f3-496d-a058-34fb2d6668d8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DESTINATION_OID to table GRADEBLOCK_GROUP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK_GROUP"/>
+            <not>
+                <columnExists tableName="GRADEBLOCK_GROUP" columnName="DESTINATION_OID"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddColumn GRADEBLOCK_GROUP.DESTINATION_OID</comment>
+        <addColumn tableName="GRADEBLOCK_GROUP">
+            <column name="DESTINATION_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="4a8963a9-4261-4ef6-a560-999345c99eaf" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for GRADEBLOCK_GROUP_WAYPOINT_O_FK to table GRADEBLOCK_GROUP as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK_GROUP"/>
+            <tableExists tableName="VIRTUALBEACON"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="GRADEBLOCK_GROUP" foreignKeyName="GRADEBLOCK_GROUP_WAYPOINT_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddForeignKeyConstraint GRADEBLOCK_GROUP_WAYPOINT_O_FK to GRADEBLOCK_GROUP (WAYPOINT_OID)</comment>
+        <sql>UPDATE GRADEBLOCK_GROUP SET WAYPOINT_OID = NULL WHERE WAYPOINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM VIRTUALBEACON WHERE VIRTUALBEACON.VIRTUALBEACON_OID = GRADEBLOCK_GROUP.WAYPOINT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="GRADEBLOCK_GROUP" baseColumnNames="WAYPOINT_OID" constraintName="GRADEBLOCK_GROUP_WAYPOINT_O_FK" referencedTableName="VIRTUALBEACON" referencedColumnNames="VIRTUALBEACON_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="GRADEBLOCK_GROUP" constraintName="GRADEBLOCK_GROUP_WAYPOINT_O_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="6590085d-bb8a-425f-b2ba-3655134221ef" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for GRADEBLOCK_GROUP_DESTINATIO_FK to table GRADEBLOCK_GROUP as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK_GROUP"/>
+            <tableExists tableName="LOCATION"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="GRADEBLOCK_GROUP" foreignKeyName="GRADEBLOCK_GROUP_DESTINATIO_FK"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddForeignKeyConstraint GRADEBLOCK_GROUP_DESTINATIO_FK to GRADEBLOCK_GROUP (DESTINATION_OID)</comment>
+        <sql>UPDATE GRADEBLOCK_GROUP SET DESTINATION_OID = NULL WHERE DESTINATION_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LOCATION WHERE LOCATION.LOCATION_OID = GRADEBLOCK_GROUP.DESTINATION_OID)</sql>
+        <addForeignKeyConstraint baseTableName="GRADEBLOCK_GROUP" baseColumnNames="DESTINATION_OID" constraintName="GRADEBLOCK_GROUP_DESTINATIO_FK" referencedTableName="LOCATION" referencedColumnNames="LOCATION_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="GRADEBLOCK_GROUP" constraintName="GRADEBLOCK_GROUP_DESTINATIO_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="4670aa8c-8b1f-43ae-b682-78ff8515447b" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for SENSOR as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SENSOR"/>
+            </not>
+        </preConditions>
+        <comment>FUG-387: CreateTable SENSOR</comment>
+        <createTable tablespace="MW_ENT" remarks="Stores the details of a sensor" tableName="SENSOR">
+            <column name="SENSOR_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENSOR_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)" remarks="The unique identifier of the sensor component."/>
+            <column name="IS_ACTIVE" type="BOOLEAN" remarks="Whether the sensor is archived or active."/>
+            <column name="MODEL" type="VARCHAR(255)" remarks="The manufacturer's model identifier of the sensor component."/>
+            <column name="POSITION_X" type="DOUBLE"/>
+            <column name="POSITION_Y" type="DOUBLE"/>
+            <column name="POSITION_Z" type="DOUBLE"/>
+            <column name="MACHINE" type="BIGINT"/>
+            <column name="RELATIVE_POSITION" type="VARCHAR(255)"/>
+            <column name="COMMS_URL" type="VARCHAR(255)"/>
+            <column name="NODE_ID" type="BIGINT" remarks="The MAC address of the RFR node."/>
+        </createTable>
+        <addPrimaryKey columnNames="SENSOR_OID" constraintName="SENSOR_PK" tablespace="MW_IDXENT" tableName="SENSOR"/>
+        <rollback>
+            <dropTable tableName="SENSOR"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="9bb528f8-5e4c-4983-84af-5adbbd73f51f" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SENSOR_MACHINE_FK to table SENSOR as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SENSOR"/>
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SENSOR" foreignKeyName="SENSOR_MACHINE_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-387: AddForeignKeyConstraint SENSOR_MACHINE_FK to SENSOR (MACHINE)</comment>
+        <sql>UPDATE SENSOR SET MACHINE = NULL WHERE MACHINE IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = SENSOR.MACHINE)</sql>
+        <addForeignKeyConstraint baseTableName="SENSOR" baseColumnNames="MACHINE" constraintName="SENSOR_MACHINE_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SENSOR" constraintName="SENSOR_MACHINE_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="e02078a5-2916-407d-8eb7-4ba2c9043c82" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for RFRN as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="RFRN"/>
+        </preConditions>
+        <comment>FUG-387: DropTable RFRN</comment>
+        <dropTable tableName="RFRN"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="6fce3ef6-467d-4214-a7ac-342e52977fb6" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for UG_MACHINE_COMPONENT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="UG_MACHINE_COMPONENT"/>
+        </preConditions>
+        <comment>FUG-387: DropTable UG_MACHINE_COMPONENT</comment>
+        <dropTable tableName="UG_MACHINE_COMPONENT"/>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

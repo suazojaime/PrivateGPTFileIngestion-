@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.mine.domain.underground.polytope.UndergroundMachinePolytopeImpl"
+           proxy="minestar.mine.domain.underground.polytope.UndergroundMachinePolytope"
+           table="UG_POLYTOPE"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">UNDERGROUNDMACHINEPOLYTOPE</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">Machine outline as SVG.</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model" />
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator" />
+        </id>
+
+        <many-to-one name="machineClassReference"
+                     class="minestar.pitlink.domain.machine.MachineClassReference"
+                     column="MACHINE_CLASS"
+                     unique="true">
+            <meta attribute="description">
+                A reference to the machine class that the polytope represents.
+            </meta>
+        </many-to-one>
+
+        <property name="serverFilename"
+                  type="java.lang.String"
+                  column="SERVER_FILENAME"
+                  length="255"
+                  not-null="true">
+            <meta attribute="description">The filename used to store the data on the server</meta>
+        </property>
+
+        <property name="originalFilename"
+                  type="java.lang.String"
+                  column="ORIGINAL_FILENAME"
+                  length="255"
+                  not-null="false">
+            <meta attribute="description">The filename of original DXF that provided the contents to generate the SVG</meta>
+        </property>
+
+        <property name="timestamp"
+                  type="java.util.Date"
+                  column="TIMESTAMP"
+                  not-null="true">
+            <meta attribute="description">The time the polytope was created</meta>
+        </property>
+
+        <property name="svg"
+                  type="byte[]"
+                  column="SVG"
+                  not-null="true">
+            <meta attribute="description">The SVG representation of the polytope</meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

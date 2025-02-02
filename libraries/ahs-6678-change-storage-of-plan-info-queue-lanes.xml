@@ -1,0 +1,17 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="fdfbcc75-8e65-4ae8-9995-e4f70b855262" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for PLAN_LANE_INFO_QUEUE_PK to table PLAN_LANE_INFO_QUEUE as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <not>
+                <primaryKeyExists primaryKeyName="PLAN_LANE_INFO_QUEUE_PK" tableName="PLAN_LANE_INFO_QUEUE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6678: AddPrimaryKey PLAN_LANE_INFO_QUEUE_PK to PLAN_LANE_INFO_QUEUE (PLAN_OID,GROUP_NR,LANE_NR,LANE_OID)</comment>
+        <addPrimaryKey columnNames="PLAN_OID,GROUP_NR,LANE_NR,LANE_OID" constraintName="PLAN_LANE_INFO_QUEUE_PK" tablespace="MW_IDXENT" tableName="PLAN_LANE_INFO_QUEUE"/>
+        <rollback>
+            <dropPrimaryKey tableName="PLAN_LANE_INFO_QUEUE" constraintName="PLAN_LANE_INFO_QUEUE_PK"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

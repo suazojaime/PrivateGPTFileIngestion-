@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Shovel Classes">
+
+    <machineClass xsi:type="shovelClassImpl">
+        <name>LiebherrR996</name>
+        <manufacturer>Liebherr</manufacturer>
+        <description>Liebherr R996 Series Shovel</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="13.00" unit="cubic metres"/>
+        <refuelLevel magnitude="1.30" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.65" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="24.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000009" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.00015" unit="cubic metres per second"/>
+        <maximumSpeed magnitude="0.611111" unit="metres per second"/>
+        <dipperLoadCapacity magnitude="34.00" unit="cubic metres"/>
+        <reachRadius magnitude="0.02" unit="metre"/>
+    </machineClass>
+
+</machineClassExport>
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1bbf3d8b-0cc2-4f0a-9646-77ff1c2380a5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for PROD_PLAN_TASK_JOB_OID of table PROD_PLAN_TASK as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="PROD_PLAN_TASK_JOB_OID" tableName="PROD_PLAN_TASK"/>
+        </preConditions>
+        <comment>MO-7479: DropIndex PROD_PLAN_TASK_JOB_OID from PROD_PLAN_TASK (JOB_OID)</comment>
+        <dropIndex indexName="PROD_PLAN_TASK_JOB_OID" tableName="PROD_PLAN_TASK"/>
+        <rollback>
+            <createIndex unique="false" tableName="PROD_PLAN_TASK" indexName="PROD_PLAN_TASK_JOB_OID">
+                <column name="JOB_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+    <changeSet id="fb099150-6786-430b-9d66-ce929cda42d7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for PROD_PLAN_TASK_PLAN_OID of table PROD_PLAN_TASK as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="PROD_PLAN_TASK_PLAN_OID" tableName="PROD_PLAN_TASK"/>
+        </preConditions>
+        <comment>MO-7479: DropIndex PROD_PLAN_TASK_PLAN_OID from PROD_PLAN_TASK (PLAN_OID)</comment>
+        <dropIndex indexName="PROD_PLAN_TASK_PLAN_OID" tableName="PROD_PLAN_TASK"/>
+        <rollback>
+            <createIndex unique="false" tableName="PROD_PLAN_TASK" indexName="PROD_PLAN_TASK_PLAN_OID">
+                <column name="PLAN_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+    <changeSet id="09efab44-6e8d-45ce-907b-ad4a138f8b84" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for PLAN_OID of table PROD_PLAN_TASK as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-7479: DropColumn PROD_PLAN_TASK.PLAN_OID</comment>
+        <dropColumn columnName="PLAN_OID" tableName="PROD_PLAN_TASK"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_TASK">
+                <column name="PLAN_OID" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="41d26025-589c-4f52-99e0-fa15426655c6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for JOB_OID of table PROD_PLAN_TASK as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK" columnName="JOB_OID"/>
+        </preConditions>
+        <comment>MO-7479: DropColumn PROD_PLAN_TASK.JOB_OID</comment>
+        <dropColumn columnName="JOB_OID" tableName="PROD_PLAN_TASK"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_TASK">
+                <column name="JOB_OID" type="BIGINT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

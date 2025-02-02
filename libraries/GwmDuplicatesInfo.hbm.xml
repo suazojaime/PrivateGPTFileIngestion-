@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class
+            name="minestar.pitlink.domain.duplicates.GwmDuplicatesInfoImpl"
+            table="GWMDUPLICATES"
+            dynamic-update="true">
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+
+        <meta attribute="description">GWM Duplicate data</meta>
+        <id
+                name="id"
+                type="java.lang.Long"
+                column="ID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property
+                name="machineName"
+                type="java.lang.String"
+                column="MACHINE_NAME"
+                length="15"
+                >
+            <meta attribute="description">Machine Name</meta>
+        </property>
+
+        <property
+                name="totalMessages"
+                column="TOTAL_MESSAGES"
+                length="50"
+                >
+            <meta attribute="description">Total number of GW Messages</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+
+
+        </property>
+
+        <property
+                name="numOfDuplicateMessages"
+                column="NUM_OF_DUPLICATE_MESSAGES"
+                length="50"
+                >
+            <meta attribute="description">Number of duplicate GW messages</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property
+                name="shiftStartTime"
+                type="TimestampType"
+                column="SHIFT_START_TIME_UTC"
+                length="50"
+                >
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">Shift Start utc Time</meta>
+            <meta attribute="description">Shift Start Time</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+                name="shiftEndTime"
+                type="TimestampType"
+                column="SHIFT_END_TIME_UTC"
+                >
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">Shift End utc Time</meta>
+            <meta attribute="description">Shift End Time</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

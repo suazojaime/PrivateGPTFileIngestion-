@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!-- Copyright (c) 2018, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+
+<classdefs>
+    <classdef name="minestar.pitlink.domain.safety.SafetyCheckAction" keyproperty="name" >
+        <propertydef name="OID" access="readonly">
+            <uidef visiblewhen="false"/>
+        </propertydef>
+        <propertydef name="name">
+            <validationdef name="required" type="shared"/>
+            <description>The name of the action.</description>
+        </propertydef>
+        <validationgroup name="Name Check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+    </classdef>
+    <classdef name="minestar.pitlink.domain.safety.SafetyCheckItem" keyproperty="name" >
+        <propertydef name="OID" access="readonly">
+            <uidef visiblewhen="false"/>
+        </propertydef>
+        <propertygroup name="details">
+            <uigroupdef mode="tab"/>
+            <propertydef name="name">
+                <validationdef type="group">
+                    <validationdef name="required" type="shared"/>
+                    <validationdef name="nocomma" type="expression">
+                        <pattern>[^\,]*</pattern>
+                        <error>No commas are allowed.</error>
+                    </validationdef>
+                </validationdef>
+                <description>The name of the item to check.</description>
+            </propertydef>
+            <propertydef name="onboardId">
+                <uidef enabledwhen="false" updateable="false"/>
+                <description>The onboard id.</description>
+            </propertydef>
+            <propertydef name="displayOrder">
+                <validationdef type="expression">
+                    <pattern>[1-9][0-9]{0,9}</pattern>
+                    <error>Value must be 1 or greater</error>
+                    <message>Enter a value 1 or greater</message>
+                </validationdef>
+                <description>The order to display the check list items.</description>
+            </propertydef>
+            <propertydef name="loadStatusId" label="Load Status">
+                <uidef widget="radio"/>
+                <defaultvalue>0</defaultvalue>
+                <validationdef name="required" type="shared"/>
+                <description>The load status</description>
+            </propertydef>
+            <propertydef name="categoryId" label="Category">
+                <uidef widget="radio"/>
+                <validationdef name="required" type="shared"/>
+                 <description>The category ID</description>
+            </propertydef>
+            <propertydef name="action">
+                <uidef widget="checkbox" custom='{selectionType="SINGLE_SELECT"}'/>
+                <description>The action to take if the check fails. Leave unselected if no action required.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="send" label="Machine Classes">
+            <uigroupdef mode="tab"/>
+            <propertydef name="machineClasses" label="">
+                <uidef widget="machineClassSelector"/>
+                <validationdef name="required" type="shared"/>
+                <description>Select the machine classes that apply to this item. Selecting the category will apply the item to all classes within that category.</description>
+            </propertydef>
+        </propertygroup>
+        
+        <validationgroup name="Name Check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+
+    </classdef>
+    <classdef name="minestar.pitlink.domain.safety.SafetyCheckResult">
+        <propertydef name="parentEvent">
+            <description>The event which delivered this safety check result.</description>
+        </propertydef>
+        <propertydef name="item">
+            <description>The item which was checked.</description>
+        </propertydef>
+        <propertydef name="itemStatus">
+            <description>The status of the item.</description>
+        </propertydef>
+    </classdef>
+    <classdef name="minestar.pitlink.domain.safety.SafetyCheckRecord">
+        <propertygroup name="safetyItemDetails">
+            <uigroupdef mode="box"/>
+            <propertydef name="machineName" label="Machine" access="readonly" category="transient">
+                <typedef><type code="string"/></typedef>
+                <uidef widget="text" updateable="false"/>
+                <description>The machine which delivered this safety check result.</description>
+            </propertydef>
+            <propertydef name="operatorName" label="Operator" access="readonly" category="transient">
+                <typedef><type code="string"/></typedef>
+                <uidef widget="text" updateable="false"/>
+                <description>The operator which logged in  this machine.</description>
+            </propertydef>
+            <propertydef name="timestamp" access="readonly">
+                <uidef widget="text" updateable="false"/>
+                <description>The time when the check occurred.</description>
+            </propertydef>
+            <propertydef name="itemName" label="Safety Item" access="readonly" category="transient">
+                <typedef><type code="string"/></typedef>
+                <uidef widget="text" updateable="false"/>
+                <description>The item which was checked.</description>
+            </propertydef>
+            <propertydef name="itemStatusDisplay" label="Item Status" access="readonly" category="transient">
+                <typedef><type code="string"/></typedef>
+                <uidef widget="text" updateable="false"/>
+                <description>The status of the item.</description>
+            </propertydef>
+            <propertydef name="itemStatus" access="readonly" category="transient">
+                <uidef visiblewhen="false" updateable="false"/>
+            </propertydef>
+        </propertygroup>
+        <propertygroup name="recordDetails">
+            <uigroupdef mode="plain"/>
+            <propertydef name="itemActioned">
+                <typedef><type code="boolean" /></typedef>
+                <uidef visiblewhen="(form.getFieldValue('itemStatus')) == 1" processOnChange="true"/>
+                <description>Has this item been actioned.</description>
+            </propertydef>
+            <propertydef name="dateActioned" label="Date Actioned">
+                <uidef visiblewhen="(form.getFieldValue('itemStatus')) == 1" enabledwhen="(form.getFieldValue('itemActioned')) == true"/>
+                <description>The date when the item was actioned.</description>
+            </propertydef>
+            <propertydef name="notes">
+                <uidef visiblewhen="(form.getFieldValue('itemStatus')) == 1" widget="textArea" custom='{rows=5,columns=30,linewrap=true}'/>
+                <description>Notes for this record.</description>
+            </propertydef>        
+        </propertygroup>
+    </classdef>
+</classdefs>

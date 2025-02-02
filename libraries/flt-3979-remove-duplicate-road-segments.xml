@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    
+    <changeSet id="6c76d08b-4bde-4396-9753-cced7a2397a4" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Unable to remove duplicate road segments and associated child records." onFail="HALT">
+            <tableExists tableName="ROAD_POSITION_COORDS"/>
+            <tableExists tableName="ROAD_TRAVEL_INFORMATION"/>
+            <tableExists tableName="ROADSEGMENT"/>
+        </preConditions>
+        <comment>FLT-3979 - Remove duplicate road segments and associated child records leaving only segment with the highest OID</comment>
+        <sql>
+            delete from ROAD_POSITION_COORDS where OID in (
+                select 
+                    r1.ROADSEGMENT_OID
+                from 
+                    ROADSEGMENT r1 
+                where 
+                    (exists
+                        (select 
+                            1
+                        from 
+                            ROADSEGMENT r2
+                        where 
+                            r2.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r2.START1 AND r1.ENDWAYPOINT = r2.ENDWAYPOINT) OR (r1.START1 = r2.ENDWAYPOINT AND r1.ENDWAYPOINT = r2.START1))
+                        )
+                    AND
+                    r1.ROADSEGMENT_OID !=
+                        (select 
+                            max(r3.ROADSEGMENT_OID)
+                        from 
+                            ROADSEGMENT r3
+                        where 
+                            r3.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r3.START1 AND r1.ENDWAYPOINT = r3.ENDWAYPOINT) OR (r1.START1 = r3.ENDWAYPOINT AND r1.ENDWAYPOINT = r3.START1))
+                        )
+                    )
+                    OR
+                    (not exists 
+                        (select 
+                            1
+                        from 
+                            ROADSEGMENT r4
+                        where 
+                            r4.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r4.START1 AND r1.ENDWAYPOINT = r4.ENDWAYPOINT) OR (r1.START1 = r4.ENDWAYPOINT AND r1.ENDWAYPOINT = r4.START1))
+                        )
+                    AND
+                    r1.ROADSEGMENT_OID !=
+                        (select 
+                            max(r5.ROADSEGMENT_OID)
+                        from 
+                            ROADSEGMENT r5
+                        where
+                            (r1.START1 = r5.START1 AND r1.ENDWAYPOINT = r5.ENDWAYPOINT) OR (r1.START1 = r5.ENDWAYPOINT AND r1.ENDWAYPOINT = r5.START1))
+                    )
+            )
+            ;
+            delete from ROAD_TRAVEL_INFORMATION where ROAD_SEGMENT_OID in (
+                select 
+                    r1.ROADSEGMENT_OID
+                from 
+                    ROADSEGMENT r1 
+                where 
+                    (exists
+                        (select 
+                            1
+                        from 
+                            ROADSEGMENT r2
+                        where 
+                            r2.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r2.START1 AND r1.ENDWAYPOINT = r2.ENDWAYPOINT) OR (r1.START1 = r2.ENDWAYPOINT AND r1.ENDWAYPOINT = r2.START1))
+                        )
+                    AND
+                    r1.ROADSEGMENT_OID !=
+                        (select 
+                            max(r3.ROADSEGMENT_OID)
+                        from 
+                            ROADSEGMENT r3
+                        where 
+                            r3.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r3.START1 AND r1.ENDWAYPOINT = r3.ENDWAYPOINT) OR (r1.START1 = r3.ENDWAYPOINT AND r1.ENDWAYPOINT = r3.START1))
+                        )
+                    )
+                    OR
+                    (not exists 
+                        (select 
+                            1
+                        from 
+                            ROADSEGMENT r4
+                        where 
+                            r4.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r4.START1 AND r1.ENDWAYPOINT = r4.ENDWAYPOINT) OR (r1.START1 = r4.ENDWAYPOINT AND r1.ENDWAYPOINT = r4.START1))
+                        )
+                    AND
+                    r1.ROADSEGMENT_OID !=
+                        (select 
+                            max(r5.ROADSEGMENT_OID)
+                        from 
+                            ROADSEGMENT r5
+                        where
+                            (r1.START1 = r5.START1 AND r1.ENDWAYPOINT = r5.ENDWAYPOINT) OR (r1.START1 = r5.ENDWAYPOINT AND r1.ENDWAYPOINT = r5.START1))
+                    )
+            )
+            ;
+            delete from ROADSEGMENT where ROADSEGMENT_OID in (
+                select 
+                    r1.ROADSEGMENT_OID
+                from 
+                    ROADSEGMENT r1 
+                where 
+                    (exists
+                        (select 
+                            1
+                        from 
+                            ROADSEGMENT r2
+                        where 
+                            r2.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r2.START1 AND r1.ENDWAYPOINT = r2.ENDWAYPOINT) OR (r1.START1 = r2.ENDWAYPOINT AND r1.ENDWAYPOINT = r2.START1))
+                        )
+                    AND
+                    r1.ROADSEGMENT_OID !=
+                        (select 
+                            max(r3.ROADSEGMENT_OID)
+                        from 
+                            ROADSEGMENT r3
+                        where 
+                            r3.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r3.START1 AND r1.ENDWAYPOINT = r3.ENDWAYPOINT) OR (r1.START1 = r3.ENDWAYPOINT AND r1.ENDWAYPOINT = r3.START1))
+                        )
+                    )
+                    OR
+                    (not exists 
+                        (select 
+                            1
+                        from 
+                            ROADSEGMENT r4
+                        where 
+                            r4.IS_ACTIVE = 1 AND
+                            ((r1.START1 = r4.START1 AND r1.ENDWAYPOINT = r4.ENDWAYPOINT) OR (r1.START1 = r4.ENDWAYPOINT AND r1.ENDWAYPOINT = r4.START1))
+                        )
+                    AND
+                    r1.ROADSEGMENT_OID !=
+                        (select 
+                            max(r5.ROADSEGMENT_OID)
+                        from 
+                            ROADSEGMENT r5
+                        where
+                            (r1.START1 = r5.START1 AND r1.ENDWAYPOINT = r5.ENDWAYPOINT) OR (r1.START1 = r5.ENDWAYPOINT AND r1.ENDWAYPOINT = r5.START1))
+                    )
+            )
+            ;
+        </sql>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

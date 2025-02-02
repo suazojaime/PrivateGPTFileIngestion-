@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class
+        name="minestar.production.domain.JobCodeClass"
+        table="JOBCODECLASS">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=JOBCODECLASS_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=JOBCODECLASS_1R
+            columns=NAME ASC, JOBCODECLASS_OID ASC
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A job code class</meta>
+        
+        <id
+            name="OID"
+            type="java.lang.Long"    
+            column="JOBCODECLASS_OID"
+            >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property
+            name="name"
+            type="java.lang.String"
+            column="NAME"
+            length="254"
+            >
+            <meta attribute="description">The name of the job code class</meta>
+
+        </property>
+
+        <!-- associations -->
+        <!-- subclasses -->
+
+    </class>
+</hibernate-mapping>

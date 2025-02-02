@@ -1,0 +1,31 @@
+This file contains documentation for mstarrun targets. This documentation
+is included into the HTML produced by targetsHtml. The text here is copied
+without processing, so you can include arbitrary HTML and expect it to work.
+If you want to include images, you can put them in the the bus/mstarrun 
+directory (where this file is), and they should be found from there.
+
+[targets]
+The targets target prints a list of all possible targets and descriptions of those targets if they are available.
+To define
+
+[sanityCheck]
+The sanity checker is a tool to check that mstarrun target definitions at least look sensible.
+It checks to make sure that:
+<UL>
+<LI>Each target has a 'filename' subkey
+<LI>Each target has a 'description' subkey
+<LI>Certain subkeys which are almost always mistakes (mis-spellings of others) are not defined
+<LI>Subkeys don't have . in them
+<LI>Files referred to by filename subkeys exist
+<LI>Targets are not defined in multiple files
+</ul>
+Most of these problems are not absolutely fatal, but they are confusing or below standard.
+
+[echo]
+Use echo for debugging variable settings.
+For example, to find out for sure which MSTAR_HOME you are using, do
+<PRE>
+mstarrun echo "{MSTAR_HOME}"
+</PRE>
+Strings are interpreted as paths, so they will have their slashes/backslashes turned around to the right
+direction, and ".." will be eliminated wherever possible.

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class
+            name="minestar.platform.domain.metadata.RUnitSet"
+            table="R_UNIT_SETS"
+    >
+        <meta attribute="table">
+            tablespace=MW_ECF
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <composite-id name="comp_id" class="minestar.platform.domain.metadata.RUnitSetPK">
+            <key-property
+                    name="name"
+                    column="SETNAME"
+                    type="java.lang.String"
+                    length="32"
+            >
+            </key-property>
+            <key-property
+                    name="typeName"
+                    column="TYPENAME"
+                    type="java.lang.String"
+                    length="32"
+            >
+            </key-property>
+        </composite-id>
+
+        <property
+                name="typeUnit"
+                type="java.lang.String"
+                column="TYPEUNIT"
+                not-null="true"
+                length="32"
+        >
+        </property>
+
+    </class>
+</hibernate-mapping>

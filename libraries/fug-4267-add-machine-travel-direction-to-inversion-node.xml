@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="2ddb8e62-d6be-4731-85dc-b61de1557b1f" context="Underground/Underground_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DIRECTION to table INVERSION_NODE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="INVERSION_NODE"/>
+            <not>
+                <columnExists tableName="INVERSION_NODE" columnName="DIRECTION"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4267: AddColumn INVERSION_NODE.DIRECTION</comment>
+        <addColumn tableName="INVERSION_NODE">
+            <column name="DIRECTION" type="VARCHAR(255)" remarks="Machine Travel Direction"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

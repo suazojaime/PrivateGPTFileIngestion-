@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.health.domain.data" schema="historical">
+
+    <class name="OilSample" table="OIL_SAMPLE">
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=IDX_OS_EXTERNAL_ID_UNIQ
+            unique=true
+            columns=EXTERNAL_ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            tablespace=MW_IDXOBJ
+            name=MW_IDX_EVALUATION_CODE
+            columns=EVALUATION_CODE
+        </meta>
+         
+                  
+		<meta attribute="description">Record of an oil sample taken from a particular machine component. An oil sample may potentially be analysed multiple times resulting an many oil sample readings, though more often an oil sample will have one oil sample reading.</meta>
+		      
+        
+        <meta attribute="viewproperty-machineOID" inherit="false">
+            type=string
+            expression=lookupResource.oilsample.machineOID.query
+        </meta>
+        <meta attribute="viewproperty-machine_N" inherit="false">
+            type=string
+            expression=lookupResource.oilsample.machine_N.query
+        </meta>
+        <meta attribute="viewproperty-machineClassOID" inherit="false">
+            type=string
+            expression=lookupResource.oilsample.machineClassOID.query
+        </meta>
+        <meta attribute="viewproperty-machineClass_N" inherit="false">
+            type=string
+            expression=lookupResource.oilsample.machineClass_N.query
+        </meta>
+
+        
+        <id name="id" column="ID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+		<property name="externalId" column="EXTERNAL_ID" length="32">
+			<meta attribute="description">
+				ID received from external system (ie. Oil Commander) during import of record 				
+			</meta>        		
+		</property>
+		
+        <property name="evaluationCode" column="EVALUATION_CODE" length="1" not-null="true">
+			<meta attribute="description">
+				Evaluation code describes the overall result of analysis of an oil sample  				
+			</meta>        		        
+        </property>
+        
+        <property name="lastInterpretationDate" type="TimestampType" column="LAST_INTERPRETATION_DATE_UTC">
+        	<meta attribute="alias" inherit="false">last_inter_time</meta>        	
+			<meta attribute="timestamp">true</meta>			
+			<meta attribute="description">The last date (or most recently) the oil sample was analysed</meta>        		        
+			<meta attribute="utc-description">The last date (or most recently) the oil sample was analysed in UTC time</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        
+        <property name="lastInterpretationUser" column="LAST_INTERPRETATION_USER">
+			<meta attribute="description">
+				The last user (or most recently) the oil sample was analysed. The user is 
+				described by a string in what ever format an external system provides it 
+				(ie. OS Username, Oil Commander Username, users full name or partial name)    				
+			</meta>        		        
+        </property>
+        
+        <property name="processDate" type="TimestampType" column="PROCESS_DATE_UTC">
+        	<meta attribute="alias" inherit="false">process_time</meta>        	
+			<meta attribute="timestamp">true</meta>			
+			<meta attribute="description">The date the oil sample was processed (analysed).</meta>
+			<meta attribute="utc-description">The UTC date the oil sample was processed (analysed)</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        
+        <property name="sampleDate" type="TimestampType" column="SAMPLE_DATE_UTC">
+        	<meta attribute="alias" inherit="false">sample_time</meta>        	
+			<meta attribute="timestamp">true</meta>			
+			<meta attribute="description">The date the oil sample was extracted from the machine component</meta>
+			<meta attribute="utc-description">The UTC date the oil sample was extracted from the machine component</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="notes" column="NOTES" length="4000">
+            <meta attribute="alias" inherit="false">notes</meta>
+            <meta attribute="description">
+                Any notes provided regarding the oil sample    				
+            </meta>
+        </property>
+        
+        <property name="oilSampleLocation" column="OIL_SAMPLE_LOCATION">
+			<meta attribute="description">
+				The geographical location of the machine at the time the oil sample was extracted.     				
+			</meta>        		        
+        </property>
+
+		<many-to-one name="machineCompartment" column="MACHINE_COMPARTMENT">
+            <meta attribute="ignoreManyToOneLookupExpr">true</meta>
+			<meta attribute="description">
+				The geographical location of the machine at the time the oil sample was extracted.     				
+			</meta>        		        
+		</many-to-one>
+		
+		<set name="oilSampleReadings" inverse="true" cascade="all-delete-orphan" lazy="false">		
+            <meta attribute="view-include">false</meta>		
+        	<key column="OIL_SAMPLE_FK" />
+            <one-to-many class="OilSampleReading"/>
+		</set>
+				
+	</class>
+
+</hibernate-mapping>

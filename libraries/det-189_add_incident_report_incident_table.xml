@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="c72b29ec-5862-4c4e-966e-f6d82823d0c0" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for INCIDENT_REPORT_INCIDENT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="INCIDENT_REPORT_INCIDENT"/>
+            </not>
+        </preConditions>
+        <comment>DET-189: CreateTable INCIDENT_REPORT_INCIDENT</comment>
+        <createTable tablespace="MW_OBJ" remarks="Records the status of an incident in an incident report." tableName="INCIDENT_REPORT_INCIDENT">
+            <column name="INCIDENT_REPORT_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INCIDENT_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="INT" remarks="Complete = 1, Incomplete = 2, No Data = 3."/>
+        </createTable>
+        <addPrimaryKey columnNames="INCIDENT_REPORT_OID,INCIDENT_OID" constraintName="INCIDENT_REPORT_INCIDENT_PK" tablespace="MW_IDXOBJ" tableName="INCIDENT_REPORT_INCIDENT"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="ff78aa78-ec05-4ae0-8235-33553283a948" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for INCIDENT_REPORT_INCIDENT_FK1 to table INCIDENT_REPORT_INCIDENT as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_REPORT_INCIDENT"/>
+            <tableExists tableName="INCIDENT_REPORT"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="INCIDENT_REPORT_INCIDENT" foreignKeyName="INCIDENT_REPORT_INCIDENT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>DET-189: AddForeignKeyConstraint INCIDENT_REPORT_INCIDENT_FK1 to INCIDENT_REPORT_INCIDENT (INCIDENT_REPORT_OID)</comment>
+        <sql>DELETE FROM INCIDENT_REPORT_INCIDENT WHERE INCIDENT_REPORT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM INCIDENT_REPORT WHERE INCIDENT_REPORT.OID = INCIDENT_REPORT_INCIDENT.INCIDENT_REPORT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="INCIDENT_REPORT_INCIDENT" baseColumnNames="INCIDENT_REPORT_OID" constraintName="INCIDENT_REPORT_INCIDENT_FK1" referencedTableName="INCIDENT_REPORT" referencedColumnNames="OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="INCIDENT_REPORT_INCIDENT" constraintName="INCIDENT_REPORT_INCIDENT_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="0d82e62c-df07-43ff-bd42-61eb5180399b" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for INCIDENT_REPORT_INCIDENT_FK2 to table INCIDENT_REPORT_INCIDENT as the foreignKey already exists." onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="INCIDENT_REPORT_INCIDENT" foreignKeyName="INCIDENT_REPORT_INCIDENT_FK2"/>
+            </not>
+        </preConditions>
+        <comment>DET-189: AddForeignKeyConstraint INCIDENT_REPORT_INCIDENT_FK2 to INCIDENT_REPORT_INCIDENT (INCIDENT_OID)</comment>
+        <sql>DELETE FROM INCIDENT_REPORT_INCIDENT WHERE INCIDENT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM INCIDENT_MESSAGE WHERE INCIDENT_MESSAGE.OID = INCIDENT_REPORT_INCIDENT.INCIDENT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="INCIDENT_REPORT_INCIDENT" baseColumnNames="INCIDENT_OID" constraintName="INCIDENT_REPORT_INCIDENT_FK2" referencedTableName="INCIDENT_MESSAGE" referencedColumnNames="OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="INCIDENT_REPORT_INCIDENT" constraintName="INCIDENT_REPORT_INCIDENT_FK2"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

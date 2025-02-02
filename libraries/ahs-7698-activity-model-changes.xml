@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="0484bb5a-197b-474c-9188-b9242b1774c5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PARENT_GROUP_OID to table ACTIVITY as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVITY"/>
+            <not>
+                <columnExists tableName="ACTIVITY" columnName="PARENT_GROUP_OID"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7698: AddColumn ACTIVITY.PARENT_GROUP_OID</comment>
+        <addColumn tableName="ACTIVITY">
+            <column name="PARENT_GROUP_OID" type="BIGINT" remarks="A reference to the parent group"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="0d16614e-a856-45d7-92ae-c4cbb01a2fb4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for ACTIVITY_GROUP_ELEMENT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVITY_GROUP_ELEMENT"/>
+            <columnExists tableName="ACTIVITY" columnName="PARENT_GROUP_OID"/>
+        </preConditions>
+        <comment>AHS-7698: DropTable ACTIVITY_GROUP_ELEMENT</comment>
+        <sql>
+            UPDATE ACTIVITY SET PARENT_GROUP_OID = (SELECT MIN(OID) FROM ACTIVITY_GROUP_ELEMENT WHERE ACTIVITY_GROUP_ELEMENT.ACTIVITY_OID = ACTIVITY.ACTIVITY_OID)
+        </sql>
+        <dropTable tableName="ACTIVITY_GROUP_ELEMENT"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="the activity group elements" tableName="ACTIVITY_GROUP_ELEMENT">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ACTIVITY_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="OID,ACTIVITY_OID" constraintName="ACTIVITY_GROUP_ELEMENT_PK" tablespace="MW_IDXENT" tableName="ACTIVITY_GROUP_ELEMENT"/>
+            <sql>
+                INSERT INTO ACTIVITY_GROUP_ELEMENT (OID, ACTIVITY_OID) SELECT PARENT_GROUP_OID, ACTIVITY_OID FROM ACTIVITY WHERE PARENT_GROUP_OID IS NOT NULL
+            </sql>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="edbee235-a58b-47b4-ae68-56111215c2d9" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ACTIVITY_PARENT_GROUP_OID_FK to table ACTIVITY as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVITY"/>
+            <tableExists tableName="ACTIVITY_GROUP"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ACTIVITY" foreignKeyName="ACTIVITY_PARENT_GROUP_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7698: AddForeignKeyConstraint ACTIVITY_PARENT_GROUP_OID_FK to ACTIVITY (PARENT_GROUP_OID)</comment>
+        <addForeignKeyConstraint baseTableName="ACTIVITY" baseColumnNames="PARENT_GROUP_OID" constraintName="ACTIVITY_PARENT_GROUP_OID_FK" referencedTableName="ACTIVITY_GROUP" referencedColumnNames="ACTIVITY_GROUP_OID" onDelete="NO ACTION"/>
+    </changeSet>
+
+    <changeSet id="6a7af222-765e-4e66-8673-0b19ef11d6ee" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for ACTIVITYGROUP_1R of table ACTIVITY_GROUP as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="ACTIVITYGROUP_1R" tableName="ACTIVITY_GROUP"/>
+        </preConditions>
+        <comment>AHS-7698: DropIndex ACTIVITYGROUP_1R from ACTIVITY_GROUP (NAME,ACTIVITY_GROUP_OID)</comment>
+        <dropIndex indexName="ACTIVITYGROUP_1R" tableName="ACTIVITY_GROUP"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" tableName="ACTIVITY_GROUP" indexName="ACTIVITYGROUP_1R">
+                <column name="NAME"/>
+                <column name="ACTIVITY_GROUP_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="ff5d83b1-ac11-4878-b574-467336716df4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ACTIVITY_GROUP.NAME as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ACTIVITY_GROUP" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-7698: AddNotNullConstraint to ACTIVITY_GROUP.NAME</comment>
+        <addNotNullConstraint columnName="NAME" columnDataType="VARCHAR(254)" tableName="ACTIVITY_GROUP"/>
+    </changeSet>
+
+    <changeSet id="f5d39d26-6fe5-4e5c-b9cb-81c1330a3332" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for ACTIVITY_GROUP.IS_READ_ONLY as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="ACTIVITY_GROUP" columnName="IS_READ_ONLY"/>
+        </preConditions>
+        <comment>AHS-7698: AddNotNullConstraint to ACTIVITY_GROUP.IS_READ_ONLY</comment>
+        <sql>UPDATE ACTIVITY_GROUP SET IS_READ_ONLY = 0 WHERE IS_READ_ONLY IS NULL</sql>
+        <addNotNullConstraint columnName="IS_READ_ONLY" columnDataType="BOOLEAN" tableName="ACTIVITY_GROUP"/>
+        <rollback>
+            <dropNotNullConstraint tableName="ACTIVITY_GROUP" columnName="IS_READ_ONLY" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6fb1e49d-e8c1-4f86-852a-cf06bfecf307" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PARENT_GROUP_OID to table ACTIVITY_GROUP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVITY_GROUP"/>
+            <not>
+                <columnExists tableName="ACTIVITY_GROUP" columnName="PARENT_GROUP_OID"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7698: AddColumn ACTIVITY_GROUP.PARENT_GROUP_OID</comment>
+        <addColumn tableName="ACTIVITY_GROUP">
+            <column name="PARENT_GROUP_OID" type="BIGINT" remarks="For non-root groups, a reference to the parent group"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="c54a6094-0658-42e7-9f3a-2ba20333094f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for ACTIVITY_GROUP_SUBDIR as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVITY_GROUP_SUBDIR"/>
+            <columnExists tableName="ACTIVITY_GROUP" columnName="PARENT_GROUP_OID"/>
+        </preConditions>
+        <comment>AHS-7698: DropTable ACTIVITY_GROUP_SUBDIR</comment>
+        <sql>
+            UPDATE ACTIVITY_GROUP SET PARENT_GROUP_OID = (SELECT MIN(OID) FROM ACTIVITY_GROUP_SUBDIR WHERE ACTIVITY_GROUP_SUBDIR.ACTIVITY_GROUP_OID = ACTIVITY_GROUP.ACTIVITY_GROUP_OID)
+        </sql>
+        <dropTable tableName="ACTIVITY_GROUP_SUBDIR"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="the activity group subdirectories" tableName="ACTIVITY_GROUP_SUBDIR">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ACTIVITY_GROUP_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="OID,ACTIVITY_GROUP_OID" constraintName="ACTIVITY_GROUP_SUBDIR_PK" tablespace="MW_IDXENT" tableName="ACTIVITY_GROUP_SUBDIR"/>
+            <sql>
+                INSERT INTO ACTIVITY_GROUP_SUBDIR (OID, ACTIVITY_GROUP_OID) SELECT PARENT_GROUP_OID, ACTIVITY_GROUP_OID FROM ACTIVITY_GROUP WHERE PARENT_GROUP_OID IS NOT NULL
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="c0dacb1c-25e4-4fa3-818b-9115a3ff2fa5" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ACTIVITY_GROUP_PARENT_GROUP_FK to table ACTIVITY_GROUP as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVITY_GROUP"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ACTIVITY_GROUP" foreignKeyName="ACTIVITY_GROUP_PARENT_GROUP_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7698: AddForeignKeyConstraint ACTIVITY_GROUP_PARENT_GROUP_FK to ACTIVITY_GROUP (PARENT_GROUP_OID)</comment>
+        <addForeignKeyConstraint baseTableName="ACTIVITY_GROUP" baseColumnNames="PARENT_GROUP_OID" constraintName="ACTIVITY_GROUP_PARENT_GROUP_FK" referencedTableName="ACTIVITY_GROUP" referencedColumnNames="ACTIVITY_GROUP_OID" onDelete="NO ACTION"/>
+    </changeSet>
+
+</databaseChangeLog>

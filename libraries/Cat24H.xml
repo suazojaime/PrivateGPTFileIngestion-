@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Grader Unit">
+
+    <machineClass xsi:type="auxMobileClassImpl">
+        <name>Cat24H</name>
+        <manufacturer>Caterpillar</manufacturer>
+        <description>Caterpillar 24H Grader</description>
+        <allowAllMaterials>false</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="1.21" unit="cubic metres"/>
+        <minimumRefuelAmount magnitude="0.00" unit="cubic metres"/>
+        <refuelLevel magnitude="0.121" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.06" unit="cubic metres"/>
+        <idleFuelBurnRate magnitude="0.00000375" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.0000125" unit="cubic metres per second"/>
+    </machineClass>
+
+</machineClassExport>

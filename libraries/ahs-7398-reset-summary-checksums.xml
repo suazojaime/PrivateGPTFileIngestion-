@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="46a19181-455e-4cc0-a616-861946e4ba09" author="MineStar" failOnError="false" context="SchemaSynchroniser">
+        <preConditions onFailMessage="No existing DATABASECHANGELOG" onFail="MARK_RAN">
+            <tableExists tableName="DATABASECHANGELOG"/>
+        </preConditions>
+        <comment>AHS-7398: Reset the MD5 check sums</comment>
+        <sql>UPDATE DATABASECHANGELOG SET MD5SUM = NULL</sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

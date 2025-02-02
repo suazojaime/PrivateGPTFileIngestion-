@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) 2021  Caterpillar, Inc.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="5d3b3ec9-1955-465a-ac34-2206aab82631" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_SOURCE_BLOCK as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_SOURCE_BLOCK"/>
+            </not>
+        </preConditions>
+        <comment>MO-2741: CreateTable PROD_PLAN_SOURCE_BLOCK</comment>
+        <createTable tablespace="MW_ENT" tableName="PROD_PLAN_SOURCE_BLOCK">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFERENCE_ID" type="VARCHAR(254)"/>
+            <column name="BLOCK_OID" type="BIGINT"/>
+            <column name="AVAILABLE_MASS" type="DOUBLE"/>
+            <column name="AVAILABLE_VOLUME" type="DOUBLE"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_SOURCE_BLOCK_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_SOURCE_BLOCK"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="55eb9908-fcc1-4af0-bc15-d6b255101af7" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_SOURCE_STOCKPILE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_SOURCE_STOCKPILE"/>
+            </not>
+        </preConditions>
+        <comment>MO-2741: CreateTable PROD_PLAN_SOURCE_STOCKPILE</comment>
+        <createTable tablespace="MW_ENT" tableName="PROD_PLAN_SOURCE_STOCKPILE">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFERENCE_ID" type="VARCHAR(254)"/>
+            <column name="STOCKPILE_OID" type="BIGINT"/>
+            <column name="GEOMETRY" type="VARCHAR(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AVAILABLE_MASS" type="DOUBLE"/>
+            <column name="AVAILABLE_VOLUME" type="DOUBLE"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_SOURCE_STOCKPILE_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_SOURCE_STOCKPILE"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="c16ca407-3b5b-4f8e-a120-1217c886c083" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_SOURCE_BLOCK_PLAN_FK to table PROD_PLAN_SOURCE_BLOCK as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_SOURCE_BLOCK" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_SOURCE_BLOCK" foreignKeyName="PROD_PLAN_SOURCE_BLOCK_PLAN_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-2741: AddForeignKeyConstraint PROD_PLAN_SOURCE_BLOCK_PLAN_FK to PROD_PLAN_SOURCE_BLOCK (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_SOURCE_BLOCK WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_SOURCE_BLOCK.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_SOURCE_BLOCK" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_SOURCE_BLOCK_PLAN_FK" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_SOURCE_BLOCK" constraintName="PROD_PLAN_SOURCE_BLOCK_PLAN_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="0ceb7035-d975-41ec-862b-ed3a05913d40" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_SOURCE_STOCKPILE_FK1 to table PROD_PLAN_SOURCE_STOCKPILE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_SOURCE_STOCKPILE" foreignKeyName="PROD_PLAN_SOURCE_STOCKPILE_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2741: AddForeignKeyConstraint PROD_PLAN_SOURCE_STOCKPILE_FK1 to PROD_PLAN_SOURCE_STOCKPILE (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_SOURCE_STOCKPILE WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_SOURCE_STOCKPILE.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_SOURCE_STOCKPILE" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_SOURCE_STOCKPILE_FK1" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_SOURCE_STOCKPILE" constraintName="PROD_PLAN_SOURCE_STOCKPILE_FK1"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

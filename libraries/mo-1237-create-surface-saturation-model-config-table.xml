@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="863e95fc-69eb-4da0-a704-aa22c5c3df46" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for SURFACE_SATURATION_CONFIG as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SURFACE_SATURATION_CONFIG"/>
+            </not>
+        </preConditions>
+        <comment>MO-1237: CreateTable SURFACE_SATURATION_CONFIG</comment>
+        <createTable tablespace="MW_ENT" tableName="SURFACE_SATURATION_CONFIG">
+            <column name="KEY_STRING" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VALUE_STRING" type="VARCHAR(255)" remarks="The value.">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="KEY_STRING" constraintName="SURFACE_SATURATION_CONFIG_PK" tableName="SURFACE_SATURATION_CONFIG"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

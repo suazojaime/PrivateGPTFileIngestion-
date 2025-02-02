@@ -1,0 +1,2124 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical" default-access="field" default-lazy="false">
+
+    <class name="minestar.production.domain.cycle.Cycle" table="CYCLE" discriminator-value="XAEntity.Cycle" dynamic-update="true" check="STARTTIME_UTC &lt;= ENDTIME_UTC">
+        <meta attribute="lookupExpr" inherit="false">lookupResource.cycle.primaryMachineName.expr</meta>
+        <meta attribute="timestampProperty">startTime</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <!-- STARTTIME_UTC should not really be in the unique index, but Cycle splitting fails with
+             a unique index violation if it is not included.  There is probably a bug in the cycle splitting
+             code which needs to be fixed (perhaps it's adding a new cycle before it adjusts the time range of the
+             original cycle??) -->
+        <meta attribute="index" inherit="false">
+            name=CYCLE_PRIMARYMACHINE_TIME
+            columns=PRIMARYMACHINE, ENDTIME_UTC, STARTTIME_UTC
+            unique=true
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=ECF_CLASS_ID_IDX
+            columns=ECF_CLASS_ID
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=CYCLE_STARTTIME_IDX
+            columns=STARTTIME_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=CYCLE_ENDTIME
+            columns=ENDTIME_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=PRIMARYMACHINE_IDX
+            columns=PRIMARYMACHINE
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=SECONDARYMACHINE_IDX
+            columns=SECONDARYMACHINE
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=SOURCELOCATION_IDX
+            columns=SOURCELOCATION
+            tablespace=MW_IDXENT
+        </meta>
+
+
+        <meta attribute="index" inherit="false">
+            name=SOURCEBLOCK_IDX
+            columns=SOURCEBLOCK
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=ENDSINKBLOCK_IDX
+            columns=ENDSINKBLOCK
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=ENDSINKLOCATION_IDX
+            columns=ENDSINKLOCATION
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=ENDPROCESSOR_IDX
+            columns=ENDPROCESSOR
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=ACTIVEDESTBLEND_FK
+            columns=ACTIVEDESTINATIONBLEND
+            unique=false
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=CYCLE_CREATED_DATE
+            columns=CREATED_DATE_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=LAST_MODIFIED_IDX
+            columns=LAST_MODIFIED
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="viewproperty-durationCalculated" inherit="false">
+            type=float
+            description=The associated duration calculated
+            unitType=duration
+            expression=lookupResource.cycle.durationCalculated.query
+        </meta>
+
+        <meta attribute="ignore-view-where-expression">lookupResource.ignoreViewWhereExp</meta>
+
+        <meta attribute="description">Production cycle information</meta>
+
+        <id name="OID" type="long" column="CYCLE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID"/>
+
+        <property name="createdDate" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the cycle was last updated.</meta>
+            <meta attribute="description">The utc time the cycle was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="CREATED_DATE_UTC"/>
+        </property>
+
+        <property name="lastModified" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the cycle was last updated.</meta>
+            <meta attribute="description">The utc time the cycle was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="LAST_MODIFIED"/>
+        </property>
+
+        <property name="startTime" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the cycle started.</meta>
+            <meta attribute="description">The time the cycle started.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="STARTTIME_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+        <property name="endTime" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the cycle finished.</meta>
+            <meta attribute="description">The time the cycle finished.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="ENDTIME_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+
+        <property name="jobCodeOID" type="long" column="JOBCODE">
+            <meta attribute="alias">jobCode</meta>
+            <meta attribute="description">The OID of the job code for this cycle.</meta>
+            <meta attribute="manyToOne">minestar.production.domain.JobCode</meta>
+        </property>
+        <property name="jobCodeComment" type="string" column="JOBCODE_COMMENT" length="4000">
+            <meta attribute="description">The job code comment</meta>
+        </property>
+
+        <property name="jobOrderReference" type="string" column="JOB_ORDER_REF">
+            <meta attribute="description">A reference to the activated Job Order related to this cycle (if any)</meta>
+        </property>
+
+        <property name="creationMode" type="short">
+            <meta attribute="choices" inherit="false">choice:cycleCreationMode</meta>
+            <meta attribute="description">Defines how the cycle was created, eg. Automatic (by a Cycle Engine), Manual (using a Cycle Editor), etc.</meta>
+            <column name="CREATIONMODE" not-null="true" default="0"/>
+        </property>
+
+        <property name="validationSeverity" type="short" column="VALIDATIONSEVERITY">
+            <meta attribute="choices" inherit="false">choice:cycleValidationSeverity</meta>
+            <meta attribute="description">Identifies the level of severity of the cycle error reported in validationMsg: 0 = no error, values set in resources</meta>
+        </property>
+        <property name="validationMsg" type="string" column="VALIDATION_MSG">
+            <meta attribute="description">Indicates something wrong with the cycle - initially written during cycle creation. See resources.</meta>
+        </property>
+
+        <property name="primaryMachineOID" type="long" column="PRIMARYMACHINE">
+            <meta attribute="alias">primaryMachine</meta>
+            <meta attribute="description">The OID of the primary machine.</meta>
+            <meta attribute="manyToOne">minestar.pitlink.domain.machine.MachineImpl</meta>
+        </property>
+        <property name="primaryMachineName" type="string" column="PRIMARYMACHINENAME"  length="254">
+            <meta attribute="description">The Name of the primary machine.</meta>
+        </property>
+
+        <property name="primaryMachineClassOID" type="long" column="PRIMARYMACHINECLASS">
+            <meta attribute="alias">primaryMachineClass</meta>
+            <meta attribute="description">The OID of the primary machine class, which may be null.</meta>
+            <meta attribute="manyToOne">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+        </property>
+        <property name="primaryMachineClassName" type="string" column="PRIMARYMACHINECLASSNAME" length="254" >
+            <meta attribute="description">The name of the primary machine class.</meta>
+        </property>
+
+        <property name="primaryMachineCategoryOID" type="long" column="PRIMARYMACHINECATEGORY">
+            <meta attribute="alias">primaryMachineCategory</meta>
+            <meta attribute="description">The OID of the primary machine category.</meta>
+            <meta attribute="manyToOne">minestar.pitlink.domain.machine.MachineCategoryImpl</meta>
+        </property>
+        <property name="primaryMachineCategoryName" type="string" column="PRIMARYMACHINECATEGORYNAME"  length="254">
+            <meta attribute="description">The Name of the primary machine category.</meta>
+        </property>
+
+        <property name="secondaryMachineOID" type="long" column="SECONDARYMACHINE">
+            <meta attribute="alias">secondaryMachine</meta>
+            <meta attribute="description">The OID of the secondary machine.</meta>
+            <meta attribute="manyToOne">minestar.pitlink.domain.machine.MachineImpl</meta>
+        </property>
+        <property name="secondaryMachineName" type="string" column="SECONDARYMACHINENAME" length="254">
+            <meta attribute="description">The Name of the secondary machine.</meta>
+        </property>
+        <property name="secondaryMachineClassOID" type="long" column="SECONDARYMACHINECLASS">
+            <meta attribute="alias">secondaryMachineClass</meta>
+            <meta attribute="description">The name of the secondary machine class.</meta>
+            <meta attribute="manyToOne">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+        </property>
+        <property name="secondaryMachineClassName" type="string" column="SECONDARYMACHINECLASSNAME" length="254">
+            <meta attribute="description">The name of the secondary machine class.</meta>
+        </property>
+        <property name="secondaryMachineCategoryOID" type="long" column="SECONDARYMACHINECATEGORY">
+            <meta attribute="alias">secondaryMachineCategory</meta>
+            <meta attribute="description">The OID of the secondary machine category.</meta>
+            <meta attribute="manyToOne">minestar.pitlink.domain.machine.MachineCategoryImpl</meta>
+        </property>
+        <property name="secondaryMachineCategoryName" type="string" column="SECONDARYMACHINECATEGORYNAME" length="254">
+            <meta attribute="description">The name of the secondary machine category.</meta>
+        </property>
+
+        <property name="primaryOperatorOID" type="long" column="PRIMARYOPERATOR">
+            <meta attribute="alias">primaryOperator</meta>
+            <meta attribute="description">The OID of the primary operator.</meta>
+            <meta attribute="manyToOne">minestar.machinetracking.domain.PersonImpl</meta>
+        </property>
+        <property name="primaryOperatorName" type="string" column="PRIMARYOPERATORNAME" length="254">
+            <meta attribute="description">Name of the primary machine operator, which may be null.</meta>
+        </property>
+        <property name="attributedCrewOID" type="long" column="ATTRIBUTEDCREW">
+            <meta attribute="alias">attributedCrew</meta>
+            <meta attribute="description">The crew which is recorded as executing this cycle for reporting purposes.</meta>
+            <meta attribute="manyToOne">minestar.platform.domain.roster.CrewImpl</meta>
+        </property>
+
+        <property name="secondaryOperatorOID" type="long" column="SECONDARYOPERATOR">
+            <meta attribute="alias">secondaryOperator</meta>
+            <meta attribute="description">The OID of the secondary operator.</meta>
+            <meta attribute="manyToOne">minestar.machinetracking.domain.PersonImpl</meta>
+        </property>
+        <property name="secondaryOperatorName" type="string" column="SECONDARYOPERATORNAME" length="254">
+            <meta attribute="description">Name of the secondary machine operator, which may be null.</meta>
+        </property>
+
+        <property name="estimatedFuelUsed" column="ESTIMATEDFUELUSED">
+            <meta attribute="description">The estimated fuel used during the cycle.</meta>
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+        <property name="avgBurnFuelUsed" column="AVGBURNFUELUSED">
+            <meta attribute="description">The estimated fuel used during the cycle based on average burn rates.</meta>
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+        <property name="machineFuelConsumed" column="MACHINEFUELCONSUMED">
+            <meta attribute="description">The fuel used by the machine during this cycle.</meta>
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+        <property name="previousCycle" type="long" column="PREVIOUSCYCLE">
+            <meta attribute="foreignKey">true</meta>
+            <meta attribute="description">The OID of the previous cycle for the same machine.</meta>
+        </property>
+        <property name="associatedCycle" type="long" column="ASSOCIATEDCYCLE">
+            <meta attribute="foreignKey">true</meta>
+            <meta attribute="description">The OID of the associated cycle ie. the loader cycle for a truck cycle and vice versa.</meta>
+        </property>
+
+        <property name="sourceCoords" type="XYZCoordinate">
+            <meta attribute="description">The source coordinates for the cycle.</meta>
+            <column name="SOURCE_COORD_X"/>
+            <column name="SOURCE_COORD_Y"/>
+            <column name="SOURCE_COORD_Z"/>
+        </property>
+
+        <property name="sinkCoords" type="XYZCoordinate">
+            <meta attribute="description">The coordinates for the sink.</meta>
+            <column name="SINK_COORD_X"/>
+            <column name="SINK_COORD_Y"/>
+            <column name="SINK_COORD_Z"/>
+        </property>
+
+        <property name="endSinkCoords" type="XYZCoordinate">
+            <meta attribute="description">The coordinates for the end sink.</meta>
+            <column name="END_SINK_COORD_X"/>
+            <column name="END_SINK_COORD_Y"/>
+            <column name="END_SINK_COORD_Z"/>
+        </property>
+
+        <property name="dumpPosition" type="XYZCoordinate">
+            <meta attribute="description">The coordinate information for the dump position.</meta>
+            <column name="DUMP_COORD_X"/>
+            <column name="DUMP_COORD_Y"/>
+            <column name="DUMP_COORD_Z"/>
+        </property>
+        <property name="hasPredictedRoads" type="minestar.platform.persistence.NullablePrimitiveBooleanUserType" column="HASPREDICTEDROADS">
+            <meta attribute="description">Indicates whether or not this cycle contains any predicted road segments (ie missing ones filled in).</meta>
+        </property>
+        <property name="autonomous" type="minestar.platform.persistence.NullablePrimitiveBooleanUserType" column="AUTONOMOUS">
+            <meta attribute="description">Indicates whether or not this cycle was generated while the machine was autonomous.</meta>
+        </property>
+
+        <!-- associations -->
+        <map name="activities" sort="natural" table="CYCLEACTIVITYCOMPONENT" fetch="select" batch-size="100">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                columns=OID, START_TIME_UTC
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=CYCLEACT_CREATED_DATE
+                columns=CREATED_DATE_UTC
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=CYCLEACT_LAST_MODIFIED
+                columns=LAST_MODIFIED_UTC
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index-alias">startTime</meta>
+            <meta attribute="index-view-include">false</meta>
+            <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+            <meta attribute="element-alias"/>
+            <key column="OID" not-null="true"/>
+            <map-key type="TimestampType" column="START_TIME_UTC"/>
+            <composite-element class="minestar.production.domain.cycle.CycleActivityComponent">
+
+                <meta attribute="viewproperty-durationCalculated" inherit="false">
+                    type=float
+                    description=The associated duration calculated
+                    unitType=duration
+                    expression=lookupResource.cycleComponent.durationCalculated.query
+                </meta>
+                <meta attribute="viewproperty-startSMU" inherit="false">
+                    type=float
+                    description=The associated start SMU
+                    unitType=service meter hours
+                    expression=lookupResource.cycle.startSMU.query
+                </meta>
+                <meta attribute="viewproperty-endSMU" inherit="false">
+                    type=float
+                    description=The associated end SMU
+                    unitType=service meter hours
+                    expression=lookupResource.cycle.endSMU.query
+                </meta>
+
+                <property name="name" type="string" column="NAME" length="254" not-null="true">
+                    <meta attribute="description">Cycle activity name</meta>
+                    <meta attribute="choices" inherit="false">choice:machineActivities</meta>
+                </property>
+
+                <property name="startTime" type="TimestampType" formula="START_TIME_UTC" not-null="true">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="utc-description">Cycle activity start utc time</meta>
+                    <meta attribute="description">Cycle activity start time</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+
+                <property name="endTime" type="TimestampType">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="utc-description">Cycle activity end utc time</meta>
+                    <meta attribute="description">Cycle activity end time</meta>
+                    <meta attribute="view-localtime">true</meta>
+                    <column name="END_TIME_UTC" not-null="true" default="01-JAN-1970"/>
+                </property>
+
+                <property name="estimatedFuelUsed" column="ESTIMATED_FUEL_USED">
+                    <meta attribute="unitType">liquid volume</meta>
+                    <meta attribute="description">Cycle activity estimated fuel used</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">liquid volume</param>
+                    </type>
+                </property>
+
+                <property name="lastModified" type="TimestampType">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="utc-description">The utc time the cycle was last updated.</meta>
+                    <meta attribute="description">The utc time the cycle was last updated.</meta>
+                    <meta attribute="view-localtime">true</meta>
+                    <column name="LAST_MODIFIED_UTC"/>
+                </property>
+
+                <property name="createdDate" type="TimestampType">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="utc-description">The utc time the cycle started.</meta>
+                    <meta attribute="description">The time the cycle started.</meta>
+                    <meta attribute="view-localtime">true</meta>
+                    <column name="CREATED_DATE_UTC"/>
+                </property>
+            </composite-element>
+        </map>
+
+        <map name="roads" sort="natural" table="CYCLEROADSEGMENT" fetch="select" batch-size="100">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                columns=OID, START_TIME_UTC
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias">startTime</meta>
+            <meta attribute="index-view-include">false</meta>
+            <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+            <meta attribute="element-alias"/>
+
+            <key column="OID" not-null="true"/>
+            <map-key type="TimestampType" column="START_TIME_UTC"/>
+            <composite-element class="minestar.production.domain.cycle.CycleRoadSegment">
+
+                <meta attribute="viewproperty-durationCalculated" inherit="false">
+                    type=float
+                    description=The associated duration calculated
+                    unitType=duration
+                    expression=lookupResource.cycleComponent.durationCalculated.query
+                </meta>
+
+                <property name="startTime" type="TimestampType" formula="START_TIME_UTC" not-null="true">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="utc-description">The start utc time</meta>
+                    <meta attribute="description">The start time</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+                <property name="endTime" type="TimestampType">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="utc-description">The road segment end utc time</meta>
+                    <meta attribute="description">The road segment end time</meta>
+                    <meta attribute="view-localtime">true</meta>
+                    <column name="END_TIME_UTC" not-null="true" default="01-JAN-1970"/>
+                </property>
+
+                <property name="startBeaconOID" column="START_BEACON_OID" type="long">
+                    <meta attribute="alias" inherit="false">startWaypoint</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.WaypointImpl</meta>
+                </property>
+                <property name="startPosition" type="XYZCoordinate">
+                    <meta attribute="alias" inherit="false">startWaypointCoords</meta>
+                    <meta attribute="description">The start position.</meta>
+                    <column name="START_POSITION_X"/>
+                    <column name="START_POSITION_Y"/>
+                    <column name="START_POSITION_Z"/>
+                </property>
+                <property name="startPositionName" type="string" length="254" column="START_POSITION_NAME">
+                    <meta attribute="alias" inherit="false">startWaypointName</meta>
+                    <meta attribute="description">Name of the start of the road segment (either the name of the start waypoint or a description of the position)</meta>
+                </property>
+
+                <property name="endBeaconOID" column="END_BEACON_OID" type="long">
+                    <meta attribute="alias" inherit="false">endWaypoint</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.WaypointImpl</meta>
+                </property>
+                <property name="endPosition" type="XYZCoordinate">
+                    <meta attribute="alias" inherit="false">endWaypointCoords</meta>
+                    <meta attribute="description">The end position.</meta>
+                    <column name="END_POSITION_X"/>
+                    <column name="END_POSITION_Y"/>
+                    <column name="END_POSITION_Z"/>
+                </property>
+                <property name="endPositionName" type="string" column="END_POSITION_NAME" length="254">
+                    <meta attribute="alias" inherit="false">endWaypointName</meta>
+                    <meta attribute="description">Name of the end of the road segment (either the name of the end waypoint or a description of the position)</meta>
+                </property>
+
+                <property name="roadOID" column="ROAD_OID" type="long">
+                    <meta attribute="alias">road</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.RoadSegmentImpl</meta>
+                </property>
+                <property name="roadClass" type="java.lang.String" column="ROAD_CLASS" length="254">
+                    <meta attribute="description">Cycle road segment road class</meta>
+                </property>
+                <property name="description" type="string" column="DESCRIPTION" length="254">
+                    <meta attribute="description">The road segment description</meta>
+                </property>
+
+                <property name="planLength" column="HORIZ_TRAVEL_DIST_MAGNITUDE">
+                    <meta attribute="unitType">length</meta>
+                    <meta attribute="description">The road segment horizontal length</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+                <property name="slopeLength" column="TRAVEL_DIST_MAGNITUDE">
+                    <meta attribute="unitType">length</meta>
+                    <meta attribute="description">The road segment slope length</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+                <property name="efhLength" column="EFH_MAGNITUDE">
+                    <meta attribute="unitType">length</meta>
+                    <meta attribute="description">The road segment EFH length</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+                <property name="riseHeight" column="RISE_DIST_MAGNITUDE">
+                    <meta attribute="unitType">depth</meta>
+                    <meta attribute="description">The road segment rise height</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">depth</param>
+                    </type>
+                </property>
+                <property name="fallHeight" column="FALL_DIST_MAGNITUDE">
+                    <meta attribute="unitType">depth</meta>
+                    <meta attribute="description">The road segment fall height</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">depth</param>
+                    </type>
+                </property>
+                <property name="loadStateDirection" type="string" column="LOAD_STATE_DIRECTION" length="254">
+                    <meta attribute="choices" inherit="false">choice:roadSegLoadStateDir</meta>
+                    <meta attribute="description">The road segment load state direction</meta>
+                </property>
+                <property name="loadStatus" type="minestar.domain.model.persistence.MachineLoadStatusUserType" column="LOAD_STATUS">
+                    <meta attribute="choices" inherit="false">choice:roadSegLoadStatus</meta>
+                    <meta attribute="description">The road segment load status</meta>
+                </property>
+                <property name="targetTravelDuration" column="TARGET_TIME_MAGNITUDE">
+                    <meta attribute="unitType">duration</meta>
+                    <meta attribute="description">The road segment target travel duration</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">duration</param>
+                    </type>
+                </property>
+                <property name="expectedTravelDuration" column="EXPECTED_TIME_MAGNITUDE">
+                    <meta attribute="unitType">duration</meta>
+                    <meta attribute="description">The road segment expected travel duration</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">duration</param>
+                    </type>
+                </property>
+                <property name="estimatedFuelUsed" column="ESTIMATED_FUEL_USED">
+                    <meta attribute="unitType">liquid volume</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">liquid volume</param>
+                    </type>
+                </property>
+                <property name="cost" column="COST_MAGNITUDE">
+                    <meta attribute="unitType">length</meta>
+                    <meta attribute="description">The road segment cost</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+
+                <property name="startVelocity" column="START_VELOCITY_MAGNITUDE">
+                    <meta attribute="unitType">speed</meta>
+                    <meta attribute="description">The road segment start velocity</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">speed</param>
+                    </type>
+                </property>
+                <property name="endVelocity" column="END_VELOCITY_MAGNITUDE">
+                    <meta attribute="unitType">speed</meta>
+                    <meta attribute="description">The road segment end velocity</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">speed</param>
+                    </type>
+                </property>
+                <property name="maximumVelocity" column="MAXIMUM_VELOCITY_MAGNITUDE">
+                    <meta attribute="unitType">speed</meta>
+                    <meta attribute="description">The road segment maximum velocity</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">speed</param>
+                    </type>
+                </property>
+
+                <property name="delayDuration" column="DELAY_DURATION_MAGNITUDE">
+                    <meta attribute="unitType">duration</meta>
+                    <meta attribute="description">The cycle delay duration</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">duration</param>
+                    </type>
+                </property>
+
+                <property name="predicted" type="minestar.platform.persistence.NullablePrimitiveBooleanUserType" column="IS_PREDICTED">
+                    <meta attribute="description">Was the delay predicted</meta>
+                </property>
+            </composite-element>
+        </map>
+
+        <property name="hasDelays" type="minestar.platform.persistence.NullablePrimitiveBooleanUserType" column="HASDELAYS">
+            <meta attribute="description">Indicates whether or not this cycle contains any delays.</meta>
+        </property>
+
+        <map name="allDelays" sort="natural" table="CYCLEDELAY" fetch="select" batch-size="100">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                columns=OID, START_TIME_UTC
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=CYCLEDELAY_1R
+                columns=DELAYOID
+                unique=false
+                tablespace=MW_IDXOBJ
+            </meta>
+            <meta attribute="index-alias">startTime</meta>
+            <meta attribute="index-view-include">false</meta>
+            <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+            <meta attribute="element-alias"/>
+            <key column="OID" not-null="true"/>
+            <map-key type="TimestampType" column="START_TIME_UTC"/>
+            <composite-element class="minestar.production.domain.cycle.CycleDelay">
+
+                <meta attribute="viewproperty-durationCalculated" inherit="false">
+                    type=float
+                    description=The associated duration calculated
+                    unitType=duration
+                    expression=lookupResource.cycleComponent.durationCalculated.query
+                </meta>
+                <meta attribute="viewproperty-startSMU" inherit="false">
+                    type=float
+                    description=The associated start SMU
+                    unitType=service meter hours
+                    expression=lookupResource.cycle.startSMU.query
+                </meta>
+                <meta attribute="viewproperty-endSMU" inherit="false">
+                    type=float
+                    description=The associated end SMU
+                    unitType=service meter hours
+                    expression=lookupResource.cycle.endSMU.query
+                </meta>
+
+                <property name="startTime" type="TimestampType" formula="START_TIME_UTC" not-null="true">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="utc-description">The delay start utc time</meta>
+                    <meta attribute="description">The delay start time</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+                <property name="endTime" type="TimestampType">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="utc-description">The delay end utc time</meta>
+                    <meta attribute="description">The delay end time</meta>
+                    <meta attribute="view-localtime">true</meta>
+                    <column name="END_TIME_UTC" not-null="true" default="01-JAN-1970"/>
+                </property>
+
+                <property name="delayOID" type="long">
+                    <meta attribute="alias" inherit="false">delay</meta>
+                    <meta attribute="manyToOne">minestar.production.domain.DelayImpl</meta>
+                    <meta attribute="description">The delay OID reference</meta>
+                    <column name="DELAYOID" not-null="true" default="0"/>
+                </property>
+                <property name="delayClassOID" type="long">
+                    <meta attribute="alias" inherit="false">delayClass</meta>
+                    <meta attribute="manyToOne">minestar.production.domain.DelayClass</meta>
+                    <meta attribute="description">The delay class OID reference</meta>
+                    <column name="DELAY_CLASS_OID" not-null="true" default="0"/>
+                </property>
+                <property name="delayClassName" type="string" column="DELAY_CLASS_NAME" length="254">
+                    <meta attribute="description">The delay class name</meta>
+                </property>
+                <property name="delayClassDesc" type="string" column="DELAY_CLASS_DESC" length="254">
+                    <meta attribute="description">The delay class description</meta>
+                </property>
+                <property name="delayCategory" type="string" column="DELAY_CATEGORY" length="254">
+                    <meta attribute="description">The delay category name</meta>
+                </property>
+
+                <property name="estimatedDuration" column="ESTIMATED_DURATION_MAGNITUDE">
+                    <meta attribute="unitType">duration</meta>
+                    <meta attribute="description">The delay estimated duration</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">duration</param>
+                    </type>
+                </property>
+                <property name="estimatedFuelUsed" column="ESTIMATED_FUEL_USED">
+                    <meta attribute="unitType">liquid volume</meta>
+                    <meta attribute="description">The delay estimated fuel used</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">liquid volume</param>
+                    </type>
+                </property>
+            </composite-element>
+        </map>
+
+        <join table="CYCLEREPORT" optional="true">
+            <key column="OID" not-null="true" on-delete="cascade"/>
+
+            <component name="cycleReport" class="minestar.production.domain.cycle.CycleReportDetails">
+                <meta attribute="description">Cycle report -VIMS- received for this cycle</meta>
+
+                <property name="timestamp" type="TimestampType" column="CRTIMESTAMP_UTC">
+                    <meta attribute="alias">eventTime</meta>
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="view-localtime">true</meta>
+                    <meta attribute="utc-description">The CRT utc timestamp</meta>
+                    <meta attribute="description">The CRT timestamp</meta>
+                </property>
+
+                <property name="loaderPassCount" type="java.lang.Short" column="CRLOADPASSCOUNT">
+                    <meta attribute="description">The number of loader passes</meta>
+                    <meta attribute="universe-type-measure">true</meta>
+                </property>
+
+                <property name="emptyStopDuration" column="CRMTSTOPTIME_MAG">
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="emptyTravelDistance" column="CRMTTRAVELDIST_MAG">
+                    <meta attribute="unitType">length</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="loadedStopDuration" column="CRLOADSTOPTIME_MAG">
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="emptyTravelDuration" column="CRMTTRAVELTIME_MAG">
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="loadDuration" column="CRLOADTIME_MAG">
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="loadedTravelDistance" column="CRLOADTRAVELDIST_MAG">
+                    <meta attribute="unitType">length</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="loadedTravelDuration" column="CRLOADTRAVELTIME_MAG">
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+            </component>
+        </join>
+
+        <!-- subclasses -->
+        <subclass name="minestar.production.domain.cycle.ProductionCycle" discriminator-value="XAEntity.Cycle.ProductionCycle" dynamic-update="true">
+            <property name="calcMaterialOID" type="long" column="CALCMATERIAL">
+                <meta attribute="calcMaterial">startBeacon</meta>
+                <meta attribute="manyToOne">minestar.machinetracking.domain.MaterialImpl</meta>
+            </property>
+            <property name="calcMaterialName" type="java.lang.String" column="CALCMATERIALNAME" length="254">
+                <meta attribute="description">The material name</meta>
+            </property>
+            <property name="density" column="DENSITY">
+                <meta attribute="description">The bank density of the material.</meta>
+                <meta attribute="unitType">density</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">density</param>
+                </type>
+            </property>
+            <property name="densityName" type="string" column="DENSITYNAME" length="254">
+                <meta attribute="description">The density name</meta>
+            </property>
+            <property name="densityType" type="string" column="DENSITYTYPE" length="254">
+                <meta attribute="description">The density type</meta>
+            </property>
+            <property name="dipperCount" type="minestar.platform.persistence.NullablePrimitiveShortUserType" column="DIPPERCOUNT">
+                <meta attribute="universe-type-measure">true</meta>
+                <meta attribute="description">The dipper count</meta>
+            </property>
+            <property name="dipperAverageSwingTime" column="DIPPERAVERAGESWINGTIME">
+                <meta attribute="description">The dipper average swing time</meta>
+                <meta attribute="unitType">duration</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+            <property name="startSMU" column="STARTSMU">
+                <meta attribute="description">The start service meter reading</meta>
+                <meta attribute="unitType">service meter hours</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">service meter hours</param>
+                </type>
+            </property>
+            <property name="endSMU" column="ENDSMU">
+                <meta attribute="description">The end service meter reading</meta>
+                <meta attribute="unitType">service meter hours</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">service meter hours</param>
+                </type>
+            </property>
+
+            <property name="loaderMaterialOID" type="long" column="LOADERMATERIAL">
+                <meta attribute="alias">loaderMaterial</meta>
+                <meta attribute="manyToOne">minestar.machinetracking.domain.MaterialImpl</meta>
+            </property>
+            <property name="loaderMaterialName" type="string" column="LOADERMATERIALNAME" length="254">
+                <meta attribute="description">The loader material name</meta>
+            </property>
+
+            <property name="operMaterialOID" type="long" column="OPERMATERIAL">
+                <meta attribute="alias">operMaterial</meta>
+                <meta attribute="manyToOne">minestar.machinetracking.domain.MaterialImpl</meta>
+            </property>
+            <property name="operMaterialName" type="string" column="OPERMATERIALNAME" length="254"/>
+
+            <property name="autoMaterialOID" type="long" column="AUTOMATERIAL">
+                <meta attribute="alias">autoMaterial</meta>
+                <meta attribute="manyToOne">minestar.machinetracking.domain.MaterialImpl</meta>
+            </property>
+            <property name="autoMaterialName" type="string" column="AUTOMATERIALNAME" length="254"/>
+
+            <property name="loadingToolMode" type="minestar.domain.model.persistence.LoadingToolOperatingModeUserType" column="LOADINGTOOLMODE">
+                <meta attribute="description">The mode of the loading tool at the end of this cycle. May not be
+                    the same as the loader cycle mode if the cycle is converted.</meta>
+            </property>
+            <property name="loadReportCount" type="minestar.platform.persistence.NullablePrimitiveIntegerUserType" column="LOADREPORTCOUNT">
+                <meta attribute="universe-type-measure">true</meta>
+            </property>
+            <property name="nominalPayload" column="NOMINALPAYLOAD">
+                <meta attribute="description">The nominal payload</meta>
+                <meta attribute="unitType">mass</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">mass</param>
+                </type>
+            </property>
+            <property name="payload" column="PAYLOAD">
+                <meta attribute="description">The payload</meta>
+                <meta attribute="unitType">mass</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">mass</param>
+                </type>
+            </property>
+
+            <bag name="payloadMeasurements" inverse="true" lazy="true" cascade="save-update" fetch="subselect">
+                <key column="CYCLE_OID"/>
+                <one-to-many class="minestar.pitlink.domain.machine.MachinePayloadMeasurement"/>
+            </bag>
+
+            <property name="rehandle" type="minestar.platform.persistence.NullablePrimitiveBooleanUserType" column="REHANDLE">
+                <meta attribute="description">Is it a rehandle cycle</meta>
+            </property>
+
+            <property name="sourceBlockOID" type="long" column="SOURCEBLOCK">
+                <meta attribute="alias">sourceBlock</meta>
+                <meta attribute="manyToOne">minestar.mine.domain.material.GradeBlockImpl</meta>
+            </property>
+            <property name="sourceBlockLevel" type="string" column="SOURCEBLOCKLEVEL" length="254"/>
+            <property name="sourceBlockName" type="string" column="SOURCEBLOCKNAME" length="254"/>
+
+            <property name="sourceLocationOID" type="long" column="SOURCELOCATION">
+                <meta attribute="alias">sourceLocation</meta>
+                <meta attribute="manyToOne">minestar.mine.domain.minemodel.LocationImpl</meta>
+            </property>
+            <property name="sourceLocationName" type="string" column="SOURCELOCATIONNAME" length="254"/>
+
+            <property name="loadedSlopeDistance" column="LOADTRAVDIST">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="emptySlopeDistance" column="MTTRAVDIST">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="loadedPlanDistance" column="LOADEDHORIZONTALDISTANCE">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="emptyPlanDistance" column="EMPTYHORIZONTALDISTANCE">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="loadedEfhDistance" column="LOADEDEFH">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="emptyEfhDistance" column="EMPTYEFH">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="loadedRiseDistance" column="LOADEDRISEDISTANCE">
+                <meta attribute="unitType">depth</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">depth</param>
+                </type>
+            </property>
+            <property name="emptyRiseDistance" column="EMPTYRISEDISTANCE">
+                <meta attribute="unitType">depth</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">depth</param>
+                </type>
+            </property>
+            <property name="loadedFallDistance" column="LOADEDFALLDISTANCE">
+                <meta attribute="unitType">depth</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">depth</param>
+                </type>
+            </property>
+            <property name="emptyFallDistance" column="EMPTYFALLDISTANCE">
+                <meta attribute="unitType">depth</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">depth</param>
+                </type>
+            </property>
+            <property name="loadedCoastingEfhDistance" column="LOADED_COASTING_EFHDIST">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="emptyCoastingEfhDistance" column="EMPTY_COASTING_EFHDIST">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="coastingTravelDuration" column="COASTING_TRAVEL_TIME">
+                <meta attribute="unitType">duration</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+            <property name="loadedTargetTravelDuration" column="LOADEDTARGETTRAVELTIME">
+                <meta attribute="unitType">duration</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+            <property name="emptyTargetTravelDuration" column="EMPTYTARGETTRAVELTIME">
+                <meta attribute="unitType">duration</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+            <property name="loadedExpectedTravelDuration" column="LOADEDEXPECTEDTRAVELTIME">
+                <meta attribute="unitType">duration</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+            <property name="emptyExpectedTravelDuration" column="EMPTYEXPECTEDTRAVELTIME">
+                <meta attribute="unitType">duration</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+            <property name="loadedActualTravelDuration" column="LOADEDACTUALTRAVELTIME">
+                <meta attribute="unitType">duration</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+            <property name="emptyActualTravelDuration" column="EMPTYACTUALTRAVELTIME">
+                <meta attribute="unitType">duration</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">duration</param>
+                </type>
+            </property>
+            <property name="vimsLoadedSlopeDistance" column="VIMSLOADEDSLOPEDISTANCE">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="vimsEmptySlopeDistance" column="VIMSEMPTYSLOPEDISTANCE">
+                <meta attribute="unitType">length</meta>
+                <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+
+            <property name="endSinkBlockOID" type="long" column="ENDSINKBLOCK">
+                <meta attribute="alias">endSinkBlock</meta>
+                <meta attribute="manyToOne">minestar.mine.domain.material.GradeBlockImpl</meta>
+            </property>
+            <property name="endSinkBlockLevel" type="string" column="ENDSINKBLOCKLEVEL" length="254"/>
+            <property name="endSinkBlockName" type="string" column="ENDSINKBLOCKNAME" length="254"/>
+
+            <property name="endSinkLocationOID" type="long" column="ENDSINKLOCATION">
+                <meta attribute="alias">endSinkLocation</meta>
+                <meta attribute="manyToOne">minestar.mine.domain.minemodel.LocationImpl</meta>
+            </property>
+            <property name="endSinkLocationName" type="string" column="ENDSINKLOCATIONNAME" length="254"/>
+
+            <property name="endProcessorOID" type="long" column="ENDPROCESSOR">
+                <meta attribute="alias">endProcessor</meta>
+                <meta attribute="manyToOne">minestar.pitlink.domain.machine.FixedProcessorImpl</meta>
+            </property>
+            <property name="endProcessorClassName" type="string" column="ENDPROCESSORCLASSNAME" length="254"/>
+            <property name="endProcessorName" type="string" column="ENDPROCESSORNAME" length="254"/>
+
+            <property name="activeBlendOID" type="long" column="ACTIVEBLEND">
+                <meta attribute="alias">activeBlend</meta>
+                <meta attribute="manyToOne">minestar.mine.domain.material.Blend</meta>
+            </property>
+
+            <property name="activeDestinationBlendOID" type="long">
+                <meta attribute="alias">activeDestinationBlend</meta>
+                <column name="ACTIVEDESTINATIONBLEND" not-null="false" />
+            </property>
+
+            <list name="calcDippers" table="CYCLE_CALC_DIPPER">
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    tablespace=MW_IDXENT
+                </meta>
+
+                <meta attribute="index-alias">dipperNr</meta>
+                <meta attribute="index-view-include">false</meta>
+                <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+                <meta attribute="element-alias"/>
+                <key column="OID" not-null="true"/>
+                <list-index column="DIPPER_NR"/>
+                <composite-element class="minestar.production.domain.ProductionDipperRecord">
+                    <property name="blockLabel" type="string" column="BLOCK_LABEL" length="254">
+                        <meta attribute="description">The block label</meta>
+                    </property>
+                    <property name="blastPatternName" type="string" column="BLAST_PAT_NAME" length="254">
+                        <meta attribute="description">The blast pattern name</meta>
+                    </property>
+                    <property name="dipperNumber" type="minestar.platform.persistence.NullablePrimitiveIntegerUserType" formula="DIPPER_NR">
+                        <meta attribute="description">The dipper number</meta>
+                    </property>
+                    <property name="gradeBlockOID" type="long" column="GRADEBLOCK_NAME">
+                        <meta attribute="alias">miningBlock</meta>
+                        <meta attribute="manyToOne">minestar.mine.domain.material.GradeBlockImpl</meta>
+                    </property>
+                    <property name="gradeCount" type="minestar.platform.persistence.NullablePrimitiveIntegerUserType" column="GRADE_COUNT">
+                        <meta attribute="universe-type-measure">true</meta>
+                        <meta attribute="description">The grade count</meta>
+                    </property>
+                    <property name="grade0" type="long" column="GRADE0" access="property">
+                        <meta attribute="alias" inherit="false">grade00</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade0Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade00</meta>
+                        <meta attribute="description">The grade 0 value</meta>
+                        <column name="GRADE0_MAGNITUDE"/>
+                    </property>
+                    <property name="grade1" type="long" column="GRADE1" access="property">
+                        <meta attribute="alias" inherit="false">grade01</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade1Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade01</meta>
+                        <meta attribute="description">The grade 1 value</meta>
+                        <column name="GRADE1_MAGNITUDE"/>
+                    </property>
+                    <property name="grade2" type="long" column="GRADE2" access="property">
+                        <meta attribute="alias" inherit="false">grade02</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade2Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade02</meta>
+                        <meta attribute="description">The grade 2 value</meta>
+                        <column name="GRADE2_MAGNITUDE"/>
+                    </property>
+                    <property name="grade3" type="long" column="GRADE3" access="property">
+                        <meta attribute="alias" inherit="false">grade03</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade3Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade03</meta>
+                        <meta attribute="description">The grade 3 value</meta>
+                        <column name="GRADE3_MAGNITUDE"/>
+                    </property>
+                    <property name="grade4" type="long" column="GRADE4" access="property">
+                        <meta attribute="alias" inherit="false">grade04</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade4Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade04</meta>
+                        <meta attribute="description">The grade 4 value</meta>
+                        <column name="GRADE4_MAGNITUDE"/>
+                    </property>
+                    <property name="grade5" type="long" column="GRADE5" access="property">
+                        <meta attribute="alias" inherit="false">grade05</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade5Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade05</meta>
+                        <meta attribute="description">The grade 5 value</meta>
+                        <column name="GRADE5_MAGNITUDE"/>
+                    </property>
+                    <property name="grade6" type="long" column="GRADE6" access="property">
+                        <meta attribute="alias" inherit="false">grade06</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade6Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade06</meta>
+                        <meta attribute="description">The grade 6 value</meta>
+                        <column name="GRADE6_MAGNITUDE"/>
+                    </property>
+                    <property name="grade7" type="long" column="GRADE7" access="property">
+                        <meta attribute="alias" inherit="false">grade07</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade7Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade07</meta>
+                        <meta attribute="description">The grade 7 value</meta>
+                        <column name="GRADE7_MAGNITUDE"/>
+                    </property>
+                    <property name="grade8" type="long" column="GRADE8" access="property">
+                        <meta attribute="alias" inherit="false">grade08</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade8Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade08</meta>
+                        <meta attribute="description">The grade 8 value</meta>
+                        <column name="GRADE8_MAGNITUDE"/>
+                    </property>
+                    <property name="grade9" type="long" column="GRADE9" access="property">
+                        <meta attribute="alias" inherit="false">grade09</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade9Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade09</meta>
+                        <meta attribute="description">The grade 9 value</meta>
+                        <column name="GRADE9_MAGNITUDE"/>
+                    </property>
+                    <property name="grade10" type="long" column="GRADE10" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade10Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade10</meta>
+                        <meta attribute="description">The grade 10 value</meta>
+                        <column name="GRADE10_MAGNITUDE"/>
+                    </property>
+                    <property name="grade11" type="long" column="GRADE11" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade11Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade11</meta>
+                        <meta attribute="description">The grade 11 value</meta>
+                        <column name="GRADE11_MAGNITUDE"/>
+                    </property>
+                    <property name="grade12" type="long" column="GRADE12" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade12Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade12</meta>
+                        <meta attribute="description">The grade 12 value</meta>
+                        <column name="GRADE12_MAGNITUDE"/>
+                    </property>
+                    <property name="grade13" type="long" column="GRADE13" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade13Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade13</meta>
+                        <meta attribute="description">The grade 13 value</meta>
+                        <column name="GRADE13_MAGNITUDE"/>
+                    </property>
+                    <property name="grade14" type="long" column="GRADE14" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade14Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade14</meta>
+                        <meta attribute="description">The grade 14 value</meta>
+                        <column name="GRADE14_MAGNITUDE"/>
+                    </property>
+                    <property name="grade15" type="long" column="GRADE15" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade15Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade15</meta>
+                        <meta attribute="description">The grade 15 value</meta>
+                        <column name="GRADE15_MAGNITUDE"/>
+                    </property>
+                    <property name="grade16" type="long" column="GRADE16" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade16Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade16</meta>
+                        <meta attribute="description">The grade 16 value</meta>
+                        <column name="GRADE16_MAGNITUDE"/>
+                    </property>
+                    <property name="grade17" type="long" column="GRADE17" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade17Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade17</meta>
+                        <meta attribute="description">The grade 17 value</meta>
+                        <column name="GRADE17_MAGNITUDE"/>
+                    </property>
+                    <property name="grade18" type="long" column="GRADE18" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade18Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade18</meta>
+                        <meta attribute="description">The grade 18 value</meta>
+                        <column name="GRADE18_MAGNITUDE"/>
+                    </property>
+                    <property name="grade19" type="long" column="GRADE19" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade19Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade19</meta>
+                        <meta attribute="description">The grade 19 value</meta>
+                        <column name="GRADE19_MAGNITUDE"/>
+                    </property>
+                    <property name="materialName" type="string" column="MATERIAL_NAME" length="254">
+                        <meta attribute="description">The material name</meta>
+                    </property>
+                    <property name="payload" column="PAYLOAD_MAGNITUDE">
+                        <meta attribute="description">The payload magnitude</meta>
+                        <meta attribute="unitType">mass</meta>
+                        <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                            <param name="unitType">mass</param>
+                        </type>
+                    </property>
+                    <property name="materialCoords" type="XYZCoordinate">
+                        <meta attribute="description">The material coordinates</meta>
+                        <column name="XCOORD_MAGNITUDE"/>
+                        <column name="YCOORD_MAGNITUDE"/>
+                        <column name="ZCOORD_MAGNITUDE"/>
+                    </property>
+                    <property name="timestamp" type="TimestampType" column="TIMESTAMP_UTC">
+                        <meta attribute="utc-description">The utc timestamp</meta>
+                        <meta attribute="description">The timestamp</meta>
+                        <meta attribute="view-localtime">true</meta>
+                    </property>
+                    <property name="dipperReason" type="string" column="DIPPER_REASON" length="254">
+                        <meta attribute="alias">calcDipperReason</meta>
+                        <meta attribute="description">Dipper reason</meta>
+                    </property>
+                    <property name="materialOid" type="long" column="MATERIAL_OID">
+                        <meta attribute="description">The OID of the dipper material.</meta>
+                        <meta attribute="alias" inherit="false">material</meta>
+                        <meta attribute="manyToOne">minestar.machinetracking.domain.MaterialImpl</meta>
+                    </property>
+                    <property name="digCoords" type="XYZCoordinate">
+                        <column name="XCOORD_DIG"/>
+                        <column name="YCOORD_DIG"/>
+                        <column name="ZCOORD_DIG"/>
+                    </property>
+                </composite-element>
+            </list>
+
+            <list name="minedDippers" table="CYCLE_MINED_DIPPER">
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    tablespace=MW_IDXENT
+                </meta>
+
+                <meta attribute="index-alias">dipperNr</meta>
+                <meta attribute="index-view-include">false</meta>
+                <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+                <meta attribute="element-alias"/>
+                <key column="OID" not-null="true"/>
+                <list-index column="DIPPER_NR"/>
+                <composite-element class="minestar.production.domain.ProductionDipperRecord">
+                    <property name="blockLabel" type="string" column="BLOCK_LABEL" length="254">
+                        <meta attribute="description">The block label</meta>
+                    </property>
+                    <property name="blastPatternName" type="string" column="BLAST_PAT_NAME" length="254">
+                        <meta attribute="description">The blast pattern name</meta>
+                    </property>
+                    <property name="dipperNumber" type="minestar.platform.persistence.NullablePrimitiveIntegerUserType" formula="DIPPER_NR">
+                        <meta attribute="description">The dipper number</meta>
+                    </property>
+                    <property name="gradeBlockOID" type="long" column="GRADEBLOCK_NAME">
+                        <meta attribute="alias">miningBlock</meta>
+                        <meta attribute="manyToOne">minestar.mine.domain.material.GradeBlockImpl</meta>
+                    </property>
+                    <property name="gradeCount" type="minestar.platform.persistence.NullablePrimitiveIntegerUserType" column="GRADE_COUNT">
+                        <meta attribute="universe-type-measure">true</meta>
+                        <meta attribute="description">The grade count</meta>
+                    </property>
+                    <property name="grade0" type="long" column="GRADE0" access="property">
+                        <meta attribute="alias" inherit="false">grade00</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade0Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade00</meta>
+                        <column name="GRADE0_MAGNITUDE"/>
+                    </property>
+                    <property name="grade1" type="long" column="GRADE1" access="property">
+                        <meta attribute="alias" inherit="false">grade01</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade1Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade01</meta>
+                        <column name="GRADE1_MAGNITUDE"/>
+                    </property>
+                    <property name="grade2" type="long" column="GRADE2" access="property">
+                        <meta attribute="alias" inherit="false">grade02</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade2Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade02</meta>
+                        <column name="GRADE2_MAGNITUDE"/>
+                    </property>
+                    <property name="grade3" type="long" column="GRADE3" access="property">
+                        <meta attribute="alias" inherit="false">grade03</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade3Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade03</meta>
+                        <column name="GRADE3_MAGNITUDE"/>
+                    </property>
+                    <property name="grade4" type="long" column="GRADE4" access="property">
+                        <meta attribute="alias" inherit="false">grade04</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade4Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade04</meta>
+                        <column name="GRADE4_MAGNITUDE"/>
+                    </property>
+                    <property name="grade5" type="long" column="GRADE5" access="property">
+                        <meta attribute="alias" inherit="false">grade05</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade5Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade05</meta>
+                        <column name="GRADE5_MAGNITUDE"/>
+                    </property>
+                    <property name="grade6" type="long" column="GRADE6" access="property">
+                        <meta attribute="alias" inherit="false">grade06</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade6Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade06</meta>
+                        <column name="GRADE6_MAGNITUDE"/>
+                    </property>
+                    <property name="grade7" type="long" column="GRADE7" access="property">
+                        <meta attribute="alias" inherit="false">grade07</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade7Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade07</meta>
+                        <column name="GRADE7_MAGNITUDE"/>
+                    </property>
+                    <property name="grade8" type="long" column="GRADE8" access="property">
+                        <meta attribute="alias" inherit="false">grade08</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade8Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade08</meta>
+                        <column name="GRADE8_MAGNITUDE"/>
+                    </property>
+                    <property name="grade9" type="long" column="GRADE9" access="property">
+                        <meta attribute="alias" inherit="false">grade09</meta>
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade9Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade09</meta>
+                        <column name="GRADE9_MAGNITUDE"/>
+                    </property>
+                    <property name="grade10" type="long" column="GRADE10" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade10Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade10</meta>
+                        <column name="GRADE10_MAGNITUDE"/>
+                    </property>
+                    <property name="grade11" type="long" column="GRADE11" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade11Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade11</meta>
+                        <column name="GRADE11_MAGNITUDE"/>
+                    </property>
+                    <property name="grade12" type="long" column="GRADE12" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade12Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade12</meta>
+                        <column name="GRADE12_MAGNITUDE"/>
+                    </property>
+                    <property name="grade13" type="long" column="GRADE13" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade13Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade13</meta>
+                        <column name="GRADE13_MAGNITUDE"/>
+                    </property>
+                    <property name="grade14" type="long" column="GRADE14" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade14Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade14</meta>
+                        <column name="GRADE14_MAGNITUDE"/>
+                    </property>
+                    <property name="grade15" type="long" column="GRADE15" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade15Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade15</meta>
+                        <column name="GRADE15_MAGNITUDE"/>
+                    </property>
+                    <property name="grade16" type="long" column="GRADE16" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade16Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade16</meta>
+                        <column name="GRADE16_MAGNITUDE"/>
+                    </property>
+                    <property name="grade17" type="long" column="GRADE17" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade17Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade17</meta>
+                        <column name="GRADE17_MAGNITUDE"/>
+                    </property>
+                    <property name="grade18" type="long" column="GRADE18" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade18Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade18</meta>
+                        <column name="GRADE18_MAGNITUDE"/>
+                    </property>
+                    <property name="grade19" type="long" column="GRADE19" access="property">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="grade19Value" type="double" access="property">
+                        <meta attribute="alias" inherit="false">grade19</meta>
+                        <column name="GRADE19_MAGNITUDE"/>
+                    </property>
+                    <property name="materialName" type="string" column="MATERIAL_NAME" length="254"/>
+                    <property name="payload" column="PAYLOAD_MAGNITUDE">
+                        <meta attribute="unitType">mass</meta>
+                        <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                            <param name="unitType">mass</param>
+                        </type>
+                    </property>
+                    <property name="materialCoords" type="XYZCoordinate">
+                        <column name="XCOORD_MAGNITUDE"/>
+                        <column name="YCOORD_MAGNITUDE"/>
+                        <column name="ZCOORD_MAGNITUDE"/>
+                    </property>
+                    <property name="timestamp" type="TimestampType" column="TIMESTAMP_UTC">
+                        <meta attribute="view-localtime">true</meta>
+                        <meta attribute="utc-description">The utc timestamp</meta>
+                        <meta attribute="description">The timestamp</meta>
+                    </property>
+                    <property name="caesFlag" type="minestar.platform.persistence.NullablePrimitiveBooleanUserType" column="CAES_FLAG">
+                        <meta attribute="alias">caesFlag</meta>
+                        <meta attribute="description">Determines if the dipper is from a loader</meta>
+                    </property>
+                    <property name="dipperReason" type="string" column="DIPPER_REASON" length="254">
+                        <meta attribute="alias">mindeDipperReason</meta>
+                        <meta attribute="description">Mined Dipper reason</meta>
+                    </property>
+                    <property name="materialOid" type="long" column="MATERIAL_OID">
+                        <meta attribute="description">The OID of the dipper material.</meta>
+                        <meta attribute="alias" inherit="false">material</meta>
+                        <meta attribute="manyToOne">minestar.machinetracking.domain.MaterialImpl</meta>
+                    </property>
+                </composite-element>
+            </list>
+
+            <set name="sourceGradesMined" table="CYCLE_SOURCE_GRADE_MINED">
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    columns=OID, GRADE_OID
+                    tablespace=MW_IDXENT
+                </meta>
+
+                <meta attribute="index-alias">grade</meta>
+                <meta attribute="index-view-include">false</meta>
+                <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+                <meta attribute="element-alias"/>
+                <key column="OID" not-null="true"/>
+                <composite-element class="minestar.production.domain.grade.GradeInformation">
+                    <property name="gradeOID" type="long" column="GRADE_OID" not-null="true">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="gradeName" type="string" column="GRADE_NAME" length="254" not-null="true">
+                        <meta attribute="description">The mined source grade name</meta>
+                    </property>
+                    <property name="valueMagnitude" type="java.lang.Float" column="MAGNITUDE" not-null="true">
+                        <meta attribute="quantity">Null:LOOKUP(UNITNAME, GRADE, GRADE_OID, GRADE_OID)</meta>
+                        <meta attribute="alias" inherit="false">gradeValue</meta>
+                        <meta attribute="description">The mined source value magnitude</meta>
+                    </property>
+                </composite-element>
+            </set>
+
+            <set name="sourceGradesCalced" table="CYCLE_SOURCE_GRADE_CALC">
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    columns=OID, GRADE_OID
+                    tablespace=MW_IDXENT
+                </meta>
+
+                <meta attribute="index-alias">grade</meta>
+                <meta attribute="index-view-include">false</meta>
+                <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+                <meta attribute="element-alias"/>
+                <key column="OID" not-null="true"/>
+                <composite-element class="minestar.production.domain.grade.GradeInformation">
+                    <property name="gradeOID" type="long" column="GRADE_OID" not-null="true">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="gradeName" type="string" column="GRADE_NAME" length="254">
+                        <meta attribute="description">The mined source grade name</meta>
+                    </property>
+                    <property name="valueMagnitude" type="java.lang.Float" column="MAGNITUDE">
+                        <meta attribute="quantity">Null:LOOKUP(UNITNAME, GRADE, GRADE_OID, GRADE_OID)</meta>
+                        <meta attribute="alias" inherit="false">gradeValue</meta>
+                        <meta attribute="description">The mined source value magnitude</meta>
+                    </property>
+                </composite-element>
+            </set>
+
+            <set name="sinkGrades" table="CYCLE_SINK_GRADE">
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    columns=OID, GRADE_OID
+                    tablespace=MW_IDXENT
+                </meta>
+
+                <meta attribute="index-alias">grade</meta>
+                <meta attribute="index-view-include">false</meta>
+                <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+                <meta attribute="element-alias"/>
+                <key column="OID" not-null="true"/>
+                <composite-element class="minestar.production.domain.grade.GradeInformation">
+                    <property name="gradeOID" type="long" column="GRADE_OID" not-null="true">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.ContinuousGrade</meta>
+                    </property>
+                    <property name="gradeName" type="string" column="GRADE_NAME" length="254">
+                        <meta attribute="description">The sink grade name</meta>
+                    </property>
+                    <property name="valueMagnitude" type="java.lang.Float" column="MAGNITUDE">
+                        <meta attribute="quantity">Null:LOOKUP(UNITNAME, GRADE, GRADE_OID, GRADE_OID)</meta>
+                        <meta attribute="alias" inherit="false">gradeValue</meta>
+                        <meta attribute="description">The sink value magnitude</meta>
+                    </property>
+                </composite-element>
+            </set>
+
+            <set name="discreteGrades" table="CYCLE_DISCRETE_GRADE">
+                <meta attribute="collection-table">
+                    tablespace=MW_ENT
+                </meta>
+                <meta attribute="collection-primary-key">
+                    columns=OID, GRADE_OID
+                    tablespace=MW_IDXENT
+                </meta>
+
+                <meta attribute="index-alias">grade</meta>
+                <meta attribute="index-view-include">false</meta>
+                <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+                <meta attribute="element-alias"/>
+                <key column="OID" not-null="true"/>
+                <composite-element class="minestar.production.domain.grade.DiscreteGradeInformation">
+                    <property name="gradeOID" type="long" column="GRADE_OID" not-null="true">
+                        <meta attribute="manyToOne">minestar.production.domain.grade.DiscreteGrade</meta>
+                    </property>
+                    <property name="gradeName" type="string" column="GRADE_NAME" length="254">
+                        <meta attribute="description">The grade name.</meta>
+                    </property>
+                    <property name="valueDisc" type="string" column="GRADE_VALUE" length="254">
+                        <meta attribute="description">The discrete value of the grade.</meta>
+                    </property>
+                </composite-element>
+            </set>
+
+            <subclass name="minestar.production.domain.cycle.LoaderCycle" discriminator-value="XAEntity.Cycle.ProductionCycle.LoaderCycle">
+
+                <property name="cycleSubtype" type="minestar.domain.model.persistence.LoaderCycleModeUserType">
+                    <meta attribute="choices" inherit="false">choice:cycleSubtype</meta>
+                    <meta attribute="description">The loader cycle subtype which is recorded for a machine in this mode.</meta>
+                    <column name="CYCLE_SUBTYPE" />
+                </property>
+
+                <subclass name="minestar.production.domain.cycle.SelfLoaderCycle" discriminator-value="XAEntity.Cycle.ProductionCycle.LoaderCycle.SelfLoaderCycle">
+                    <meta attribute="description">Self loader production cycle</meta>
+
+                    <property name="sinkBlockOID" type="long" column="SINKBLOCK">
+                        <meta attribute="alias">sinkBlock</meta>
+                        <meta attribute="manyToOne">minestar.mine.domain.material.GradeBlockImpl</meta>
+                    </property>
+                    <property name="sinkBlockName" type="string" column="SINKBLOCKNAME" length="254"/>
+
+                    <property name="sinkLocationOID" type="long" column="SINKLOCATION">
+                        <meta attribute="alias">sinkLocation</meta>
+                        <meta attribute="manyToOne">minestar.mine.domain.minemodel.LocationImpl</meta>
+                    </property>
+                    <property name="sinkLocationName" type="string" column="SINKLOCATIONNAME" length="254"/>
+
+                    <property name="processorOID" type="long" column="PROCESSOR">
+                        <meta attribute="alias">processor</meta>
+                        <meta attribute="manyToOne">minestar.pitlink.domain.machine.FixedProcessorImpl</meta>
+                    </property>
+                    <property name="processorClassName" type="string" column="PROCESSORCLASSNAME" length="254"/>
+                    <property name="processorName" type="string" column="PROCESSORNAME" length="254"/>
+                </subclass>
+            </subclass>
+
+            <subclass name="minestar.production.domain.cycle.TruckCycle" discriminator-value="XAEntity.Cycle.ProductionCycle.TruckCycle" dynamic-update="true">
+                <meta attribute="description">Truck production cycle</meta>
+                <property name="transmissionShifts" type="minestar.platform.persistence.NullablePrimitiveShortUserType" column="TRANSMISSIONSHIFTS"/>
+                <property name="fuelUsed" column="FUELUSED">
+                    <meta attribute="unitType">liquid volume</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">liquid volume</param>
+                    </type>
+                </property>
+                <property name="fuelLevel" column="FUELLEVEL">
+                    <meta attribute="unitType">ratio</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+
+                <property name="lastBeaconDumpOID" type="long" column="LASTBEACONDUMP">
+                    <meta attribute="alias" inherit="false">lastWaypointDump</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.WaypointImpl</meta>
+                </property>
+                <property name="lastBeaconDumpName" type="string" column="LASTBEACONDUMPNAME" length="254">
+                    <meta attribute="alias" inherit="false">lastWaypointDumpName</meta>
+                </property>
+
+                <property name="lastBeaconLoadOID" type="long" column="LASTBEACONLOAD">
+                    <meta attribute="alias" inherit="false">lastWaypointLoad</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.WaypointImpl</meta>
+                </property>
+                <property name="lastBeaconLoadName" type="string" column="LASTBEACONLOADNAME" length="254">
+                    <meta attribute="alias" inherit="false">lastWaypointLoadName</meta>
+                </property>
+
+                <property name="lastKnownMaterialOID" type="long" column="LASTKNOWNMATERIAL">
+                    <meta attribute="alias">lastKnownMaterial</meta>
+                    <meta attribute="manyToOne">minestar.machinetracking.domain.MaterialImpl</meta>
+                </property>
+                <property name="lastKnownMaterialName" type="string" column="LASTKNOWNMATERIALNAME" length="254"/>
+
+                <property name="assignedSinkLocationOID" type="long" column="ASSIGNEDSINKLOCATION">
+                    <meta attribute="alias">assignedSinkLocation</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.LocationImpl</meta>
+                </property>
+                <property name="assignedSinkLocationName" type="string" column="ASSIGNEDSINKLOCATIONNAME" length="254"/>
+
+                <property name="observedSinkLocationOID" type="long" column="OBSERVEDSINKLOCATION">
+                    <meta attribute="alias">observedSinkLocation</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.LocationImpl</meta>
+                </property>
+                <property name="observedSinkLocationName" type="string" column="OBSERVEDSINKLOCATIONNAME" length="254"/>
+
+                <property name="freeDestPercent" column="FREEDESTPERCENT_MAGNITUDE">
+                    <meta attribute="unitType">ratio</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+                <property name="freeGrpDestPercent" column="FREEGRPDESTPERCENT_MAGNITUDE">
+                    <meta attribute="unitType">ratio</meta>
+                    <type name="minestar.platform.persistence.NullablePrimitiveDoubleUserType">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+            </subclass>
+            <subclass name="minestar.production.domain.cycle.LoadHaulDumpCycle" discriminator-value="XAEntity.Cycle.ProductionCycle.LoadHaulDumpCycle" dynamic-update="true">
+                <meta attribute="description">LHD production cycle</meta>
+
+                <property name="spillCycle" type="minestar.platform.persistence.NullablePrimitiveBooleanUserType" column="SPILLCYCLE" />
+                <property name="lastBeaconDumpOID" type="long" column="LASTBEACONDUMP">
+                    <meta attribute="alias" inherit="false">lastWaypointDump</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.WaypointImpl</meta>
+                </property>
+                <property name="lastBeaconDumpName" type="string" column="LASTBEACONDUMPNAME" length="254">
+                    <meta attribute="alias" inherit="false">lastWaypointDumpName</meta>
+                </property>
+
+                <property name="lastBeaconLoadOID" type="long" column="LASTBEACONLOAD">
+                    <meta attribute="alias" inherit="false">lastWaypointLoad</meta>
+                    <meta attribute="manyToOne">minestar.mine.domain.minemodel.WaypointImpl</meta>
+                </property>
+                <property name="lastBeaconLoadName" type="string" column="LASTBEACONLOADNAME" length="254">
+                    <meta attribute="alias" inherit="false">lastWaypointLoadName</meta>
+                </property>
+            </subclass>
+
+            <subclass name="minestar.production.domain.cycle.SecondaryBreakageUnitCycle" discriminator-value="XAEntity.Cycle.ProductionCycle.SecondaryBreakageUnitCycle" dynamic-update="true">
+                <meta attribute="description">SBU production cycle</meta>
+            </subclass>
+        </subclass>
+
+        <subclass name="minestar.production.domain.cycle.AuxiliaryCycle" discriminator-value="XAEntity.Cycle.AuxiliaryCycle">
+            <subclass name="minestar.production.domain.cycle.AuxMobileCycle" discriminator-value="XAEntity.Cycle.AuxiliaryCycle.AuxMobileCycle">
+                <subclass name="minestar.production.domain.cycle.DrillCycle" discriminator-value="XAEntity.Cycle.AuxiliaryCycle.AuxMobileCycle.DrillCycle">
+                    <meta attribute="description">Drill production cycle</meta>
+                    <property name="gpsAccuracy" type="short" column="GPSACCURACY">
+                        <meta attribute="choices" inherit="false">choice:gpsAccuracy</meta>
+                    </property>
+
+                    <property name="bi" column="BI">
+                        <meta attribute="unitType">ratio</meta>
+                        <meta attribute="description">Blastability index</meta>
+                        <type name="quantity">
+                            <param name="unitType">ratio</param>
+                        </type>
+                    </property>
+
+                    <map name="holeProfile" table="DRILL_HOLE_PROFILE">
+                        <meta attribute="collection-table">
+                            tablespace=MW_ENT
+                        </meta>
+                        <meta attribute="collection-primary-key">
+                            columns=OID, SLICE_START_UTC
+                            tablespace=MW_IDXENT
+                        </meta>
+
+                        <meta attribute="index-alias">startTime</meta>
+                        <meta attribute="index-view-include">false</meta>
+                        <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+                        <meta attribute="element-alias"/>
+                        <key column="OID" not-null="true"/>
+                        <map-key type="TimestampType" column="SLICE_START_UTC"/>
+                        <composite-element class="minestar.production.domain.cycle.DrillHoleProfile">
+                            <property name="sliceStart" type="TimestampType" formula="SLICE_START_UTC" not-null="true">
+                                <meta attribute="timestamp">true</meta>
+                                <meta attribute="utc-description">The slice start utc time</meta>
+                                <meta attribute="description">The slice start time</meta>
+                                <meta attribute="view-localtime">true</meta>
+                            </property>
+
+                            <property name="sliceEnd" type="TimestampType" column="SLICE_END_UTC">
+                                <meta attribute="timestamp">true</meta>
+                                <meta attribute="utc-description">The slice end utc time</meta>
+                                <meta attribute="description">The slice end time</meta>
+                                <meta attribute="view-localtime">true</meta>
+                            </property>
+
+                            <property name="sliceDepth" column="SLICE_DEPTH">
+                                <meta attribute="unitType">depth</meta>
+                                <meta attribute="description">The slice depth</meta>
+                                <type name="quantity">
+                                    <param name="unitType">depth</param>
+                                </type>
+                            </property>
+
+                            <property name="avgRPM" column="AVERAGE_RPM">
+                                <meta attribute="unitType">angular velocity</meta>
+                                <meta attribute="description">The average RPM.</meta>
+                                <type name="quantity">
+                                    <param name="unitType">angular velocity</param>
+                                </type>
+                            </property>
+
+                            <property name="weightOnBit" column="WEIGHT_ON_BIT">
+                                <meta attribute="unitType">force</meta>
+                                <meta attribute="description">The weight on the bit</meta>
+                                <type name="quantity">
+                                    <param name="unitType">force</param>
+                                </type>
+                            </property>
+
+                            <property name="torque" column="TORQUE">
+                                <meta attribute="unitType">torque</meta>
+                                <meta attribute="description">The torque</meta>
+                                <type name="quantity">
+                                    <param name="unitType">torque</param>
+                                </type>
+                            </property>
+
+                            <property name="rop" column="ROP">
+                                <meta attribute="unitType">speed</meta>
+                                <meta attribute="description">The ROP speed</meta>
+                                <type name="quantity">
+                                    <param name="unitType">drill speed</param>
+                                </type>
+                            </property>
+
+                            <property name="airPressure" column="AIR_PRESSURE">
+                                <meta attribute="unitType">pressure</meta>
+                                <meta attribute="description">The air pressure</meta>
+                                <type name="quantity">
+                                    <param name="unitType">pressure</param>
+                                </type>
+                            </property>
+
+                            <property name="vibration" column="VIBRATION">
+                                <meta attribute="unitType">acceleration</meta>
+                                <meta attribute="description">The vibration</meta>
+                                <type name="quantity">
+                                    <param name="unitType">acceleration</param>
+                                </type>
+                            </property>
+
+                            <property name="bi" column="BI">
+                                <meta attribute="unitType">ratio</meta>
+                                <type name="quantity">
+                                    <param name="unitType">ratio</param>
+                                </type>
+                            </property>
+
+                            <property name="rockType" type="string" column="ROCK_TYPE">
+                                <meta attribute="description">The rock type</meta>
+                            </property>
+                        </composite-element>
+                    </map>
+                    <map name="consumable" table="DRILL_HOLE_CONSUMABLE">
+                        <meta attribute="collection-table">
+                            tablespace=MW_ENT
+                        </meta>
+                        <meta attribute="collection-primary-key">
+                            columns=OID, CONSUMABLE_NAME
+                            tablespace=MW_IDXENT
+                        </meta>
+
+                        <meta attribute="index-alias">consumableName</meta>
+                        <meta attribute="key-manyToOne">minestar.production.domain.cycle.Cycle</meta>
+                        <meta attribute="element-alias"/>
+                        <key column="OID" not-null="true"/>
+                        <map-key type="string" column="CONSUMABLE_NAME"/>
+                        <composite-element class="minestar.production.domain.cycle.DrillHoleConsumable">
+                            <property name="drillStart" type="TimestampType" column="DRILL_START_UTC">
+                                <meta attribute="timestamp">true</meta>
+                                <meta attribute="utc-description">The drill start utc time</meta>
+                                <meta attribute="description">The drill start time</meta>
+                                <meta attribute="view-localtime">true</meta>
+                            </property>
+                            <property name="drillFinish" type="TimestampType" column="DRILL_FINISH_UTC">
+                                <meta attribute="timestamp">true</meta>
+                                <meta attribute="utc-description">The drill finish utc time</meta>
+                                <meta attribute="description">The drill finish time</meta>
+                                <meta attribute="view-localtime">true</meta>
+                            </property>
+                            <property name="consumableCount" type="java.lang.Integer" column="CONSUMABLE_COUNT">
+                                <meta attribute="description">The drill consumable count</meta>
+                            </property>
+                            <property name="consumableType" type="java.lang.Integer" column="CONSUMABLE_TYPE">
+                                <meta attribute="choices" inherit="false">choice:drillConsumableType</meta>
+                                <meta attribute="description">The drill consumable type</meta>
+
+                            </property>
+                            <property name="consumableName" type="string" formula="CONSUMABLE_NAME" not-null="true">
+                                <meta attribute="description">The drill consumable name</meta>
+                            </property>
+                            <property name="meterage" column="METERAGE">
+                                <meta attribute="unitType">depth</meta>
+                                <meta attribute="description">Metres drilled by this consumable during this cycle</meta>
+                                <type name="quantity">
+                                    <param name="unitType">depth</param>
+                                </type>
+                            </property>
+                            <property name="energyDissipated" column="ENERGY_DISSIPATED">
+                                <meta attribute="unitType">energy</meta>
+                                <meta attribute="description">Energy dissipated by the bit in this cycle</meta>
+                                <type name="quantity">
+                                    <param name="unitType">energy</param>
+                                </type>
+                            </property>
+                            <property name="rotations" type="java.lang.Integer" column="ROTATIONS">
+                                <meta attribute="description">Number of rotations by the bit in this cycle</meta>
+                                <meta attribute="universe-type-measure">true</meta>
+                            </property>
+                        </composite-element>
+                    </map>
+
+                    <join table="DRILL_HOLE_INFORMATION" optional="true">
+                        <key column="OID" not-null="true" on-delete="cascade"/>
+
+                        <component name="hole" class="minestar.production.domain.cycle.DrillHoleInfo">
+                            <meta attribute="view-master" inherit="false">false</meta>
+                            <meta attribute="table">
+                                tablespace=MW_OBJ
+                            </meta>
+                            <meta attribute="primary-key">
+                                tablespace=MW_IDXOBJ
+                            </meta>
+                            <meta attribute="description">Drill hole information</meta>
+
+                            <property name="drillStart" type="TimestampType" column="DRILL_START_UTC">
+                                <meta attribute="timestamp">true</meta>
+                                <meta attribute="utc-description">The utc time the drilling  started</meta>
+                                <meta attribute="description">The time the drilling  started</meta>
+                                <meta attribute="view-localtime">true</meta>
+                            </property>
+                            <property name="drillFinish" type="TimestampType" column="DRILL_FINISH_UTC">
+                                <meta attribute="timestamp">true</meta>
+                                <meta attribute="utc-description">The utc time the drilling  finished</meta>
+                                <meta attribute="description">The time the drilling  finished</meta>
+                                <meta attribute="view-localtime">true</meta>
+                            </property>
+                            <property name="breakingGroundDuration" column="BREAK_GROUND">
+                                <meta attribute="unitType">duration</meta>
+                                <type name="quantity">
+                                    <param name="unitType">duration</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="depthActual" column="DEPTH_ACTUAL">
+                                <meta attribute="unitType">depth</meta>
+                                <type name="quantity">
+                                    <param name="unitType">depth</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="nameActual" type="string" column="NAME_ACTUAL"/>
+                            <property name="blastActual" type="string" column="BLAST_ACTUAL"/>
+                            <property name="patternActual" type="string" column="PATTERN_ACTUAL"/>
+                            <property name="depthDesign" column="DEPTH_DESIGN">
+                                <meta attribute="unitType">depth</meta>
+                                <type name="quantity">
+                                    <param name="unitType">depth</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="nameDesign" type="string" column="NAME_DESIGN"/>
+                            <property name="blastDesign" type="string" column="BLAST_DESIGN"/>
+                            <property name="patternDesign" type="string" column="PATTERN_DESIGN"/>
+                            <property name="holeType" type="int" column="HOLE_TYPE">
+                                <meta attribute="choices" inherit="false">choice:drillHoleType</meta>
+                            </property>
+                        </component>
+                    </join>
+
+                    <join table="DRILL_HOLE_POSITION" optional="true">
+                        <key column="OID" not-null="true" on-delete="cascade"/>
+
+                        <component name="holePosition" class="minestar.production.domain.cycle.DrillHolePosition">
+                            <meta attribute="view-master">false</meta>
+                            <meta attribute="table">
+                                tablespace=MW_OBJ
+                            </meta>
+                            <meta attribute="primary-key">
+                                tablespace=MW_IDXOBJ
+                            </meta>
+                            <meta attribute="description">Drill hole position</meta>
+
+                            <property name="drillStart" type="TimestampType" column="DRILL_START_UTC">
+                                <meta attribute="timestamp">true</meta>
+                                <meta attribute="utc-description">The utc time drilling started.</meta>
+                                <meta attribute="description">The time drilling started.</meta>
+                                <meta attribute="view-localtime">true</meta>
+                            </property>
+                            <property name="drillFinish" type="TimestampType" column="DRILL_FINISH_UTC">
+                                <meta attribute="timestamp">true</meta>
+                                <meta attribute="utc-description">The utc time drilling finished.</meta>
+                                <meta attribute="description">The time drilling finished.</meta>
+                                <meta attribute="view-localtime">true</meta>
+                            </property>
+                            <property name="accuracyHorizontal" column="ACCURACYHORIZONTAL">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Horizontal accuracy</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="accuracyVertical" column="ACCURACYVERTICAL">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Vertical accuracy</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="collarElevationActual" column="COLLARELEVATION">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Actual collar elevation</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="eastingActual" column="EASTINGACTUAL">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Actual drill hole easting</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="northingActual" column="NORTHINGACTUAL">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Actual drill hole northing</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="elevationActual" column="ELEVATIONACTUAL">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Actual drill hole elevation</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="headingActual" column="HEADINGACTUAL">
+                                <meta attribute="unitType">angle</meta>
+                                <meta attribute="description">Actual drill heading</meta>
+                                <type name="quantity">
+                                    <param name="unitType">angle</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="mastAngleActual" column="MASTANGLEACTUAL">
+                                <meta attribute="unitType">angle</meta>
+                                <meta attribute="description">Actual drill mast angle</meta>
+                                <type name="quantity">
+                                    <param name="unitType">angle</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="eastingDesign" column="EASTINGDESIGN">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Drill hole easting as per the design</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="northingDesign" column="NORTHINGDESIGN">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Drill hole northing as per the design</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="elevationDesign" column="ELEVATIONDESIGN">
+                                <meta attribute="unitType">length</meta>
+                                <meta attribute="description">Drill hole elevation as per the design</meta>
+                                <type name="quantity">
+                                    <param name="unitType">length</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="headingDesign" column="HEADINGDESIGN">
+                                <meta attribute="unitType">angle</meta>
+                                <meta attribute="description">Drill heading as per the design</meta>
+                                <type name="quantity">
+                                    <param name="unitType">angle</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                            <property name="mastAngleDesign" column="MASTANGLEDESIGN">
+                                <meta attribute="unitType">angle</meta>
+                                <meta attribute="description">Drill mast angle as per the design</meta>
+                                <type name="quantity">
+                                    <param name="unitType">angle</param>
+                                    <param name="nullable">true</param>
+                                </type>
+                            </property>
+                        </component>
+                    </join>
+
+                </subclass>
+            </subclass>
+        </subclass>
+
+    </class>
+
+    <!-- A lightweight reference to a Cycle -->
+    <class name="minestar.production.domain.cycle.CycleReference"
+           table="CYCLE"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">CYCLE_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a cycle.</meta>
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <id name="OID" type="long" column="CYCLE_OID"/>
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,322 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.pitlink.domain.machine.MachineType" table="MACHINE_TYPE">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">
+            Properties of a machine class particularly in relation to its shape and movement.
+        </meta>
+        <meta attribute="foreign-key">
+            name=MACHINE_TYPE_TYPE_OID_FK
+            columns=TYPE_OID
+            referenced-table=MACHINECLASS
+            referenced-columns=MACHINECLASS_OID
+            on-delete=CASCADE
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="TYPE_OID">
+            <!-- MachineClass.OID -->
+            <generator class="assigned"/>
+        </id>
+
+        <many-to-one name="machineClassRef" class="minestar.pitlink.domain.machine.MachineClassReference"
+                     formula="TYPE_OID" not-null="true"/>
+
+        <property name="id" type="long" column="ID" not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="description">An automatically generated unique ID value for this dimension.</meta>
+        </property>
+
+        <property name="externalMachine" type="boolean" column="EXTERNAL_MACHINE" not-null="true"/>
+
+        <property name="routeOperatorMessages" type="boolean" column="ROUTE_OP_MSGS" not-null="true"/>
+
+        <property name="routeAllMessages" type="boolean" column="ROUTE_ALL_MSGS" not-null="true"/>
+
+        <property name="infrastructure" type="boolean" column="IS_INFRASTRUCTURE" not-null="true">
+            <meta attribute="description">Is this machine a piece of infrastructure?</meta>
+        </property>
+
+        <property name="canBeTowed" type="boolean" column="CAN_BE_TOWED" not-null="true">
+            <meta attribute="description">Can this machine be towed?</meta>
+        </property>
+
+        <property name="ignoreHeading" type="boolean" column="IGNORE_HEADING" not-null="true">
+            <meta attribute="description">Should the heading be ignored for this machine type?</meta>
+        </property>
+
+        <property name="useBodyRadius" type="boolean" column="USE_BODY_RADIUS" not-null="true">
+            <meta attribute="description">Should the body radius be used to derive a circular body polygon for the machine?</meta>
+        </property>
+
+        <property name="useAvoidanceRadius" type="boolean" column="USE_AVOIDANCE_RADIUS" not-null="true">
+            <meta attribute="description">Should the avoidance radius be used to derive a circular avoidance polygon for the machine?</meta>
+        </property>
+
+        <property name="isSrvrProxExempt" type="boolean" column="IS_SRV_PROX_EXEMPT" not-null="true">
+            <meta attribute="description">
+                When true, machines of this type do not interact with avoidance exempt machines for proximity detection.
+            </meta>
+        </property>
+
+        <property name="isAvoidProxExempt" type="boolean" column="IS_AVOID_PROX_EXEMPT" not-null="true">
+            <meta attribute="description">
+                When true, machines of this type do not interact with server prox exempt machines for proximity detection.
+            </meta>
+        </property>
+
+        <property name="machineLength" column="MACHINE_LENGTH">
+            <meta attribute="description">The length of the machine.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="machineWidth" column="MACHINE_WIDTH">
+            <meta attribute="description">The width of the machine.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="bodyLength" column="BODY_LENGTH">
+            <meta attribute="description">The body length value for the machine class.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="bodyWidth" column="BODY_WIDTH">
+            <meta attribute="description">The body width value for the machine class.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="centreOfBodyArea" type="XYZCoordinate" >
+            <meta attribute="description">The centre of body area. If it is not set, the centre of the machine will be used.</meta>
+            <column name="BODY_CENTRE_X"/>
+            <column name="BODY_CENTRE_Y"/>
+            <column name="BODY_CENTRE_Z"/>
+        </property>
+
+        <property name="gpsOffset" type="XYZCoordinate" >
+            <meta attribute="description">The offset of the gps relative to the right rear.</meta>
+            <column name="GPS_OFFSET_X"/>
+            <column name="GPS_OFFSET_Y"/>
+            <column name="GPS_OFFSET_Z"/>
+        </property>
+
+        <property name="corOffset" type="XYZCoordinate" >
+            <meta attribute="description">
+                The offset of the center of rotation relative to the right rear.
+                Normally this would not be set as it is the same as the gps offset, however HEX machines send in a different GPS
+                position to their center of rotation.
+            </meta>
+            <column name="COR_OFFSET_X"/>
+            <column name="COR_OFFSET_Y"/>
+            <column name="COR_OFFSET_Z"/>
+        </property>
+
+        <property name="gpsAntenna" type="XYZCoordinate" >
+            <meta attribute="description">
+                The offset of the gps antenna relative to the right rear.
+            </meta>
+            <column name="GPS_ANTENNA_X"/>
+            <column name="GPS_ANTENNA_Y"/>
+            <column name="GPS_ANTENNA_Z"/>
+        </property>
+
+        <property name="bodyRadius" column="BODY_RADIUS">
+            <meta attribute="description">The body radius value for the Machine class.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="avoidanceLength" column="AVOIDANCE_LENGTH">
+            <meta attribute="description">The avoidance length value for the machine class.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="avoidanceWidth" column="AVOIDANCE_WIDTH">
+            <meta attribute="description">The avoidance width value for the machine class.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="avoidanceLengthStaffed" column="AVOIDANCE_LENGTH_STAFFED">
+            <meta attribute="description">The avoidance length value for the machine class when in staffed mode.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="avoidanceWidthStaffed" column="AVOIDANCE_WIDTH_STAFFED">
+            <meta attribute="description">The avoidance width value for the machine class when in staffed mode.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="centreOfAvoidanceArea" type="XYZCoordinate" >
+            <meta attribute="description">
+                The centre of avoidance area.
+                If it is not set, the centre of the machine will be used.
+            </meta>
+            <column name="AVOIDANCE_CENTRE_X"/>
+            <column name="AVOIDANCE_CENTRE_Y"/>
+            <column name="AVOIDANCE_CENTRE_Z"/>
+        </property>
+
+        <property name="centreOfAvoidanceAreaStaffed" type="XYZCoordinate" >
+            <meta attribute="description">
+                The centre of staffed avoidance.
+                If it is not set, the centre of the machine will be used.
+            </meta>
+            <column name="STAFFED_AVOIDANCE_CENTRE_X"/>
+            <column name="STAFFED_AVOIDANCE_CENTRE_Y"/>
+            <column name="STAFFED_AVOIDANCE_CENTRE_Z"/>
+        </property>
+
+        <property name="avoidanceRadius" column="AVOIDANCE_RADIUS">
+            <meta attribute="description">The avoidance radius value for the Machine class.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="avoidanceRadiusStaffed" column="AVOIDANCE_RADIUS_STAFFED">
+            <meta attribute="description">The avoidance radius value for the Machine class when in staffed mode.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="pathRegionScalar" type="double" column="PATH_REGION_SCALAR">
+            <meta attribute="description">This scalar is a multiplier used to reduce or increase the effective look ahead of the path region.  Nominally, the machines will use the traditional equation of velocity and aceeleration over time.</meta>
+        </property>
+
+        <property name="pathRegionExtension" type="double" column="PATH_REGION_EXT"/>
+
+        <property name="maxDeceleration" column="MAX_DECELERATION">
+            <meta attribute="description">This value represents the maximum deceleration value of a specific machine type.</meta>
+            <meta attribute="unitType">acceleration</meta>
+            <type name="quantity">
+                <param name="unitType">acceleration</param>
+            </type>
+        </property>
+
+        <property name="maxAcceleration" column="MAX_ACCELERATION">
+            <meta attribute="description">This value represents the maximum acceleration value of a specific machine type.</meta>
+            <meta attribute="unitType">acceleration</meta>
+            <type name="quantity">
+                <param name="unitType">acceleration</param>
+            </type>
+        </property>
+
+        <property name="maxForwardSpeed" column="MAX_FWD_SPEED">
+            <meta attribute="description">Used by self to monitor max allowed speed, used by others to calculate rate of growth of avoidance region between comm messages and during out of comms or bad position conditions and used by others to establish possible paths.</meta>
+            <meta attribute="unitType">speed</meta>
+            <type name="quantity">
+                <param name="unitType">speed</param>
+            </type>
+        </property>
+
+        <property name="maxReverseSpeed" column="MAX_REV_SPEED">
+            <meta attribute="description">Used by self to monitor max allowed speed, used by others to calculate rate of growth of avoidance region between comm messages and during out of comms or bad position conditions.</meta>
+            <meta attribute="unitType">speed</meta>
+            <type name="quantity">
+                <param name="unitType">speed</param>
+            </type>
+        </property>
+
+        <property name="minTurningRadius" column="MIN_TURN_RADIUS">
+            <meta attribute="description">The minimum turning radius that can be achieved by this vehicle..</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="categoryId" type="byte">
+            <meta attribute="defaultValue">99</meta>
+            <!-- default the category to "Other, No Heading" if there is not one provided -->
+            <column name="CATEGORY_ID" default="99" not-null="true"/>
+        </property>
+
+        <property name="lanePlanningAvoidanceRadius" column="LANE_PLAN_RADIUS">
+            <meta attribute="description">The lane planning radius. Currently only applicable to shovels, the dynamic lanes will not be planned inside this radius.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="articOffset" type="XYZCoordinate" >
+            <meta attribute="description">
+                The offset of the articulation point relative to the right rear.
+                Currently only applicable to LHDs
+            </meta>
+            <column name="ARTIC_OFFSET_X"/>
+            <column name="ARTIC_OFFSET_Y"/>
+            <column name="ARTIC_OFFSET_Z"/>
+        </property>
+        <!--  FRONT   -->
+        <property name="dataCollectionFrontLeftOffset" type="XYZCoordinate">
+            <meta attribute="description">The offset of the dataCollection relative to the front left.</meta>
+            <column name="DATA_COLLECTION_FRONT_LEFT_X"/>
+            <column name="DATA_COLLECTION_FRONT_LEFT_Y"/>
+            <column name="DATA_COLLECTION_FRONT_LEFT_Z"/>
+        </property>
+        <property name="dataCollectionFrontRightOffset" type="XYZCoordinate">
+            <meta attribute="description">The offset of the dataCollection relative to the front right.</meta>
+            <column name="DATA_COLLECTION_FRONT_RIGHT_X"/>
+            <column name="DATA_COLLECTION_FRONT_RIGHT_Y"/>
+            <column name="DATA_COLLECTION_FRONT_RIGHT_Z"/>
+        </property>
+        <!--  REAR    -->
+        <property name="dataCollectionRearLeftOffset" type="XYZCoordinate">
+            <meta attribute="description">The offset of the dataCollection relative to the rear left.</meta>
+            <column name="DATA_COLLECTION_REAR_LEFT_X"/>
+            <column name="DATA_COLLECTION_REAR_LEFT_Y"/>
+            <column name="DATA_COLLECTION_REAR_LEFT_Z"/>
+        </property>
+        <!--  REAR      -->
+        <property name="dataCollectionRearRightOffset" type="XYZCoordinate">
+            <meta attribute="description">The offset of the dataCollection relative to the rear right.</meta>
+            <column name="DATA_COLLECTION_REAR_RIGHT_X"/>
+            <column name="DATA_COLLECTION_REAR_RIGHT_Y"/>
+            <column name="DATA_COLLECTION_REAR_RIGHT_Z"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

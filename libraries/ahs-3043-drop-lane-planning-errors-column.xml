@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="e88663b7-2e1c-4d1f-8e64-a4f825d1df4b" author="MineStar" failOnError="false" >
+        <preConditions onFailMessage="Ignored DropDefaultValue for LANE_PLANNING_ERRORS of table PLAN_MODEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="LANE_PLANNING_ERRORS"/>
+        </preConditions>
+        <comment>AHS-3043: DropDefaultValue PLAN_MODEL.LANE_PLANNING_ERRORS</comment>
+        <dropDefaultValue tableName="PLAN_MODEL" columnName="LANE_PLANNING_ERRORS"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="e88663b7-2e1c-4d1f-8e64-a4f825d1df4d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LANE_PLANNING_ERRORS of table PLAN_MODEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="LANE_PLANNING_ERRORS"/>
+        </preConditions>
+        <comment>AHS-3043: DropColumn PLAN_MODEL.LANE_PLANNING_ERRORS</comment>
+        <dropColumn columnName="LANE_PLANNING_ERRORS" tableName="PLAN_MODEL"/>
+        <rollback>
+            <addColumn tableName="PLAN_MODEL">
+                <column name="LANE_PLANNING_ERRORS" type="BOOLEAN" defaultValueBoolean="false" remarks="Are there any lane planning errors for this plan? This value is stored for convenience and can be derived from determining if there exists PlanLaneInformation, PlanGroupLaneInfo or SpotPointLaneInfo that contains a lane planning error.">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

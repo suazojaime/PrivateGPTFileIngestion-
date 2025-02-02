@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="81581bdf-3418-4838-8e80-bbdcb30d9bbe" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for ROCK_BREAKER_CRUSHER as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ROCK_BREAKER_CRUSHER"/>
+            </not>
+        </preConditions>
+        <comment>MO-6057: CreateTable ROCK_BREAKER_CRUSHER</comment>
+        <createTable tableName="ROCK_BREAKER_CRUSHER">
+            <column name="ROCK_BREAKER_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CRUSHER_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="ROCK_BREAKER_OID,CRUSHER_OID" constraintName="ROCK_BREAKER_CRUSHER_PK" tableName="ROCK_BREAKER_CRUSHER"/>
+        <rollback>
+            <dropTable tableName="ROCK_BREAKER_CRUSHER"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="d224335a-bf64-47f9-bd10-bbbe1b41ba94" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ROCK_BREAKER_CRUSHER_CRUSHE_FK to table ROCK_BREAKER_CRUSHER as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="ROCK_BREAKER_CRUSHER" columnName="CRUSHER_OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ROCK_BREAKER_CRUSHER" foreignKeyName="ROCK_BREAKER_CRUSHER_CRUSHE_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-6057: AddForeignKeyConstraint ROCK_BREAKER_CRUSHER_CRUSHE_FK to ROCK_BREAKER_CRUSHER (CRUSHER_OID)</comment>
+        <sql>DELETE FROM ROCK_BREAKER_CRUSHER WHERE CRUSHER_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = ROCK_BREAKER_CRUSHER.CRUSHER_OID)</sql>
+        <addForeignKeyConstraint baseTableName="ROCK_BREAKER_CRUSHER" baseColumnNames="CRUSHER_OID" constraintName="ROCK_BREAKER_CRUSHER_CRUSHE_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ROCK_BREAKER_CRUSHER" constraintName="ROCK_BREAKER_CRUSHER_CRUSHE_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="25ee6fd4-6f79-44fe-8b7f-db456c626371" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ROCK_BREAKER_CRUSHER_ROCK_B_FK to table ROCK_BREAKER_CRUSHER as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="ROCK_BREAKER_CRUSHER" columnName="ROCK_BREAKER_OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ROCK_BREAKER_CRUSHER" foreignKeyName="ROCK_BREAKER_CRUSHER_ROCK_B_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-6057: AddForeignKeyConstraint ROCK_BREAKER_CRUSHER_ROCK_B_FK to ROCK_BREAKER_CRUSHER (ROCK_BREAKER_OID)</comment>
+        <sql>DELETE FROM ROCK_BREAKER_CRUSHER WHERE ROCK_BREAKER_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = ROCK_BREAKER_CRUSHER.ROCK_BREAKER_OID)</sql>
+        <addForeignKeyConstraint baseTableName="ROCK_BREAKER_CRUSHER" baseColumnNames="ROCK_BREAKER_OID" constraintName="ROCK_BREAKER_CRUSHER_ROCK_B_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ROCK_BREAKER_CRUSHER" constraintName="ROCK_BREAKER_CRUSHER_ROCK_B_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

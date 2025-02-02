@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- =========================================================================================================== -->
+    <!-- Event column sorters -->
+
+    <bean id="machineClassNameAscendingSorter"
+        class = "minestar.health.report.data.EventColumnSorter">
+        <constructor-arg value="MACHINECLASS_N"/>
+    </bean>
+
+    <bean id="machineNameAscendingSorter"
+        class = "minestar.health.report.data.EventColumnSorter">
+        <constructor-arg value="MACHINE_N"/>
+    </bean>
+
+    <bean id="channelGroupNameAscendingSorter"
+        class = "minestar.health.report.data.EventColumnSorter">
+        <constructor-arg value="CHANNELGROUP_N"/>
+    </bean>
+
+    <bean id="eventLevelDescendingSorter"
+        class = "minestar.health.report.data.EventColumnSorter">
+        <constructor-arg value="EVENTLEVEL"/>
+        <constructor-arg value="DESCENDING"/>
+    </bean>
+
+    <bean id="durationDescendingSorter"
+        class = "minestar.health.report.data.EventColumnSorter">
+        <constructor-arg value="DURATION"/>
+        <constructor-arg value="DESCENDING"/>
+    </bean>
+
+    <bean id="sourceTimestampDescendingSorter"
+        class = "minestar.health.report.data.EventColumnSorter">
+        <constructor-arg value="SOURCETIMESTAMP"/>
+        <constructor-arg value="DESCENDING"/>
+    </bean>
+
+    <bean id="eventNumberAscendingSorter"
+        class = "minestar.health.report.data.EventColumnSorter">
+        <constructor-arg value="EVENTNUMBER"/>
+    </bean>
+
+    <!-- =========================================================================================================== -->
+    <!-- Data Source Factory instances -->
+
+    <bean id="emptyDataSourceFactory"
+        class = "minestar.health.report.factory.EmptyDataSourceFactoryImpl">
+    </bean>
+
+    <bean id="tabularDataSourceFactory"
+        class = "minestar.health.report.factory.EventTabularDataSourceFactoryImpl">
+    </bean>
+
+    <bean id="tabularSortingDataSourceFactory"
+        class = "minestar.health.report.factory.EventTabularSortingDataSourceFactoryImpl">
+        <constructor-arg ref="tabularDataSourceFactory"/>
+    </bean>
+
+    <bean id="summaryDataSourceFactory"
+        class = "minestar.health.report.factory.EventSummaryDataSourceFactoryImpl">
+    </bean>
+
+    <bean id="defaultQueryDataSourceFactory"
+        class = "minestar.health.report.factory.SimpleDataSourceFactoryImpl">
+        <constructor-arg value="select sysdate from dual" />
+    </bean>
+
+    <bean id="channelGroupQueryDataSourceFactory"
+          class = "minestar.health.report.factory.SimpleDataSourceFactoryImpl">
+        <constructor-arg value="select oid, name, id\n
+                    from v_chan_grp_def\n
+                    order by name" />
+    </bean>
+
+    <bean id="fmiDetailQueryDataSourceFactory"
+          class = "minestar.health.report.factory.SimpleDataSourceFactoryImpl">
+        <constructor-arg value="select 1 as group_index, 'Possible Causes:' as group_name, cause as description, sequencenumber
+                            from v_cause_def
+                            where fmioid = ?
+                            and   cidoid = ?
+                            union
+                            select 2 as group_index, 'Result or Fault:' as group_name, fault as description, sequencenumber
+                            from v_fault_def
+                            where fmioid = ?
+                            and   cidoid = ?
+                            order by group_index, sequencenumber" />
+    </bean>
+
+    <!-- =========================================================================================================== -->
+    <!-- Sub-reports -->
+
+    <bean id="parametersReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value=""/>
+        <constructor-arg value="Channel Groups" />
+        <constructor-arg value="{MSTAR_XML}/reports/Parameters.xml" />
+        <constructor-arg ref="channelGroupQueryDataSourceFactory" />
+        <constructor-arg>
+            <list>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+    </bean>
+
+    <bean id="parametersSubReport"
+        class = "minestar.health.report.model.SubReportTemplate">
+        <constructor-arg value="CHANNEL_REPORT"/>
+        <constructor-arg ref="parametersReport" />
+    </bean>
+
+    <bean id="machinesReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value=""/>
+        <constructor-arg value="Machines" />
+        <constructor-arg value="{MSTAR_XML}/reports/Machines.xml" />
+        <constructor-arg ref="defaultQueryDataSourceFactory" />
+        <constructor-arg>
+            <list>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+    </bean>
+
+    <bean id="machinesSubReport"
+        class = "minestar.health.report.model.SubReportTemplate">
+        <constructor-arg value="MACHINE_REPORT"/>
+        <constructor-arg ref="machinesReport" />
+    </bean>
+
+    <bean id="fmiDetailReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value=""/>
+        <constructor-arg value="CID/FMI Fault Description" />
+        <constructor-arg value="{MSTAR_XML}/reports/FaultReport.xml" />
+        <constructor-arg ref="fmiDetailQueryDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>FMI_KEY</value>
+                <value>CID_KEY</value>
+                <value>FMI_KEY</value>
+                <value>CID_KEY</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+    </bean>
+
+    <bean id="fmiDetailSubReport"
+        class = "minestar.health.report.model.SubReportTemplate">
+        <constructor-arg value="FAULT_REPORT"/>
+        <constructor-arg ref="fmiDetailReport" />
+    </bean>
+
+    <bean id="chartReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value=""/>
+        <constructor-arg value="" />
+        <constructor-arg value="{MSTAR_XML}/reports/Chart.xml" />
+        <constructor-arg ref="emptyDataSourceFactory" />
+        <constructor-arg>
+            <list>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+    </bean>
+
+    <bean id="chartSubReport"
+        class = "minestar.health.report.model.SubReportTemplate">
+        <constructor-arg value="CHART_REPORT"/>
+        <constructor-arg ref="chartReport" />
+    </bean>
+
+    <!-- =========================================================================================================== -->
+    <!-- Event Tabular Reports -->
+
+    <bean id="browseTabularReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Browse" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventTabularReport.xml" />
+        <constructor-arg ref="tabularDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="browseOperatorTabularReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Browse Operator" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventTabularOperatorReport.xml" />
+        <constructor-arg ref="tabularDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="browseGpsTabularReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Browse w/GPS" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventTabularGpsReport.xml" />
+        <constructor-arg ref="tabularDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="browseExportAllTabularReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Export All Data" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventTabularExportAllReport.xml" />
+        <constructor-arg ref="tabularDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="browseCategoryTimeTabularReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Category, Time" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventTabularCategoryTimeReport.xml" />
+        <constructor-arg ref="tabularDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <value>ev.MACHINECLASS_N</value>
+                <value>ev.MACHINE_N</value>
+                <value>ev.EVENTLEVEL desc</value>
+                <value>ev.SOURCETIMESTAMP desc</value>
+                <value>ev.EVENTNUMBER</value>
+                <value>ev.OBJECTTYPEID</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="browseDescendingTimeTabularReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Descending Time" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventTabularCategoryTimeReport.xml" />
+        <constructor-arg ref="tabularDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="browseGroupCategoryDurationTabularReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Group, Category, Duration" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventTabularGroupCategoryDurationReport.xml" />
+        <constructor-arg ref="tabularSortingDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <value>ev.MACHINECLASS_N</value>
+                <value>ev.MACHINE_N</value>
+                <value>ch.CHANNELGROUP_N</value>
+                <value>ev.EVENTLEVEL desc</value>
+                <value>ev.SOURCETIMESTAMP desc</value>
+                <value>ev.EVENTNUMBER</value>
+                <value>ev.OBJECTTYPEID</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machineClassNameAscendingSorter"/>
+                <ref bean="machineNameAscendingSorter"/>
+                <ref bean="channelGroupNameAscendingSorter"/>
+                <ref bean="eventLevelDescendingSorter"/>
+                <ref bean="durationDescendingSorter"/>
+                <ref bean="sourceTimestampDescendingSorter"/>
+                <ref bean="eventNumberAscendingSorter"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="browseGroupCategoryTimeTabularReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Group, Category, Time" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventTabularGroupCategoryDurationReport.xml" />
+        <constructor-arg ref="tabularDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <list>
+                <value>ev.MACHINECLASS_N</value>
+                <value>ev.MACHINE_N</value>
+                <value>ch.CHANNELGROUP_N</value>
+                <value>ev.EVENTLEVEL desc</value>
+                <value>ev.SOURCETIMESTAMP desc</value>
+                <value>ev.EVENTNUMBER</value>
+                <value>ev.OBJECTTYPEID</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- =========================================================================================================== -->
+    <!-- Summary Event reports -->
+
+    <bean id="defaultSummaryReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Event Report"/>
+        <constructor-arg value="Summary" />
+        <constructor-arg value="{MSTAR_XML}/reports/EventSummaryReport.xml" />
+        <constructor-arg ref="summaryDataSourceFactory" />
+        <constructor-arg>
+            <list>
+                <value>MINESTAR_FROM_TIME</value>
+                <value>MINESTAR_TO_TIME</value>
+                <value>PARAMETER_GROUPS</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- =========================================================================================================== -->
+    <!-- Snapshot and Data Logger reports -->
+
+    <bean id="snapshotReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Snapshot Report"/>
+        <constructor-arg value="" />
+        <constructor-arg value="{MSTAR_XML}/reports/SnapshotReport.xml" />
+        <constructor-arg ref="emptyDataSourceFactory" />
+        <constructor-arg>
+            <list>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+                <ref bean="chartSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="dataloggerReport"
+        class="minestar.health.report.model.ReportTemplate">
+        <constructor-arg value="Data Logger Report"/>
+        <constructor-arg value="" />
+        <constructor-arg value="{MSTAR_XML}/reports/SnapshotReport.xml" />
+        <constructor-arg ref="emptyDataSourceFactory" />
+        <constructor-arg>
+            <list>
+            </list>
+        </constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg><null/></constructor-arg>
+        <constructor-arg>
+            <list>
+                <ref bean="machinesSubReport"/>
+                <ref bean="parametersSubReport"/>
+                <ref bean="chartSubReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- =========================================================================================================== -->
+    <!-- Report Template Groups -->
+
+    <bean id="tabularEventReportProvider"
+        class="minestar.health.report.model.TemplateProviderImpl">
+        <constructor-arg>
+            <list>
+                <ref bean="browseTabularReport"/>
+                <ref bean="browseOperatorTabularReport"/>
+                <ref bean="browseGpsTabularReport"/>
+                <ref bean="browseCategoryTimeTabularReport"/>
+                <ref bean="browseDescendingTimeTabularReport"/>
+                <ref bean="browseExportAllTabularReport"/>
+                <ref bean="browseGroupCategoryDurationTabularReport"/>
+                <ref bean="browseGroupCategoryTimeTabularReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="tabularReportType"
+          class="minestar.health.report.model.ReportType">
+        <constructor-arg value="Tabular" />
+        <constructor-arg ref="tabularEventReportProvider" />
+    </bean>
+
+    <bean id="summaryEventReportProvider"
+          class="minestar.health.report.model.TemplateProviderImpl">
+        <constructor-arg>
+            <list>
+                <ref bean="browseTabularReport"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="summaryReportType"
+          class="minestar.health.report.model.ReportType">
+        <constructor-arg value="Summary" />
+        <constructor-arg ref="summaryEventReportProvider" />
+    </bean>
+
+    <bean id="eventReportTypeProvider"
+        class="minestar.health.report.model.ReportTypeProviderImpl">
+        <constructor-arg>
+            <list>
+                <ref bean="tabularReportType"/>
+                <ref bean="summaryReportType"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

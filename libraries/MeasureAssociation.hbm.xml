@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <class name="minestar.health.api.definition.MeasureAssociation" table="MEASURE_ASSOCIATION">
+
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <composite-id>
+
+            <meta attribute="view-include">false</meta>
+            <meta attribute="view-ignore">true</meta>
+
+            <key-many-to-one name="measure" class="minestar.health.api.definition.Measure" column="MEASURE_OID">
+                <meta attribute="view-include">false</meta>
+                <meta attribute="view-ignore">true</meta>
+            </key-many-to-one>
+            <key-many-to-one name="associated" class="minestar.health.api.definition.Measure" column="ASSOCIATED_MEASURE_OID">
+                <meta attribute="view-include">false</meta>
+                <meta attribute="view-ignore">true</meta>
+            </key-many-to-one>
+
+            <key-property name="associationType"
+                          type="minestar.health.impl.definition.MeasureAssociationTypeUserType"
+                          column="ASSOCIATION_TYPE"
+                          length="32">
+            </key-property>
+
+        </composite-id>
+
+    </class>
+</hibernate-mapping>

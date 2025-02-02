@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="cb81b948-c969-47f8-90d7-2913ccaed406" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for RESOURCE_STRING to table MACHINEDIAGNOSTIC as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINEDIAGNOSTIC"/>
+            <not>
+                <columnExists tableName="MACHINEDIAGNOSTIC" columnName="RESOURCE_STRING"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6564: AddColumn MACHINEDIAGNOSTIC.RESOURCE_STRING</comment>
+        <addColumn tableName="MACHINEDIAGNOSTIC">
+            <column name="RESOURCE_STRING" type="VARCHAR(510)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

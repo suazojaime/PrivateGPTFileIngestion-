@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2023, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- 4.5 Base schema -->
+    <include file="db/changelog/4_5/gis/updates/gis-tables.xml"/>
+
+    <!-- 4.5 Schema changes -->
+    <include file="db/changelog/4_5/gis/updates/ahs-6145-turn_off_autovacuum.xml"/>
+    <include file="db/changelog/4_5/gis/updates/ahs-6409-extract_4.4_to_4.5_table_changes_into_own_changeset.xml"/>
+
+    <!-- 4.7 changes -->
+    <include file="db/changelog/4_7/gis/updates/gis-tables.xml"/>
+
+    <!-- 5.2 changes -->
+    <include file="db/changelog/5_2/gis/updates/ahs-8356-create-gis-plan-tables.xml"/>
+    <include file="db/changelog/5_2/gis/updates/ahs-9059-delete-plans-from-regions.xml"/>
+
+    <!-- 5.3 changes -->
+    <include file="db/changelog/5_3/gis/updates/ahs-9450-add-gis-region-layer-update-version.xml"/>
+
+    <!-- 5.4 changes -->
+    <include file="db/changelog/5_4/gis/flt-8041-add-mwf-fields-to-waypoint.xml"/>
+    <include file="db/changelog/5_4/gis/flt-7258-add-direct-tip-processor-flag-to-waypoint.xml"/>
+    <include file="db/changelog/5_4/gis/flt-8679-add-direct-tip-processor-flag-to-processor.xml"/>
+    <include file="db/changelog/5_4/gis/flt-8039-add-hierarchy-to-grade-block.xml"/>
+    <include file="db/changelog/5_4/gis/flt-8920-add-layer-update-version-to-processor.xml"/>
+    <include file="db/changelog/5_4/gis/flt-9105-add-waypoint-id-to-processor.xml"/>
+
+    <!-- 5.5 changes -->
+    <include file="db/changelog/5_5/gis/flt-9813-add-hazard-type-id-to-hazard.xml"/>
+
+
+    <!-- 5.11 changes -->
+    <include file="/db/changelog/5_11/gis/updates/mo-13933-add-high-performance-dbr.xml"/>
+    <include file="/db/changelog/5_11/gis/updates/mo-15044-add-barrier-zone-column.xml"/>
+
+    <!-- Views (must be at the end) -->
+    <include file="db/changelog/4_5/gis/updates/gis-views.xml"/>
+
+    <!-- Extensions - see ~/config/ext/Platform/Platform_Management/xml/db/changelog/gis-extensions.xml -->
+    <include file="gis-extensions.xml"/>
+
+</databaseChangeLog>

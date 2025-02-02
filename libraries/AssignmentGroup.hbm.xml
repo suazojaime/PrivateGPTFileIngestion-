@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <!-- ****************************************************************************** -->
+    <!-- AssGroup -->
+    <!-- ****************************************************************************** -->
+    <class name="minestar.assignment.domain.AssGroup" table="ASSIGNMENTGROUP">
+        <meta attribute="alias" inherit="false">AssignmentGroup</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=ASSIGNMENTGROUP_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">A mechanism for grouping machines that work together under assignment.</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="java.lang.Long" column="ASSIGNMENTGROUP_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="name" type="java.lang.String" column="NAME" length="254" not-null="true"/>
+        <property name="description" type="java.lang.String" column="DESCRIPTION" length="254"/>
+        <property name="assignGroup" type="boolean">
+            <column name="ASSIGNGROUP" not-null="true" default="0"/>
+        </property>
+        <property name="shiftChangeGroup" type="boolean">
+            <column name="SHIFTCHANGEGROUP" not-null="true" default="0"/>
+        </property>
+    </class>
+
+    <!-- ****************************************************************************** -->
+    <!-- AssGroupReference -->
+    <!-- ****************************************************************************** -->
+    <class name="minestar.assignment.domain.AssGroupReference" table="ASSIGNMENTGROUP" mutable="false" lazy="false">
+
+        <meta attribute="alias" inherit="false">ASSIGNMENTGROUP_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to an assignment group.</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <id name="OID" type="long" column="ASSIGNMENTGROUP_OID" access="field"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true" access="field"/>
+    </class>
+
+
+</hibernate-mapping>

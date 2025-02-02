@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Shovel Classes">
+
+    <machineClass xsi:type="shovelClassImpl">
+        <name>LiebherrR995</name>
+        <manufacturer>Liebherr</manufacturer>
+        <description>Liebherr R995 Series Shovel</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="10.00" unit="cubic metres"/>
+        <refuelLevel magnitude="1.00" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.50" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="24.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000007" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.000116" unit="cubic metres per second"/>
+        <maximumSpeed magnitude="0.75" unit="metres per second"/>
+        <dipperLoadCapacity magnitude="26.50" unit="cubic metres"/>
+        <reachRadius magnitude="7.80" unit="metre"/>
+    </machineClass>
+
+</machineClassExport>
+

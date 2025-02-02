@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<circuit>
+
+    &JobExecutors;
+
+    <nodes>
+        <node name="start3GNode" class="com.mincom.integ.cat.equip.onboard.nodes.MachineFanoutNode">
+            <var name="isDefaultStartNode">true</var>
+	        <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="DownloadVims3GFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="isEndNode">true</var>
+            <var name="executor">vims3GFtpExecutor</var>
+            <var name="defaultJobUrl">com.mincom.integ.cat.vims.download.Vims3GDownloadJob</var>
+            <var name="jobClass">com.mincom.integ.cat.vims.download.Vims3GDownloadJob</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+    </nodes>
+    <connections>
+        <connect source="start3GNode" sink="DownloadVims3GFiles" />
+    </connections>
+</circuit>
+

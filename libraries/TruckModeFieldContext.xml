@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2013, Caterpillar, Brisbane Australia. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+              
+    <bean id="truckModeCommInterface" class="java.lang.String">
+        <constructor-arg type="String" value="Assignment"/>
+    </bean>
+                    
+    <bean id="truckModeFieldListener" 
+          class="minestar.mode.truck.field.TruckModeFieldListener">
+        <property name="sharedModeControlService" ref="sharedModeControlService"/>
+    </bean>
+    
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="delegatingModeFieldListener"/>
+        <property name="targetMethod"><value>addDelegate</value></property>
+        <property name="arguments">
+            <list>
+                <ref bean="truckModeFieldListener"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="truckModeFieldSender"
+          class="minestar.mode.truck.field.TruckModeFieldSender">
+        <property name="sharedModeFieldSender" ref="sharedModeFieldSender"/>
+        <property name="commInterface" ref="truckModeCommInterface"/>
+    </bean>
+    
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="modeMessageServiceImpl"/>
+        <property name="targetMethod"><value>addDelegate</value></property>
+        <property name="arguments">
+            <list>
+                <ref bean="truckModeFieldSender"/>
+            </list>
+        </property>
+    </bean>
+    
+</beans>

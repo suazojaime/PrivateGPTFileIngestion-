@@ -1,0 +1,1052 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    
+    <changeSet id="ad3ff55d-cdfb-443b-a022-47631dacdd78" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_ENTRY_LANES_LANE_FK of table PLAN_GROUP_ENTRY_LANES as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_ENTRY_LANES" foreignKeyName="PLAN_GROUP_ENTRY_LANES_LANE_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_GROUP_ENTRY_LANES_LANE_FK from PLAN_GROUP_ENTRY_LANES (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANES" constraintName="PLAN_GROUP_ENTRY_LANES_LANE_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANES" baseColumnNames="LANE_OID" constraintName="PLAN_GROUP_ENTRY_LANES_LANE_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="686b6f45-db6c-4402-8920-ce3bf8fba174" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_ENTRY_LANES_LANE_FK to table PLAN_GROUP_ENTRY_LANES as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP_ENTRY_LANES"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_ENTRY_LANES" foreignKeyName="PLAN_GROUP_ENTRY_LANES_LANE_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_GROUP_ENTRY_LANES_LANE_FK to PLAN_GROUP_ENTRY_LANES (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_ENTRY_LANES WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_GROUP_ENTRY_LANES.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANES" baseColumnNames="LANE_OID" constraintName="PLAN_GROUP_ENTRY_LANES_LANE_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANES" constraintName="PLAN_GROUP_ENTRY_LANES_LANE_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6cb26dce-1dca-4241-aa8e-2c0af0ef7bf9" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_ENTRY_LANES_PLAN_FK of table PLAN_GROUP_ENTRY_LANES as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_ENTRY_LANES" foreignKeyName="PLAN_GROUP_ENTRY_LANES_PLAN_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_GROUP_ENTRY_LANES_PLAN_FK from PLAN_GROUP_ENTRY_LANES (PLAN_GROUP_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANES" constraintName="PLAN_GROUP_ENTRY_LANES_PLAN_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANES" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_ENTRY_LANES_PLAN_FK" referencedTableName="PLAN_GROUP_LANE_INFO" referencedColumnNames="PLAN_GROUP_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="d296afd4-71e5-4526-86a9-058209da6de5" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_ENTRY_LANES_PLAN_FK to table PLAN_GROUP_ENTRY_LANES as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP_ENTRY_LANES"/>
+            <tableExists tableName="PLAN_GROUP_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_ENTRY_LANES" foreignKeyName="PLAN_GROUP_ENTRY_LANES_PLAN_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_GROUP_ENTRY_LANES_PLAN_FK to PLAN_GROUP_ENTRY_LANES (PLAN_GROUP_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_ENTRY_LANES WHERE PLAN_GROUP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_GROUP_LANE_INFO WHERE PLAN_GROUP_LANE_INFO.PLAN_GROUP_OID = PLAN_GROUP_ENTRY_LANES.PLAN_GROUP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANES" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_ENTRY_LANES_PLAN_FK" referencedTableName="PLAN_GROUP_LANE_INFO" referencedColumnNames="PLAN_GROUP_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANES" constraintName="PLAN_GROUP_ENTRY_LANES_PLAN_FK"/>
+        </rollback>
+    </changeSet>
+
+
+    <changeSet id="11a5c51a-a0bd-4a9b-bccf-b524e930efc3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_ENTRY_LANE_ERRO_FK1 of table PLAN_GROUP_ENTRY_LANE_ERRORS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_ENTRY_LANE_ERRORS" foreignKeyName="PLAN_GROUP_ENTRY_LANE_ERRO_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_GROUP_ENTRY_LANE_ERRO_FK1 from PLAN_GROUP_ENTRY_LANE_ERRORS (PLAN_GROUP_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANE_ERRORS" constraintName="PLAN_GROUP_ENTRY_LANE_ERRO_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANE_ERRORS" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_ENTRY_LANE_ERRO_FK1" referencedTableName="PLAN_GROUP_LANE_INFO" referencedColumnNames="PLAN_GROUP_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="5aba17cc-c621-44a0-8ede-3ceaf2f09ac9" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_ENTRY_LANE_ERRO_FK1 to table PLAN_GROUP_ENTRY_LANE_ERRORS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP_ENTRY_LANE_ERRORS"/>
+            <tableExists tableName="PLAN_GROUP_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_ENTRY_LANE_ERRORS" foreignKeyName="PLAN_GROUP_ENTRY_LANE_ERRO_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_GROUP_ENTRY_LANE_ERRO_FK1 to PLAN_GROUP_ENTRY_LANE_ERRORS (PLAN_GROUP_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_ENTRY_LANE_ERRORS WHERE PLAN_GROUP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_GROUP_LANE_INFO WHERE PLAN_GROUP_LANE_INFO.PLAN_GROUP_OID = PLAN_GROUP_ENTRY_LANE_ERRORS.PLAN_GROUP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANE_ERRORS" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_ENTRY_LANE_ERRO_FK1" referencedTableName="PLAN_GROUP_LANE_INFO" referencedColumnNames="PLAN_GROUP_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_ENTRY_LANE_ERRORS" constraintName="PLAN_GROUP_ENTRY_LANE_ERRO_FK1"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3bbe5502-99bc-49fb-b923-2405f6994483" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_EXIT_LANES_LANE_FK of table PLAN_GROUP_EXIT_LANES as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_EXIT_LANES" foreignKeyName="PLAN_GROUP_EXIT_LANES_LANE_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_GROUP_EXIT_LANES_LANE_FK from PLAN_GROUP_EXIT_LANES (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANES" constraintName="PLAN_GROUP_EXIT_LANES_LANE_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANES" baseColumnNames="LANE_OID" constraintName="PLAN_GROUP_EXIT_LANES_LANE_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="f263dee3-ad5f-4322-b928-b238eeacbfcd" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_EXIT_LANES_LANE_FK to table PLAN_GROUP_EXIT_LANES as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP_EXIT_LANES"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_EXIT_LANES" foreignKeyName="PLAN_GROUP_EXIT_LANES_LANE_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_GROUP_EXIT_LANES_LANE_FK to PLAN_GROUP_EXIT_LANES (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_EXIT_LANES WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_GROUP_EXIT_LANES.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANES" baseColumnNames="LANE_OID" constraintName="PLAN_GROUP_EXIT_LANES_LANE_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANES" constraintName="PLAN_GROUP_EXIT_LANES_LANE_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="18097696-ea60-4266-abfb-d6384f1eca35" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_EXIT_LANES_PLAN_FK of table PLAN_GROUP_EXIT_LANES as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_EXIT_LANES" foreignKeyName="PLAN_GROUP_EXIT_LANES_PLAN_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_GROUP_EXIT_LANES_PLAN_FK from PLAN_GROUP_EXIT_LANES (PLAN_GROUP_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANES" constraintName="PLAN_GROUP_EXIT_LANES_PLAN_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANES" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_EXIT_LANES_PLAN_FK" referencedTableName="PLAN_GROUP_LANE_INFO" referencedColumnNames="PLAN_GROUP_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="3fd35aa9-0c1f-4edd-895c-92d4903fed0b" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_EXIT_LANES_PLAN_FK to table PLAN_GROUP_EXIT_LANES as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP_EXIT_LANES"/>
+            <tableExists tableName="PLAN_GROUP_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_EXIT_LANES" foreignKeyName="PLAN_GROUP_EXIT_LANES_PLAN_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_GROUP_EXIT_LANES_PLAN_FK to PLAN_GROUP_EXIT_LANES (PLAN_GROUP_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_EXIT_LANES WHERE PLAN_GROUP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_GROUP_LANE_INFO WHERE PLAN_GROUP_LANE_INFO.PLAN_GROUP_OID = PLAN_GROUP_EXIT_LANES.PLAN_GROUP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANES" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_EXIT_LANES_PLAN_FK" referencedTableName="PLAN_GROUP_LANE_INFO" referencedColumnNames="PLAN_GROUP_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANES" constraintName="PLAN_GROUP_EXIT_LANES_PLAN_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="675a1434-bc6a-422e-ae5a-638b1cfd8813" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_EXIT_LANE_ERROR_FK1 of table PLAN_GROUP_EXIT_LANE_ERRORS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_EXIT_LANE_ERRORS" foreignKeyName="PLAN_GROUP_EXIT_LANE_ERROR_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_GROUP_EXIT_LANE_ERROR_FK1 from PLAN_GROUP_EXIT_LANE_ERRORS (PLAN_GROUP_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANE_ERRORS" constraintName="PLAN_GROUP_EXIT_LANE_ERROR_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANE_ERRORS" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_EXIT_LANE_ERROR_FK1" referencedTableName="PLAN_GROUP_LANE_INFO" referencedColumnNames="PLAN_GROUP_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="9a3f40e9-ab71-4c34-9aa3-661773e3d043" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_EXIT_LANE_ERROR_FK1 to table PLAN_GROUP_EXIT_LANE_ERRORS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP_EXIT_LANE_ERRORS"/>
+            <tableExists tableName="PLAN_GROUP_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_EXIT_LANE_ERRORS" foreignKeyName="PLAN_GROUP_EXIT_LANE_ERROR_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_GROUP_EXIT_LANE_ERROR_FK1 to PLAN_GROUP_EXIT_LANE_ERRORS (PLAN_GROUP_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_EXIT_LANE_ERRORS WHERE PLAN_GROUP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_GROUP_LANE_INFO WHERE PLAN_GROUP_LANE_INFO.PLAN_GROUP_OID = PLAN_GROUP_EXIT_LANE_ERRORS.PLAN_GROUP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANE_ERRORS" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_EXIT_LANE_ERROR_FK1" referencedTableName="PLAN_GROUP_LANE_INFO" referencedColumnNames="PLAN_GROUP_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_EXIT_LANE_ERRORS" constraintName="PLAN_GROUP_EXIT_LANE_ERROR_FK1"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="17c32be8-53a8-4fb0-bba4-1d90e8ed18a8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_LANE_INFO_PLAN_G_FK of table PLAN_GROUP_LANE_INFO as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_LANE_INFO" foreignKeyName="PLAN_GROUP_LANE_INFO_PLAN_G_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_GROUP_LANE_INFO_PLAN_G_FK from PLAN_GROUP_LANE_INFO (PLAN_GROUP_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_LANE_INFO" constraintName="PLAN_GROUP_LANE_INFO_PLAN_G_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_LANE_INFO" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_LANE_INFO_PLAN_G_FK" referencedTableName="PLAN_GROUP" referencedColumnNames="PLAN_GROUP_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="848b9ff7-0603-48a7-a9f4-c0328a811304" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_PLAN_OID_FK of table PLAN_LANE_INFO as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO" foreignKeyName="PLAN_LANE_INFO_PLAN_OID_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_PLAN_OID_FK from PLAN_LANE_INFO (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO" constraintName="PLAN_LANE_INFO_PLAN_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="7adb692b-420e-43de-8f9e-7815f362af04" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_DEAD_LANE_OI_FK of table PLAN_LANE_INFO_DEAD as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_DEAD" foreignKeyName="PLAN_LANE_INFO_DEAD_LANE_OI_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_DEAD_LANE_OI_FK from PLAN_LANE_INFO_DEAD (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_DEAD" constraintName="PLAN_LANE_INFO_DEAD_LANE_OI_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_DEAD" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_DEAD_LANE_OI_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="f83d2249-f110-4664-9ed3-2371e134d764" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_DEAD_PLAN_OI_FK of table PLAN_LANE_INFO_DEAD as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_DEAD" foreignKeyName="PLAN_LANE_INFO_DEAD_PLAN_OI_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_DEAD_PLAN_OI_FK from PLAN_LANE_INFO_DEAD (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_DEAD" constraintName="PLAN_LANE_INFO_DEAD_PLAN_OI_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_DEAD" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_DEAD_PLAN_OI_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="b36bdda6-7557-4eb4-ad49-f76a4b4489bc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_LANE_O_FK of table PLAN_LANE_INFO_ENTRY as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY" foreignKeyName="PLAN_LANE_INFO_ENTRY_LANE_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_ENTRY_LANE_O_FK from PLAN_LANE_INFO_ENTRY (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" constraintName="PLAN_LANE_INFO_ENTRY_LANE_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_ENTRY_LANE_O_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="479aeae3-0078-4d50-98d5-6a01fd7c0bee" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_PLAN_O_FK of table PLAN_LANE_INFO_ENTRY as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY" foreignKeyName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_ENTRY_PLAN_O_FK from PLAN_LANE_INFO_ENTRY (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" constraintName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="a59c44ee-2cc2-4eca-93f3-672702368228" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_ERROR_FK1 of table PLAN_LANE_INFO_ENTRY_ERRORS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY_ERRORS" foreignKeyName="PLAN_LANE_INFO_ENTRY_ERROR_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_ENTRY_ERROR_FK1 from PLAN_LANE_INFO_ENTRY_ERRORS (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY_ERRORS" constraintName="PLAN_LANE_INFO_ENTRY_ERROR_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY_ERRORS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_ENTRY_ERROR_FK1" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="00ce53a9-bcf6-4ed8-9714-df3112b7f706" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_EXIT_LANE_OI_FK of table PLAN_LANE_INFO_EXIT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_EXIT" foreignKeyName="PLAN_LANE_INFO_EXIT_LANE_OI_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_EXIT_LANE_OI_FK from PLAN_LANE_INFO_EXIT (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT" constraintName="PLAN_LANE_INFO_EXIT_LANE_OI_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_EXIT_LANE_OI_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="15433f80-c2e6-43bc-9cae-ccddc2425666" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_EXIT_PLAN_OI_FK of table PLAN_LANE_INFO_EXIT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_EXIT" foreignKeyName="PLAN_LANE_INFO_EXIT_PLAN_OI_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_EXIT_PLAN_OI_FK from PLAN_LANE_INFO_EXIT (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT" constraintName="PLAN_LANE_INFO_EXIT_PLAN_OI_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_EXIT_PLAN_OI_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="4b92286c-6eda-42bd-9469-5416ea943e6f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_EXIT_ERRORS_FK1 of table PLAN_LANE_INFO_EXIT_ERRORS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_EXIT_ERRORS" foreignKeyName="PLAN_LANE_INFO_EXIT_ERRORS_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_EXIT_ERRORS_FK1 from PLAN_LANE_INFO_EXIT_ERRORS (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT_ERRORS" constraintName="PLAN_LANE_INFO_EXIT_ERRORS_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT_ERRORS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_EXIT_ERRORS_FK1" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="d8ab195a-8051-491f-bcae-88cc29e4910b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_GROUPED_SPO_FK1 of table PLAN_LANE_INFO_GROUPED_SPOTS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_GROUPED_SPOTS" foreignKeyName="PLAN_LANE_INFO_GROUPED_SPO_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_GROUPED_SPO_FK1 from PLAN_LANE_INFO_GROUPED_SPOTS (SPOT_POINT_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" baseColumnNames="SPOT_POINT_OID" constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK1" referencedTableName="SPOT_POINT" referencedColumnNames="SPOT_POINT_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="564d5d05-cb37-4dd6-9976-ea85c25fd8e3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_GROUPED_SPO_FK2 of table PLAN_LANE_INFO_GROUPED_SPOTS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_GROUPED_SPOTS" foreignKeyName="PLAN_LANE_INFO_GROUPED_SPO_FK2"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_GROUPED_SPO_FK2 from PLAN_LANE_INFO_GROUPED_SPOTS (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK2"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK2" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="ff72a6ac-ca3a-4015-a874-66e1ae0eb7a7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_INBOUND_ACC_FK1 of table PLAN_LANE_INFO_INBOUND_ACCESS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_INBOUND_ACCESS" foreignKeyName="PLAN_LANE_INFO_INBOUND_ACC_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_INBOUND_ACC_FK1 from PLAN_LANE_INFO_INBOUND_ACCESS (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_INBOUND_ACCESS" constraintName="PLAN_LANE_INFO_INBOUND_ACC_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_INBOUND_ACCESS" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_INBOUND_ACC_FK1" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="5aa73145-16f1-4be6-8cc6-3d342ffeef9d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_INBOUND_ACC_FK2 of table PLAN_LANE_INFO_INBOUND_ACCESS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_INBOUND_ACCESS" foreignKeyName="PLAN_LANE_INFO_INBOUND_ACC_FK2"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_INBOUND_ACC_FK2 from PLAN_LANE_INFO_INBOUND_ACCESS (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_INBOUND_ACCESS" constraintName="PLAN_LANE_INFO_INBOUND_ACC_FK2"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_INBOUND_ACCESS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_INBOUND_ACC_FK2" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="1ec3fc15-31bc-4bcb-b38b-123d03d3d862" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_OUTBOUND_AC_FK1 of table PLAN_LANE_INFO_OUTBOUND_ACCESS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" foreignKeyName="PLAN_LANE_INFO_OUTBOUND_AC_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_OUTBOUND_AC_FK1 from PLAN_LANE_INFO_OUTBOUND_ACCESS (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" constraintName="PLAN_LANE_INFO_OUTBOUND_AC_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_OUTBOUND_AC_FK1" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="8201a489-7f22-4f62-b8bd-1b212d49932a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_OUTBOUND_AC_FK2 of table PLAN_LANE_INFO_OUTBOUND_ACCESS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" foreignKeyName="PLAN_LANE_INFO_OUTBOUND_AC_FK2"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_OUTBOUND_AC_FK2 from PLAN_LANE_INFO_OUTBOUND_ACCESS (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" constraintName="PLAN_LANE_INFO_OUTBOUND_AC_FK2"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_OUTBOUND_AC_FK2" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="d8b994d9-ef84-4b30-80f9-3caad0b31be5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_QUEUE_LANE_O_FK of table PLAN_LANE_INFO_QUEUE as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_QUEUE" foreignKeyName="PLAN_LANE_INFO_QUEUE_LANE_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_QUEUE_LANE_O_FK from PLAN_LANE_INFO_QUEUE (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE" constraintName="PLAN_LANE_INFO_QUEUE_LANE_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_QUEUE_LANE_O_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="7a8f55a3-1df1-4a60-a96b-513f75856695" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_QUEUE_PLAN_O_FK of table PLAN_LANE_INFO_QUEUE as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_QUEUE" foreignKeyName="PLAN_LANE_INFO_QUEUE_PLAN_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_QUEUE_PLAN_O_FK from PLAN_LANE_INFO_QUEUE (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE" constraintName="PLAN_LANE_INFO_QUEUE_PLAN_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_QUEUE_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="6747a47e-7dff-4ad9-84a0-f8ed79e88ad2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_QUEUE_ERROR_FK1 of table PLAN_LANE_INFO_QUEUE_ERRORS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_QUEUE_ERRORS" foreignKeyName="PLAN_LANE_INFO_QUEUE_ERROR_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_QUEUE_ERROR_FK1 from PLAN_LANE_INFO_QUEUE_ERRORS (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE_ERRORS" constraintName="PLAN_LANE_INFO_QUEUE_ERROR_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE_ERRORS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_QUEUE_ERROR_FK1" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="30cd8811-c585-4088-9aa9-b7681d623c25" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_UTURN_LANE_O_FK of table PLAN_LANE_INFO_UTURN as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_UTURN" foreignKeyName="PLAN_LANE_INFO_UTURN_LANE_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_UTURN_LANE_O_FK from PLAN_LANE_INFO_UTURN (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN" constraintName="PLAN_LANE_INFO_UTURN_LANE_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_UTURN_LANE_O_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="b5a8952e-1c9c-43b7-bc8c-ea2e66d1539c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_UTURN_PLAN_O_FK of table PLAN_LANE_INFO_UTURN as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_UTURN" foreignKeyName="PLAN_LANE_INFO_UTURN_PLAN_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_UTURN_PLAN_O_FK from PLAN_LANE_INFO_UTURN (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN" constraintName="PLAN_LANE_INFO_UTURN_PLAN_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_UTURN_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="1423543a-be79-490a-a2f6-c9bbf31d63af" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_UTURN_ERROR_FK1 of table PLAN_LANE_INFO_UTURN_ERRORS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_UTURN_ERRORS" foreignKeyName="PLAN_LANE_INFO_UTURN_ERROR_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_UTURN_ERROR_FK1 from PLAN_LANE_INFO_UTURN_ERRORS (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN_ERRORS" constraintName="PLAN_LANE_INFO_UTURN_ERROR_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN_ERRORS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_UTURN_ERROR_FK1" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="250347e2-112c-410a-88d3-560d12178229" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_LANE_INFO_SPOT_P_FK of table SPOT_POINT_LANE_INFO as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_LANE_INFO" foreignKeyName="SPOT_POINT_LANE_INFO_SPOT_P_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint SPOT_POINT_LANE_INFO_SPOT_P_FK from SPOT_POINT_LANE_INFO (SPOT_POINT_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT_LANE_INFO" constraintName="SPOT_POINT_LANE_INFO_SPOT_P_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT_LANE_INFO" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_LANE_INFO_SPOT_P_FK" referencedTableName="SPOT_POINT" referencedColumnNames="SPOT_POINT_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="b3614a2c-8ddc-4be5-b959-657bfd0beee2" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_LANE_INFO_PG_OID_FK to table PLAN_GROUP_LANE_INFO as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP_LANE_INFO"/>
+            <tableExists tableName="PLAN_GROUP"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_LANE_INFO" foreignKeyName="PLAN_GROUP_LANE_INFO_PG_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_GROUP_LANE_INFO_PG_OID_FK to PLAN_GROUP_LANE_INFO (PLAN_GROUP_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_LANE_INFO WHERE PLAN_GROUP_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_GROUP WHERE PLAN_GROUP.PLAN_GROUP_OID = PLAN_GROUP_LANE_INFO.PLAN_GROUP_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_LANE_INFO" baseColumnNames="PLAN_GROUP_OID" constraintName="PLAN_GROUP_LANE_INFO_PG_OID_FK" referencedTableName="PLAN_GROUP" referencedColumnNames="PLAN_GROUP_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_LANE_INFO" constraintName="PLAN_GROUP_LANE_INFO_PG_OID_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="450ee876-b2b8-4d32-93b6-752ace279e65" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_PLAN_OID_FK to table PLAN_LANE_INFO as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO" foreignKeyName="PLAN_LANE_INFO_PLAN_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_PLAN_OID_FK to PLAN_LANE_INFO (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_MODEL WHERE PLAN_MODEL.PLAN_OID = PLAN_LANE_INFO.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO" constraintName="PLAN_LANE_INFO_PLAN_OID_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="19772401-4901-4535-84a2-dfdc72349b48" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_DEAD_LANE_OI_FK to table PLAN_LANE_INFO_DEAD as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_DEAD"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_DEAD" foreignKeyName="PLAN_LANE_INFO_DEAD_LANE_OI_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_DEAD_LANE_OI_FK to PLAN_LANE_INFO_DEAD (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_DEAD WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_DEAD.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_DEAD" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_DEAD_LANE_OI_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_DEAD" constraintName="PLAN_LANE_INFO_DEAD_LANE_OI_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="295f432d-9641-4388-a781-eb81b841559d" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_DEAD_PLAN_OI_FK to table PLAN_LANE_INFO_DEAD as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_DEAD"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_DEAD" foreignKeyName="PLAN_LANE_INFO_DEAD_PLAN_OI_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_DEAD_PLAN_OI_FK to PLAN_LANE_INFO_DEAD (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_DEAD WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_DEAD.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_DEAD" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_DEAD_PLAN_OI_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_DEAD" constraintName="PLAN_LANE_INFO_DEAD_PLAN_OI_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="c0dc2bae-c55b-4b8e-a11e-a6b3a043a935" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_LANE_O_FK to table PLAN_LANE_INFO_ENTRY as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_ENTRY"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY" foreignKeyName="PLAN_LANE_INFO_ENTRY_LANE_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_ENTRY_LANE_O_FK to PLAN_LANE_INFO_ENTRY (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_ENTRY WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_ENTRY.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_ENTRY_LANE_O_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" constraintName="PLAN_LANE_INFO_ENTRY_LANE_O_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="da0b6967-ab72-4271-a4e7-f0331823e253" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_PLAN_O_FK to table PLAN_LANE_INFO_ENTRY as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_ENTRY"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY" foreignKeyName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_ENTRY_PLAN_O_FK to PLAN_LANE_INFO_ENTRY (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_ENTRY WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_ENTRY.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" constraintName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="1a6ddcd4-39a9-4ec6-ad14-bde36fe84883" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_ERROR_FK1 to table PLAN_LANE_INFO_ENTRY_ERRORS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_ENTRY_ERRORS"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY_ERRORS" foreignKeyName="PLAN_LANE_INFO_ENTRY_ERROR_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_ENTRY_ERROR_FK1 to PLAN_LANE_INFO_ENTRY_ERRORS (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_ENTRY_ERRORS WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_ENTRY_ERRORS.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY_ERRORS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_ENTRY_ERROR_FK1" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY_ERRORS" constraintName="PLAN_LANE_INFO_ENTRY_ERROR_FK1"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="524c0183-7b50-42e3-a0b2-014399728364" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_EXIT_LANE_OI_FK to table PLAN_LANE_INFO_EXIT as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_EXIT"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_EXIT" foreignKeyName="PLAN_LANE_INFO_EXIT_LANE_OI_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_EXIT_LANE_OI_FK to PLAN_LANE_INFO_EXIT (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_EXIT WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_EXIT.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_EXIT_LANE_OI_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT" constraintName="PLAN_LANE_INFO_EXIT_LANE_OI_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="d045aafb-18c4-4aa4-970a-cf0d9c20048e" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_EXIT_PLAN_OI_FK to table PLAN_LANE_INFO_EXIT as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_EXIT"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_EXIT" foreignKeyName="PLAN_LANE_INFO_EXIT_PLAN_OI_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_EXIT_PLAN_OI_FK to PLAN_LANE_INFO_EXIT (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_EXIT WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_EXIT.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_EXIT_PLAN_OI_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT" constraintName="PLAN_LANE_INFO_EXIT_PLAN_OI_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="6b86aec1-d52e-46a5-a95a-f02571574560" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_EXIT_ERRORS_FK1 to table PLAN_LANE_INFO_EXIT_ERRORS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_EXIT_ERRORS"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_EXIT_ERRORS" foreignKeyName="PLAN_LANE_INFO_EXIT_ERRORS_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_EXIT_ERRORS_FK1 to PLAN_LANE_INFO_EXIT_ERRORS (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_EXIT_ERRORS WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_EXIT_ERRORS.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT_ERRORS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_EXIT_ERRORS_FK1" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_EXIT_ERRORS" constraintName="PLAN_LANE_INFO_EXIT_ERRORS_FK1"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3bf2ba30-c798-4af6-a2f9-076518308f03" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_GRPD_SPTS_FK1 to table PLAN_LANE_INFO_GROUPED_SPOTS as (1) the table does not exist, or (2) the foreignKey not exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_GROUPED_SPOTS"/>
+            <tableExists tableName="SPOT_POINT"/>
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_GROUPED_SPOTS" foreignKeyName="PLAN_LANE_INFO_GRPD_SPTS_FK1"/>
+        </preConditions>
+        <comment>FLT-6143: DropForeignKeyConstraint PLAN_LANE_INFO_GRPD_SPTS_FK1 to PLAN_LANE_INFO_GROUPED_SPOTS (SPOT_POINT_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_GROUPED_SPOTS WHERE SPOT_POINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPOT_POINT WHERE SPOT_POINT.SPOT_POINT_OID = PLAN_LANE_INFO_GROUPED_SPOTS.SPOT_POINT_OID)</sql>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" constraintName="PLAN_LANE_INFO_GRPD_SPTS_FK1"/>
+
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" baseColumnNames="SPOT_POINT_OID" constraintName="PLAN_LANE_INFO_GRPD_SPTS_FK1" referencedTableName="SPOT_POINT" referencedColumnNames="SPOT_POINT_OID" onDelete="CASCADE"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="3bf2ba30-c798-4af6-a2f9-076518308f02" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_GROUPED_SPO_FK1 to table PLAN_LANE_INFO_GROUPED_SPOTS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_GROUPED_SPOTS"/>
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_GROUPED_SPOTS" foreignKeyName="PLAN_LANE_INFO_GROUPED_SPO_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_GROUPED_SPO_FK1 to PLAN_LANE_INFO_GROUPED_SPOTS (SPOT_POINT_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_GROUPED_SPOTS WHERE SPOT_POINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPOT_POINT WHERE SPOT_POINT.SPOT_POINT_OID = PLAN_LANE_INFO_GROUPED_SPOTS.SPOT_POINT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" baseColumnNames="SPOT_POINT_OID" constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK1" referencedTableName="SPOT_POINT" referencedColumnNames="SPOT_POINT_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK1"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="e506d090-5f28-45ee-aa66-36b4a7b11915" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_GROUPED_SPO_FK2 to table PLAN_LANE_INFO_GROUPED_SPOTS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_GROUPED_SPOTS"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_GROUPED_SPOTS" foreignKeyName="PLAN_LANE_INFO_GROUPED_SPO_FK2"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_GROUPED_SPO_FK2 to PLAN_LANE_INFO_GROUPED_SPOTS (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_GROUPED_SPOTS WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_GROUPED_SPOTS.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK2" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_GROUPED_SPOTS" constraintName="PLAN_LANE_INFO_GROUPED_SPO_FK2"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="fd61b29a-5dbe-45c2-a0cb-b20ebc384b19" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_INBOUND_ACC_FK1 to table PLAN_LANE_INFO_INBOUND_ACCESS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_INBOUND_ACCESS"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_INBOUND_ACCESS" foreignKeyName="PLAN_LANE_INFO_INBOUND_ACC_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_INBOUND_ACC_FK1 to PLAN_LANE_INFO_INBOUND_ACCESS (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_INBOUND_ACCESS WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_INBOUND_ACCESS.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_INBOUND_ACCESS" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_INBOUND_ACC_FK1" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_INBOUND_ACCESS" constraintName="PLAN_LANE_INFO_INBOUND_ACC_FK1"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="5b419297-6e7c-4028-8e13-f2ab887ae36e" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_INBOUND_ACC_FK2 to table PLAN_LANE_INFO_INBOUND_ACCESS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_INBOUND_ACCESS"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_INBOUND_ACCESS" foreignKeyName="PLAN_LANE_INFO_INBOUND_ACC_FK2"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_INBOUND_ACC_FK2 to PLAN_LANE_INFO_INBOUND_ACCESS (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_INBOUND_ACCESS WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_INBOUND_ACCESS.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_INBOUND_ACCESS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_INBOUND_ACC_FK2" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_INBOUND_ACCESS" constraintName="PLAN_LANE_INFO_INBOUND_ACC_FK2"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="1b39b5ef-6aba-40f1-9934-bdc217b987f5" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_OUTBOUND_AC_FK1 to table PLAN_LANE_INFO_OUTBOUND_ACCESS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_OUTBOUND_ACCESS"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" foreignKeyName="PLAN_LANE_INFO_OUTBOUND_AC_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_OUTBOUND_AC_FK1 to PLAN_LANE_INFO_OUTBOUND_ACCESS (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_OUTBOUND_ACCESS WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_OUTBOUND_ACCESS.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_OUTBOUND_AC_FK1" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" constraintName="PLAN_LANE_INFO_OUTBOUND_AC_FK1"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="259fc72f-867d-4711-9a40-27a8bc42faa3" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_OUTBOUND_AC_FK2 to table PLAN_LANE_INFO_OUTBOUND_ACCESS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_OUTBOUND_ACCESS"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" foreignKeyName="PLAN_LANE_INFO_OUTBOUND_AC_FK2"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_OUTBOUND_AC_FK2 to PLAN_LANE_INFO_OUTBOUND_ACCESS (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_OUTBOUND_ACCESS WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_OUTBOUND_ACCESS.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_OUTBOUND_AC_FK2" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_OUTBOUND_ACCESS" constraintName="PLAN_LANE_INFO_OUTBOUND_AC_FK2"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="d194057e-5d01-4677-aa0e-a2934cf5a929" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_QUEUE_LANE_O_FK to table PLAN_LANE_INFO_QUEUE as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_QUEUE"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_QUEUE" foreignKeyName="PLAN_LANE_INFO_QUEUE_LANE_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_QUEUE_LANE_O_FK to PLAN_LANE_INFO_QUEUE (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_QUEUE WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_QUEUE.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_QUEUE_LANE_O_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE" constraintName="PLAN_LANE_INFO_QUEUE_LANE_O_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="0acb6df8-88ac-43db-86f0-ac2121db94d8" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_QUEUE_PLAN_O_FK to table PLAN_LANE_INFO_QUEUE as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_QUEUE"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_QUEUE" foreignKeyName="PLAN_LANE_INFO_QUEUE_PLAN_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_QUEUE_PLAN_O_FK to PLAN_LANE_INFO_QUEUE (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_QUEUE WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_QUEUE.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_QUEUE_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE" constraintName="PLAN_LANE_INFO_QUEUE_PLAN_O_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="f75efc74-3b2c-483c-9247-71afb18266c0" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_QUEUE_ERROR_FK1 to table PLAN_LANE_INFO_QUEUE_ERRORS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_QUEUE_ERRORS"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_QUEUE_ERRORS" foreignKeyName="PLAN_LANE_INFO_QUEUE_ERROR_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_QUEUE_ERROR_FK1 to PLAN_LANE_INFO_QUEUE_ERRORS (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_QUEUE_ERRORS WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_QUEUE_ERRORS.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE_ERRORS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_QUEUE_ERROR_FK1" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_QUEUE_ERRORS" constraintName="PLAN_LANE_INFO_QUEUE_ERROR_FK1"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="19de13ef-8ac4-4271-925c-701d1d534de5" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_UTURN_LANE_O_FK to table PLAN_LANE_INFO_UTURN as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_UTURN"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_UTURN" foreignKeyName="PLAN_LANE_INFO_UTURN_LANE_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_UTURN_LANE_O_FK to PLAN_LANE_INFO_UTURN (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_UTURN WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_UTURN.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_UTURN_LANE_O_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN" constraintName="PLAN_LANE_INFO_UTURN_LANE_O_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="d496025f-ba61-4d30-80e8-46765b345c5d" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_UTURN_PLAN_O_FK to table PLAN_LANE_INFO_UTURN as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_UTURN"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_UTURN" foreignKeyName="PLAN_LANE_INFO_UTURN_PLAN_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_UTURN_PLAN_O_FK to PLAN_LANE_INFO_UTURN (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_UTURN WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_UTURN.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_UTURN_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN" constraintName="PLAN_LANE_INFO_UTURN_PLAN_O_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="36a5305a-3730-4a81-bb12-7ba1c75e257b" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_UTURN_ERROR_FK1 to table PLAN_LANE_INFO_UTURN_ERRORS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_UTURN_ERRORS"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_UTURN_ERRORS" foreignKeyName="PLAN_LANE_INFO_UTURN_ERROR_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_UTURN_ERROR_FK1 to PLAN_LANE_INFO_UTURN_ERRORS (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_UTURN_ERRORS WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_UTURN_ERRORS.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN_ERRORS" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_UTURN_ERROR_FK1" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_UTURN_ERRORS" constraintName="PLAN_LANE_INFO_UTURN_ERROR_FK1"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="3b31fb66-c289-464e-9bd7-e5e48dda08ab" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_LANE_INFO_SP_OID_FK to table SPOT_POINT_LANE_INFO as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT_LANE_INFO"/>
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_LANE_INFO" foreignKeyName="SPOT_POINT_LANE_INFO_SP_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint SPOT_POINT_LANE_INFO_SP_OID_FK to SPOT_POINT_LANE_INFO (SPOT_POINT_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT_LANE_INFO WHERE SPOT_POINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPOT_POINT WHERE SPOT_POINT.SPOT_POINT_OID = SPOT_POINT_LANE_INFO.SPOT_POINT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT_LANE_INFO" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_LANE_INFO_SP_OID_FK" referencedTableName="SPOT_POINT" referencedColumnNames="SPOT_POINT_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT_LANE_INFO" constraintName="SPOT_POINT_LANE_INFO_SP_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="8a10b0f5-ae11-4e8d-9b2e-3608bb750f1a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_LANE_O_FK of table PLAN_LANE_INFO_ENTRY as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY" foreignKeyName="PLAN_LANE_INFO_ENTRY_LANE_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_ENTRY_LANE_O_FK from PLAN_LANE_INFO_ENTRY (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" constraintName="PLAN_LANE_INFO_ENTRY_LANE_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_ENTRY_LANE_O_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="dd888c20-7d22-4d29-a3f2-135f313c1fce" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_PLAN_O_FK of table PLAN_LANE_INFO_ENTRY as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY" foreignKeyName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_LANE_INFO_ENTRY_PLAN_O_FK from PLAN_LANE_INFO_ENTRY (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" constraintName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="d5c03f9f-7553-45fa-80dd-57d878ea34e4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_ENTRY_LANES_LANE_FK of table SPOT_POINT_ENTRY_LANES as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_ENTRY_LANES" foreignKeyName="SPOT_POINT_ENTRY_LANES_LANE_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint SPOT_POINT_ENTRY_LANES_LANE_FK from SPOT_POINT_ENTRY_LANES (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANES" constraintName="SPOT_POINT_ENTRY_LANES_LANE_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANES" baseColumnNames="LANE_OID" constraintName="SPOT_POINT_ENTRY_LANES_LANE_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="96b31ac8-8139-47e6-86ba-0d9f7fb0fb6b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_ENTRY_LANES_SPOT_FK of table SPOT_POINT_ENTRY_LANES as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_ENTRY_LANES" foreignKeyName="SPOT_POINT_ENTRY_LANES_SPOT_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint SPOT_POINT_ENTRY_LANES_SPOT_FK from SPOT_POINT_ENTRY_LANES (SPOT_POINT_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANES" constraintName="SPOT_POINT_ENTRY_LANES_SPOT_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANES" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_ENTRY_LANES_SPOT_FK" referencedTableName="SPOT_POINT_LANE_INFO" referencedColumnNames="SPOT_POINT_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="7c145d44-c43f-44ba-b0a8-6ea4fc8acae6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_ENTRY_LANE_ERRO_FK1 of table SPOT_POINT_ENTRY_LANE_ERRORS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_ENTRY_LANE_ERRORS" foreignKeyName="SPOT_POINT_ENTRY_LANE_ERRO_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint SPOT_POINT_ENTRY_LANE_ERRO_FK1 from SPOT_POINT_ENTRY_LANE_ERRORS (SPOT_POINT_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANE_ERRORS" constraintName="SPOT_POINT_ENTRY_LANE_ERRO_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANE_ERRORS" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_ENTRY_LANE_ERRO_FK1" referencedTableName="SPOT_POINT_LANE_INFO" referencedColumnNames="SPOT_POINT_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="44b7f2e6-c94b-4184-bf28-67524e73513e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_EXIT_LANES_LANE_FK of table SPOT_POINT_EXIT_LANES as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_EXIT_LANES" foreignKeyName="SPOT_POINT_EXIT_LANES_LANE_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint SPOT_POINT_EXIT_LANES_LANE_FK from SPOT_POINT_EXIT_LANES (LANE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANES" constraintName="SPOT_POINT_EXIT_LANES_LANE_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANES" baseColumnNames="LANE_OID" constraintName="SPOT_POINT_EXIT_LANES_LANE_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="44a3e355-f51e-417a-b1b8-94bba89de107" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_EXIT_LANES_SPOT_FK of table SPOT_POINT_EXIT_LANES as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_EXIT_LANES" foreignKeyName="SPOT_POINT_EXIT_LANES_SPOT_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint SPOT_POINT_EXIT_LANES_SPOT_FK from SPOT_POINT_EXIT_LANES (SPOT_POINT_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANES" constraintName="SPOT_POINT_EXIT_LANES_SPOT_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANES" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_EXIT_LANES_SPOT_FK" referencedTableName="SPOT_POINT_LANE_INFO" referencedColumnNames="SPOT_POINT_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="36ea0bf4-eff0-457a-9245-71ecf05e6511" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_EXIT_LANE_ERROR_FK1 of table SPOT_POINT_EXIT_LANE_ERRORS as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_EXIT_LANE_ERRORS" foreignKeyName="SPOT_POINT_EXIT_LANE_ERROR_FK1"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint SPOT_POINT_EXIT_LANE_ERROR_FK1 from SPOT_POINT_EXIT_LANE_ERRORS (SPOT_POINT_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANE_ERRORS" constraintName="SPOT_POINT_EXIT_LANE_ERROR_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANE_ERRORS" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_EXIT_LANE_ERROR_FK1" referencedTableName="SPOT_POINT_LANE_INFO" referencedColumnNames="SPOT_POINT_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="3b558648-a3b2-4369-8e57-79d0bf4161ad" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_LANE_O_FK to table PLAN_LANE_INFO_ENTRY as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_ENTRY"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY" foreignKeyName="PLAN_LANE_INFO_ENTRY_LANE_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_ENTRY_LANE_O_FK to PLAN_LANE_INFO_ENTRY (LANE_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_ENTRY WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = PLAN_LANE_INFO_ENTRY.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" baseColumnNames="LANE_OID" constraintName="PLAN_LANE_INFO_ENTRY_LANE_O_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" constraintName="PLAN_LANE_INFO_ENTRY_LANE_O_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="016b01d4-5ea6-481a-a264-6f11a07e8076" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_LANE_INFO_ENTRY_PLAN_O_FK to table PLAN_LANE_INFO_ENTRY as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LANE_INFO_ENTRY"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_LANE_INFO_ENTRY" foreignKeyName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_LANE_INFO_ENTRY_PLAN_O_FK to PLAN_LANE_INFO_ENTRY (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_LANE_INFO_ENTRY WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_LANE_INFO_ENTRY.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" baseColumnNames="PLAN_OID" constraintName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_LANE_INFO_ENTRY" constraintName="PLAN_LANE_INFO_ENTRY_PLAN_O_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="254a3846-19d8-4ef2-b3f8-f945fb3b1ea1" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_ENTRY_LANES_LANE_FK to table SPOT_POINT_ENTRY_LANES as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT_ENTRY_LANES"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_ENTRY_LANES" foreignKeyName="SPOT_POINT_ENTRY_LANES_LANE_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint SPOT_POINT_ENTRY_LANES_LANE_FK to SPOT_POINT_ENTRY_LANES (LANE_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT_ENTRY_LANES WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = SPOT_POINT_ENTRY_LANES.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANES" baseColumnNames="LANE_OID" constraintName="SPOT_POINT_ENTRY_LANES_LANE_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANES" constraintName="SPOT_POINT_ENTRY_LANES_LANE_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="84af6396-916b-4eb6-93e8-4969ba24511d" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_ENTRY_LANES_SPOT_FK to table SPOT_POINT_ENTRY_LANES as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT_ENTRY_LANES"/>
+            <tableExists tableName="SPOT_POINT_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_ENTRY_LANES" foreignKeyName="SPOT_POINT_ENTRY_LANES_SPOT_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint SPOT_POINT_ENTRY_LANES_SPOT_FK to SPOT_POINT_ENTRY_LANES (SPOT_POINT_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT_ENTRY_LANES WHERE SPOT_POINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPOT_POINT_LANE_INFO WHERE SPOT_POINT_LANE_INFO.SPOT_POINT_OID = SPOT_POINT_ENTRY_LANES.SPOT_POINT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANES" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_ENTRY_LANES_SPOT_FK" referencedTableName="SPOT_POINT_LANE_INFO" referencedColumnNames="SPOT_POINT_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANES" constraintName="SPOT_POINT_ENTRY_LANES_SPOT_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="b835db4f-e9d5-4148-a4b1-d6af4d91c9d1" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_ENTRY_LANE_ERRO_FK1 to table SPOT_POINT_ENTRY_LANE_ERRORS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT_ENTRY_LANE_ERRORS"/>
+            <tableExists tableName="SPOT_POINT_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_ENTRY_LANE_ERRORS" foreignKeyName="SPOT_POINT_ENTRY_LANE_ERRO_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint SPOT_POINT_ENTRY_LANE_ERRO_FK1 to SPOT_POINT_ENTRY_LANE_ERRORS (SPOT_POINT_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT_ENTRY_LANE_ERRORS WHERE SPOT_POINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPOT_POINT_LANE_INFO WHERE SPOT_POINT_LANE_INFO.SPOT_POINT_OID = SPOT_POINT_ENTRY_LANE_ERRORS.SPOT_POINT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANE_ERRORS" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_ENTRY_LANE_ERRO_FK1" referencedTableName="SPOT_POINT_LANE_INFO" referencedColumnNames="SPOT_POINT_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT_ENTRY_LANE_ERRORS" constraintName="SPOT_POINT_ENTRY_LANE_ERRO_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="37b66f61-4a72-4f3d-9a4f-06e5ff798c13" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_EXIT_LANES_LANE_FK to table SPOT_POINT_EXIT_LANES as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT_EXIT_LANES"/>
+            <tableExists tableName="LANE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_EXIT_LANES" foreignKeyName="SPOT_POINT_EXIT_LANES_LANE_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint SPOT_POINT_EXIT_LANES_LANE_FK to SPOT_POINT_EXIT_LANES (LANE_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT_EXIT_LANES WHERE LANE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LANE WHERE LANE.LANE_OID = SPOT_POINT_EXIT_LANES.LANE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANES" baseColumnNames="LANE_OID" constraintName="SPOT_POINT_EXIT_LANES_LANE_FK" referencedTableName="LANE" referencedColumnNames="LANE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANES" constraintName="SPOT_POINT_EXIT_LANES_LANE_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="f19ef8a7-1c7d-4b54-94d7-91c44ed64f6c" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_EXIT_LANES_SPOT_FK to table SPOT_POINT_EXIT_LANES as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT_EXIT_LANES"/>
+            <tableExists tableName="SPOT_POINT_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_EXIT_LANES" foreignKeyName="SPOT_POINT_EXIT_LANES_SPOT_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint SPOT_POINT_EXIT_LANES_SPOT_FK to SPOT_POINT_EXIT_LANES (SPOT_POINT_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT_EXIT_LANES WHERE SPOT_POINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPOT_POINT_LANE_INFO WHERE SPOT_POINT_LANE_INFO.SPOT_POINT_OID = SPOT_POINT_EXIT_LANES.SPOT_POINT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANES" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_EXIT_LANES_SPOT_FK" referencedTableName="SPOT_POINT_LANE_INFO" referencedColumnNames="SPOT_POINT_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANES" constraintName="SPOT_POINT_EXIT_LANES_SPOT_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="40e0c295-a6d4-4411-8bf2-9fa4a0e31dde" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_EXIT_LANE_ERROR_FK1 to table SPOT_POINT_EXIT_LANE_ERRORS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT_EXIT_LANE_ERRORS"/>
+            <tableExists tableName="SPOT_POINT_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_EXIT_LANE_ERRORS" foreignKeyName="SPOT_POINT_EXIT_LANE_ERROR_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint SPOT_POINT_EXIT_LANE_ERROR_FK1 to SPOT_POINT_EXIT_LANE_ERRORS (SPOT_POINT_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT_EXIT_LANE_ERRORS WHERE SPOT_POINT_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPOT_POINT_LANE_INFO WHERE SPOT_POINT_LANE_INFO.SPOT_POINT_OID = SPOT_POINT_EXIT_LANE_ERRORS.SPOT_POINT_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANE_ERRORS" baseColumnNames="SPOT_POINT_OID" constraintName="SPOT_POINT_EXIT_LANE_ERROR_FK1" referencedTableName="SPOT_POINT_LANE_INFO" referencedColumnNames="SPOT_POINT_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT_EXIT_LANE_ERRORS" constraintName="SPOT_POINT_EXIT_LANE_ERROR_FK1"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="5b111f50-38bf-4ee1-b663-9c34ade7e9ed" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_GROUP_LANE_INFO_PLAN_O_FK of table PLAN_GROUP_LANE_INFO as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_LANE_INFO" foreignKeyName="PLAN_GROUP_LANE_INFO_PLAN_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint PLAN_GROUP_LANE_INFO_PLAN_O_FK from PLAN_GROUP_LANE_INFO (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_GROUP_LANE_INFO" constraintName="PLAN_GROUP_LANE_INFO_PLAN_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PLAN_GROUP_LANE_INFO" baseColumnNames="PLAN_OID" constraintName="PLAN_GROUP_LANE_INFO_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="968342eb-65d4-40e2-b91e-d5d31ef899e8" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_LANE_INFO_PLAN_O_FK to table PLAN_GROUP_LANE_INFO as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP_LANE_INFO"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP_LANE_INFO" foreignKeyName="PLAN_GROUP_LANE_INFO_PLAN_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint PLAN_GROUP_LANE_INFO_PLAN_O_FK to PLAN_GROUP_LANE_INFO (PLAN_OID)</comment>
+        <sql>DELETE FROM PLAN_GROUP_LANE_INFO WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = PLAN_GROUP_LANE_INFO.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP_LANE_INFO" baseColumnNames="PLAN_OID" constraintName="PLAN_GROUP_LANE_INFO_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_GROUP_LANE_INFO" constraintName="PLAN_GROUP_LANE_INFO_PLAN_O_FK"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="dbb26ca2-965d-4611-9a53-68eefc55d5df" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for SPOT_POINT_LANE_INFO_PLAN_O_FK of table SPOT_POINT_LANE_INFO as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_LANE_INFO" foreignKeyName="SPOT_POINT_LANE_INFO_PLAN_O_FK"/>
+        </preConditions>
+        <comment>AHS-6803: DropForeignKeyConstraint SPOT_POINT_LANE_INFO_PLAN_O_FK from SPOT_POINT_LANE_INFO (PLAN_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="SPOT_POINT_LANE_INFO" constraintName="SPOT_POINT_LANE_INFO_PLAN_O_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="SPOT_POINT_LANE_INFO" baseColumnNames="PLAN_OID" constraintName="SPOT_POINT_LANE_INFO_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="47528e8a-b8fe-42f1-9cf4-6fe1bdb2ab49" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_LANE_INFO_PLAN_O_FK to table SPOT_POINT_LANE_INFO as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT_LANE_INFO"/>
+            <tableExists tableName="PLAN_LANE_INFO"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT_LANE_INFO" foreignKeyName="SPOT_POINT_LANE_INFO_PLAN_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-6803: AddForeignKeyConstraint SPOT_POINT_LANE_INFO_PLAN_O_FK to SPOT_POINT_LANE_INFO (PLAN_OID)</comment>
+        <sql>DELETE FROM SPOT_POINT_LANE_INFO WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_LANE_INFO WHERE PLAN_LANE_INFO.PLAN_OID = SPOT_POINT_LANE_INFO.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT_LANE_INFO" baseColumnNames="PLAN_OID" constraintName="SPOT_POINT_LANE_INFO_PLAN_O_FK" referencedTableName="PLAN_LANE_INFO" referencedColumnNames="PLAN_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT_LANE_INFO" constraintName="SPOT_POINT_LANE_INFO_PLAN_O_FK"/>
+        </rollback>
+    </changeSet>
+    
+</databaseChangeLog>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="75bdd265-6945-4b8b-a756-d4dbec55b190" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PAYLOAD_MATERIAL_DENSITY to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PRODUCTION_EVENT"/>
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="PAYLOAD_MATERIAL_DENSITY"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1003 AddColumn PAYLOAD_MATERIAL_DENSITY to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="PAYLOAD_MATERIAL_DENSITY" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="60ecf03b-00b6-4745-b23b-fb6aec2bf23a" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for TIMESTAMP_PAYLOAD_CYCLE_UTC to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PRODUCTION_EVENT"/>
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="TIMESTAMP_PAYLOAD_CYCLE_UTC"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1003 AddColumn TIMESTAMP_PAYLOAD_CYCLE_UTC to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="TIMESTAMP_PAYLOAD_CYCLE_UTC" type="DATETIME2"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="bd1d5625-ab41-47db-9ec4-be293250c259" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MATERIAL_NAME to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PRODUCTION_EVENT"/>
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="MATERIAL_NAME"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1003 AddColumn MATERIAL_NAME to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="MATERIAL_NAME" type="VARCHAR(254)" remarks="The name of the Material."/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

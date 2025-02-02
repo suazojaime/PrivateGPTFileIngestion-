@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.production.domain.ScaleReading"
+           table="SCALE_READING"
+           dynamic-update="true">
+
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <meta attribute="index">
+            name=SCLRD_SCALE_MACHINE_OID
+            columns=SCALE_MACHINE_OID
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=SCLRD_TIMESTAMP_UTC
+            columns=TIMESTAMP_UTC
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=SCLRD_MACHINE_OID
+            columns=MACHINE_OID
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=SCLRD_CYCLE_OID
+            columns=CYCLE_OID
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <meta attribute="description">A scale reading.</meta>
+
+        <cache usage="read-write" region="historical"/>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="SCALE_READING_OID"
+                >
+            <meta attribute="description">The object identifier of the entity, unique within its manager.</meta>
+            <generator class="com.mincom.env.base.persistence.TableHiLoGenerator"/>
+        </id>
+        <many-to-one
+                name="scaleMachine"
+                column="SCALE_MACHINE_OID"
+                not-null="true"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                >
+            <meta attribute="description">The entity the event came from.</meta>
+        </many-to-one>
+        <property
+                name="timestamp"
+                type="TimestampType"
+                not-null="true"
+                column="TIMESTAMP_UTC"
+                >
+            <meta attribute="utc-description">The utc time the reading was taken.</meta>
+            <meta attribute="description">The utc time the reading was taken.</meta>
+        </property>
+        <many-to-one
+                name="machine"
+                column="MACHINE_OID"
+                not-null="false"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                >
+            <meta attribute="description">The machine entity that was weighed.</meta>
+        </many-to-one>
+        <many-to-one
+                name="cycle"
+                column="CYCLE_OID"
+                not-null="false"
+                class="minestar.production.domain.cycle.CycleReference"
+                >
+            <meta attribute="description">The machine cycle.</meta>
+        </many-to-one>
+        <property name="status"
+                  not-null="true"
+                  type="java.lang.Short">
+            <meta attribute="choices" inherit="false">choice:scaleReadingStatus</meta>
+            <meta attribute="description">The status of the reading.</meta>
+            <column name="STATUS" />
+        </property>
+        <property
+                name="payload"
+                type="java.lang.Float"
+                column="PAYLOAD"
+                not-null="false">
+            <meta attribute="description">The payload of the reading.</meta>
+        </property>
+        <property
+                name="frontRightWeight"
+                type="java.lang.Float"
+                column="FRONT_RIGHT_WEIGHT"
+                not-null="false">
+            <meta attribute="description">Weight at front right.</meta>
+        </property>
+        <property
+                name="frontLeftWeight"
+                type="java.lang.Float"
+                column="FRONT_LEFT_WEIGHT"
+                not-null="false">
+            <meta attribute="description">Weight at front left.</meta>
+        </property>
+        <property
+                name="rearRightOuterWeight"
+                type="java.lang.Float"
+                column="REAR_RIGHT_OUTER_WEIGHT"
+                not-null="false">
+            <meta attribute="description">Weight at rear right outer.</meta>
+        </property>
+        <property
+                name="rearLeftOuterWeight"
+                type="java.lang.Float"
+                column="REAR_LEFT_OUTER_WEIGHT"
+                not-null="false">
+            <meta attribute="description">Weight at rear left outer.</meta>
+        </property>
+        <property
+                name="rearRightInnerWeight"
+                type="java.lang.Float"
+                column="REAR_RIGHT_INNER_WEIGHT"
+                not-null="false">
+            <meta attribute="description">Weight at rear right inner.</meta>
+        </property>
+        <property
+                name="rearLeftInnerWeight"
+                type="java.lang.Float"
+                column="REAR_LEFT_INNER_WEIGHT"
+                not-null="false">
+            <meta attribute="description">Weight at rear left inner.</meta>
+        </property>
+        <property
+                name="horizontalBiasPct"
+                type="java.lang.Float"
+                column="HORIZONTAL_BIAS_PCT"
+                not-null="false">
+            <meta attribute="description">Horizontal bias percentage.</meta>
+        </property>
+        <property
+                name="verticalBiasPct"
+                type="java.lang.Float"
+                column="VERTICAL_BIAS_PCT"
+                not-null="false">
+            <meta attribute="description">Vertical bias percentage.</meta>
+        </property>
+    </class>
+
+</hibernate-mapping>

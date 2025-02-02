@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="70440d73-b2f2-40f6-81e0-0bc31dc8f740" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for POLLING_ID to table MACHINE_MEASURE_CONFIG as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_MEASURE_CONFIG"/>
+            <not>
+                <columnExists tableName="MACHINE_MEASURE_CONFIG" columnName="POLLING_ID"/>
+            </not>
+        </preConditions>
+        <comment>{HLT-817}: AddColumn MACHINE_MEASURE_CONFIG.POLLING_ID</comment>
+        <addColumn tableName="MACHINE_MEASURE_CONFIG">
+            <column name="POLLING_ID" type="BIGINT" remarks="U64 channel polling ID."/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

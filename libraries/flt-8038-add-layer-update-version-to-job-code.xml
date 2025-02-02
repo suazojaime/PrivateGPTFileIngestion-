@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="396d7900-8bcc-481b-aa54-14b55b24f4c0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for JOBCODE.DESCRIPTION as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="JOBCODE" columnName="DESCRIPTION"/>
+        </preConditions>
+        <comment>FLT-8038: ChangeDataType of JOBCODE.DESCRIPTION from VARCHAR(254) to VARCHAR(4000)</comment>
+        <modifyDataType columnName="DESCRIPTION" newDataType="VARCHAR(4000)" tableName="JOBCODE"/>
+        <rollback>
+            <sql dbms="oracle">UPDATE JOBCODE SET DESCRIPTION = SUBSTR(DESCRIPTION,1,254)</sql>
+            <sql dbms="mssql">UPDATE JOBCODE SET DESCRIPTION = SUBSTRING(DESCRIPTION,1,254)</sql>
+            <modifyDataType columnName="DESCRIPTION" newDataType="VARCHAR(254)" tableName="JOBCODE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="a52adbd6-ac4c-4663-81ed-0994aca1ae7e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MODEL_UPDATE_VERSION to table JOBCODE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="JOBCODE"/>
+            <not>
+                <columnExists tableName="JOBCODE" columnName="MODEL_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8038: AddColumn JOBCODE.MODEL_UPDATE_VERSION</comment>
+        <addColumn tableName="JOBCODE">
+            <column name="MODEL_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0" remarks="The mine model update version when the job code was created/modified.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="a14b9c15-4283-4450-93e3-22df79a2327c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table JOBCODE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="JOBCODE"/>
+            <not>
+                <columnExists tableName="JOBCODE" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8038: AddColumn JOBCODE.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="JOBCODE">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0" remarks="The layer update version when the job code was created/modified.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+	<changeSet id="1fcb2942-6727-4238-a07d-aa2ffa52563c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table JOBCODE as table or column does not exist." onFail="MARK_RAN">
+            <tableExists tableName="JOBCODE"/>
+			<columnExists tableName="JOBCODE" columnName="MODEL_UPDATE_VERSION"/>
+            <columnExists tableName="JOBCODE" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>FLT-8036: Initialize JOBCODE.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="JobCode"/>
+            <param name="table" value="JOBCODE"/>
+            <param name="oidColumn" value="JOBCODE_OID"/>
+            <param name="activeColumn" value="ACTIVE"/>
+            <param name="supportsArchiving" value="true"/>
+            <param name="hasModelUpdateVersion" value="true"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE JOBCODE SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
+

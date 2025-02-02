@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2014, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+            http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        ">
+    <changeSet id="11c7ca77-d99c-4057-bb28-5fa079313da1" author="MineStar" failOnError="true" dbms="mssql">
+        <preConditions onFailMessage="Ignored DropIndex for USER_LAYER_GROUP_NAME of table USERLAYER_GROUP as index does not exist." onFail="MARK_RAN">
+            <indexExists tableName="USERLAYER_GROUP" indexName="USER_LAYER_GROUP_NAME"/>
+        </preConditions>
+        <dropIndex tableName="USERLAYER_GROUP" indexName="USER_LAYER_GROUP_NAME"/>
+        <rollback>
+            <createIndex unique="true" tablespace="MW_IDXENT" tableName="USERLAYER_GROUP" indexName="USER_LAYER_GROUP_NAME">
+                <column name="NAME"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+    <changeSet id="11c7ca77-d99c-4057-bb28-5fa079313da2" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AlterColumn for NAME of table USERLAYER_GROUP as column does not exist or already has a NOT NULL constraint." onFail="MARK_RAN">
+            <columnExists tableName="USERLAYER_GROUP" columnName="NAME"/>
+            <ext:columnIsNullable tableName="USERLAYER_GROUP" columnName="NAME"/>
+        </preConditions>
+        <comment>UX-354: AlterColumn USERLAYER_GROUP.NAME - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="NAME" columnDataType="VARCHAR(254)" tableName="USERLAYER_GROUP"/>
+    </changeSet>
+    <changeSet id="11c7ca77-d99c-4057-bb28-5fa079313da3" author="MineStar" failOnError="true" dbms="mssql">
+        <preConditions onFailMessage="Ignored CreateIndex for USER_LAYER_GROUP_NAME of table USERLAYER_GROUP as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists tableName="USERLAYER_GROUP" indexName="USER_LAYER_GROUP_NAME"/>
+            </not>
+        </preConditions>
+        <createIndex unique="true" tableName="USERLAYER_GROUP" indexName="USER_LAYER_GROUP_NAME">
+            <column name="NAME"/>
+        </createIndex>
+    </changeSet>
+    
+    <changeSet id="f3047816-2d48-4341-a4ce-deface083da4" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AlterColumn for DEFAULT_MOBILE of table USERLAYER_GROUP as column does not exist or already has a NOT NULL constraint." onFail="MARK_RAN">
+            <columnExists tableName="USERLAYER_GROUP" columnName="DEFAULT_MOBILE"/>
+            <ext:columnIsNullable tableName="USERLAYER_GROUP" columnName="DEFAULT_MOBILE"/>
+        </preConditions>
+        <comment>UX-354: AlterColumn USERLAYER_GROUP.DEFAULT_MOBILE - nullability changed from true to false - defaultValue changed from 'null' to '0'</comment>
+        <addDefaultValue columnName="DEFAULT_MOBILE" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="USERLAYER_GROUP"/>
+        <addNotNullConstraint columnName="DEFAULT_MOBILE" defaultNullValue="0" columnDataType="BOOLEAN" tableName="USERLAYER_GROUP"/>
+    </changeSet>
+    
+    <changeSet id="f3047816-2d48-4341-a4ce-deface08da5" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AlterColumn for DEFAULT_WEB of table USERLAYER_GROUP as column does not exist or already has a NOT NULL constraint." onFail="MARK_RAN">
+            <columnExists tableName="USERLAYER_GROUP" columnName="DEFAULT_WEB"/>
+            <ext:columnIsNullable tableName="USERLAYER_GROUP" columnName="DEFAULT_WEB"/>
+        </preConditions>
+        <comment>UX-354: AlterColumn USERLAYER_GROUP.DEFAULT_WEB - nullability changed from true to false - defaultValue changed from 'null' to '0'</comment>
+        <addDefaultValue columnName="DEFAULT_WEB" columnDataType="BOOLEAN" defaultValueBoolean="false" tableName="USERLAYER_GROUP"/>
+        <addNotNullConstraint columnName="DEFAULT_WEB" defaultNullValue="0" columnDataType="BOOLEAN" tableName="USERLAYER_GROUP"/>
+    </changeSet>
+</databaseChangeLog>

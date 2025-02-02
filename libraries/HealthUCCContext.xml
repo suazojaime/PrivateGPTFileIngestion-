@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- internal cache beans, not available for remoting or serviceFactory -->
+    <bean id="measureGroupCacheImpl" class="minestar.health.uifacade.measure.collection.MeasureGroupCache"
+          lazy-init="true" parent="cacheParent">
+        <property name="definitionService" ref="definitionServiceImpl"/>
+    </bean>
+
+
+    <!-- must have this -->
+
+    <bean id="healthUCCImpl" class="minestar.health.uifacade.measure.impl.HealthUCCImpl"
+          lazy-init="true" init-method="springInit">
+        <property name="definitionService" ref="definitionServiceImpl"/>
+        <property name="dataFrameService" ref="dataFrameServiceImpl"/>
+        <property name="healthEventService" ref="healthEventServiceImpl"/>
+        <property name="telemetryService" ref="telemetryServiceImpl"/>
+        <property name="systemChannelPollingService" ref="systemChannelPollingServiceImpl"/>
+        <property name="mineFleetService" ref="mineFleetServiceImpl"/>
+        <property name="measureGroupCache" ref="measureGroupCacheImpl"/>
+        <property name="userContext" ref="userContextImpl"/>
+        <property name="healthUCCTaskScheduler" ref="minestarTaskScheduler"/>
+        <property name="notification" ref="notification"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerHealthUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Health UCC"/>
+        <constructor-arg value="minestar.health.uifacade.measure.HealthUCCFacade"/>
+        <constructor-arg ref="healthUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="healthUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="healthUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="healthUCC"/>
+        <property name="service" ref="healthUCCProxy"/>
+        <property name="serviceInterface" value="minestar.health.uifacade.measure.HealthUCCFacade"/>
+    </bean>
+
+</beans>

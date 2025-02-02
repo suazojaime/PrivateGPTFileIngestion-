@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="8e983157-f3e1-4b6b-ae0c-6f5ca4697a93" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LANE_EXTENSION of table PLAN_MODEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="LANE_EXTENSION"/>
+        </preConditions>
+        <comment>AHS-5063: DropColumn PLAN_MODEL.LANE_EXTENSION</comment>
+        <dropColumn columnName="LANE_EXTENSION" tableName="PLAN_MODEL"/>
+        <rollback>
+            <addColumn tableName="PLAN_MODEL">
+                <column name="LANE_EXTENSION" type="FLOAT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

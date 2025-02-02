@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<!-- MODIFICATION HISTORY
+     $Log: not supported by cvs2svn $
+-->
+
+<circuit>
+    <sources>
+        <source name="scheduledBreakEvents" class="com.mincom.works.scheduledbreak.node.ScheduledBreakNodeSource" />
+    </sources>
+    <nodes>
+        <node name="notificationMonitor" class="com.mincom.works.scheduledbreak.util.notification.NotificationMonitor" />
+    </nodes>
+    <sinks>
+    </sinks>
+    <connections>
+        <connect source="scheduledBreakEvents" sink="notificationMonitor"/>
+    </connections>
+</circuit>

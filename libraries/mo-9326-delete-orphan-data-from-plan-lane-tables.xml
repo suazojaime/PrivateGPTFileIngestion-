@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="825a2bc5-2c78-42d7-b574-3d932c3119b1" author="MineStar" runAlways="true" runOnChange="true">
+        <comment>MO-9326: Remove orphaned plan lane points</comment>
+        <sql>
+            DELETE FROM PLAN_LANE_POINTS_LEFT
+                  WHERE PLAN_LANE_POINTS_OID NOT IN (SELECT PLAN_LANE_POINTS_OID FROM SPOT_POINT_ENTRY_POINTS)
+                    AND PLAN_LANE_POINTS_OID NOT IN (SELECT PLAN_LANE_POINTS_OID FROM SPOT_POINT_EXIT_POINTS)
+        </sql>
+        <sql>
+            DELETE FROM PLAN_LANE_POINTS_PATH
+                  WHERE PLAN_LANE_POINTS_OID NOT IN (SELECT PLAN_LANE_POINTS_OID FROM SPOT_POINT_ENTRY_POINTS)
+                    AND PLAN_LANE_POINTS_OID NOT IN (SELECT PLAN_LANE_POINTS_OID FROM SPOT_POINT_EXIT_POINTS)
+        </sql>
+        <sql>
+            DELETE FROM PLAN_LANE_POINTS_RIGHT
+                  WHERE PLAN_LANE_POINTS_OID NOT IN (SELECT PLAN_LANE_POINTS_OID FROM SPOT_POINT_ENTRY_POINTS)
+                    AND PLAN_LANE_POINTS_OID NOT IN (SELECT PLAN_LANE_POINTS_OID FROM SPOT_POINT_EXIT_POINTS)
+        </sql>
+        <sql>
+            DELETE FROM PLAN_LANE_POINTS
+                  WHERE PLAN_LANE_POINTS_OID NOT IN (SELECT PLAN_LANE_POINTS_OID FROM SPOT_POINT_ENTRY_POINTS)
+                    AND PLAN_LANE_POINTS_OID NOT IN (SELECT PLAN_LANE_POINTS_OID FROM SPOT_POINT_EXIT_POINTS)
+        </sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

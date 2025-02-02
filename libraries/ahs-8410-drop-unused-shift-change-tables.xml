@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    
+    <changeSet id="edb5e094-189b-444d-98e4-d060bc562655" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for SHIFT_CHANGE_ACTIVE_LICENCE as table does not exist."
+                       onFail="MARK_RAN">
+            <tableExists tableName="SHIFT_CHANGE_ACTIVE_LICENCE"/>
+        </preConditions>
+        <comment>AHS-8410: DropTable SHIFT_CHANGE_ACTIVE_LICENCE</comment>
+        <dropTable tableName="SHIFT_CHANGE_ACTIVE_LICENCE"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="The active licenses of the shift change allocation" tableName="SHIFT_CHANGE_ACTIVE_LICENCE">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="FLEET_OID" type="BIGINT"/>
+                <column name="NR" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="OID,NR" constraintName="SHIFT_CHANGE_ACTIVE_LICENCE_PK" tablespace="MW_IDXENT" tableName="SHIFT_CHANGE_ACTIVE_LICENCE"/>
+            <createIndex unique="false" tablespace="MW_IDXENT" tableName="SHIFT_CHANGE_ACTIVE_LICENCE" indexName="SHIFTCHANGE_ACTIVE_LICENCE_12U">
+                <column name="OID"/>
+            </createIndex>
+            <addForeignKeyConstraint baseTableName="SHIFT_CHANGE_ACTIVE_LICENCE" baseColumnNames="OID" constraintName="SHIFT_CHANGE_ACTIVE_LICENC_FK1" referencedTableName="SHIFTCHANGEALLOCATION" referencedColumnNames="SHIFTCHANGEALLOCATION_OID" onDelete="NO ACTION"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="d2fd49e1-ce99-4d9a-be87-4879de86295f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for SHIFT_CHANGE_MACHINE_PREF as table does not exist."
+                       onFail="MARK_RAN">
+            <tableExists tableName="SHIFT_CHANGE_MACHINE_PREF"/>
+        </preConditions>
+        <comment>AHS-8410: DropTable SHIFT_CHANGE_MACHINE_PREF</comment>
+        <dropTable tableName="SHIFT_CHANGE_MACHINE_PREF"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="The machine preferences of the shift change allocation" tableName="SHIFT_CHANGE_MACHINE_PREF">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="MACHINE_OID" type="BIGINT"/>
+                <column name="NR" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="OID,NR" constraintName="SHIFT_CHANGE_MACHINE_PREF_PK" tablespace="MW_IDXENT" tableName="SHIFT_CHANGE_MACHINE_PREF"/>
+            <createIndex unique="false" tablespace="MW_IDXENT" tableName="SHIFT_CHANGE_MACHINE_PREF" indexName="SHIFT_CHANGE_MACHINE_PREF_12U">
+                <column name="OID"/>
+            </createIndex>
+            <addForeignKeyConstraint baseTableName="SHIFT_CHANGE_MACHINE_PREF" baseColumnNames="OID" constraintName="SHIFT_CHANGE_MACHINE_PREF_FK1" referencedTableName="SHIFTCHANGEALLOCATION" referencedColumnNames="SHIFTCHANGEALLOCATION_OID" onDelete="NO ACTION"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

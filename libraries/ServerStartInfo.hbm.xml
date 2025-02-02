@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class
+            name="minestar.platform.domain.restarts.ServerStartInfoImpl"
+            table="SERVER_START_INFO"
+            >
+        
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">Server start information </meta>
+        
+         <id
+                name="id"
+                type="java.lang.Long"
+                column="ID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        <property
+                name="serviceName"
+                column="SERVICE_NAME"
+                type="java.lang.String"
+                length="80">
+            <meta attribute="description">Service Name </meta>
+        </property>
+
+        <property
+                name="jobExecutionTime"
+                type="TimestampType"
+                column="JOBEXECUTIONTIME_UTC"
+                >
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">Job Execution Utc Time </meta>
+            <meta attribute="description">Job Execution Time </meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+                name="startTime"
+                type="TimestampType"
+                column="STARTTIME_UTC"
+                >
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">Start utc Time of the Service </meta>
+            <meta attribute="description">Start Time of the Service </meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+                name="host"
+                column="HOST"
+                type="java.lang.String"
+                length="80">
+            <meta attribute="description">HOST on which service is running.</meta>
+        </property>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="ac1d5c8c-9c41-4a50-a940-9d1e537f3968" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ASSIGNED_JOINED_PANEL to table DRAW_CARD_ASSIGNMENT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DRAW_CARD_ASSIGNMENT"/>
+            <not>
+                <columnExists tableName="DRAW_CARD_ASSIGNMENT" columnName="ASSIGNED_JOINED_PANEL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-1667: AddColumn DRAW_CARD_ASSIGNMENT.ASSIGNED_JOINED_PANEL</comment>
+        <addColumn tableName="DRAW_CARD_ASSIGNMENT">
+            <column name="ASSIGNED_JOINED_PANEL" type="BIGINT" remarks="A reference to the underground panel (MSMODEL.JOINED_UNDERGROUND_PANEL) that the machine is currently assigned to when the machine is assigned to a joined panel."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="DRAW_CARD_ASSIGNMENT" columnName="ASSIGNED_JOINED_PANEL"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="ac39a904-c8f7-4f9c-b857-ecc8a8535d8a" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for DRAW_CARD_ASSIGNMENT_FK1 to table DRAW_CARD_ASSIGNMENT as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="DRAW_CARD_ASSIGNMENT"/>
+            <tableExists tableName="JOINED_UNDERGROUND_PANEL"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DRAW_CARD_ASSIGNMENT" foreignKeyName="DRAW_CARD_ASSIGNMENT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>FUG-1667: AddForeignKeyConstraint DRAW_CARD_ASSIGNMENT_FK1 to DRAW_CARD_ASSIGNMENT (ASSIGNED_JOINED_PANEL)</comment>
+        <sql>UPDATE DRAW_CARD_ASSIGNMENT SET ASSIGNED_JOINED_PANEL = NULL WHERE ASSIGNED_JOINED_PANEL IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM JOINED_UNDERGROUND_PANEL WHERE JOINED_UNDERGROUND_PANEL.JOINED_PANEL_OID = DRAW_CARD_ASSIGNMENT.ASSIGNED_JOINED_PANEL)</sql>
+        <addForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" baseColumnNames="ASSIGNED_JOINED_PANEL" constraintName="DRAW_CARD_ASSIGNMENT_FK1" referencedTableName="JOINED_UNDERGROUND_PANEL" referencedColumnNames="JOINED_PANEL_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DRAW_CARD_ASSIGNMENT" constraintName="DRAW_CARD_ASSIGNMENT_FK1"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

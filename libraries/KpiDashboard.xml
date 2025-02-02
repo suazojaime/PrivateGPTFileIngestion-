@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:widget="http://www.minestar.au.cat.com/namespace/widget"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.minestar.au.cat.com/namespace/widget http://www.minestar.au.cat.com/namespace/widget.xsd
+       ">
+
+
+    <widget:guiPage id="KpiDashboard" name="KPI Dashboard"
+                    guiGroup="topLevelKpiGroup" displayGroup="Dashboards" privilegeName="KPI Dashboard">
+        <widget:access>user</widget:access>
+    </widget:guiPage>
+
+    <widget:guiGroup id="topLevelKpiGroup" orientation="vertical"
+                     groupMode="box">
+        <widget:componentRef ref="classMeters"/>
+        <widget:componentRef ref="fleetMeters"/>
+        <widget:componentRef ref="drawCardComplianceGroup"/>
+        <widget:componentRef ref="totalTons"/>
+        <widget:componentRef ref="cycleActivityPie"/>
+    </widget:guiGroup>
+
+</beans>

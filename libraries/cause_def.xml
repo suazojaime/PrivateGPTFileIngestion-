@@ -1,0 +1,1433 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE CauseDefinitions [
+<!ELEMENT CauseDefinitions (CauseDefinition)+>
+<!ELEMENT CauseDefinition EMPTY>
+<!ATTLIST CauseDefinition
+schema CDATA #REQUIRED
+sequenceNumber CDATA #REQUIRED
+fmi CDATA #REQUIRED
+cid CDATA #REQUIRED
+cause CDATA #REQUIRED
+>
+]>
+<!--
+$Revision: $
+Version: 10.0.1
+-->
+<CauseDefinitions>
+    <CauseDefinition schema="VIMS" sequenceNumber="0" fmi="0" cid="0" cause="Other"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="41" cause="a. Harness/connector short to +Battery or other voltage greater than 8 Volts for the output on contact 26."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="41" cause="1. D963-BU (I/M#1)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="41" cause="2. D964-BR (I/M#2)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="41" cause="3. F975-OR  (I/M#2)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="41" cause="a. Harness/connector short to +Battery or other voltage greater than 8 Volts for the output on contact 26."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="41" cause="1. D963-BU (I/M#1)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="41" cause="2. D964-BR (I/M#2)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="41" cause="3. F975-OR  (I/M#2)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="4" cid="41" cause="b. Faulty sensor(s) powered by this circuit."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="41" cause="a. Harness/connector short to +Battery or other voltage greater than 8 Volts for the output on contact 26."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="41" cause="1. D963-BU (I/M#1)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="41" cause="2. D964-BR (I/M#2)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="41" cause="3. F975-OR  (I/M#2)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="41" cause="b. Faulty sensor(s) powered by this circuit."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="75" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="75" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="75" cause="2. A451-WT (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="75" cause="3. 201-BK  (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="75" cause="b. Harness/connector short to +Battery or +8V in the A451-WT wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="75" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="75" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="75" cause="a. Harness/connector short to ground in the A451-WT wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="75" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="75" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="75" cause="a. Harness/connector short to ground in the A451-WT wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="75" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="75" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="96" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="96" cause="1. 113-OR (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="96" cause="2. 447-PK (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="96" cause="3. 201-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="96" cause="b. Harness/connector short to +Battery in the 447-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="96" cause="c. Faulty fuel level sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="96" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="96" cause="a. Harness/connector short to ground in the 447-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="96" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="96" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="96" cause="a. Harness/connector short to ground in the 447-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="96" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="96" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="100" cause="a. Harness/connector open or intermittent in one or more of the following circuits."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="100" cause="1. 113-OR  (+24 Volts)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="100" cause="2. 994-GY  (Signal)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="100" cause="3. A252-BK (Ground)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="100" cause="b. Harness/Connector short to +Battery in the 994-GY (Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="100" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="100" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="100" cause="a. Harness/connector short to ground in the 994-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="100" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="100" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="100" cause="a. Harness/connector short to ground in the 994-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="100" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="100" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="110" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="110" cause="1. 308-YL  (+28 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="110" cause="2. A718-PU (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="110" cause="3. 237-BK  (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="110" cause="b. Harness/connector short to +Battery in the A718-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="110" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="110" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="110" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="110" cause="1. 308-YL (+28 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="110" cause="2. 237-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="110" cause="b. Harness/connector short to +Battery."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="4" cid="110" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="4" cid="110" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="110" cause="a.  Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="110" cause="1. 308-YL (+28 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="110" cause="2. 237-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="110" cause="b. Harness/connector short to +Battery."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="110" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="6" cid="110" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="127" cause="a. Harness/connector open or intermittent in one or more of the following circuits."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="127" cause="1. 709-OR (+8Volts)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="127" cause="2. 815-WH (Signal)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="127" cause="3. 202-BK (Ground)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="127" cause="b. Harness/Connector short to +Battery in the 815-WH (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="127" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="127" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="127" cause="a. Harness/connector short to ground in the 815-WH (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="127" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="127" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="127" cause="a. Harness/connector short to ground in the 815-WH (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="127" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="127" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="171" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="171" cause="1. D963-BU or F975-OR (+8V)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="171" cause="2. C453-YL (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="171" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="171" cause="b. Harness/connector short to +Battery or +8V in the C453-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="171" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="171" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="171" cause="a. Harness/connector short to ground in the C453-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="171" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="171" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="171" cause="a. Harness/connector short to ground in the C453-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="171" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="171" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="177" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="177" cause="1. F975-OR (+8 Volts)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="177" cause="2. 428-OR  (Signal)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="177" cause="3. 201-BK  (Ground)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="177" cause="b. Harness/connector short to + Battery or +8V in the 428-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="177" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="177" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="177" cause="a. Harness\connector short to ground in the 428-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="177" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="177" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="177" cause="a. Harness\connector short to ground in the 428-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="177" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="177" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="190" cause="a. Sensor not adjusted correctly."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="190" cause="b. Harness/Connector is loose or intermittent in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="190" cause="1. D963-BU (+8V)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="190" cause="2. 450-YL  (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="190" cause="3. 201-BK  (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="190" cause="a. Sensor not adjusted correctly."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="190" cause="b. Harness/connector is loose or intermittent in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="190" cause="1. D963-BU (+8V)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="190" cause="2. 450-YL  (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="190" cause="3. 201-BK  (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="190" cause="a. Harness/connector short to ground in the 450-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="190" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="190" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="190" cause="a. Runout on engine flywheel."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="190" cause="b. Incorrect hook-up/use of two-way radio."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="190" cause="c. Harness/connector is loose or intermittent in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="190" cause="1. D963-BU (+8V)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="8" cid="190" cause="2. 450-YL (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="8" cid="190" cause="3. 201-BK(Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="8" cid="190" cause="d. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="190" cause="a. Harness/connector is loose or intermittent in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="190" cause="1. D9963-BU (+8V)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="190" cause="2. 450-YL (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="190" cause="3. 201-BK(Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="190" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="248" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="248" cause="1. CAT data link +"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="248" cause="2. CAT data link -"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="248" cause="b. Software mismatch between electronic control systems on the CDL."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="248" cause="c. Faulty electronic control Module(ECM) on CDL."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="248" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="248" cause="1. CAT data link +"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="248" cause="2. CAT data link -"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="248" cause="b. Software mismatch between electronic control systems on the CDL."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="248" cause="c. Faulty electronic control Module(ECM) on CDL."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="248" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="248" cause="1. CAT data link +"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="248" cause="2. CAT data link -"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="248" cause="b. Software mismatch between Electronic Control Systems on the CDL."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="248" cause="c. Faulty electronic control Module(ECM) on CDL."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="262" cause="a. Harness/connector short to +Battery or other voltage greater than 5 Volts for the output on contact 27 of this interface"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="262" cause="module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="262" cause="a. Harness/connector short to ground for the output on contact 27 of this interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="262" cause="b. Faulty sensor(s) powered by this circuit."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="262" cause="a. Harness/connector short to ground for the output on contact 27 of this interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="262" cause="b. Faulty sensor(s) powered by this circuit."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="263" cause="a. Harness/connector short to +Battery or other voltage greater than 8 Volts for the"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="263" cause="output on contact 26 (D963-BU) of this inter-"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="263" cause="face module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="263" cause="a. Harness/connector short to ground for the output on contact 26 (D963-BU) of this inter-"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="263" cause="face module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="263" cause="b. Faulty sensor(s) powered by this circuit."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="263" cause="a. Harness/connector short to ground for the output on contact 26 (D963-BU) of this inter-"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="263" cause="face module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="263" cause="b. Faulty sensor(s) powered by this circuit."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="1" cid="267" cause="a. Faulty engine ECM personality module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="1" cid="267" cause="b. Faulty engine ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="267" cause="a. Faulty engine ECM personality module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="267" cause="b. Faulty engine ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="271" cause="a. Wire 410-WH shorted to +Battery."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="271" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="271" cause="a. Alarm faulty."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="271" cause="b. Wrong alarm installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="271" cause="c. Wire 410-WH is open (harness or connectors)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="271" cause="d. Alarm ground, 201-BK, is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="5" cid="271" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="271" cause="a. Faulty alarm (shorted)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="271" cause="b. Wrong alarm installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="271" cause="c. Wire 410-WH has short to ground (intermittent)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="271" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="279" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="279" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="279" cause="2. D965-GN (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="279" cause="3. 201-BK  (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="279" cause="b. Harness/connector short to +Battery or +8V in the D965-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="279" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="279" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="279" cause="a. Harness/connector short to ground in the D965-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="279" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="279" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="279" cause="a. Harness/connector short to ground in the D965-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="279" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="279" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="280" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="280" cause="1. A700-OR (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="280" cause="2. C401-BR (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="280" cause="3. 998-BR (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="280" cause="b. Harness/connector short to +Battery or +8V in the C401-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="280" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="280" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="280" cause="a. Harness/connector short to ground in the C401-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="280" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="280" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="280" cause="a. Harness/connector short to ground in the C401-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="280" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="280" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="295" cause="a. Harness/Connector Open/Short in one, or both, of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="295" cause="1. 882-PK (CDL+)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="295" cause="2. 883-GY (CDL-)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="295" cause="b. Faulty HEX ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="295" cause="c. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="295" cause="a. Harness/connector open/short in one, or both, of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="295" cause="1. 882-PK (CDL-)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="295" cause="2. 883-GY (CDL+)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="295" cause="b. Wrong VIMS configuration or wrong HEX ECM part number."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="295" cause="c. Faulty HEX ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="9" cid="295" cause="d. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="295" cause="a.  Wrong VIMS Configuration or wrong HEX ECM part number."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="295" cause="b. Faulty HEX ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="295" cause="c. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="295" cause="a. Wrong VIMS configuration number."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="295" cause="b. Wrong HEX ECM part number."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="295" cause="c. Faulty HEX ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="295" cause="d. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="296" cause="a. Harness/connector open/short in one or both of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="296" cause="1. 892-BN"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="296" cause="2. 893-GN"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="296" cause="b. Faulty transmission ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="296" cause="c. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="296" cause="a. Verify that harness code contacts on transmission control are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="296" cause="b. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="296" cause="c. No power and/or ground connection to transmission control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="296" cause="d. Faulty transmission control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="296" cause="e. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="296" cause="a. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="296" cause="b. Faulty transmission control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="296" cause="c. Verify that harness code contacts on transmission control are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="296" cause="a. Incorrect VIMS Configuration or Transmission ECM Part Number."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="296" cause="b. Verify that harness code contacts on transmission control are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="296" cause="c. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="296" cause="d. No power and/or ground connection to transmission control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="296" cause="e. Faulty transmission ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="296" cause="f. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="324" cause="a. Wire 411-PK shorted to +Battery."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="324" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="324" cause="a. Lamp defective (burned out)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="324" cause="b. Wrong lamp installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="324" cause="c. Wire 411-PK is open (harness or connectors)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="324" cause="d. Lamp ground, 201-BK, is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="5" cid="324" cause="e. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="5" cid="324" cause="f. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="324" cause="a. Lamp defective (shorted)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="324" cause="b. Wrong lamp installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="324" cause="c. Wire 411-PK has short (intermittent) to ground."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="324" cause="d. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="324" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="341" cause="a. Harness/connector short to +Battery in the E775-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="341" cause="a. Harness/connector open (intermittent) in the E775-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="341" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="341" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="341" cause="a. Harness/connector short to ground in the E775-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="341" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="341" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="341" cause="a. Unidentified harness problem."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="341" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="341" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="0" cid="350" cause="a. Harness/connector short to +Battery or +8V in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="0" cid="350" cause="b. Calibration is required."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="0" cid="350" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="0" cid="350" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="1" cid="350" cause="a. Calibration is needed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="1" cid="350" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="1" cid="350" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="350" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="350" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="350" cause="2. C502-GY (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="350" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="350" cause="b. Harness/connector short to +Battery or +8V in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="350" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="350" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="350" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="350" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="350" cause="2. C502-GY (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="350" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="350" cause="b. Harness/connector short to +Battery or +8V in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="350" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="350" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="350" cause="a. Harness/connector short to ground in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="350" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="350" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="350" cause="a. Harness/connector short to ground in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="350" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="350" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="350" cause="a. Harness/connector open/short (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="350" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="350" cause="2. C502-GY (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="350" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="8" cid="350" cause="b. Harness/connector short to +Battery or +8V in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="8" cid="350" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="8" cid="350" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="350" cause="a. Unidentified harness problem."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="350" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="350" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="13" cid="350" cause="a. Calibration is required."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="13" cid="350" cause="b. Data is out of range."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="0" cid="351" cause="a. Harness/connector short to +Battery or +8V in the E451-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="0" cid="351" cause="b. Calibration is required."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="0" cid="351" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="0" cid="351" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="1" cid="351" cause="a. Calibration is needed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="1" cid="351" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="1" cid="351" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="351" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="351" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="351" cause="2. E451-BU (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="351" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="351" cause="b. Harness/connector short to +Battery or +8V in the E451-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="351" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="351" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="351" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="351" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="351" cause="2. E451-BU (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="351" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="351" cause="b. Harness/connector short to +Battery or +8V in the E451-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="351" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="351" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="351" cause="a. Harness/connector short to ground in the E451-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="351" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="351" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="351" cause="a. Harness/connector short to ground in the E451-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="351" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="351" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="351" cause="a. Harness/connector open/short (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="351" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="351" cause="2. E451-BU (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="351" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="8" cid="351" cause="b. Harness/connector short to +Battery or +8V in the E451-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="8" cid="351" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="8" cid="351" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="351" cause="a. Unidentified harness problem."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="351" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="351" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="13" cid="351" cause="a. Calibration is required."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="13" cid="351" cause="b. Data is out of range."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="364" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="364" cause="1. 113-OR  (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="364" cause="2. C502-GY (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="364" cause="3. A252-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="364" cause="b. Harness/connector short to +Battery in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="364" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="364" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="364" cause="a. Harness/connector short to ground in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="364" cause="b. Faulty Sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="364" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="364" cause="a. Harness/connector short to ground in the C502-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="364" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="364" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="371" cause="a. Harness/connector open/short to +Battery in the E785-G4 wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="371" cause="b. Faulty solenoid valve coil."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="371" cause="a. Harness/connector open/short to +Battery in the E785-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="371" cause="b. Faulty horn solenoid valve coil."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="371" cause="a. Harness/connector short/ground in the E785-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="371" cause="b. Faulty horn solenoid valve."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="371" cause="a. Unidentified harness problem."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="371" cause="b. Faulty horn solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="371" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="378" cause="a. Harness/connector short to +Battery in the 801-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="378" cause="a. Harness/connector open (intermittent) in the 801-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="378" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="378" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="378" cause="a. Harness/connector short to ground in the 801-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="378" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="378" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="378" cause="a. Unidentified harness problem."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="378" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="378" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="379" cause="a. Harness/connector open or intermittent in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="379" cause="5130:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="379" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="379" cause="2. B497-WH (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="379" cause="3. 201-BK  (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="379" cause="5230:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="379" cause="1. 709-OR  (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="3" cid="379" cause="2. B497-WH (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="3" cid="379" cause="3. A201-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="10" fmi="3" cid="379" cause="b. Harness/connector short to +Battery in the B497-WH (Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="11" fmi="3" cid="379" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="12" fmi="3" cid="379" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="379" cause="a. Harness/connector short to ground in the B497-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="379" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="379" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="379" cause="a. Harness/connector short to ground in the B497-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="379" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="379" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="379" cause="a. Harness/connector open or intermittent in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="379" cause="5130:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="379" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="379" cause="2. B497-WH (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="8" cid="379" cause="3. 201-BK  (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="8" cid="379" cause="5230:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="8" cid="379" cause="1. 709-OR  (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="8" cid="379" cause="2. B497-WH (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="8" cid="379" cause="3. A201-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="10" fmi="8" cid="379" cause="b. Harness/connector short to +Battery in the B497-WH (Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="11" fmi="8" cid="379" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="12" fmi="8" cid="379" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="425" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="425" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="425" cause="2. C456-OR (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="425" cause="3. A252-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="425" cause="b. Harness/connector short to +Battery or +8V in the C456-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="425" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="425" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="425" cause="a. Harness/connector short to ground in the C456-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="425" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="425" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="425" cause="a. Harness/connector short to ground in the C456-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="425" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="425" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="426" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="426" cause="1. F975-OR  (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="426" cause="2. C457-BU  (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="426" cause="3. A252-BK  (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="426" cause="b. Harness/connector short to +Battery or +8V in the C457-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="426" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="426" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="426" cause="a. Harness/connector short to ground in the C457-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="426" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="426" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="426" cause="a. Harness/connector short to ground in the C457-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="426" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="426" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="427" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="427" cause="1. E933-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="427" cause="2. 429-YL  (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="427" cause="3. A251-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="427" cause="b. Harness/connector short to +Battery or +8V in the 429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="427" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="427" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="427" cause="a. Harness/connector short to ground in the 429-YL(Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="427" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="427" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="427" cause="a. Harness/connector short to ground in the 429-YL Signal wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="427" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="427" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="428" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="428" cause="1. E933-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="428" cause="2. 446-PU  (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="428" cause="3. A251-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="428" cause="b. Harness/connector short to +Battery or +8V in the 446-PU (Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="428" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="428" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="428" cause="a. Harness/connector short to ground in the 446-PU (Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="428" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="428" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="428" cause="a. Harness/connector short to ground in the 446-PU (Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="428" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="428" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="429" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="429" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="429" cause="2. C462-PK (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="429" cause="3. A252-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="429" cause="b. Harness/connector short to +Battery or +8V in the C462-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="429" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="429" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="429" cause="a. Harness/connector short to ground in the C462-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="429" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="429" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="429" cause="a. Harness/connector short to ground in the C462-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="429" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="429" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="430" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="430" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="430" cause="2. C450-YL (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="430" cause="3. A252-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="430" cause="b. Harness/connector short to +Battery or +8V in the C450-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="430" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="430" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="430" cause="a. Harness/connector short to ground in the C450-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="430" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="430" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="430" cause="a. Harness/connector short to ground in the C450-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="430" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="430" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="434" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="434" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="434" cause="2. C461-OR (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="434" cause="3. A252-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="434" cause="b. Harness/connector short to +Battery or +8V in the C461-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="434" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="434" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="434" cause="a. Harness/connector short to ground in the C461-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="434" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="434" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="434" cause="a. Harness/connector short to ground in the C461-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="434" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="434" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="436" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="436" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="436" cause="2. C459-GY (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="436" cause="3. A252-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="436" cause="b. Harness/connector short to +Battery or +8V in the C459-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="436" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="436" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="436" cause="a. Harness/connector short to ground in the C459-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="436" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="436" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="436" cause="a. Harness/connector short to ground in the C459-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="436" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="436" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="438" cause="a. Harness/connector short to +Battery in the E761-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="438" cause="b. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="438" cause="a. Harness/connector open (intermittent) in the E761-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="438" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="438" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="438" cause="a. Harness/connector short to ground in the  E761-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="438" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="438" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="438" cause="a. Unidentified harness problem."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="438" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="438" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="439" cause="a. Harness/connector short to +Battery in the E762-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="439" cause="b. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="439" cause="a. Harness/connector open (intermittent) in the E762-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="439" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="439" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="439" cause="a. Harness/connector short to ground in the E762-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="439" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="439" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="439" cause="a. Unidentified harness problem."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="439" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="439" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="440" cause="a. Harness/connector short to +Battery in the E763-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="440" cause="b. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="440" cause="a. Harness/connector open (intermittent) in the E763-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="440" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="440" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="440" cause="a. Harness/connector short to ground in the E763-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="440" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="440" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="440" cause="a. Unidentified harness problem."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="440" cause="b. Faulty solenoid."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="440" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="457" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="457" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="457" cause="2. 429-YL  (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="457" cause="3. A252-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="457" cause="b. Harness/connector short to +Battery or +8V in the B429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="457" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="457" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="457" cause="a. Harness/connector short to ground in the 429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="457" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="457" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="457" cause="a. Harness/connector short to ground in the 429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="457" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="457" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="458" cause="a. Harness/Connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="458" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="458" cause="2. E451-PU (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="458" cause="3. A252-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="458" cause="b. Harness/Connector short to +battery in the E451-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="458" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="458" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="458" cause="a. Harness/Connector short to ground in the E451-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="458" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="458" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="458" cause="a. Harness/Connector short to ground in the E451-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="458" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="458" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="533" cause="a. Harness/Connector open/short in one or both of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="533" cause="1. 892-BN."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="533" cause="2. 893-GN."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="533" cause="b. Faulty auto retarder ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="533" cause="c. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="533" cause="a. Verify that harness code contacts on auto retarder control are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="533" cause="b. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="533" cause="c. No power and/or ground connection to auto retarder control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="533" cause="d. Faulty auto retarder control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="533" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="533" cause="a. Verify that harness code contacts on auto retarder control are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="533" cause="b. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="533" cause="c. No power and/or ground connection to auto retarder control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="533" cause="d. Faulty auto retarder control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="533" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="0" cid="541" cause="a. Residual pressure in system at key Start &quot;switch on&quot;."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="0" cid="541" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="0" cid="541" cause="c. Faulty CMSII control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="541" cause="a. Residual vacuum in system at key Start &quot;switch on&quot;."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="541" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="541" cause="c. Faulty CMSII control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="541" cause="a. Harness/Connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="541" cause="1. F975-b15-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="541" cause="2. C473-B11-GN (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="541" cause="3. A271-B6-BK  (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="8" cid="541" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="8" cid="541" cause="c. Faulty CMSII control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="562" cause="a. Verify correct harness code on Caterpillar Monitoring System."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="562" cause="b. Check CAT data link circuits for open/shorts:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="562" cause="1. 892-A18-BN"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="562" cause="2. 893-A19-GN"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="562" cause="c. Intermittent loss of power or ground:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="562" cause="1. 113-A1-OR"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="562" cause="2. A271-A27-BK"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="562" cause="d. Faulty or wrong Part No. Caterpillar Monitoring System."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="2" cid="562" cause="e. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="562" cause="a. Verify correct harness code on Caterpillar Monitoring System."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="562" cause="b. Check CAT data link circuits for open/shorts:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="562" cause="1. 892-A18-BN"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="562" cause="2. 893-A19-GN"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="562" cause="c. Intermittent loss of power or ground:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="9" cid="562" cause="1. 113-A1-OR"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="9" cid="562" cause="2. A271-A27-BK"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="9" cid="562" cause="d. Faulty or wrong Part No. Caterpillar Monitoring System."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="9" cid="562" cause="e. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="562" cause="a. Verify correct harness code on Caterpillar Monitoring System."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="562" cause="b. Check CAT data link circuits for open/shorts:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="562" cause="1. 892-A18-BN"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="562" cause="2. 893-A19-GN"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="562" cause="c. Intermittent loss of power or ground:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="562" cause="1. 113-A1-OR"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="562" cause="2. A271-A27-BK"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="562" cause="d. Faulty or wrong Part No. Caterpillar Monitoring System."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="562" cause="e. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="590" cause="a. Harness/connector open/short on CAT data link (CDL)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="590" cause="b. VIMS configuration and this module have trouble communicating."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="590" cause="c. Faulty engine ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="590" cause="d. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="590" cause="a. Verify that harness code contacts on engine control are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="590" cause="b. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="590" cause="c. No power and/or ground connection to engine control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="590" cause="d. Faulty engine ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="590" cause="e. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="590" cause="a. Wrong VIMS Configuration or engine ECM personality module part number."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="590" cause="b. Faulty engine ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="590" cause="c. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="590" cause="a. Wrong VIMS Configuration or engine ECM personality module part number or flash software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="590" cause="b. Check for open/shorts in CAT data link (CDL)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="590" cause="c. No power and/or ground connection to engine ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="590" cause="d. Faulty engine ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="590" cause="e. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="596" cause="a. Harness/connector open/short on CAT data link (CDL)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="596" cause="b. VIMS configuration and this module have trouble communicating."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="596" cause="c. Faulty engine implement control module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="596" cause="d. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="596" cause="a. Verify that implement control software is correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="596" cause="b. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="596" cause="c. No power and/or ground connection to implement control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="596" cause="d. Faulty implement control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="596" cause="e. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="596" cause="a. Wrong VIMS configuration or software in implement ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="596" cause="b. Open/Shorts in CAT data link (CDL)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="596" cause="c. Loss of power and/or ground to ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="596" cause="d. Faulty implement control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="11" cid="596" cause="e. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="596" cause="a. Wrong VIMS configuration or software in Implement ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="596" cause="b. Open/shorts in CAT data link (CDL)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="596" cause="c. Loss of power and/or ground to ECM."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="596" cause="d. Faulty implement control."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="596" cause="e. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="600" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="600" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="600" cause="2. 442-GY  (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="600" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="600" cause="b. Harness/connector short to +Battery or +8V in the 446-PU (Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="600" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="600" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="600" cause="a. Harness/connector short to ground in the 442-GY (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="600" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="600" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="600" cause="a. Harness/connector short to ground in the 442-GY (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="600" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="600" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="600" cause="a. Harness/connector open/short (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="600" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="600" cause="2. 442-GY  (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="600" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="8" cid="600" cause="b. Harness/connector short to +Battery or +8V in the 446-PU (Signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="8" cid="600" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="8" cid="600" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="650" cause="a. Verify that harness code contacts 37, 38, and 39 on interface module are grounded (201-BK)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="650" cause="b. Verify that harness code contact 40 on interface module is open."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="654" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="654" cause="1. C985-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="654" cause="2. E805-BR (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="654" cause="3. A253-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="654" cause="b. Harness/connector short to +Battery or +8V in the E805-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="654" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="654" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="654" cause="a. Harness/connector short to ground in the E805-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="654" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="654" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="654" cause="a. Harness/connector short to ground in the E805-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="654" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="654" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="655" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="655" cause="1. C985-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="655" cause="2. E806-OR (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="655" cause="3. A253-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="655" cause="b. Harness/connector short to +Battery or +8V in the E806-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="655" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="655" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="655" cause="a. Harness/connector short to ground in the E806-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="655" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="655" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="655" cause="a. Harness/connector short to ground in the E806-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="655" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="655" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="656" cause="a. Harness/connector open(intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="656" cause="1. C985-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="656" cause="2. E807-YL (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="656" cause="3. A253-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="656" cause="b. Harness/connector short to + battery or +8V in the E807-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="656" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="656" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="656" cause="a. Harness/connector short to ground in the E807-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="656" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="656" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="656" cause="a. Harness/connector short to ground in the E807-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="656" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="656" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="657" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="657" cause="1. C985-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="657" cause="2. E848-GN (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="657" cause="3. A253-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="657" cause="b. Harness/connector short to +Battery or +8V in the E848-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="657" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="657" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="657" cause="a. Harness/connector short to ground in the E848-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="657" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="657" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="657" cause="a. Harness/connector short to ground in the E848-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="657" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="657" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="658" cause="a. Suspension cylinder is collapsed. (Check cylinder see SEHS9411)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="658" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="658" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="658" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="658" cause="1. 113-OR (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="658" cause="2. E822-OR (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="658" cause="3. A253-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="658" cause="b. Harness/connector short to +Battery in the E822-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="658" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="658" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="658" cause="a. Harness/connector short to ground in the E822-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="658" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="658" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="658" cause="a. Harness/connector short to ground in the E822-OR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="658" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="658" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="659" cause="a. Suspension Cylinder is collapsed. (Check cylinder see SEHS9411)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="659" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="659" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="659" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="659" cause="1. 113-OR  (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="659" cause="2. E823-YL (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="659" cause="3. A053-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="659" cause="b. Harness/connector short to +Battery in the E823-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="659" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="659" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="659" cause="a. Harness/connector short to ground in the E823-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="659" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="659" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="659" cause="a. Harness/connector short to ground in the E823-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="659" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="659" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="0" cid="672" cause="a. Incorrect sensor adjustment."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="0" cid="672" cause="b. Possible RFI interference from a 2-way radio installation."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="0" cid="672" cause="c. Harness/connector open (intermittent) in the 452-PU (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="0" cid="672" cause="d. Wrong sensor installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="1" cid="672" cause="a. Incorrect sensor adjustment."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="1" cid="672" cause="b. Possible RFI interference from a 2-way radio installation."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="1" cid="672" cause="c. Harness/connector open (intermittent) in the 452-PU (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="1" cid="672" cause="d. Wrong sensor installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="672" cause="a. Incorrect sensor adjustment."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="672" cause="b. Possible RFI interference from a 2-way radio installation."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="672" cause="c. Harness/connector open (intermittent) in the 452-PU (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="672" cause="d. Wrong sensor installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="672" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="672" cause="1. 709-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="672" cause="2. 452-PU (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="672" cause="3. 202-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="672" cause="b. Harness/connector short to +Battery or +8 Volt in the 452-PU (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="672" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="672" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="672" cause="a. Harness/connector short to ground in the 452-PU (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="672" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="672" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="672" cause="a. Loose gear for speed sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="672" cause="b. Possible RFI interference from a 2-way radio installation."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="672" cause="c. Harness/connector open (intermittent) in the 452-PU (signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="672" cause="d. Wrong sensor installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="703" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="703" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="703" cause="2. E809-BU (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="703" cause="3. A253-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="703" cause="b. Harness/connector short to + battery or +8V in the E809-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="703" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="703" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="703" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="703" cause="1. 113-OR  (+24 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="703" cause="2. E809-BU (Signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="4" cid="703" cause="3. A253-BK (Ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="4" cid="703" cause="b. Harness/connector short to + battery or +8V in the E809-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="4" cid="703" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="4" cid="703" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="703" cause="a. Harness/connector short to ground in the E809-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="703" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="703" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="800" cause="a. Wrong or corrupted source or configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="800" cause="b. Faulty VIMS main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="800" cause="a. Verify harness code contacts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="800" cause="b. Wrong or corrupt source or configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="800" cause="c. Faulty VIMS main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="800" cause="a. Wrong or corrupted source or configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="800" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="800" cause="a. Low or erratically low system voltage."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="800" cause="b. Wrong or corrupted source or configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="800" cause="c. Faulty VIMS main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="801" cause="a. Verify that harness code contacts 37, 38 and 39 on I/M #1 are grounded(201-BK)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="801" cause="b. Verify that harness code contact 40 on I/M #1 is open."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="801" cause="c. Check CAT data link (CDL) circuit for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="801" cause="d. Check for intermittent power and/or ground connection to I/M #1."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="801" cause="e. Wrong software in one or more electronic controls on machine."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="801" cause="f. Wrong VIMS configuration."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="801" cause="g. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="801" cause="h. Faulty I/M #1."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="801" cause="a. Verify that harness code contacts 37, 38 and 39 on I/M #1 are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="801" cause="b. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="801" cause="c. Intermittent power and/or ground connection to I/M #1."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="801" cause="d. Faulty I/M #1."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="801" cause="a. Wrong software configuration in one or more electronic control modules(ECM)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="801" cause="b. Open/shorts in CAT data link (CDL) circuits."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="801" cause="c. Loss of power and/or ground to I/M #1."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="801" cause="d. Wrong VIMS or corrupted source or configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="11" cid="801" cause="e. Faulty I/M #1."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="801" cause="a. Wrong VIMS configuration."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="801" cause="b. Open/shorts in CAT data link (CDL) circuits."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="801" cause="c. Loss of power and/or ground to I/M #1."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="801" cause="d. Faulty I/M #1."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="801" cause="e. Wrong or corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="802" cause="a. Verify that harness code contacts 37, 38 and 39 on I/M #2 are grounded(201-BK)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="802" cause="b. Verify that harness code contact 40 on I/M #2 is open."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="802" cause="c. Check CAT Data Link(CDL) circuit for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="802" cause="d. Check for intermittent power and/or ground connection to I/M #2."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="802" cause="e. Wrong software in one or more Electronic Controls on machine."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="802" cause="f. Wrong VIMS Configuration."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="802" cause="g. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="802" cause="h. Faulty I/M #2."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="802" cause="a. Verify that harness code contacts 37, 38 and 39 on I/M #2 are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="802" cause="b. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="802" cause="c. Intermittent power and/or ground connection to I/M #2."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="802" cause="d. Incorrect software group in controls using CAT data link (CDL)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="802" cause="e. Faulty I/M #2."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="802" cause="a. Wrong software configuration in one or more electronic control modules(ECM)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="802" cause="b. Open/shorts in CAT data link (CDL) circuits."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="802" cause="c. loss of Power and/or Ground to I/M #2."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="802" cause="d. Wrong VIMS or corrupted source or configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="11" cid="802" cause="e. Faulty I/M #2."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="802" cause="a. Wrong VIMS configuration."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="802" cause="b. Open/Shorts in Cat Data Link (CDL) circuits."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="802" cause="c. Loss of Power and/or Ground to I/M #2."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="802" cause="d. Faulty I/M #2."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="802" cause="e. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="803" cause="a. Verify that harness code contacts 37, 39 and 40 on I/M #3 are grounded(201-BK)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="803" cause="b. Verify that harness code contact 38 on I/M #3 is open."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="803" cause="c. Check CAT Data Link(CDL) circuit for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="803" cause="d. Check for intermittent power and/or ground connection to I/M #3."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="803" cause="e. Wrong software in one or more Electronic Controls on machine."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="803" cause="f. Wrong VIMS Configuration."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="803" cause="g. Faulty I/M #3."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="803" cause="h. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="803" cause="a. Verify that harness code contacts 37, 39 and 40 on I/M #3 are correct."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="803" cause="b. Check CAT data link circuits for opens/shorts."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="803" cause="c. Intermittent power and/or ground connection to I/M #3."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="803" cause="d. Incorrect software group in controls using CAT Data Link(CDL)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="803" cause="e. Faulty I/M #3."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="803" cause="a. Wrong software configuration in one or more Electronic Control modules(ECM)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="803" cause="b. Open/Shorts in Cat Data Link (CDL) circuits."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="803" cause="c. loss of Power and/or Ground to I/M #3."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="803" cause="d. Wrong VIMS or corrupted source or configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="11" cid="803" cause="e. Faulty I/M #3."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="803" cause="a. Wrong VIMS configuration."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="803" cause="b. Open/Shorts in Cat Data Link (CDL) circuits."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="803" cause="c. Loss of Power and/or Ground to I/M #3."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="803" cause="d. Faulty I/M #3."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="803" cause="e. Corrupted configuration software."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="809" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="809" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="809" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="809" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="809" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="809" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="809" cause="c. Faulty Speedo/tach module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="809" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="809" cause="a. Module connector is not connected to dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="809" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="809" cause="1. E707-GN (9V Power)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="809" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="809" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="809" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="809" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="809" cause="d. Faulty Speedo/tach module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="809" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="810" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="810" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="810" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="810" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="810" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="810" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="810" cause="c. Faulty Speedo/tach module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="810" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="810" cause="a. Module connector is not connected to dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="810" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="810" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="810" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="810" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="810" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="810" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="810" cause="d. Faulty Speedo/tach module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="810" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="811" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="811" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="811" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="811" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="811" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="811" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="811" cause="c. Faulty GAUGE cluster module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="811" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="811" cause="a. Module connector is not connected to the dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="811" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="811" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="811" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="811" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="811" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="811" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="811" cause="d. Faulty GAUGE cluster module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="811" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="812" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="812" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="812" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="812" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="812" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="812" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="812" cause="c. Faulty GAUGE cluster module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="812" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="812" cause="a. Module connector is not connected to the dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="812" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="812" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="812" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="812" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="812" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="812" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="812" cause="d. Faulty GAUGE cluster module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="812" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="813" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="813" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="813" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="813" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="813" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="813" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="813" cause="c. Faulty GAUGE cluster module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="813" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="813" cause="a. Module connector is not connected to the dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="813" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="813" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="813" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="813" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="813" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="813" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="813" cause="d. Faulty GAUGE cluster module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="813" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="814" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="814" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="814" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="814" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="814" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="814" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="814" cause="c. Faulty GAUGE cluster module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="814" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="814" cause="a. Module connector is not connected to the dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="814" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="814" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="814" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="814" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="814" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="814" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="814" cause="d. Faulty GAUGE cluster module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="814" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="815" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="815" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="815" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="815" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="815" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="815" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="815" cause="c. Faulty message center module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="815" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="815" cause="a. Module connector is not connected to dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="815" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="815" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="815" cause="2. E708-PK (Clock)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="815" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="815" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="815" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="815" cause="d. Faulty message center module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="815" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="816" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="816" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="816" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="816" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="816" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="816" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="816" cause="c. Faulty message center module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="816" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="816" cause="a. Module connector is not connected to dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="816" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="816" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="816" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="816" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="816" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="816" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="816" cause="d. Faulty message center module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="816" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="817" cause="a. Replacement of 3V lithium battery while machine disconnect switch was open."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="817" cause="b. Failure of 3V lithium battery while machine disconnect switch was open."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="817" cause="c. Failure of battery holder for 3V lithium battery."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="817" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="817" cause="a. Failure of 3V lithium battery (less than 1.8V)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="817" cause="b. 3V lithium battery installed without removing insulation sleeve from battery (v2.0 Hardware)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="817" cause="c. No battery installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="817" cause="d. Failure of battery holder/socket for 3V lithium battery."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="817" cause="e. Failure of main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="819" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="819" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="819" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="819" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="819" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="819" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="2" cid="819" cause="c. One or more of the display component modules is faulty."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="2" cid="819" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="819" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="819" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="819" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="819" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="819" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="819" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="819" cause="c. One or more of the display component modules is faulty."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="3" cid="819" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="819" cause="a. Harness/connector short to ground in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="819" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="819" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="819" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="819" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="6" cid="819" cause="b. One of the display component modules is faulty."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="6" cid="819" cause="c. One or more of the display component modules is faulty."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="6" cid="819" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="819" cause="a. The connector to one or more of the display component modules is not connected to the dash harness."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="819" cause="b. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="819" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="819" cause="2. E708-PK (Clock)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="819" cause="3. C413-YL (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="819" cause="4. C414-BU (Load)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="12" cid="819" cause="c. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="8" fmi="12" cid="819" cause="d. One or more of the display component modules is faulty."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="9" fmi="12" cid="819" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="820" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="820" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="820" cause="2. C415-WH (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="2" cid="820" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="2" cid="820" cause="c. Faulty keypad."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="2" cid="820" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="820" cause="a. Harness/connector short to +Battery or E707-GN in the C415-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="820" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="820" cause="c. Faulty keypad."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="820" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="820" cause="a. Harness/connector short to ground in C415-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="820" cause="b. Faulty keypad."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="820" cause="c. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="820" cause="a. Harness/connector open/short in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="820" cause="1. E707-GN (9V Power)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="820" cause="2. C415-WH (Data)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="820" cause="b. Wire E972-BU is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="820" cause="c. Faulty keypad."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="820" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="821" cause="a. Harness/connector short to +Battery in the E707-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="821" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="821" cause="a. Harness/connector short to ground in the E707-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="821" cause="b. One of the display component modules is faulty."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="821" cause="c. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="822" cause="a. Harness/connector short to +Battery in the E710-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="822" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="822" cause="a. Harness/connector short to +Battery in the E710-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="822" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="822" cause="a. Harness/connector short to +Battery or E707-GR in the E710-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="822" cause="b. Wrong lamps used for LCD backlighting."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="822" cause="c. Fault in lamp socket(s)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="822" cause="d. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="823" cause="a. Harness/connector short to +Battery in the E709-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="823" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="823" cause="a. Lamp defective (burned out)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="823" cause="b. Wrong lamp installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="823" cause="c. Wire E709-WH is open (harness or connectors)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="823" cause="d. Lamp ground, 201-BK, is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="5" cid="823" cause="e. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="5" cid="823" cause="f. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="823" cause="a. Lamp defective (shorted)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="823" cause="b. Wrong lamp installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="823" cause="c. Wire E709-WH has short (intermittent) to ground."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="823" cause="d. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="823" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="824" cause="a. Harness/connector short to +Battery in the 636-GN wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="824" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="824" cause="a. Both lamps defective (burned out)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="824" cause="b. Wrong lamps installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="824" cause="c. Wire 636-GN is open (harness or connectors)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="824" cause="d. Lamp ground, 201-BK, is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="5" cid="824" cause="e. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="5" cid="824" cause="f. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="824" cause="a. Lamps defective (shorted)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="824" cause="b. Wrong lamps installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="824" cause="c. Wire 636-GN has short (intermittent) to ground."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="824" cause="d. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="824" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="824" cause="a. Both lamps defective (burned out)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="824" cause="b. Wrong lamps installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="824" cause="c. Wire 636-GN is open (harness or connectors)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="824" cause="d. Lamp ground, 201-BK, is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="824" cause="e. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="824" cause="f. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="825" cause="a. Harness/connector short to +Battery in the 635-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="825" cause="b. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="5" cid="825" cause="a. Both lamps defective (burned out)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="5" cid="825" cause="b. Wrong lamps installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="5" cid="825" cause="c. Wire 635-BU is open (harness or connectors)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="5" cid="825" cause="d. Lamp ground, 201-BK, is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="5" cid="825" cause="e. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="5" cid="825" cause="f. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="825" cause="a. Lamps defective (shorted)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="825" cause="b. Wrong lamps installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="825" cause="c. Wire 635-BU has short (intermittent) to ground."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="6" cid="825" cause="d. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="6" cid="825" cause="e. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="12" cid="825" cause="a. Both lamps defective (burned out)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="12" cid="825" cause="b. Wrong lamps installed."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="12" cid="825" cause="c. Wire 635-BU is open (harness or connectors)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="12" cid="825" cause="d. Lamp ground, 201-BK, is open or intermittent."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="12" cid="825" cause="e. Faulty lamp socket."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="12" cid="825" cause="f. Faulty main module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="826" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="826" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="826" cause="2. D969-PU (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="826" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="826" cause="b. Harness/connector short to +Battery or +8V in the D969-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="826" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="826" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="826" cause="a. Harness/connector short to ground in the D969-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="826" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="826" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="826" cause="a. Harness/connector short to ground in the D969-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="826" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="826" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="11" cid="826" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="11" cid="826" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="11" cid="826" cause="2. D969-PU (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="11" cid="826" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="11" cid="826" cause="b. Harness/connector short to +Battery or +8V in the D969-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="11" cid="826" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="11" cid="826" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="827" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="827" cause="1. D963-BU(+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="827" cause="2. D976-PK(signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="827" cause="3. 201-BK(ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="827" cause="b. Harness/connector short to +Battery or +8Vin the D976-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="827" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="827" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="827" cause="a. Harness/connector short to ground in the D976-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="827" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="827" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="827" cause="a. Harness/connector short to ground in the D976-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="827" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="827" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="827" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="827" cause="1. D963-BU(+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="827" cause="2. D976-PK(signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="827" cause="3. 201-BK(ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="8" cid="827" cause="b. Harness/connector short to +Battery or +8Vin the D976-PK wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="8" cid="827" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="8" cid="827" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="828" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="828" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="828" cause="2. D977-PU (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="828" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="828" cause="b. Harness/connector short to +Battery or +8V in the D977-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="828" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="828" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="828" cause="a. Harness/connector short to ground in the D977-PU(signal) wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="828" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="828" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="828" cause="a. Harness/connector short to ground in the D977-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="828" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="828" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="8" cid="828" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="8" cid="828" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="8" cid="828" cause="2. D977-PU (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="8" cid="828" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="8" cid="828" cause="b. Harness/connector short to +Battery or +8V in the D977-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="8" cid="828" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="8" cid="828" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="829" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="829" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="829" cause="2. B406-GY (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="829" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="829" cause="b. Harness/connector short to +Battery or +8V in the B406-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="829" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="829" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="829" cause="a. Harness/connector short to ground in the B406-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="829" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="829" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="829" cause="a. Harness/connector short to ground in the B406-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="829" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="829" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="830" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="830" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="830" cause="2. B433-PU (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="830" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="830" cause="b. Harness/connector short to +Battery or +8V in the B433-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="830" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="830" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="830" cause="a. Harness/connector short to ground in the B433-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="830" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="830" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="830" cause="a. Harness/connector short to ground in the B433-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="830" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="830" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="833" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="833" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="833" cause="2. 429-YL (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="833" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="833" cause="b. Harness/connector short to +Battery or +8V in the 429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="833" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="833" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="833" cause="a. Harness/connector short to ground in the 429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="833" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="833" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="833" cause="a. Harness/connector short to ground in the 429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="833" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="833" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="835" cause="a. Harness/connector open(intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="835" cause="1. F975-OR(+8Volts)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="835" cause="2. C429-GY(Signal)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="835" cause="3. 201-BK(Ground)"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="835" cause="b. Harness/connector short to + battery or +8V in the C429-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="835" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="835" cause="d. Faulty Interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="835" cause="a. Harness/connector short to ground in the C429-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="835" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="835" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="835" cause="a. Harness/connector short to ground in the C429-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="835" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="835" cause="c. Faulty Interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="838" cause="a. Suspension Cylinder is collapsed. (Check cylinder see SEHS9411)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="838" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="838" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="838" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="838" cause="1. 113-OR (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="838" cause="2. 859-YL (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="838" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="838" cause="b. Harness/connector short to +Battery in the 859-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="838" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="838" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="838" cause="a. Harness/connector short to ground in the 859-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="838" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="838" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="838" cause="a. Harness/connector short to ground in the 859-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="838" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="838" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="839" cause="a. Suspension Cylinder is collapsed. (Check cylinder see SEHS9411)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="839" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="839" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="839" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="839" cause="1. 113-OR (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="839" cause="2. 858-GY (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="839" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="839" cause="b. Harness/connector short to +Battery in the 858-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="839" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="839" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="839" cause="a. Harness/connector short to ground in the 858-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="839" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="839" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="839" cause="a. Harness/connector short to ground in the 858-GY wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="839" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="839" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="840" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="840" cause="1. 113-OR (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="840" cause="2. 861-PU (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="840" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="840" cause="b. Harness/connector short to +Battery in the 861-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="840" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="840" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="840" cause="a. Harness/connector short to ground in the 861-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="840" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="840" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="840" cause="a. Harness/connector short to ground in the 861-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="840" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="840" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="841" cause="a. Suspension Cylinder is collapsed. (Check cylinder see SEHS9411)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="841" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="2" cid="841" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="841" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="841" cause="1. 113-OR (+Battery)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="841" cause="2. 860-PK (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="841" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="841" cause="b. Harness/connector short to +Battery in the 860-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="841" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="841" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="841" cause="a. Harness/connector short to ground in the 860-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="841" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="841" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="841" cause="a. Harness/connector short to ground in the 860-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="841" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="841" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="849" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="849" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="849" cause="2. D970-WH (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="849" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="849" cause="b. Harness/connector short to +Battery or +8V in the D970-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="849" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="849" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="849" cause="a. Harness/connector short to ground in the D970-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="849" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="849" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="849" cause="a. Harness/connector short to ground in the D970-WH wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="849" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="849" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="851" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="851" cause="1. D963-BU (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="851" cause="2. C412-BR (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="851" cause="3. 201-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="851" cause="b. Harness/connector short to +Battery or +8V in the C412-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="851" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="851" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="851" cause="a. Harness/connector short to ground in the C412-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="851" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="851" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="851" cause="a. Harness/connector short to ground in the C412-BR wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="851" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="851" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="852" cause="a. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="852" cause="b. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="852" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="852" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="852" cause="2. B433-PU (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="852" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="852" cause="b. Harness/connector short to +Battery or +8V in the B433-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="852" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="852" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="852" cause="a. Harness/connector short to ground in the B433-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="852" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="852" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="852" cause="a. Harness/connector short to ground in the B433-PU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="852" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="852" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="853" cause="a. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="853" cause="b. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="853" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="853" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="853" cause="2. B466-YL (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="853" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="853" cause="b. Harness/connector short to +Battery or +8V in the B466-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="853" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="853" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="853" cause="a. Harness/connector short to ground in the B466-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="853" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="853" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="853" cause="a. Harness/connector short to ground in the B466-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="853" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="853" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="854" cause="a. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="854" cause="b. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="854" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="854" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="854" cause="2. B429-YL (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="854" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="854" cause="b. Harness/connector short to +Battery or +8V in the B429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="854" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="854" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="854" cause="a. Harness/connector short to ground in the B429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="854" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="854" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="854" cause="a. Harness/connector short to ground in the B429-YL wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="854" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="854" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="2" cid="855" cause="a. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="2" cid="855" cause="b. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="3" cid="855" cause="a. Harness/connector open (intermittent) in one or more of the following circuits:"/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="3" cid="855" cause="1. F975-OR (+8 Volts)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="3" cid="855" cause="2. C467-BU (signal)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="3" cid="855" cause="3. A252-BK (ground)."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="3" cid="855" cause="b. Harness/connector short to +Battery or +8V in the C467-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="3" cid="855" cause="c. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="7" fmi="3" cid="855" cause="d. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="4" cid="855" cause="a. Harness/connector short to ground in the C467-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="4" cid="855" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="4" cid="855" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="6" cid="855" cause="a. Harness/connector short to ground in the C467-BU wire."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="6" cid="855" cause="b. Faulty sensor."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="6" cid="855" cause="c. Faulty interface module."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="1" fmi="9" cid="890" cause="a. Broadcast system is not removing data from VIMS broadcast buffer."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="2" fmi="9" cid="890" cause="b. Will correct itself when Broadcast system resumes operation."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="3" fmi="9" cid="890" cause="c. Key Start switch On/Off will clear broadcast buffer."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="4" fmi="9" cid="890" cause="d. Open, short, ground in broadcast datalink."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="5" fmi="9" cid="890" cause="e. Related broadcast ECM is faulty."/>
+    <CauseDefinition schema="VIMS" sequenceNumber="6" fmi="9" cid="890" cause="f. Faulty Main Module."/>
+</CauseDefinitions>
+

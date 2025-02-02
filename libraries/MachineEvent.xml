@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<!-- MODIFICATION HISTORY
+     $Log: not supported by cvs2svn $
+     Revision 1.1  2003/12/15 03:56:42  markb
+     New circuit for processing machine events.
+
+-->
+
+<circuit>
+    <sources>
+        <source name="machineEvents" class="minestar.platform.service.event.LeanEventNode">
+                <var name="filter">assignmentFieldEvents</var>
+        </source>
+    </sources>
+    <nodes>
+        <node name="commsActivityNode" class="com.mincom.works.cc.machine.node.MonitorCommsActivityNode" />
+        <node name="bufferedNode" class="com.mincom.env.integ.connection.BufferedNode" />
+        <node name="eventNode" class="minestar.platform.service.event.EventNode" />
+   </nodes>
+    <sinks>
+    </sinks>
+    <connections>
+        <connect source="machineEvents" sink="eventNode" />
+        <connect source="eventNode" sink="bufferedNode" />
+        <connect source="bufferedNode" sink="commsActivityNode" />
+    </connections>
+</circuit>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="bbed985d-331a-4268-b7ad-9c84d19a119f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for BIN_LOCATION_OFFSET to table MACHINECLASS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <columnExists tableName="MACHINECLASS" columnName="BIN_LOCATION_OFFSET"/>
+            </not>
+        </preConditions>
+        <comment>FLT-10365: AddColumn MACHINECLASS.BIN_LOCATION_OFFSET</comment>
+        <addColumn tableName="MACHINECLASS">
+            <column name="BIN_LOCATION_OFFSET" type="DOUBLE" remarks="The offset of the processor bin from the machine position in the direction of machine heading."/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

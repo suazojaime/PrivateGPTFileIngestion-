@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class
+            name="minestar.external.domain.QrtzTrigger"
+            table="QRTZ_TRIGGERS"
+    >
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">The Quartz trigger definitions.</meta>
+
+        <composite-id name="comp_id" class="minestar.external.domain.QrtzTriggerPK">
+            <key-property
+                    name="triggerName"
+                    column="TRIGGER_NAME"
+                    type="java.lang.String"
+                    length="254"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="triggerGroup"
+                    column="TRIGGER_GROUP"
+                    type="java.lang.String"
+                    length="254"
+            >
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+        </composite-id>
+        <property
+                name="description"
+                type="java.lang.String"
+                column="DESCRIPTION"
+                length="254"
+        >
+            <meta attribute="description">Description of the trigger.</meta>
+        </property>
+        <property
+                name="nextFireTime"
+                type="long"
+                column="NEXT_FIRE_TIME"
+
+        >
+            <meta attribute="description">The next fire time.</meta>
+        </property>
+        <!-- Data type changed from sql to generic : MSTAR:7000 Nags -->
+        <property
+                name="prevFireTime"
+                type="long"
+                column="PREV_FIRE_TIME"
+
+        >
+            <meta attribute="description">The previous fire time.</meta>
+        </property>
+        <property
+                name="triggerState"
+                type="java.lang.String"
+                column="TRIGGER_STATE"
+                not-null="true"
+                length="16"
+        >
+            <meta attribute="description">The trigger state.</meta>
+        </property>
+        <property
+                name="triggerType"
+                type="java.lang.String"
+                column="TRIGGER_TYPE"
+                not-null="true"
+                length="8"
+        >
+            <meta attribute="description">The trigger type.</meta>
+        </property>
+        <!-- Data type changed from sql to generic : MSTAR:7000 Nags -->
+        <property
+                name="startTime"
+                type="long"
+                column="START_TIME"
+                not-null="true"
+
+        >
+            <meta attribute="description">The start time.</meta>
+        </property>
+        <!-- Data type changed from sql to generic : MSTAR:7000 Nags -->
+        <property name="endTime" type="long" column="END_TIME">
+            <meta attribute="description">The end time.</meta>
+
+        </property>
+        <property name="calendarName" type="java.lang.String"
+                  column="CALENDAR_NAME"
+                  length="254"
+        >
+            <meta attribute="description">The calendar name.</meta>
+        </property>
+        <property
+                name="misfireInstr"
+                type="byte"
+                column="MISFIRE_INSTR"
+                length="2"
+        >
+            <meta attribute="description">The misfire instruction.</meta>
+        </property>
+        <!-- Data type changed from sql to generic : MSTAR:7000 Nags -->
+        <property
+                name="priority"
+                type="long"
+                column="PRIORITY"
+
+        >
+            <meta attribute="defaultValue">5</meta>
+            <meta attribute="description">The trigger priority.</meta>
+        </property>
+        <!-- Data type changed from java.lang.long to java.sql.Blob : MSTAR:7000 Nags -->
+        <property
+                name="jobData"
+                type="java.sql.Blob"
+                column="JOB_DATA"
+        >
+
+            <!--// TODO. SQLSERVER_TBD. Need to check on this.-->
+            <!--type="java.sql.Blob"-->
+
+            <meta attribute="description">The serialized Job data.</meta>
+
+        </property>
+        <property name="schedName" type="java.lang.String">
+            <meta attribute="description">The Scheduler name.</meta>
+            <column name="SCHED_NAME" length="120" not-null="true" default="Sched1" />
+        </property>
+        <!-- associations -->
+        <!-- bi-directional many-to-one association to QrtzJobDetail -->
+        <many-to-one
+                name="qrtzJobDetail"
+                class="minestar.external.domain.QrtzJobDetail"
+                not-null="true"
+        >
+            <column name="JOB_NAME"/>
+            <column name="JOB_GROUP"/>
+        </many-to-one>
+
+        <!-- bi-directional one-to-one association to QrtzBlobTrigger -->
+        <one-to-one
+                name="qrtzBlobTrigger"
+                class="minestar.external.domain.QrtzBlobTrigger"
+                outer-join="auto"
+        >
+        </one-to-one>
+        <!-- bi-directional one-to-one association to QrtzSimpleTrigger -->
+        <one-to-one
+                name="qrtzSimpleTrigger"
+                class="minestar.external.domain.QrtzSimpleTrigger"
+                outer-join="auto"
+        >
+        </one-to-one>
+        <!-- bi-directional one-to-one association to QrtzCronTrigger -->
+        <one-to-one
+                name="qrtzCronTrigger"
+                class="minestar.external.domain.QrtzCronTrigger"
+                outer-join="auto"
+        >
+        </one-to-one>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+<changeSet id="b8ecf9ad-2441-46fb-8649-a26c1fbfa31f" author="MineStar" failOnError="false">
+    <preConditions onFailMessage="Ignored AddColumn for FILEIMPORTTIME_UTC to table HEALTH_LOG as table does not exist or column already exists." onFail="MARK_RAN">
+        <tableExists tableName="HEALTH_LOG"/>
+        <not>
+            <columnExists tableName="HEALTH_LOG" columnName="FILEIMPORTTIME_UTC"/>
+        </not>
+    </preConditions>
+    <comment>HLT-1327 Add file import timestamp to HEALTH_LOG table</comment>
+    <addColumn tableName="HEALTH_LOG">
+        <column name="FILEIMPORTTIME_UTC" type="DATETIME2" remarks="which is populated with the current UTC date and time when a file is imported."/>
+    </addColumn>
+</changeSet>
+</databaseChangeLog>
+

@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.production.domain.event.SegProductionEventDetails"
+           table="SEG_PRODUCTION_EVENT_DETAILS"
+           dynamic-update="true">
+
+        <meta attribute="index">
+            name=SEG_PRODUCTION_EVENT_UNIQ
+            unique=true
+            columns=SEG_ID, SEG_START_TIME, TRUCK_DISC, SEG_PROCESS_STATUS
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        <property
+                name="segType"
+                column="SEG_TYPE"
+                type="java.lang.String"
+                length="50"
+        >
+        </property>
+
+        <property
+                name="segId"
+                column="SEG_ID"
+                type="java.lang.Integer"
+        >
+        </property>
+
+        <property
+                name="segStartTime"
+                type="TimestampType"
+                column="SEG_START_TIME"
+        >
+            <meta attribute="utc-description">The utc date when the item was actioned.</meta>
+            <meta attribute="description">The segment start time</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property
+                name="segEndTime"
+                type="TimestampType"
+                column="SEG_END_TIME"
+        >
+            <meta attribute="utc-description">The utc date when the item was actioned.</meta>
+            <meta attribute="description">The segment end time</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+
+        <property
+                name="segDuration"
+                column="SEG_DURATION"
+        >
+            <meta attribute="unitType">duration</meta>
+            <meta attribute="description">The segment duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property
+                name="fuelConsumption"
+                column="FUEL_CONS"
+                >
+            <meta attribute="unitType">liquid volume</meta>
+            <meta attribute="description">The fuel Consumption</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property
+                name="distanceTravelled"
+                column="DIST_TRAVELLED"
+                >
+            <meta attribute="unitType">length</meta>
+            <meta attribute="description">The loaded travel distance</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property
+                name="payLoadWeight"
+                column="PAYLOAD_WEIGHT"
+                >
+            <meta attribute="description">The payload value associated with the event.</meta>
+            <meta attribute="unitType">mass</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+            </type>
+        </property>
+
+        <property
+                name="payLoadCalMethod"
+                column="PAYLOAD_CAL_METHOD"
+                type="java.lang.String"
+                length="50"
+        >
+        </property>
+
+
+        <property
+                name="truckDisc"
+                column="TRUCK_DISC"
+                type="java.lang.String"
+                length="50"
+        >
+        </property>
+
+
+        <property
+                name="materialId"
+                column="MATERIAL_ID"
+                type="java.lang.String"
+                length="50"
+        >
+        </property>
+
+        <property
+                name="materialDensity"
+                column="MATERIAL_DENSITY"
+                >
+            <meta attribute="description">The smu of the event.</meta>
+            <meta attribute="unitType">service meter hours</meta>
+            <type name="quantity">
+                <param name="unitType">service meter hours</param>
+            </type>
+        </property>
+
+        <property
+                name="truckPayloadId"
+                column="TRUCK_PAYLOAD_ID"
+                type="java.lang.String"
+                length="50"
+        >
+        </property>
+
+        <property
+                name="segProcessStatus"
+                column="SEG_PROCESS_STATUS"
+                type="java.lang.Boolean"
+                not-null="true"
+        >
+        </property>
+
+        <property
+                name="latitude"
+                column="LATITUDE"
+        >
+            <meta attribute="unitType">length</meta>
+            <meta attribute="description">gps latitude</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property
+                name="longitude"
+                column="LONGITUDE"
+        >
+            <meta attribute="unitType">length</meta>
+            <meta attribute="description">gps longitude</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property
+                name="gpsPosStat"
+                column="GPS_POS_STAT"
+                type="java.lang.String"
+                length="1"
+        >
+        </property>
+        <property
+                name="carrybackPayload"
+                column="CARRYBACK_PAYLOAD"
+        >
+            <meta attribute="description">The payload value material left on the truck bed.</meta>
+            <meta attribute="unitType">mass</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+            </type>
+        </property>
+        <property
+                name="carrybackCycleStartTime"
+                type="TimestampType"
+                column="CARRYBACK_START_TIME"
+        >
+            <meta attribute="utc-description">The utc date when the item was actioned.</meta>
+            <meta attribute="description">The carryback cycle start time</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        <property
+                name="loadStartTime"
+                type="TimestampType"
+                column="LOAD_START_TIME"
+        >
+            <meta attribute="utc-description">The utc date when the item was actioned.</meta>
+            <meta attribute="description">The Load start time</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+
+    </class>
+</hibernate-mapping>

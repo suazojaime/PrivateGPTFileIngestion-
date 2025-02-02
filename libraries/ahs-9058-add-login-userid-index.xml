@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="e1b711c0-3764-4e3c-b6c0-4b1c2fd4c946" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for LOGIN.USER_ID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="LOGIN" columnName="USER_ID"/>
+        </preConditions>
+        <comment>AHS-9058: AddNotNullConstraint to LOGIN.USER_ID</comment>
+        <sql>DELETE FROM LOGIN WHERE USER_ID IS NULL</sql>
+        <addNotNullConstraint columnName="USER_ID" columnDataType="VARCHAR(254)" tableName="LOGIN"/>
+        <rollback>
+            <dropNotNullConstraint tableName="LOGIN" columnName="USER_ID" columnDataType="VARCHAR(254)"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="e0c28bb2-9e25-4a91-99b7-3ece7d27127c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for LOGIN_USERID to table LOGIN as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOGIN"/>
+            <not>
+                <indexExists indexName="LOGIN_USERID" tableName="LOGIN"/>
+            </not>
+        </preConditions>
+        <comment>AHS-9058: CreateIndex LOGIN_USERID on LOGIN (USER_ID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="LOGIN" indexName="LOGIN_USERID">
+            <column name="USER_ID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

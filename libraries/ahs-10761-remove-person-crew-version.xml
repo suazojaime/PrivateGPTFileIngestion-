@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="7c11f239-9e72-45cf-b764-a4cb53da89bf" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for VERSION of table CREW as column does not exist."
+                       onFail="MARK_RAN">
+            <columnExists tableName="CREW" columnName="VERSION"/>
+        </preConditions>
+        <comment>AHS-10761: DropColumn CREW.VERSION</comment>
+        <dropColumn columnName="VERSION" tableName="CREW"/>
+        <rollback>
+            <addColumn tableName="CREW">
+                <column name="VERSION" type="INT"/>
+            </addColumn>
+            <sql>UPDATE CREW SET VERSION = 0</sql>
+            <addNotNullConstraint tableName="CREW" columnName="VERSION" columnDataType="INT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="708bd680-6373-444d-ad2e-5182b8a937a1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for VERSION of table PERSON as column does not exist."
+                       onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="PERSON" columnName="VERSION"/>
+        </preConditions>
+        <comment>AHS-10761: DropDefaultValue PERSON.VERSION</comment>
+        <dropDefaultValue columnName="VERSION" tableName="PERSON"/>
+        <rollback>
+            <addDefaultValue tableName="PERSON" columnName="VERSION" columnDataType="INT" defaultValueNumeric="0"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="708bd680-6373-444d-ad2e-5182b8a937ad" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for VERSION of table PERSON as column does not exist."
+                       onFail="MARK_RAN">
+            <columnExists tableName="PERSON" columnName="VERSION"/>
+        </preConditions>
+        <comment>AHS-10761: DropColumn PERSON.VERSION</comment>
+        <dropColumn columnName="VERSION" tableName="PERSON"/>
+        <rollback>
+            <addColumn tableName="PERSON">
+                <column name="VERSION" type="INT" remarks="The version of the person."/>
+            </addColumn>
+            <sql>UPDATE PERSON SET VERSION = 0</sql>
+            <addNotNullConstraint tableName="PERSON" columnName="VERSION" columnDataType="INT"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

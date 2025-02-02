@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class
+            name="minestar.external.domain.QrtzJobDetail"
+            table="QRTZ_JOB_DETAILS"
+    >
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">The Quartz Job detail.</meta>
+
+        <composite-id name="comp_id" class="minestar.external.domain.QrtzJobDetailPK">
+            <key-property
+                    name="jobName"
+                    column="JOB_NAME"
+                    type="java.lang.String"
+                    length="254"
+            >
+                <meta attribute="description">The job name.</meta>
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+            <key-property
+                    name="jobGroup"
+                    column="JOB_GROUP"
+                    type="java.lang.String"
+                    length="254"
+            >
+                <meta attribute="description">The job group.</meta>
+                <meta attribute="use-in-equals">true</meta>
+            </key-property>
+        </composite-id>
+
+        <property
+                name="description"
+                type="java.lang.String"
+                column="DESCRIPTION"
+                length="254"
+        >
+            <meta attribute="description">The Job description.</meta>
+        </property>
+        <property
+                name="jobClassName"
+                type="java.lang.String"
+                column="JOB_CLASS_NAME"
+                not-null="true"
+                length="254"
+        >
+            <meta attribute="description">The Job class name.</meta>
+        </property>
+        <property
+                name="isDurable"
+                type="java.lang.String"
+                column="IS_DURABLE"
+                not-null="true"
+                length="1"
+        >
+            <meta attribute="description">Is the Job durable.</meta>
+        </property>
+        <property name="isNonconcurrent" type="java.lang.String">
+            <meta attribute="description">Is the Job is nonconcurent.</meta>
+            <column name="IS_NONCONCURRENT" length="1" not-null="true" default="" />
+        </property>
+        <property name="isUpdateData" type="java.lang.String">
+            <meta attribute="description">Is the Job is update data.</meta>
+            <column name="IS_UPDATE_DATA" length="1" not-null="true" default="" />
+        </property>
+        <property
+                name="requestsRecovery"
+                type="java.lang.String"
+                column="REQUESTS_RECOVERY"
+                not-null="true"
+                length="1"
+        >
+            <meta attribute="description">The Job recovery requests.</meta>
+        </property>
+        <property
+                name="jobData"
+                type="java.sql.Blob"
+                column="JOB_DATA"
+        >
+            <meta attribute="description">The serialized data.</meta>
+        </property>
+        <property name="schedName" type="java.lang.String">
+            <meta attribute="description">The Scheduler name.</meta>
+            <column name="SCHED_NAME" length="120" not-null="true" default="Sched1" />
+        </property>
+
+        <!-- associations -->
+        <!-- bi-directional one-to-many association to QrtzJobListener -->
+
+        <!-- bi-directional one-to-many association to QrtzTrigger -->
+        <set
+                name="qrtzTriggers"
+
+                inverse="true"
+        >
+            <key>
+                <column name="JOB_NAME"/>
+                <column name="JOB_GROUP"/>
+            </key>
+            <one-to-many
+                    class="minestar.external.domain.QrtzTrigger"
+            />
+        </set>
+
+    </class>
+</hibernate-mapping>

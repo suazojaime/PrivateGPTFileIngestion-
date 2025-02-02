@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.pitlink.domain.machine.UndergroundRockBreakerImpl"
+           proxy="minestar.pitlink.domain.machine.UndergroundRockBreaker"
+           table="UG_ROCK_BREAKER">
+
+        <meta attribute="alias" inherit="false">UNDERGROUNDROCKBREAKER</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">The underground-specific details of a rock breaker in an underground mine.</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model" />
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="ROCK_BREAKER_OID">
+            <meta attribute="description">
+                A reference to the rock breaker (MSMODEL.MACHINE) that the underground-specific details apply to.
+            </meta>
+
+            <generator class="foreign">
+                <param name="property">rockBreaker</param>
+            </generator>
+        </id>
+
+        <one-to-one name="rockBreaker"
+                    class="minestar.pitlink.domain.machine.RockBreakerImpl"
+                    constrained="true"
+                    lazy="false" />
+
+        <many-to-one name="orePass"
+                     class="minestar.mine.domain.minemodel.underground.orepass.OrePassImpl"
+                     column="ORE_PASS">
+            <meta attribute="description">
+                A reference to the ore pass (MSMODEL.ORE_PASS) that the rock breaker is currently attached to.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="infrastructureExclusionZone"
+                    class="minestar.mine.domain.minemodel.ZoneReference"
+                    column="INFRASTRUCTURE_EXCLUSION_ZONE"
+                    lazy="false"
+                    not-null="false">
+            <meta attribute="description">Reference to infrastructure exclusion zone (MSMODEL.ZONE).</meta>
+        </many-to-one>
+    </class>
+
+</hibernate-mapping>

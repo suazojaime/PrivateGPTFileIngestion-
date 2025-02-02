@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.production.domain.underground.chute.HistoricalChuteDataImpl"
+           proxy="minestar.production.domain.underground.chute.HistoricalChuteData"
+           table="HISTORICAL_CHUTE_DATA"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">HISTORICALCHUTEDATA</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">A historical record of what the levels of a chute was at the end of a shift.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="CHUTE_DATA_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <properties name="UK_" unique="true">
+            <!-- Uniqueness constraint is over chute and shift field -->
+
+            <many-to-one name="chute"
+                         class="minestar.pitlink.domain.machine.MachineReference"
+                         column="CHUTE"
+                         not-null="true">
+                <meta attribute="description">
+                    A reference to the chute (MSMODEL.MACHINE) that this historical record applies to.
+                </meta>
+            </many-to-one>
+
+            <property name="shiftOID"
+                      type="java.lang.Long"
+                      column="SHIFT"
+                      not-null="true">
+                <meta attribute="description">
+                    A reference to the shift (MSMODEL.SHIFT) that this historical record applies to.
+                </meta>
+            </property>
+        </properties>
+
+        <property name="level"
+                  column="CHUTE_LEVEL">
+            <meta attribute="alias">CHUTE_LEVEL</meta>
+            <meta attribute="description">The amount of ore that the chute contained at the end of the shift.</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+            </type>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

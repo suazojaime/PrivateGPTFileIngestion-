@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) 2019 Caterpillar
+  -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="34fe0eb6-46bc-4752-87f9-12f16ee2980b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for TRACTION_EVENT_LANES as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="TRACTION_EVENT_LANES"/>
+        </preConditions>
+        <comment>AHS-11422: DropTable TRACTION_EVENT_LANES</comment>
+        <dropTable tableName="TRACTION_EVENT_LANES"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="8fa72d0b-de0d-459a-8776-154e5bb13c55" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for TRACTION_EVENT_ZONES as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="TRACTION_EVENT_ZONES"/>
+        </preConditions>
+        <comment>AHS-11422: DropTable TRACTION_EVENT_ZONES</comment>
+        <dropTable tableName="TRACTION_EVENT_ZONES"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="fd2d1d5e-d257-4588-a8c7-ecba54c2bf8d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for TRACTION_EVENT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="TRACTION_EVENT"/>
+        </preConditions>
+        <comment>AHS-11422: DropTable TRACTION_EVENT</comment>
+        <dropTable tableName="TRACTION_EVENT"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="41b478b5-3210-40e8-9337-9040eaf719ee" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for TRACTION_EVENT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TRACTION_EVENT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-11422: CreateTable TRACTION_EVENT</comment>
+        <createTable tablespace="MW_ENT" remarks="An instance of a loss of traction experience by a truck" tableName="TRACTION_EVENT">
+            <column name="TRACTION_EVENT_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_OID" type="BIGINT" remarks="The machine that experienced the traction event.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRACTION_EVENT_TYPE" type="VARCHAR(255)" remarks="The type of the traction event, either LOSS_OF_TRACTION or EXCESSIVE_LOSS_OF_TRACTION.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="START_TIME_UTC" type="DATETIME2" remarks="The time the traction event started">
+                <constraints nullable="false"/>
+            </column>
+            <column name="END_TIME_UTC" type="DATETIME2" remarks="The time the traction event ended">
+                <constraints nullable="false"/>
+            </column>
+            <column name="START_LOCATION_X" type="DOUBLE" remarks="The xyz coordinate the traction event started.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="START_LOCATION_Y" type="DOUBLE" remarks="The xyz coordinate the traction event started.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="START_LOCATION_Z" type="DOUBLE" remarks="The xyz coordinate the traction event started."/>
+            <column name="END_LOCATION_X" type="DOUBLE" remarks="The xyz coordinate the traction event ended.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="END_LOCATION_Y" type="DOUBLE" remarks="The xyz coordinate the traction event ended.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="END_LOCATION_Z" type="DOUBLE" remarks="The xyz coordinate the traction event ended."/>
+            <column name="ABSOLUTE" type="DOUBLE" remarks="Absolute speed limit"/>
+            <column name="PROPORTIONAL" type="DOUBLE" remarks="Proportional derate"/>
+            <column name="PROPORTIONAL_REASON" type="VARCHAR(255)" remarks="Reason of proportional derate"/>
+            <column name="TRACTION_LEVEL" type="DOUBLE" remarks="Traction level"/>
+            <column name="TRACTION_EVENT_STATE" type="VARCHAR(255)" remarks="Traction state"/>
+            <column name="ACTION" type="VARCHAR(255)" remarks="Action took on traction event"/>
+            <column name="EXTERNAL_INFLUENCE" type="VARCHAR(255)" remarks="external Influence on traction event"/>
+            <column name="WEATHER_CONDITION" type="VARCHAR(255)" remarks="Weather condition on traction event"/>
+            <column name="ROAD_CONDITION" type="VARCHAR(255)" remarks="Road condition on traction event"/>
+            <column name="USER_NAME" type="VARCHAR(255)" remarks="The name of the last user which edited the Traction event"/>
+            <column name="NOTES" type="VARCHAR(2000)" remarks="A free form notes field for the traction event."/>
+            <column name="GLOBAL_SPEED_LIMIT" type="DOUBLE" remarks="Absolute speed limit"/>
+            <column name="GLOBAL_PROP_DERATE" type="DOUBLE" remarks="Proportional derate"/>
+            <column name="GLOBAL_DERATE_REASON" type="VARCHAR(255)" remarks="Reason of proportional derate"/>
+            <column name="MACH_SPEED_LIMIT" type="DOUBLE" remarks="Absolute speed limit"/>
+            <column name="MACH_PROP_DERATE" type="DOUBLE" remarks="Proportional derate"/>
+            <column name="MACH_DERATE_REASON" type="VARCHAR(255)" remarks="Reason of proportional derate"/>
+            <column name="MACH_CL_SPEED_LIMIT" type="DOUBLE" remarks="Absolute speed limit"/>
+            <column name="MACH_CL_PROP_DERATE" type="DOUBLE" remarks="Proportional derate"/>
+            <column name="MACH_CL_DERATE_REASON" type="VARCHAR(255)" remarks="Reason of proportional derate"/>
+            <column name="PAYLOAD" type="DOUBLE" remarks="The  payload in the machine"/>
+        </createTable>
+        <addPrimaryKey columnNames="TRACTION_EVENT_OID" constraintName="TRACTION_EVENT_PK" tablespace="MW_IDXENT" tableName="TRACTION_EVENT"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+    <changeSet id="32a7114a-0e8d-41e9-9f8c-97acaeb29d19" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for TRACTION_EVENT_LANES as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TRACTION_EVENT_LANES"/>
+            </not>
+        </preConditions>
+        <comment>AHS-11422: CreateTable TRACTION_EVENT_LANES</comment>
+        <createTable tablespace="MW_ENT" remarks="The processors assigned to this destination blend" tableName="TRACTION_EVENT_LANES">
+            <column name="TRACTION_EVENT_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LANE_NAME" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LANE_SPEED_LIMIT" type="DOUBLE"/>
+        </createTable>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="TRACTION_EVENT_LANES" indexName="TRACTION_EVENT_LANES_UIDX1">
+            <column name="TRACTION_EVENT_OID"/>
+            <column name="LANE_NAME"/>
+        </createIndex>
+        <addForeignKeyConstraint baseTableName="TRACTION_EVENT_LANES" baseColumnNames="TRACTION_EVENT_OID" constraintName="TRACTION_EVENT_LANES_TRACTI_FK" referencedTableName="TRACTION_EVENT" referencedColumnNames="TRACTION_EVENT_OID" onDelete="NO ACTION"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+    <changeSet id="2240f3bf-2e3b-48da-b931-9e8fd662f1bd" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for TRACTION_EVENT_ZONES as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TRACTION_EVENT_ZONES"/>
+            </not>
+        </preConditions>
+        <comment>AHS-11422: CreateTable TRACTION_EVENT_ZONES</comment>
+        <createTable tablespace="MW_ENT" remarks="The traction on zones" tableName="TRACTION_EVENT_ZONES">
+            <column name="TRACTION_EVENT_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ZONE_NAME" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRACTION_LEVEL" type="DOUBLE"/>
+            <column name="ZONE_SPEED_LIMIT" type="DOUBLE"/>
+        </createTable>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="TRACTION_EVENT_ZONES" indexName="TRACTION_EVENT_ZONES_UIDX1">
+            <column name="TRACTION_EVENT_OID"/>
+            <column name="ZONE_NAME"/>
+        </createIndex>
+        <addForeignKeyConstraint baseTableName="TRACTION_EVENT_ZONES" baseColumnNames="TRACTION_EVENT_OID" constraintName="TRACTION_EVENT_ZONES_TRACTI_FK" referencedTableName="TRACTION_EVENT" referencedColumnNames="TRACTION_EVENT_OID" onDelete="NO ACTION"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+</databaseChangeLog>

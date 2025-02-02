@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="bd1d5625-ab41-47db-92d5-be293250c259" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LOADSITE_NAME to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="LOADSITE_NAME"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1154 AddColumn LOADSITE_NAME to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="LOADSITE_NAME" type="VARCHAR(254)" remarks="The name of the LOAD SITE."/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

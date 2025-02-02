@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class name="minestar.mine.domain.layer.UserLayerGroupImpl" table="USERLAYER_GROUP">
+
+        <meta attribute="table">tablespace=MW_ENT</meta>
+        <meta attribute="primary-key">tablespace=MW_IDXENT</meta>
+        <meta attribute="index">
+            name=USER_LAYER_GROUP_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">List of User defined Layer Groups.</meta>
+
+        <id name="OID" type="java.lang.Long" column="GROUP_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="active" type="java.lang.Boolean" column="IS_ACTIVE" not-null="true">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Is this user layer group active</meta>
+        </property>
+
+        <property name="name" type="java.lang.String" column="NAME" length="254" not-null="true">
+            <meta attribute="description">The name of the user layer group.</meta>
+        </property>
+
+        <property name="defaultMobile" type="boolean">
+            <meta attribute="description">Is this user layer group the default for the Mobile client</meta>
+            <column name="DEFAULT_MOBILE" not-null="true" default="0"/>
+        </property>
+
+        <property name="defaultWeb" type="boolean">
+            <meta attribute="description">Is this user layer group the default for the Web client</meta>
+            <column name="DEFAULT_WEB" not-null="true" default="0"/>
+        </property>
+
+        <set name="userLayerViews" cascade="all-delete-orphan" lazy="false">
+            <meta attribute="collection-table">tablespace=MW_ENT</meta>
+            <meta attribute="collection-primary-key">tablespace=MW_IDXENT</meta>
+            <meta attribute="description">A set of the user layer views.</meta>
+            <key column="OID"/>
+            <one-to-many class="minestar.mine.domain.layer.UserLayerViewImpl" not-found="ignore"/>
+        </set>
+    </class>
+
+    <class name="minestar.mine.domain.layer.UserLayerViewImpl" table="USERLAYER_VIEW"
+           dynamic-update="true" lazy="false">
+
+        <meta attribute="table">tablespace=MW_ENT</meta>
+        <meta attribute="primary-key">tablespace=MW_IDXENT</meta>
+        <meta attribute="description">One Layer and the oids of the visible items.</meta>
+
+        <id name="OID" type="java.lang.Long" column="VIEW_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="layer" type="minestar.mine.persistence.layer.UserLayerEnumUserType"
+                  column="LAYER" not-null="true">
+            <meta attribute="description">The enum reference to a layer.</meta>
+        </property>
+
+        <property name="allItems" type="java.lang.Boolean" column="ALL_ITEMS" not-null="true">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Are all items in this layer visible</meta>
+        </property>
+
+        <set name="items" table="USERLAYER_ITEM" cascade="all-delete-orphan" lazy="false">
+            <meta attribute="collection-table">tablespace=MW_ENT</meta>
+            <meta attribute="collection-primary-key">tablespace=MW_IDXENT</meta>
+            <meta attribute="description">A set of OIDS of model entities that are visible in this layer.</meta>
+            <key column="OID" not-null="true"/>
+            <element type="java.lang.Long" column="ITEM_OID" not-null="true"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

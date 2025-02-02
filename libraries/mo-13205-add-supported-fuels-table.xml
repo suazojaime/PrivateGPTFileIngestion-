@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a96a0c41-9286-4ea2-9571-2000ddf086f9" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for FUELBAY_SUPPORTED_FUELS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="FUELBAY_SUPPORTED_FUELS"/>
+            </not>
+        </preConditions>
+        <comment>MO-13205: CreateTable FUELBAY_SUPPORTED_FUELS</comment>
+        <createTable tablespace="MW_ENT" remarks="The fuel bay refuelling classes" tableName="FUELBAY_SUPPORTED_FUELS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FUEL_AND_LUBE_TYPE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,FUEL_AND_LUBE_TYPE_OID" constraintName="FUELBAY_SUPPORTED_FUELS_PK" tablespace="MW_IDXENT" tableName="FUELBAY_SUPPORTED_FUELS"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="2b63dc02-bba1-4cd0-948d-cd429cc4993f" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for FUELBAY_SUPPORTED_FUELS_FK1 to table FUELBAY_SUPPORTED_FUELS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="FUELBAY_SUPPORTED_FUELS" columnName="FUEL_AND_LUBE_TYPE_OID"/>
+            <columnExists tableName="FUELANDLUBETYPE" columnName="FUELANDLUBETYPE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="FUELBAY_SUPPORTED_FUELS" foreignKeyName="FUELBAY_SUPPORTED_FUELS_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-13205: AddForeignKeyConstraint FUELBAY_SUPPORTED_FUELS_FK1 to FUELBAY_SUPPORTED_FUELS (FUEL_AND_LUBE_TYPE_OID)</comment>
+        <sql>DELETE FROM FUELBAY_SUPPORTED_FUELS WHERE FUEL_AND_LUBE_TYPE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM FUELANDLUBETYPE WHERE FUELANDLUBETYPE.FUELANDLUBETYPE_OID = FUELBAY_SUPPORTED_FUELS.FUEL_AND_LUBE_TYPE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="FUELBAY_SUPPORTED_FUELS" baseColumnNames="FUEL_AND_LUBE_TYPE_OID" constraintName="FUELBAY_SUPPORTED_FUELS_FK1" referencedTableName="FUELANDLUBETYPE" referencedColumnNames="FUELANDLUBETYPE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="FUELBAY_SUPPORTED_FUELS" constraintName="FUELBAY_SUPPORTED_FUELS_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="20e4d699-60c3-4dcc-8f0d-034e09907dfb" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for FUELBAY_SUPPORTED_FUELS_FK2 to table FUELBAY_SUPPORTED_FUELS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="FUELBAY_SUPPORTED_FUELS" columnName="OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="FUELBAY_SUPPORTED_FUELS" foreignKeyName="FUELBAY_SUPPORTED_FUELS_FK2"/>
+            </not>
+        </preConditions>
+        <comment>MO-13205: AddForeignKeyConstraint FUELBAY_SUPPORTED_FUELS_FK2 to FUELBAY_SUPPORTED_FUELS (OID)</comment>
+        <sql>DELETE FROM FUELBAY_SUPPORTED_FUELS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = FUELBAY_SUPPORTED_FUELS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="FUELBAY_SUPPORTED_FUELS" baseColumnNames="OID" constraintName="FUELBAY_SUPPORTED_FUELS_FK2" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="FUELBAY_SUPPORTED_FUELS" constraintName="FUELBAY_SUPPORTED_FUELS_FK2"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

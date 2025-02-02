@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:widget="http://www.minestar.au.cat.com/namespace/widget"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.minestar.au.cat.com/namespace/widget http://www.minestar.au.cat.com/namespace/widget.xsd
+       ">
+
+    <widget:pie3DChart id="truckActivityPieChart" dataSet="shiftDataSet" dataSource="truckActivity"
+                       labelX="Truck" labelY="Avg Activity Time ($Unit)"
+                       title="Cycle Activity Breakdown - Haulage Truck"
+                       width="800" height="500" displayUnit="minute" domain="properties"
+                       backgroundColour="graphBackground"
+                       legend="customTruckActivityBreakdownLegend"/>
+
+    <widget:pie3DChart id="lhdActivityPieChart" dataSet="shiftDataSet" dataSource="lhdActivity"
+                       labelX="Truck" labelY="Avg Activity Time ($Unit)"
+                       title="Cycle Activity Breakdown - Load Haul Dump"
+                       width="800" height="500" displayUnit="minute" domain="properties"
+                       backgroundColour="graphBackground"
+                       legend="customLhdActivityBreakdownLegend"/>
+
+</beans>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) 2022 Caterpillar
+  -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="e5b2e05e-d63d-48d9-ab7b-3b8f8661ff1c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LIME_SILO to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="LIME_SILO"/>
+            </not>
+        </preConditions>
+        <comment>MO-10904: AddColumn MACHINE.LIME_SILO</comment>
+        <addColumn tableName="MACHINE">
+            <column name="LIME_SILO" type="BOOLEAN" defaultValueBoolean="true" remarks="Whether this material service has lime silo capabilities (e.g. can spray lime material onto a loaded truck before it goes to a dump)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

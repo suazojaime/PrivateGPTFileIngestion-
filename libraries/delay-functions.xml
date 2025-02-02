@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="2fcbbc15-4a23-4f36-8dd3-c056cd4a6182" author="MineStar" dbms="mssql" runOnChange="true">
+        <comment>Base 4.1 CreateFunction delayDiscriminator</comment>
+        <sqlFile path="db/changelog/functions/sqlserver/delayDiscriminator.sql" endDelimiter="Go" stripComments="true"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="135d486b-561a-4240-ab8d-74440e010f3a" author="MineStar" dbms="oracle" runOnChange="true">
+        <comment>Base 4.1 CreateFunction delayDiscriminator</comment>
+        <sqlFile path="db/changelog/functions/oracle/delayDiscriminator.sql" endDelimiter="\n/" stripComments="true"/>
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>

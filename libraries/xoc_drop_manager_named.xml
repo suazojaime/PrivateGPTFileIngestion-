@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE transformation SYSTEM "transformation.dtd">
+
+<transformation>
+    <name lang="en">Drop a named manager from an XOC File</name>
+    <description lang="en">
+This transformation drops a manager with a given name from an XOC file.
+    </description>
+    <propertydef name="manager">
+        <typedef><type code="string" /></typedef>
+        <description lang="en">The manager to be removed, e.g. Machine_1</description>
+    </propertydef>
+    <content value="false" />
+</transformation>

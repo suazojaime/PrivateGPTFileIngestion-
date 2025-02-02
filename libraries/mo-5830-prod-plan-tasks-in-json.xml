@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="279f2bbc-b0d2-4d74-9837-a533f9f00781" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_TASK as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-5830: CreateTable PROD_PLAN_TASK</comment>
+        <createTable remarks="Stores production planning task details" tableName="PROD_PLAN_TASK">
+            <column name="TASK_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_UUID" type="UUID" remarks="UUID that uniquely identifies a task">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(32)" remarks="The system or user that created this task">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_TIME_UTC" type="DATETIME2" remarks="Task creation timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_TIME_UTC" type="DATETIME2" remarks="Task updated timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TARGET_START_TIME_UTC" type="DATETIME2" remarks="The planned start time of the task"/>
+            <column name="TARGET_END_TIME_UTC" type="DATETIME2" remarks="The planned end time of the task"/>
+            <column name="ACTUAL_START_TIME_UTC" type="DATETIME2" remarks="The actual start time of the task when status changed to AVAILABLE"/>
+            <column name="ACTUAL_END_TIME_UTC" type="DATETIME2" remarks="The actual end time of the task when status changed to CLOSED"/>
+            <column name="PLAN_OID" type="BIGINT"/>
+            <column name="JOB_OID" type="BIGINT"/>
+            <column name="TASK_TYPE" type="VARCHAR(32)" remarks="The type of task">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_CONTENT" type="CLOB" remarks="The JSON encoding of the task">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="TASK_OID" constraintName="PROD_PLAN_TASK_PK" tableName="PROD_PLAN_TASK"/>
+        <createIndex unique="true" indexName="PROD_PLAN_TASK_UUID" tableName="PROD_PLAN_TASK">
+            <column name="TASK_UUID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="800cf325-bcc2-48d5-85bf-4c81b21f76e6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for CREATED_BY of table PROD_PLAN_TASK as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK" columnName="CREATED_BY"/>
+        </preConditions>
+        <comment>MO-6116: DropColumn PROD_PLAN_TASK.CREATED_BY</comment>
+        <dropColumn columnName="CREATED_BY" tableName="PROD_PLAN_TASK"/>
+        <rollback>
+            <addColumn tableName="PROD_PLAN_TASK">
+                <column name="CREATED_BY" type="NVARCHAR(32)"/>
+            </addColumn>
+            <sql>UPDATE PROD_PLAN_TASK SET CREATED_BY = 'MINESTAR' WHERE CREATED_BY IS NULL</sql>
+            <addNotNullConstraint tableName="PROD_PLAN_TASK" columnName="CREATED_BY" columnDataType="NVARCHAR(32)"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="62f8cd86-403a-46fd-aa33-c2f62e247690" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for TASK_STATUS to table PROD_PLAN_TASK as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK" columnName="TASK_STATUS"/>
+            </not>
+        </preConditions>
+        <comment>MO-5830: AddColumn PROD_PLAN_TASK.TASK_STATUS</comment>
+        <addColumn tableName="PROD_PLAN_TASK">
+            <column name="TASK_STATUS" type="VARCHAR(32)" remarks="The status of task"/>
+        </addColumn>
+        <sql>UPDATE PROD_PLAN_TASK SET TASK_STATUS='CLOSED'</sql>
+        <addNotNullConstraint tableName="PROD_PLAN_TASK" columnName="TASK_STATUS" columnDataType="VARCHAR(32)"/>
+        <rollback>
+            <dropColumn tableName="PROD_PLAN_TASK" columnName="TASK_STATUS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="5f4d1c7f-aab6-4984-a336-2179fadba164" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored migration of PROD_PLAN_TASK_OPERATIONAL as table does not exist" onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+            <tableExists tableName="PROD_PLAN_TASK"/>
+        </preConditions>
+        <comment>MO-5830: Migrate PROD_PLAN_TASK_OPERATIONAL to PROD_PLAN_TASK</comment>
+        <customChange class="minestar.db.customchange.MigrateProdPlanOperationalTask"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="74d45f86-0460-4ee7-9b79-e47b32a5fdd4" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored migration of PROD_PLAN_TASK_NON_PRODUCTION as table does not exist" onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+            <tableExists tableName="PROD_PLAN_TASK"/>
+        </preConditions>
+        <comment>MO-5830: Migrate PROD_PLAN_TASK_NON_PRODUCTION to PROD_PLAN_TASK</comment>
+        <customChange class="minestar.db.customchange.MigrateProdPlanNonProductionTask"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="4c6f91d9-8c3b-44b6-9547-0a47481d2663" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_TASK_NON_PROD_LOCATION as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_NON_PROD_LOCATION"/>
+        </preConditions>
+        <comment>MO-5830: DropTable PROD_PLAN_TASK_NON_PROD_LOCATION</comment>
+        <dropTable tableName="PROD_PLAN_TASK_NON_PROD_LOCATION"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="8653bee1-1778-4ce5-b24c-fd519f7268f7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_TASK_NON_PRODUCTION as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+        </preConditions>
+        <comment>MO-5830: DropTable PROD_PLAN_TASK_NON_PRODUCTION</comment>
+        <dropTable tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="6d4f062c-1165-418d-b16b-64cde03c754e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_TASK_OPER_EQUIPMENT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_OPER_EQUIPMENT"/>
+        </preConditions>
+        <comment>MO-5830: DropTable PROD_PLAN_TASK_OPER_EQUIPMENT</comment>
+        <dropTable tableName="PROD_PLAN_TASK_OPER_EQUIPMENT"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="e49f23e0-6b85-4849-b9f6-605a60e24b29" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_TASK_OPERATIONAL as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+        </preConditions>
+        <comment>MO-5830: DropTable PROD_PLAN_TASK_OPERATIONAL</comment>
+        <dropTable tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="6ff66935-b6c1-463c-bec9-aec0180ccd04" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropForeignKeyConstraint for PROD_PLAN_TASK_PRODUCTION_FK1 of table PROD_PLAN_TASK_PRODUCTION as foreignKey does not exist."
+                onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_TASK_PRODUCTION"
+                                        foreignKeyName="PROD_PLAN_TASK_PRODUCTION_FK1"/>
+        </preConditions>
+        <comment>MO-5830: DropForeignKeyConstraint PROD_PLAN_TASK_PRODUCTION_FK1 from PROD_PLAN_TASK_PRODUCTION
+            (PLAN_OID)
+        </comment>
+        <dropForeignKeyConstraint baseTableName="PROD_PLAN_TASK_PRODUCTION"
+                                  constraintName="PROD_PLAN_TASK_PRODUCTION_FK1"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="PROD_PLAN_TASK_PRODUCTION" baseColumnNames="PLAN_OID"
+                                     constraintName="PROD_PLAN_TASK_PRODUCTION_FK1" referencedTableName="PROD_PLAN"
+                                     referencedColumnNames="OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a7d906d3-1cc2-4150-beba-6a6a9ce905c6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PROD_PLAN_TASK_PLAN_OID to table PROD_PLAN_TASK as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK"/>
+            <not>
+                <indexExists indexName="PROD_PLAN_TASK_PLAN_OID" tableName="PROD_PLAN_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-5830: CreateIndex PROD_PLAN_TASK_PLAN_OID on PROD_PLAN_TASK (PLAN_OID)</comment>
+        <createIndex unique="false" indexName="PROD_PLAN_TASK_PLAN_OID" tableName="PROD_PLAN_TASK">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="b889caee-c9c3-4075-9718-08555dd9f315" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PROD_PLAN_TASK_JOB_OID to table PROD_PLAN_TASK as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK"/>
+            <not>
+                <indexExists indexName="PROD_PLAN_TASK_JOB_OID" tableName="PROD_PLAN_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-5830: CreateIndex PROD_PLAN_TASK_JOB_OID on PROD_PLAN_TASK (JOB_OID)</comment>
+        <createIndex unique="false" indexName="PROD_PLAN_TASK_JOB_OID" tableName="PROD_PLAN_TASK">
+            <column name="JOB_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <!-- Remove Foreign Key Constraints on the Inversion Node Table -->
+    <changeSet id="35cbfb87-1e66-458f-a846-b646bcd61f9a" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for INVERSION_NODE_INVERSION_GO_FK of table INVERSION_NODE as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="INVERSION_NODE" foreignKeyName="INVERSION_NODE_INVERSION_GO_FK"/>
+        </preConditions>
+        <comment>FUG-5565: DropForeignKeyConstraint INVERSION_NODE_INVERSION_GO_FK from INVERSION_NODE (INVERSION_GOAL_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="INVERSION_NODE" constraintName="INVERSION_NODE_INVERSION_GO_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="INVERSION_NODE" baseColumnNames="INVERSION_GOAL_OID" constraintName="INVERSION_NODE_INVERSION_GO_FK" referencedTableName="INVERSION_GOAL" referencedColumnNames="ROUTE_NODE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <!-- Change Dump Goals to have OID and ref to Route Node -->
+    <changeSet id="0356c8e7-e8bb-4613-8122-1a86335bd30d" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for DUMPGOAL_ID of table DUMP_GOAL as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="DUMPGOAL_ID" tableName="DUMP_GOAL"/>
+        </preConditions>
+        <comment>FUG-5565: DropIndex DUMPGOAL_ID from DUMP_GOAL (ID)</comment>
+        <dropIndex indexName="DUMPGOAL_ID" tableName="DUMP_GOAL"/>
+        <rollback>
+            <createIndex unique="true" indexName="DUMPGOAL_ID" tableName="DUMP_GOAL">
+                <column name="ID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="1ba1819c-5fe6-479f-9fa1-e380f15fd274" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for DUMP_GOAL_PK of table DUMP_GOAL as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="DUMP_GOAL_PK" tableName="DUMP_GOAL"/>
+        </preConditions>
+        <comment>FUG-5565: DropPrimaryKey DUMP_GOAL_PK from DUMP_GOAL (ROUTE_NODE_OID)</comment>
+        <dropPrimaryKey constraintName="DUMP_GOAL_PK" tableName="DUMP_GOAL"/>
+        <rollback>
+            <addPrimaryKey columnNames="ROUTE_NODE_OID" constraintName="DUMP_GOAL_PK" tableName="DUMP_GOAL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="0d43cb7b-a31f-4eed-8da0-1f6dbda0c8fd" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for DUMP_GOAL.ID as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="DUMP_GOAL" columnName="ID"/>
+        </preConditions>
+        <comment>FUG-5565: ChangeDataType and Name of DUMP_GOAL.ID from INT to BIGINT</comment>
+        <modifyDataType columnName="ID" newDataType="BIGINT" tableName="DUMP_GOAL"/>
+        <renameColumn oldColumnName="ID" newColumnName="OID" tableName="DUMP_GOAL"/>
+        <rollback>
+            <renameColumn oldColumnName="OID" newColumnName="ID" tableName="DUMP_GOAL"/>
+            <modifyDataType columnName="ID" newDataType="INT" tableName="DUMP_GOAL"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="46255483-19a1-4f91-abea-b0261e2949ad" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for DUMP_GOAL.ROUTE_NODE_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="DUMP_GOAL" columnName="ROUTE_NODE_OID"/>
+        </preConditions>
+        <comment>FUG-5565: DropNotNullConstraint from DUMP_GOAL.ROUTE_NODE_OID</comment>
+        <dropNotNullConstraint tableName="DUMP_GOAL" columnName="ROUTE_NODE_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="d6e9995c-8c74-4b99-8970-a4cfcb27d3b3" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for DUMP_GOAL.OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="DUMP_GOAL" columnName="OID"/>
+        </preConditions>
+        <comment>FUG-5565: AddNotNullConstraint to DUMP_GOAL.OID</comment>
+        <sql>UPDATE DUMP_GOAL SET OID = 0 WHERE OID IS NULL</sql>
+        <addNotNullConstraint columnName="OID" columnDataType="BIGINT" tableName="DUMP_GOAL"/>
+        <rollback>
+            <dropNotNullConstraint tableName="DUMP_GOAL" columnName="OID" columnDataType="BIGINT"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="95c27268-be43-4199-8b24-c305e7643954" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for DUMP_GOAL_PK to table DUMP_GOAL as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="DUMP_GOAL"/>
+            <not>
+                <primaryKeyExists primaryKeyName="DUMP_GOAL_PK" tableName="DUMP_GOAL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5565: AddPrimaryKey DUMP_GOAL_PK to DUMP_GOAL (OID)</comment>
+        <sql dbms="oracle">DELETE FROM DUMP_GOAL WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID ORDER BY ROWID) RN FROM DUMP_GOAL) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID ORDER BY %%physloc%%) AS ROW_NUM FROM DUMP_GOAL) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID" constraintName="DUMP_GOAL_PK" tablespace="MW_IDXENT" tableName="DUMP_GOAL"/>
+        <rollback>
+            <dropPrimaryKey constraintName="DUMP_GOAL_PK" tableName="DUMP_GOAL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <!-- Change Inversion Goals to have OID and ref to Route Node -->
+    <changeSet id="69a1c361-d13d-4ebe-af4b-130cd171c146" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for INVERSIONGOAL_ID of table INVERSION_GOAL as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="INVERSIONGOAL_ID" tableName="INVERSION_GOAL"/>
+        </preConditions>
+        <comment>FUG-5565: DropIndex INVERSIONGOAL_ID from INVERSION_GOAL (ID)</comment>
+        <dropIndex indexName="INVERSIONGOAL_ID" tableName="INVERSION_GOAL"/>
+        <rollback>
+            <createIndex unique="true" indexName="INVERSIONGOAL_ID" tableName="INVERSION_GOAL">
+                <column name="ID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="45969993-c8d3-4b4f-88bd-43a3acc28433" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for INVERSION_GOAL_PK of table INVERSION_GOAL as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="INVERSION_GOAL_PK" tableName="INVERSION_GOAL"/>
+        </preConditions>
+        <comment>FUG-5565: DropPrimaryKey INVERSION_GOAL_PK from INVERSION_GOAL (ROUTE_NODE_OID)</comment>
+        <dropPrimaryKey constraintName="INVERSION_GOAL_PK" tableName="INVERSION_GOAL"/>
+        <rollback>
+            <addPrimaryKey columnNames="ROUTE_NODE_OID" constraintName="INVERSION_GOAL_PK" tableName="INVERSION_GOAL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="79bc0dce-3f99-4185-b4f2-f741bc697cf4" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for INVERSION_GOAL.ROUTE_NODE_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="INVERSION_GOAL" columnName="ROUTE_NODE_OID"/>
+        </preConditions>
+        <comment>FUG-5565: DropNotNullConstraint from INVERSION_GOAL.ROUTE_NODE_OID</comment>
+        <dropNotNullConstraint tableName="INVERSION_GOAL" columnName="ROUTE_NODE_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="3aff8f0f-d967-4a15-8a44-190240c0d006" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for INVERSION_GOAL.ID as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="INVERSION_GOAL" columnName="ID"/>
+        </preConditions>
+        <comment>FUG-5565: ChangeDataType and Name of INVERSION_GOAL.ID from INT to BIGINT</comment>
+        <modifyDataType columnName="ID" newDataType="BIGINT" tableName="INVERSION_GOAL"/>
+        <renameColumn oldColumnName="ID" newColumnName="OID" tableName="INVERSION_GOAL"/>
+        <rollback>
+            <renameColumn oldColumnName="OID" newColumnName="ID" tableName="INVERSION_GOAL"/>
+            <modifyDataType columnName="ID" newDataType="INT" tableName="INVERSION_GOAL"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="6c4d6f0a-65b0-4ee6-bf3f-c394f5783d34" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for INVERSION_GOAL.OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="INVERSION_GOAL" columnName="OID"/>
+        </preConditions>
+        <comment>FUG-5565: AddNotNullConstraint to INVERSION_GOAL.OID</comment>
+        <sql>UPDATE INVERSION_GOAL SET OID = 0 WHERE OID IS NULL</sql>
+        <addNotNullConstraint columnName="OID" columnDataType="BIGINT" tableName="INVERSION_GOAL"/>
+        <rollback>
+            <dropNotNullConstraint tableName="INVERSION_GOAL" columnName="OID" columnDataType="BIGINT"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="63671ab0-35f4-48ce-84dd-baae7271f0f6" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for INVERSION_GOAL_PK to table INVERSION_GOAL as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="INVERSION_GOAL"/>
+            <not>
+                <primaryKeyExists primaryKeyName="INVERSION_GOAL_PK" tableName="INVERSION_GOAL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5565: AddPrimaryKey INVERSION_GOAL_PK to INVERSION_GOAL (OID)</comment>
+        <sql dbms="oracle">DELETE FROM INVERSION_GOAL WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID ORDER BY ROWID) RN FROM INVERSION_GOAL) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID ORDER BY %%physloc%%) AS ROW_NUM FROM INVERSION_GOAL) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID" constraintName="INVERSION_GOAL_PK" tablespace="MW_IDXENT" tableName="INVERSION_GOAL"/>
+        <rollback>
+            <dropPrimaryKey constraintName="INVERSION_GOAL_PK" tableName="INVERSION_GOAL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <!-- Change Inversion Goals to have OID and ref to Route Node -->
+    <changeSet id="ed404227-19eb-47ca-83a5-9f67a181a319" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for LOAD_GOAL_PK of table LOAD_GOAL as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="LOAD_GOAL_PK" tableName="LOAD_GOAL"/>
+        </preConditions>
+        <comment>FUG-5565: DropPrimaryKey LOAD_GOAL_PK from LOAD_GOAL (ROUTE_NODE_OID)</comment>
+        <dropPrimaryKey constraintName="LOAD_GOAL_PK" tableName="LOAD_GOAL"/>
+        <rollback>
+            <addPrimaryKey columnNames="ROUTE_NODE_OID" constraintName="LOAD_GOAL_PK" tableName="LOAD_GOAL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="27c942c4-d9d2-48ce-9041-22fdf5344d5a" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for LOAD_GOAL.ID as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="LOAD_GOAL" columnName="ID"/>
+        </preConditions>
+        <comment>FUG-5565: ChangeDataType and Name of LOAD_GOAL.ID from INT to BIGINT</comment>
+        <modifyDataType columnName="ID" newDataType="BIGINT" tableName="LOAD_GOAL"/>
+        <renameColumn oldColumnName="ID" newColumnName="OID" tableName="LOAD_GOAL"/>
+        <rollback>
+            <renameColumn oldColumnName="OID" newColumnName="ID" tableName="LOAD_GOAL"/>
+            <modifyDataType columnName="ID" newDataType="INT" tableName="LOAD_GOAL"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="ada740dd-d255-4893-a1ae-0c3a28610194" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for LOAD_GOAL.ROUTE_NODE_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="LOAD_GOAL" columnName="ROUTE_NODE_OID"/>
+        </preConditions>
+        <comment>FUG-5565: DropNotNullConstraint from LOAD_GOAL.ROUTE_NODE_OID</comment>
+        <dropNotNullConstraint tableName="LOAD_GOAL" columnName="ROUTE_NODE_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="92c61ef6-41f1-461c-825e-3efb752f3b80" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for LOAD_GOAL.OID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="LOAD_GOAL" columnName="OID"/>
+        </preConditions>
+        <comment>FUG-5565: AddNotNullConstraint to LOAD_GOAL.OID</comment>
+        <sql>UPDATE LOAD_GOAL SET OID = 0 WHERE OID IS NULL</sql>
+        <addNotNullConstraint columnName="OID" columnDataType="BIGINT" tableName="LOAD_GOAL"/>
+        <rollback>
+            <dropNotNullConstraint tableName="LOAD_GOAL" columnName="OID" columnDataType="BIGINT"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="2d49de6e-b30c-4312-a850-63115ab5caf0" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for LOAD_GOAL_PK to table LOAD_GOAL as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOAD_GOAL"/>
+            <not>
+                <primaryKeyExists primaryKeyName="LOAD_GOAL_PK" tableName="LOAD_GOAL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5565: AddPrimaryKey LOAD_GOAL_PK to LOAD_GOAL (OID)</comment>
+        <sql dbms="oracle">DELETE FROM LOAD_GOAL WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID ORDER BY ROWID) RN FROM LOAD_GOAL) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID ORDER BY %%physloc%%) AS ROW_NUM FROM LOAD_GOAL) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID" constraintName="LOAD_GOAL_PK" tablespace="MW_IDXENT" tableName="LOAD_GOAL"/>
+        <rollback>
+            <dropPrimaryKey constraintName="LOAD_GOAL_PK" tableName="LOAD_GOAL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <!-- Change Inversion Node Foreign Key Constraints to have OID and ref to Route Node -->
+    <changeSet id="ce95b1cf-134f-49e7-8ef0-50ab016c3a83" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for INVERSION_NODE_INVERSION_GO_FK to table INVERSION_NODE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="INVERSION_NODE" columnName="INVERSION_GOAL_OID"/>
+            <columnExists tableName="INVERSION_GOAL" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="INVERSION_NODE" foreignKeyName="INVERSION_NODE_INVERSION_GO_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5565: AddForeignKeyConstraint INVERSION_NODE_INVERSION_GO_FK to INVERSION_NODE (INVERSION_GOAL_OID)</comment>
+        <sql>UPDATE INVERSION_NODE SET INVERSION_GOAL_OID = NULL WHERE INVERSION_GOAL_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM INVERSION_GOAL WHERE INVERSION_GOAL.OID = INVERSION_NODE.INVERSION_GOAL_OID)</sql>
+        <addForeignKeyConstraint baseTableName="INVERSION_NODE" baseColumnNames="INVERSION_GOAL_OID" constraintName="INVERSION_NODE_INVERSION_GO_FK" referencedTableName="INVERSION_GOAL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="INVERSION_NODE" constraintName="INVERSION_NODE_INVERSION_GO_FK"/>
+        </rollback>
+    </changeSet>
+
+    <!-- Move Position from ROUTE_NODE_IMPL table -->
+    <changeSet id="a8c2b694-a7bb-483e-b922-a662585dcf28" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for POSITION_X to table ROUTE_NODE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE"/>
+            <not>
+                <columnExists tableName="ROUTE_NODE" columnName="POSITION_X"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5565: AddColumn ROUTE_NODE.POSITION_X</comment>
+        <addColumn tableName="ROUTE_NODE">
+            <column name="POSITION_X" type="DOUBLE" remarks="Position on map that this route node is associated with."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="c0c30e34-2ae5-4179-93d4-c9ebc4010aac" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for POSITION_Y to table ROUTE_NODE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE"/>
+            <not>
+                <columnExists tableName="ROUTE_NODE" columnName="POSITION_Y"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5565: AddColumn ROUTE_NODE.POSITION_Y</comment>
+        <addColumn tableName="ROUTE_NODE">
+            <column name="POSITION_Y" type="DOUBLE" remarks="Position on map that this route node is associated with."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="d7883d7a-eb41-4ff2-9c64-31d0b1710ee3" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for POSITION_Z to table ROUTE_NODE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE"/>
+            <not>
+                <columnExists tableName="ROUTE_NODE" columnName="POSITION_Z"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5565: AddColumn ROUTE_NODE.POSITION_Z</comment>
+        <addColumn tableName="ROUTE_NODE">
+            <column name="POSITION_Z" type="DOUBLE" remarks="Position on map that this route node is associated with."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="c88c4492-929e-42e6-a985-f6e627f17a0d" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored adding data for POSITION_X ,POSITION_Y, POSITION_Z since one of the tables or columns is missing." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_X"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_Y"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_Z"/>
+            <tableExists tableName="ROUTE_NODE_IMPL"/>
+            <columnExists tableName="ROUTE_NODE_IMPL" columnName="POSITION_X"/>
+            <columnExists tableName="ROUTE_NODE_IMPL" columnName="POSITION_Y"/>
+            <columnExists tableName="ROUTE_NODE_IMPL" columnName="POSITION_Z"/>
+        </preConditions>
+        <comment>FUG-5565: Update ROUTE_NODE.POSITION_X, ROUTE_NODE.POSITION_Y, ROUTE_NODE.POSITION_Z with data from old table</comment>
+        <update tableName="ROUTE_NODE">
+            <column name="POSITION_X" valueComputed="(SELECT b.POSITION_X from ROUTE_NODE_IMPL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <column name="POSITION_Y" valueComputed="(SELECT b.POSITION_Y from ROUTE_NODE_IMPL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <column name="POSITION_Z" valueComputed="(SELECT b.POSITION_Z from ROUTE_NODE_IMPL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <where>POSITION_X IS NULL AND POSITION_Y IS NULL AND POSITION_Z IS NULL</where>
+        </update>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="2e35109c-f751-4533-9da9-ff9831976f8c" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored adding data from Load Goals for POSITION_X ,POSITION_Y, POSITION_Z since one of the tables or columns is missing." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_X"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_Y"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_Z"/>
+            <tableExists tableName="LOAD_GOAL"/>
+            <columnExists tableName="LOAD_GOAL" columnName="POSITION_X"/>
+            <columnExists tableName="LOAD_GOAL" columnName="POSITION_Y"/>
+            <columnExists tableName="LOAD_GOAL" columnName="POSITION_Z"/>
+            <tableExists tableName="ROUTE_NODE_IMPL"/>
+        </preConditions>
+        <comment>FUG-5565: Update ROUTE_NODE.POSITION_X, ROUTE_NODE.POSITION_Y, ROUTE_NODE.POSITION_Z with data from Load Goals</comment>
+        <update tableName="ROUTE_NODE">
+            <column name="POSITION_X" valueComputed="(SELECT b.POSITION_X from LOAD_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <column name="POSITION_Y" valueComputed="(SELECT b.POSITION_Y from LOAD_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <column name="POSITION_Z" valueComputed="(SELECT b.POSITION_Z from LOAD_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <where>POSITION_X IS NULL AND POSITION_Y IS NULL AND POSITION_Z IS NULL</where>
+        </update>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="ebd25dbc-7da2-4bc7-9652-0e5a157d833d" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored adding data from Dump Goals for POSITION_X ,POSITION_Y, POSITION_Z since one of the tables or columns is missing." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_X"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_Y"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_Z"/>
+            <tableExists tableName="DUMP_GOAL"/>
+            <columnExists tableName="DUMP_GOAL" columnName="POSITION_X"/>
+            <columnExists tableName="DUMP_GOAL" columnName="POSITION_Y"/>
+            <columnExists tableName="DUMP_GOAL" columnName="POSITION_Z"/>
+            <tableExists tableName="ROUTE_NODE_IMPL"/>
+        </preConditions>
+        <comment>FUG-5565: Update ROUTE_NODE.POSITION_X, ROUTE_NODE.POSITION_Y, ROUTE_NODE.POSITION_Z with data from Dump Goals</comment>
+        <update tableName="ROUTE_NODE">
+            <column name="POSITION_X" valueComputed="(SELECT b.POSITION_X from DUMP_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <column name="POSITION_Y" valueComputed="(SELECT b.POSITION_Y from DUMP_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <column name="POSITION_Z" valueComputed="(SELECT b.POSITION_Z from DUMP_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <where>POSITION_X IS NULL AND POSITION_Y IS NULL AND POSITION_Z IS NULL</where>
+        </update>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="3c4e0700-6395-4f0f-82c4-362f0f7f98e9" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored adding data from Inversion Goals for POSITION_X ,POSITION_Y, POSITION_Z since one of the tables or columns is missing." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_X"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_Y"/>
+            <columnExists tableName="ROUTE_NODE" columnName="POSITION_Z"/>
+            <tableExists tableName="INVERSION_GOAL"/>
+            <columnExists tableName="INVERSION_GOAL" columnName="POSITION_X"/>
+            <columnExists tableName="INVERSION_GOAL" columnName="POSITION_Y"/>
+            <columnExists tableName="INVERSION_GOAL" columnName="POSITION_Z"/>
+            <tableExists tableName="ROUTE_NODE_IMPL"/>
+        </preConditions>
+        <comment>FUG-5565: Update ROUTE_NODE.POSITION_X, ROUTE_NODE.POSITION_Y, ROUTE_NODE.POSITION_Z with data from Inversion Goals</comment>
+        <update tableName="ROUTE_NODE">
+            <column name="POSITION_X" valueComputed="(SELECT b.POSITION_X from INVERSION_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <column name="POSITION_Z" valueComputed="(SELECT b.POSITION_Z from INVERSION_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <column name="POSITION_Y" valueComputed="(SELECT b.POSITION_Y from INVERSION_GOAL b where b.ROUTE_NODE_OID=ROUTE_NODE.ROUTE_NODE_OID)"/>
+            <where>POSITION_X IS NULL AND POSITION_Y IS NULL AND POSITION_Z IS NULL</where>
+        </update>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="51ec6d0f-a1d6-4c99-9d23-e2e5e1e9d5aa" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored adding data from Inversion Goals for POSITION_X ,POSITION_Y, POSITION_Z since one of the tables or columns is missing." onFail="MARK_RAN">
+            <tableExists tableName="LOAD_GOAL"/>
+            <tableExists tableName="DUMP_GOAL"/>
+            <tableExists tableName="INVERSION_GOAL"/>
+            <tableExists tableName="ROUTE_NODE_IMPL"/>
+        </preConditions>
+        <comment>FUG-5565: Update ROUTE_NODE.POSITION_X, ROUTE_NODE.POSITION_Y, ROUTE_NODE.POSITION_Z with data from Inversion Goals</comment>
+        <update tableName="LOAD_GOAL">
+            <column name="ROUTE_NODE_OID" value="NULL"/>
+            <where>ROUTE_NODE_OID NOT IN (SELECT ENTRY_NODE AS NODE FROM ROUTE UNION SELECT EXIT_NODE AS NODE FROM ROUTE)</where>
+        </update>
+        <update tableName="DUMP_GOAL">
+            <column name="ROUTE_NODE_OID" value="NULL"/>
+            <where>ROUTE_NODE_OID NOT IN (SELECT ENTRY_NODE AS NODE FROM ROUTE UNION SELECT EXIT_NODE AS NODE FROM ROUTE)</where>
+        </update>
+        <update tableName="INVERSION_GOAL">
+            <column name="ROUTE_NODE_OID" value="NULL"/>
+            <where>ROUTE_NODE_OID NOT IN (SELECT ENTRY_NODE AS NODE FROM ROUTE UNION SELECT EXIT_NODE AS NODE FROM ROUTE)</where>
+        </update>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="24230b5b-a705-4f08-acce-ecef12ab4cb7" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored deleting orphans as the tables are missing." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE"/>
+            <tableExists tableName="ROUTE"/>
+            <tableExists tableName="ROUTE_NODE_IMPL"/>
+        </preConditions>
+        <comment>FUG-5565: Delete Orphaned Route Nodes</comment>
+        <delete tableName="ROUTE_NODE">
+            <where>ROUTE_NODE_OID NOT IN (SELECT ENTRY_NODE AS NODE FROM ROUTE UNION SELECT EXIT_NODE AS NODE FROM ROUTE)</where>
+        </delete>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="78580abe-7e31-4e39-aeb9-0b234f3777eb" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for ROUTE_NODE_IMPL as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ROUTE_NODE_IMPL"/>
+        </preConditions>
+        <comment>FUG-5565: DropTable ROUTE_NODE_IMPL</comment>
+        <dropTable tableName="ROUTE_NODE_IMPL"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="A point in the map used for underground path-planning." tableName="ROUTE_NODE_IMPL">
+                <column name="ROUTE_NODE_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="POSITION_X" type="DOUBLE" remarks="Position on map that this route node is associated with."/>
+                <column name="POSITION_Y" type="DOUBLE" remarks="Position on map that this route node is associated with."/>
+                <column name="POSITION_Z" type="DOUBLE" remarks="Position on map that this route node is associated with."/>
+            </createTable>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="70a8aa90-3459-4691-bb53-6a4638829008" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_HIGH_PERFORMANCE_ALLOWED to table REGION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="REGION"/>
+            <not>
+                <columnExists tableName="REGION" columnName="IS_HIGH_PERFORMANCE_ALLOWED"/>
+            </not>
+        </preConditions>
+        <comment>MO-12796: AddColumn REGION.IS_HIGH_PERFORMANCE_ALLOWED</comment>
+        <addColumn tableName="REGION">
+            <column name="IS_HIGH_PERFORMANCE_ALLOWED" type="BOOLEAN" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="REGION" columnName="IS_HIGH_PERFORMANCE_ALLOWED"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

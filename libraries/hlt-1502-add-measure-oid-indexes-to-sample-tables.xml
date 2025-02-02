@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="132b6284-0206-40f8-bd3e-6bce588a58a7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for CONTINUOUS_SAMPLES_MEASURE_OID to table HEALTH_CONTINUOUS_SAMPLE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HEALTH_CONTINUOUS_SAMPLE"/>
+            <not>
+                <indexExists indexName="CONTINUOUS_SAMPLES_MEASURE_OID" tableName="HEALTH_CONTINUOUS_SAMPLE"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1502: CreateIndex CONTINUOUS_SAMPLES_MEASURE_OID on HEALTH_CONTINUOUS_SAMPLE (MEASURE_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="CONTINUOUS_SAMPLES_MEASURE_OID" tableName="HEALTH_CONTINUOUS_SAMPLE">
+            <column name="MEASURE_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace=" ON MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="6ff6ba4b-bfc2-4f4f-b538-59205f3f5cbc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for CUMULATIVE_SAMPLES_MEASURE_OID to table HEALTH_CUMULATIVE_SAMPLE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HEALTH_CUMULATIVE_SAMPLE"/>
+            <not>
+                <indexExists indexName="CUMULATIVE_SAMPLES_MEASURE_OID" tableName="HEALTH_CUMULATIVE_SAMPLE"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1502: CreateIndex CUMULATIVE_SAMPLES_MEASURE_OID on HEALTH_CUMULATIVE_SAMPLE (MEASURE_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="CUMULATIVE_SAMPLES_MEASURE_OID" tableName="HEALTH_CUMULATIVE_SAMPLE">
+            <column name="MEASURE_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace=" ON MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="96be1d4b-6022-4603-86ad-1cf2ec06ea10" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for DATALOG_SAMPLES_MEASURE_OID to table HEALTH_DATALOG_SAMPLE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HEALTH_DATALOG_SAMPLE"/>
+            <not>
+                <indexExists indexName="DATALOG_SAMPLES_MEASURE_OID" tableName="HEALTH_DATALOG_SAMPLE"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1502: CreateIndex DATALOG_SAMPLES_MEASURE_OID on HEALTH_DATALOG_SAMPLE (MEASURE_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="DATALOG_SAMPLES_MEASURE_OID" tableName="HEALTH_DATALOG_SAMPLE">
+            <column name="MEASURE_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace=" ON MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="ac5da950-95b4-43e9-97d4-3d831b7df700" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for POLLED_SAMPLES_MEASURE_OID to table HEALTH_POLLED_SAMPLE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HEALTH_POLLED_SAMPLE"/>
+            <not>
+                <indexExists indexName="POLLED_SAMPLES_MEASURE_OID" tableName="HEALTH_POLLED_SAMPLE"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1502: CreateIndex POLLED_SAMPLES_MEASURE_OID on HEALTH_POLLED_SAMPLE (MEASURE_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="POLLED_SAMPLES_MEASURE_OID" tableName="HEALTH_POLLED_SAMPLE">
+            <column name="MEASURE_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace=" ON MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="e96d9105-8728-4dce-929f-a281b5c0b382" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SNAPSHOT_SAMPLES_MEASURE_OID to table HEALTH_SNAPSHOT_SAMPLE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HEALTH_SNAPSHOT_SAMPLE"/>
+            <not>
+                <indexExists indexName="SNAPSHOT_SAMPLES_MEASURE_OID" tableName="HEALTH_SNAPSHOT_SAMPLE"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1502: CreateIndex SNAPSHOT_SAMPLES_MEASURE_OID on HEALTH_SNAPSHOT_SAMPLE (MEASURE_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="SNAPSHOT_SAMPLES_MEASURE_OID" tableName="HEALTH_SNAPSHOT_SAMPLE">
+            <column name="MEASURE_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace=" ON MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="a7ee7080-2d14-463e-a0ee-e5883201c9eb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for TREND_SAMPLES_MEASURE_OID to table HEALTH_TREND_SAMPLE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HEALTH_TREND_SAMPLE"/>
+            <not>
+                <indexExists indexName="TREND_SAMPLES_MEASURE_OID" tableName="HEALTH_TREND_SAMPLE"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1502: CreateIndex TREND_SAMPLES_MEASURE_OID on HEALTH_TREND_SAMPLE (MEASURE_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="TREND_SAMPLES_MEASURE_OID" tableName="HEALTH_TREND_SAMPLE">
+            <column name="MEASURE_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace=" ON MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="5b79c66f-e9c3-468e-9acd-ede54274b370" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for HEALTH_LOG_MACHINE_STARTTIME to table HEALTH_LOG as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="HEALTH_LOG"/>
+            <not>
+                <indexExists indexName="HEALTH_LOG_MACHINE_STARTTIME" tableName="HEALTH_LOG"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1502 CreateIndex HEALTH_LOG_MACHINE_STARTTIME on HEALTH_LOG (MACHINE_OID,STARTTIME_UTC)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="HEALTH_LOG_MACHINE_STARTTIME" tableName="HEALTH_LOG">
+            <column name="MACHINE_OID"/>
+            <column name="STARTTIME_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace=" ON MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+</databaseChangeLog>

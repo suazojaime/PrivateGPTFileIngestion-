@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       ">
+
+    <bean class="com.mincom.util.deployment.MineStarPropertyConfigurer"/>
+    <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
+
+    <!-- MineStar is not normally running when MakeDataStores is executed - use a stub for the Notification system -->
+    <bean id="notification" class="com.mincom.util.event.NotificationNoopImpl"/>
+
+    <bean id="sequenceValueServiceImpl" class="minestar.platform.service.SequenceValueServiceImpl">
+        <constructor-arg name="txManager" ref="minestarTransactionManager"/>
+        <constructor-arg name="dataSource" ref="pooledModelDataSource"/>
+        <constructor-arg name="notification" ref="notification"/>
+    </bean>
+
+    <bean id="registerSequenceValueService" parent="registrationInstance">
+        <constructor-arg value="Sequence Value Service"/>
+        <constructor-arg value="minestar.platform.service.SequenceValueService"/>
+        <constructor-arg ref="sequenceValueServiceImpl"/>
+    </bean>
+
+    <bean id="dataStoreProcessor" class="minestar.platform.persistence.service.tools.AbstractDataStoreProcessor" abstract="true">
+        <property name="dataStoreType" value="${dataStoreType}"/>
+        <property name="dataStoreFactory" ref="dataStoreFactory"/>
+    </bean>
+
+    <util:map id="processors">
+        <entry>
+            <key>
+                <util:constant
+                        static-field="minestar.platform.persistence.service.tools.MakeDataStoresTool.CHECKS_PART"/>
+            </key>
+            <bean class="minestar.platform.persistence.service.tools.CheckProcessor" parent="dataStoreProcessor"/>
+        </entry>
+        <entry>
+            <key>
+                <util:constant
+                        static-field="minestar.platform.persistence.service.tools.MakeDataStoresTool.SCHEMA_PART"/>
+            </key>
+            <bean class="minestar.platform.persistence.service.tools.SchemaProcessor" parent="dataStoreProcessor"/>
+        </entry>
+        <entry>
+            <key>
+                <util:constant
+                        static-field="minestar.platform.persistence.service.tools.MakeDataStoresTool.MODEL_DATA_PART"/>
+            </key>
+            <bean class="minestar.platform.persistence.service.tools.ModelDataProcessor" parent="dataStoreProcessor">
+                <property name="sessionFactory" ref="minestarSessionFactory"/>
+                <property name="sequenceValueService" ref="sequenceValueServiceImpl"/>
+                <property name="txManager" ref="minestarTransactionManager"/>
+            </bean>
+        </entry>
+        <entry>
+            <key>
+                <util:constant
+                        static-field="minestar.platform.persistence.service.tools.MakeDataStoresTool.VIEWS_PART"/>
+            </key>
+            <bean class="minestar.platform.persistence.service.tools.views.ViewsProcessor" parent="dataStoreProcessor"/>
+        </entry>
+        <entry>
+            <key>
+                <util:constant
+                        static-field="minestar.platform.persistence.service.tools.MakeDataStoresTool.REFERENCE_DATA_PART"/>
+            </key>
+            <bean class="minestar.platform.persistence.service.tools.ReferenceDataProcessor"
+                  parent="dataStoreProcessor"/>
+        </entry>
+        <entry>
+            <key>
+                <util:constant
+                        static-field="minestar.platform.persistence.service.tools.MakeDataStoresTool.HEALTHVIEWS_DATA_PART"/>
+            </key>
+            <bean class="minestar.health.impl.reporting.HealthReportingViewGenerator" parent="dataStoreProcessor"/>
+        </entry>
+        <entry>
+            <key>
+                <util:constant
+                        static-field="minestar.platform.persistence.service.tools.MakeDataStoresTool.CONSISTENCY_CHECK_PART"/>
+            </key>
+            <bean class="minestar.platform.persistence.service.tools.ConsistencyCheckProcessor"
+                  parent="dataStoreProcessor"/>
+        </entry>
+        <entry>
+            <key>
+                <util:constant
+                        static-field="minestar.platform.persistence.service.tools.MakeDataStoresTool.HEALTH_DATA_PART"/>
+            </key>
+            <bean class="minestar.health.util.UpdateHealthDefinitions" parent="dataStoreProcessor"/>
+        </entry>
+    </util:map>
+
+    <bean name="makeDataStoresTool" class="minestar.platform.persistence.service.tools.MakeDataStoresTool" depends-on="registerSequenceValueService">
+        <constructor-arg name="dataStoreType" value="${dataStoreType}"/>
+        <constructor-arg name="processors" ref="processors"/>
+    </bean>
+
+</beans>

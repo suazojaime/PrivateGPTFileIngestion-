@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class
+            name="minestar.mine.domain.minemodel.surface.saturation.WaterEvaporationRatesProfile"
+            table="WATER_DEPLETION_PROFILE"
+            dynamic-update="true">
+
+        <meta attribute="view-master">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=WATER_DEPLETION_PROFILE_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">The definition of a mine model water depletion rate profile</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="PROFILE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <version name="version" access="field">
+            <meta attribute="description">The version number for optimistic locking</meta>
+        </version>
+
+        <property name="name" type="java.lang.String" column="NAME" not-null="true">
+            <meta attribute="description">The unique profile name</meta>
+        </property>
+
+        <property name="description" type="java.lang.String" column="DESCRIPTION">
+            <meta attribute="description">A description of the profile</meta>
+        </property>
+
+        <property name="active" type="boolean">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Is this profile active</meta>
+            <column name="IS_ACTIVE" not-null="true" default="1"/>
+        </property>
+
+        <property name="currentProfile" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">Is this profile the current one in use. Note that only 1 profile can be the current profile</meta>
+            <column name="IS_CURRENT" not-null="true" default="0"/>
+        </property>
+
+        <property name="createdDate" type="TimestampType" column="CREATED_DATE_UTC" not-null="true">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The profile creation utc timestamp.</meta>
+            <meta attribute="description">The profile creation timestamp</meta>
+        </property>
+
+        <property name="lastUpdatedDate" type="TimestampType" column="LAST_UPDATED_DATE_UTC" not-null="true">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The profile updated utc timestamp.</meta>
+            <meta attribute="description">The profile updated timestamp</meta>
+        </property>
+
+        <map name="monthlyEvaporationRates" table="WATER_MONTHLY_EVAP_RATES" cascade="all-delete-orphan" lazy="false" order-by="MONTH asc">
+            <meta attribute="description">Evaporation rates specific to a single month</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+                name=WATER_MONTHLY_EVAP_R_PK
+                columns=WATER_DEPLETION_PROFILE_OID,MONTH
+            </meta>
+            <meta attribute="element-alias"/>
+
+            <key column="WATER_DEPLETION_PROFILE_OID" not-null="true"/>
+            <map-key column="MONTH" type="java.lang.Integer"/>
+            <composite-element class="minestar.mine.domain.minemodel.surface.saturation.WaterEvaporationRates">
+
+                <property name="daytimeRatePerDay" column="DAYTIME_RATE">
+                    <meta attribute="description">Daytime evaporation rate in mm/day</meta>
+                    <meta attribute="unitType">evaporation rate</meta>
+                    <type name="quantity">
+                        <param name="unitType">evaporation rate</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="nighttimeRatePerDay" column="NIGHTTIME_RATE">
+                    <meta attribute="description">Nighttime evaporation rate in mm/day</meta>
+                    <meta attribute="unitType">evaporation rate</meta>
+                    <type name="quantity">
+                        <param name="unitType">evaporation rate</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="truckRatePerUsageLoaded" column="TRUCK_RATE_LOADED">
+                    <meta attribute="description">Truck usage evaporation rate while loaded in litres/m2/day</meta>
+                    <meta attribute="unitType">spread rate</meta>
+                    <type name="quantity">
+                        <param name="unitType">spread rate</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="truckRatePerUsageUnloaded" column="TRUCK_RATE_UNLOADED">
+                    <meta attribute="description">Truck usage evaporation rate while unloaded in litres/m2/day</meta>
+                    <meta attribute="unitType">spread rate</meta>
+                    <type name="quantity">
+                        <param name="unitType">spread rate</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="daytimeStart" type="LocalTime" column="DAYTIME_START">
+                    <meta attribute="description">Daytime start time for evaporation rate calculations</meta>
+                </property>
+
+                <property name="nighttimeStart" type="LocalTime" column="NIGHTTIME_START">
+                    <meta attribute="description">Nighttime start time for evaporation rate calculations</meta>
+                </property>
+
+            </composite-element>
+        </map>
+    </class>
+
+</hibernate-mapping>

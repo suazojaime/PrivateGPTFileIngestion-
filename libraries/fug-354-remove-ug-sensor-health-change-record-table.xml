@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="fe1dcd3b-e146-49c7-9c39-1691917d3374" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for UG_SENSOR_HEALTH_CHANGE_RECORD as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="UG_SENSOR_HEALTH_CHANGE_RECORD"/>
+        </preConditions>
+        <comment>FUG-354: DropTable UG_SENSOR_HEALTH_CHANGE_RECORD</comment>
+        <dropTable tableName="UG_SENSOR_HEALTH_CHANGE_RECORD"/>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

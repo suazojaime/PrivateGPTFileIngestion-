@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Dozer Unit">
+
+    <machineClass xsi:type="auxMobileClassImpl">
+        <name>CatD7E</name>
+        <manufacturer>Caterpillar</manufacturer>
+        <description>Caterpillar D7E Series Dozer</description>
+        <allowAllMaterials>false</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="0.409" unit="cubic metres"/>
+        <minimumRefuelAmount magnitude="0.00" unit="cubic metres"/>
+        <refuelLevel magnitude="0.0409" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.02045" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="12.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000004" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.000017" unit="cubic metres per second"/>
+    </machineClass>
+
+</machineClassExport>
+

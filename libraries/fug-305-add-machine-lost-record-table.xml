@@ -1,0 +1,35 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="4e8f2453-ff54-4230-a095-2f4a37f74208" author="MineStar" context="Underground/Underground_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_LOST_RECORD as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_LOST_RECORD"/>
+            </not>
+        </preConditions>
+        <comment>FUG-305: CreateTable MACHINE_LOST_RECORD</comment>
+        <createTable tablespace="MW_ENT" remarks="A record for each machine lost incident" tableName="MACHINE_LOST_RECORD">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LOST_TIME_UTC" type="DATETIME2" remarks="When the machine went to lost status">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FOUND_TIME_UTC" type="DATETIME2" remarks="When the machine regained its position"/>
+            <column name="MACHINE" type="BIGINT" remarks="Reference to the machine that this entry applies to.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_KNOWN_X" type="DOUBLE" remarks="The last known good position coordinate for the machine."/>
+            <column name="LAST_KNOWN_Y" type="DOUBLE" remarks="The last known good position coordinate for the machine."/>
+            <column name="LAST_KNOWN_Z" type="DOUBLE" remarks="The last known good position coordinate for the machine."/>
+            <column name="REGAINED_X" type="DOUBLE" remarks="The position coordinate that the machine regained."/>
+            <column name="REGAINED_Y" type="DOUBLE" remarks="The position coordinate that the machine regained."/>
+            <column name="REGAINED_Z" type="DOUBLE" remarks="The position coordinate that the machine regained."/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="MACHINE_LOST_RECORD_PK" tablespace="MW_IDXENT" tableName="MACHINE_LOST_RECORD"/>
+        <rollback>
+            <dropTable tableName="MACHINE_LOST_RECORD"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

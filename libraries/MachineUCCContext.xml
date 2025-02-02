@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="machineLocationCollectionCacheImpl"
+          class="minestar.pitlink.uifacade.machine.collection.MachineLocationCollectionCache"
+          parent="cacheParent"
+          lazy-init="true"/>
+
+    <!-- must have this -->
+    <bean id="machineUCCImpl" class="minestar.pitlink.uifacade.machine.impl.MachineUCCImpl"
+          lazy-init="true">
+        <property name="machineLocationCache" ref="machineLocationCollectionCacheImpl"/>
+        <property name="machineCategoryUCC" ref="machineCategoryUCCImpl"/>
+        <property name="machineClassUCC" ref="machineClassUCCImpl"/>
+        <property name="recentMachineDelayChanges" ref="recentMachineDelayChangesImpl"/>
+        <property name="personUCC" ref="personUCCImpl"/>
+        <property name="delayUCC" ref="delayUCCImpl"/>
+        <property name="uiCacheManager" ref="uiCacheManagerImpl"/>
+        <property name="delayManagementService" ref="delayManagementServiceImpl"/>
+        <property name="onboardHardwareService" ref="onboardHardwareServiceImpl"/>
+        <property name="trafficManagementService" ref="trafficManagementServiceImpl"/>
+        <property name="assignmentRequestService" ref="assignmentRequestServiceImpl"/>
+        <property name="fleetProductionService" ref="fleetProductionServiceImpl"/>
+        <property name="machineModeService" ref="machineModeServiceImpl"/>
+        <property name="machineRestrictionService" ref="machineRestrictionServiceImpl"/>
+        <property name="machineSmuService" ref="machineSmuService"/>
+        <property name="materialManagementService" ref="materialManagementServiceImpl"/>
+        <property name="mineFleetService" ref="mineFleetServiceImpl"/>
+        <property name="mineFuelService" ref="mineFuelServiceImpl"/>
+        <property name="personnelService" ref="personnelServiceImpl"/>
+        <property name="pitModelService" ref="pitModelServiceImpl"/>
+        <property name="blendingAuditService" ref="blendingAuditServiceImpl"/>
+        <property name="materialTrackingService" ref="materialTrackingServiceImpl"/>
+        <property name="userContext" ref="userContextImpl"/>
+        <property name="userService" ref="userServiceImpl"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerMachineUCCImpl" parent="registrationInstance">
+        <constructor-arg value="Machine UCC"/>
+        <constructor-arg value="minestar.pitlink.uifacade.machine.MachineUCCFacade"/>
+        <constructor-arg ref="machineUCCImpl"/>
+    </bean>
+
+    <!-- support for remoting -->
+    <bean id="machineUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="machineUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="machineUCC"/>
+        <property name="service" ref="machineUCCProxy"/>
+        <property name="serviceInterface" value="minestar.pitlink.uifacade.machine.MachineUCCFacade"/>
+    </bean>
+
+</beans>

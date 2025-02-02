@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="fd3a88c3-10ef-4235-836b-f251fe412832" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for WATER_DEPLETION_PROFILE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="WATER_DEPLETION_PROFILE"/>
+            </not>
+        </preConditions>
+        <comment>MO-208: CreateTable WATER_DEPLETION_PROFILE</comment>
+        <createTable tablespace="MW_ENT" remarks="The definition of a mine model water depletion rate profile" tableName="WATER_DEPLETION_PROFILE">
+            <column name="PROFILE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)" remarks="The unique profile name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)" remarks="A description of the profile"/>
+            <column name="IS_ACTIVE" type="BOOLEAN" defaultValueBoolean="true" remarks="Is this profile active">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_CURRENT" type="BOOLEAN" defaultValueBoolean="false" remarks="Is this profile the current one in use. Note that only 1 profile can be the current profile">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_DATE_UTC" type="DATETIME2" remarks="The profile creation timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_UPDATED_DATE_UTC" type="DATETIME2" remarks="The profile updated timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="PROFILE_OID" constraintName="WATER_DEPLETION_PROFILE_PK" tablespace="MW_IDXENT" tableName="WATER_DEPLETION_PROFILE"/>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="WATER_DEPLETION_PROFILE_NAME" tableName="WATER_DEPLETION_PROFILE">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="af2e97ce-8c23-435b-a5ce-ddd2bd800c1c" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for WATER_MONTHLY_EVAPORATION_RATES as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="WATER_MONTHLY_EVAPORATION_RATES"/>
+        </preConditions>
+        <comment>MO-208: DropTable WATER_MONTHLY_EVAPORATION_RATES</comment>
+        <dropTable cascadeConstraints="true" tableName="WATER_MONTHLY_EVAPORATION_RATES"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="af2e97ce-8c23-435b-a5ce-ddd2bd800c1e" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for WATER_MONTHLY_EVAP_RATES as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="WATER_MONTHLY_EVAP_RATES"/>
+            </not>
+        </preConditions>
+        <comment>MO-208: CreateTable WATER_MONTHLY_EVAP_RATES</comment>
+        <createTable tablespace="MW_ENT" remarks="Evaporation rates specific to a single month" tableName="WATER_MONTHLY_EVAP_RATES">
+            <column name="WATER_DEPLETION_PROFILE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MONTH" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DAYTIME_RATE" type="DOUBLE"/>
+            <column name="NIGHTTIME_RATE" type="DOUBLE"/>
+            <column name="TRUCK_RATE_LOADED" type="DOUBLE"/>
+            <column name="TRUCK_RATE_UNLOADED" type="DOUBLE"/>
+        </createTable>
+        <addPrimaryKey columnNames="WATER_DEPLETION_PROFILE_OID,MONTH" constraintName="WATER_MONTHLY_EVAP_R_PK" tablespace="MW_IDXENT" tableName="WATER_MONTHLY_EVAP_RATES"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="8bb5f1cf-a4be-482e-9fb5-74ab8bca959c" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for WATER_MONTHLY_EVAP_FK1 to table WATER_MONTHLY_EVAP_RATES as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="WATER_MONTHLY_EVAP_RATES" columnName="WATER_DEPLETION_PROFILE_OID"/>
+            <columnExists tableName="WATER_DEPLETION_PROFILE" columnName="PROFILE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="WATER_MONTHLY_EVAP_RATES" foreignKeyName="WATER_MONTHLY_EVAP_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-208: AddForeignKeyConstraint WATER_MONTHLY_EVAP_FK1 to WATER_MONTHLY_EVAP_RATES (WATER_DEPLETION_PROFILE_OID)</comment>
+        <sql>DELETE FROM WATER_MONTHLY_EVAP_RATES WHERE WATER_DEPLETION_PROFILE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM WATER_DEPLETION_PROFILE WHERE WATER_DEPLETION_PROFILE.PROFILE_OID = WATER_MONTHLY_EVAP_RATES.WATER_DEPLETION_PROFILE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="WATER_MONTHLY_EVAP_RATES" baseColumnNames="WATER_DEPLETION_PROFILE_OID" constraintName="WATER_MONTHLY_EVAP_FK1" referencedTableName="WATER_DEPLETION_PROFILE" referencedColumnNames="PROFILE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="WATER_MONTHLY_EVAP_RATES" constraintName="WATER_MONTHLY_EVAP_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="880aec51-736b-48d2-b9a3-e43078525b54" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for TRUCK_RATE_PER_TONNE of table WATER_MONTHLY_EVAP_RATES as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="WATER_MONTHLY_EVAP_RATES" columnName="TRUCK_RATE_PER_TONNE"/>
+        </preConditions>
+        <comment>MO-208: DropColumn WATER_MONTHLY_EVAP_RATES.TRUCK_RATE_PER_TONNE</comment>
+        <dropColumn columnName="TRUCK_RATE_PER_TONNE" tableName="WATER_MONTHLY_EVAP_RATES"/>
+        <rollback>
+            <addColumn tableName="WATER_MONTHLY_EVAP_RATES">
+                <column name="TRUCK_RATE_PER_TONNE" type="DOUBLE"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="a83f0767-678e-4d49-87c6-7adbe9c58981" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for TRUCK_RATE_PER_PASSAGE of table WATER_MONTHLY_EVAP_RATES as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="WATER_MONTHLY_EVAP_RATES" columnName="TRUCK_RATE_PER_PASSAGE"/>
+        </preConditions>
+        <comment>MO-208: DropColumn WATER_MONTHLY_EVAP_RATES.TRUCK_RATE_PER_PASSAGE</comment>
+        <dropColumn columnName="TRUCK_RATE_PER_PASSAGE" tableName="WATER_MONTHLY_EVAP_RATES"/>
+        <rollback>
+            <addColumn tableName="WATER_MONTHLY_EVAP_RATES">
+                <column name="TRUCK_RATE_PER_PASSAGE" type="DOUBLE"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="a27c6650-b53a-4cea-9ee6-9f47e23cf533" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for TRUCK_RATE_LOADED to table WATER_MONTHLY_EVAP_RATES as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="WATER_MONTHLY_EVAP_RATES"/>
+            <not>
+                <columnExists tableName="WATER_MONTHLY_EVAP_RATES" columnName="TRUCK_RATE_LOADED"/>
+            </not>
+        </preConditions>
+        <comment>MO-208: AddColumn WATER_MONTHLY_EVAP_RATES.TRUCK_RATE_LOADED</comment>
+        <addColumn tableName="WATER_MONTHLY_EVAP_RATES">
+            <column name="TRUCK_RATE_LOADED" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="513786f8-cbba-40bb-b46e-09a88fde0e0f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for TRUCK_RATE_UNLOADED to table WATER_MONTHLY_EVAP_RATES as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="WATER_MONTHLY_EVAP_RATES"/>
+            <not>
+                <columnExists tableName="WATER_MONTHLY_EVAP_RATES" columnName="TRUCK_RATE_UNLOADED"/>
+            </not>
+        </preConditions>
+        <comment>MO-208: AddColumn WATER_MONTHLY_EVAP_RATES.TRUCK_RATE_UNLOADED</comment>
+        <addColumn tableName="WATER_MONTHLY_EVAP_RATES">
+            <column name="TRUCK_RATE_UNLOADED" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="6832dcfb-b0bd-4e6e-9e86-4cfb3d430688" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DAYTIME_START to table WATER_MONTHLY_EVAP_RATES as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="WATER_MONTHLY_EVAP_RATES"/>
+            <not>
+                <columnExists tableName="WATER_MONTHLY_EVAP_RATES" columnName="DAYTIME_START"/>
+            </not>
+        </preConditions>
+        <comment>MO-2083: AddColumn WATER_MONTHLY_EVAP_RATES.DAYTIME_START</comment>
+        <addColumn tableName="WATER_MONTHLY_EVAP_RATES">
+            <column name="DAYTIME_START" type="TIME"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="0e9a0ab2-8740-4b87-ac51-0be5a2332c84" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for NIGHTTIME_START to table WATER_MONTHLY_EVAP_RATES as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="WATER_MONTHLY_EVAP_RATES"/>
+            <not>
+                <columnExists tableName="WATER_MONTHLY_EVAP_RATES" columnName="NIGHTTIME_START"/>
+            </not>
+        </preConditions>
+        <comment>MO-2083: AddColumn WATER_MONTHLY_EVAP_RATES.NIGHTTIME_START</comment>
+        <addColumn tableName="WATER_MONTHLY_EVAP_RATES">
+            <column name="NIGHTTIME_START" type="TIME"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,56 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="164caf68-31db-431d-85f4-9c9ae1549252" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_MODE_CHANGE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_MODE_CHANGE"/>
+            </not>
+        </preConditions>
+        <comment>SATS-851: CreateTable MACHINE_MODE_CHANGE</comment>
+        <createTable tablespace="MW_ENT" remarks="A record of machine mode change." tableName="MACHINE_MODE_CHANGE">
+            <column name="OID" type="BIGINT" remarks="Unique row identifier.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE" type="BIGINT" remarks="Reference the OID of the MACHINE that this entry applies to.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODE_CHANGE_TIME_UTC" type="DATETIME2" remarks="Time of the mode change.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NEW_MODE" type="VARCHAR(254)" remarks="The new machine mode.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PREVIOUS_MODE" type="VARCHAR(254)" remarks="The previous machine mode.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PREVIOUS_MODE_TIME_UTC" type="DATETIME2" remarks="Time of the previous mode change.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INITIATOR" type="VARCHAR(254)" remarks="Initiator of the mode change.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REASON" type="VARCHAR(254)" remarks="Reason for the mode change.">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="MACHINE_MODE_CHANGE_PK" tablespace="MW_IDXENT" tableName="MACHINE_MODE_CHANGE"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="9389e395-a2dc-4e65-99e0-af10e24ea595" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for MACHINE_MODE_CHANGE_IDX1 to table MACHINE_MODE_CHANGE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_MODE_CHANGE"/>
+            <not>
+                <indexExists indexName="MACHINE_MODE_CHANGE_IDX1" tableName="MACHINE_MODE_CHANGE"/>
+            </not>
+        </preConditions>
+        <comment>SATS-851: CreateIndex MACHINE_MODE_CHANGE_IDX1 on MACHINE_MODE_CHANGE (MODE_CHANGE_TIME_UTC,MACHINE_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="MACHINE_MODE_CHANGE" indexName="MACHINE_MODE_CHANGE_IDX1">
+            <column name="MACHINE"/>
+            <column name="MODE_CHANGE_TIME_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!--
+    We want to check to see :
+        a) if there are two MACHINECATEGORY rows - one named 'Automatic Object Detection Verification Target Classes' and one named 'AODV'
+            and if so update the MACHINECLASS rows that reference the 'Automatic Object Detection Verification Target Classes' category to reference the 'AODV' category.
+            Then delete the now unused 'Automatic Object Detection Verification Target Classes' MACHINECATEGORY row.
+    or
+        b) if there is only a MACHINECATEGORY named 'Automatic Object Detection Verification Target Classes' and if so rename it to 'AODV'
+
+    If neither of these conditions exist then do nothing.
+    -->
+    <changeSet id="f8e6c465-6644-4b55-b65a-dde8393efa02" author="MineStar" dbms="mssql" failOnError="false">
+        <preConditions onFailMessage="Ignored Option 1 of migrate 'Automatic Object Detection Verification Target Classes' to 'AODV' machine category" onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                SELECT COUNT(*)
+                FROM   MACHINECATEGORY
+                WHERE  ECF_CLASS_ID = 'XAEntity.MachineCategory.AutomaticObjectDetectionVerificationTargetCategory'
+                AND    NAME = 'Automatic Object Detection Verification Target Classes';
+            </sqlCheck>
+            <sqlCheck expectedResult="1">
+                SELECT  COUNT(*)
+                FROM    MACHINECATEGORY
+                WHERE   ECF_CLASS_ID = 'XAEntity.MachineCategory.AutomaticObjectDetectionVerificationTargetCategory'
+                AND     NAME = 'AODV';
+            </sqlCheck>
+        </preConditions>
+        <comment>MO-15398: Option 1 of Migrate 'Automatic Object Detection Verification Target Classes' to 'AODV' machine category</comment>
+        <sql>
+            DECLARE @OLD_OID BIGINT = (SELECT MACHINECATEGORY_OID
+                                       FROM   MACHINECATEGORY
+                                       WHERE  ECF_CLASS_ID = 'XAEntity.MachineCategory.AutomaticObjectDetectionVerificationTargetCategory'
+                                       AND    NAME = 'Automatic Object Detection Verification Target Classes')
+            DECLARE @NEW_OID BIGINT = (SELECT MACHINECATEGORY_OID
+                                       FROM   MACHINECATEGORY
+                                       WHERE  ECF_CLASS_ID = 'XAEntity.MachineCategory.AutomaticObjectDetectionVerificationTargetCategory'
+                                       AND    NAME = 'AODV')
+
+            -- Remove any association between the new 'AODV' category and a delay class that may have also been
+            -- associated with the old 'Automatic Object Detection Verification Target Classes' category.
+            -- This is the same as opening the Delay Type Finder page and selecting the delay class
+            -- (ie At Payload Service Exit) and unchecking the checkbox for 'AODV'.
+            DELETE FROM DELAY_CLASS_ASSOCIATION
+            WHERE MACHINE_CATEGORY_OID = @OLD_OID
+              AND OID in (SELECT OID
+                          FROM DELAY_CLASS_ASSOCIATION
+                          WHERE MACHINE_CATEGORY_OID = @NEW_OID)
+
+            -- Update all 'Automatic Object Detection Verification Target Classes' category references to 'AODV'
+            UPDATE ACTIVITY_ASSOCIATION     SET MACHINE_CATEGORY_OID = @NEW_OID WHERE MACHINE_CATEGORY_OID = @OLD_OID
+            UPDATE DELAY_CLASS_ASSOCIATION  SET MACHINE_CATEGORY_OID = @NEW_OID WHERE MACHINE_CATEGORY_OID = @OLD_OID
+            UPDATE JOB_CODE_ASSOCIATION     SET MACHINE_CATEGORY_OID = @NEW_OID WHERE MACHINE_CATEGORY_OID = @OLD_OID
+            UPDATE MACHINECLASS             SET CATEGORY             = @NEW_OID WHERE CATEGORY             = @OLD_OID
+
+            -- Delete the 'Automatic Object Detection Verification Target Classes' category
+            DELETE FROM MACHINECATEGORY WHERE MACHINECATEGORY_OID = @OLD_OID
+        </sql>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="382b623b-67ae-49e7-aa49-d0b84270dd15" author="MineStar" dbms="mssql" failOnError="false">
+        <preConditions onFailMessage="Ignored Option 2 of migrate 'Automatic Object Detection Verification Target Classes' to 'AODV' machine category" onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">
+                SELECT COUNT(*)
+                FROM   MACHINECATEGORY
+                WHERE  ECF_CLASS_ID = 'XAEntity.MachineCategory.AutomaticObjectDetectionVerificationTargetCategory'
+                AND    NAME = 'Automatic Object Detection Verification Target Classes';
+            </sqlCheck>
+            <sqlCheck expectedResult="0">
+                SELECT  COUNT(*)
+                FROM    MACHINECATEGORY
+                WHERE   ECF_CLASS_ID = 'XAEntity.MachineCategory.AutomaticObjectDetectionVerificationTargetCategory'
+                AND     NAME = 'AODV';
+            </sqlCheck>
+        </preConditions>
+        <comment>MO-15398: Option 2 of Migrate 'Automatic Object Detection Verification Target Classes' to 'AODV' machine category</comment>
+        <sql>
+            UPDATE  MACHINECATEGORY
+            SET     NAME = 'AODV'
+            WHERE   ECF_CLASS_ID = 'XAEntity.MachineCategory.AutomaticObjectDetectionVerificationTargetCategory'
+            AND     NAME = 'Automatic Object Detection Verification Target Classes';
+        </sql>
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>

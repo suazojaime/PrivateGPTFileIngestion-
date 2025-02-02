@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="5f420690-975b-4261-8c38-b3a19e47820b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for V2_PROD_PLAN_OPERATIONAL_TASK.PLAN_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="V2_PROD_PLAN_OPERATIONAL_TASK" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-3347: DropNotNullConstraint from V2_PROD_PLAN_OPERATIONAL_TASK.PLAN_OID</comment>
+        <dropNotNullConstraint tableName="V2_PROD_PLAN_OPERATIONAL_TASK" columnName="PLAN_OID" columnDataType="BIGINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="09c5e74a-01ad-40b5-a425-bfb83f4f12f5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID to table V2_PROD_PLAN_OPERATIONAL_TASK as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_OPERATIONAL_TASK"/>
+            <not>
+                <indexExists indexName="PLAN_OID" tableName="V2_PROD_PLAN_OPERATIONAL_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3347: CreateIndex PLAN_OID on V2_PROD_PLAN_OPERATIONAL_TASK (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="PLAN_OID" tableName="V2_PROD_PLAN_OPERATIONAL_TASK">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="95294017-0b17-40b6-a0a7-5fb79c040bd8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PLAN_MODEL_LAYOVER_STATION_FK of table PLAN_MODEL as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PLAN_MODEL" foreignKeyName="PLAN_MODEL_LAYOVER_STATION_FK"/>
+        </preConditions>
+        <comment>MO-6873: DropForeignKeyConstraint PLAN_MODEL_LAYOVER_STATION_FK from PLAN_MODEL (LAYOVER_STATION)</comment>
+        <dropForeignKeyConstraint baseTableName="PLAN_MODEL" constraintName="PLAN_MODEL_LAYOVER_STATION_FK"/>
+        <rollback>
+            <sql>UPDATE PLAN_MODEL SET LAYOVER_STATION = NULL WHERE LAYOVER_STATION IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM LOCATION WHERE LOCATION.LOCATION_OID = PLAN_MODEL.LAYOVER_STATION)</sql>
+            <addForeignKeyConstraint baseTableName="PLAN_MODEL" baseColumnNames="LAYOVER_STATION" constraintName="PLAN_MODEL_LAYOVER_STATION_FK" referencedTableName="LOCATION" referencedColumnNames="LOCATION_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="8ea9cc84-4b0f-4f6a-9e33-ba01454c8ae2" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_MODEL_LAYOVER_STATION_FK to table PLAN_MODEL as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="LAYOVER_STATION"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_MODEL" foreignKeyName="PLAN_MODEL_LAYOVER_STATION_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-6873: AddForeignKeyConstraint PLAN_MODEL_LAYOVER_STATION_FK to PLAN_MODEL (LAYOVER_STATION)</comment>
+        <sql>UPDATE PLAN_MODEL SET LAYOVER_STATION = NULL WHERE LAYOVER_STATION IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = PLAN_MODEL.LAYOVER_STATION)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_MODEL" baseColumnNames="LAYOVER_STATION" constraintName="PLAN_MODEL_LAYOVER_STATION_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_MODEL" constraintName="PLAN_MODEL_LAYOVER_STATION_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

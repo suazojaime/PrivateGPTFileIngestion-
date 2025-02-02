@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="26780586-2da3-4108-a7ef-ecb76e252169" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for OPERATORSHIFT_1 of table OPERATORSHIFT as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="OPERATORSHIFT_1" tableName="OPERATORSHIFT"/>
+        </preConditions>
+        <comment>AHS-8791: DropIndex OPERATORSHIFT_1 from OPERATORSHIFT (ECF_CLASS_ID,OPERATORSHIFT_OID)</comment>
+        <dropIndex tableName="OPERATORSHIFT" indexName="OPERATORSHIFT_1"/>
+        <rollback>
+            <createIndex unique="false" indexName="OPERATORSHIFT_1" tableName="OPERATORSHIFT">
+                <column name="ECF_CLASS_ID"/>
+                <column name="OPERATORSHIFT_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="c53eff93-b23d-4abd-b5cd-3b5c6cff2f44" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ECF_CLASS_ID of table OPERATORSHIFT as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="OPERATORSHIFT" columnName="ECF_CLASS_ID"/>
+        </preConditions>
+        <comment>AHS-8791: DropColumn OPERATORSHIFT.ECF_CLASS_ID</comment>
+        <dropColumn columnName="ECF_CLASS_ID" tableName="OPERATORSHIFT"/>
+        <rollback>
+            <addColumn tableName="OPERATORSHIFT">
+                <column name="ECF_CLASS_ID" type="VARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="99c7a0f9-218b-4666-bc0c-97c89678a09c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for OPERATORSHIFT.MACHINE as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="OPERATORSHIFT" columnName="MACHINE"/>
+        </preConditions>
+        <comment>AHS-8791: AddNotNullConstraint to OPERATORSHIFT.MACHINE</comment>
+        <sql>DELETE FROM OPERATORSHIFT WHERE MACHINE IS NULL</sql>
+        <addNotNullConstraint columnName="MACHINE" columnDataType="BIGINT" tableName="OPERATORSHIFT"/>
+        <rollback>
+            <dropNotNullConstraint tableName="OPERATORSHIFT" columnName="MACHINE" columnDataType="BIGINT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="54cdc223-e87b-496b-8258-afb3f844c648" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for OPERATORSHIFT.LOGIN_UTC as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="OPERATORSHIFT" columnName="LOGIN_UTC"/>
+        </preConditions>
+        <comment>AHS-8791: AddNotNullConstraint to OPERATORSHIFT.LOGIN_UTC</comment>
+        <sql>DELETE FROM OPERATORSHIFT WHERE LOGIN_UTC IS NULL</sql>
+        <addNotNullConstraint columnName="LOGIN_UTC" columnDataType="DATETIME2" tableName="OPERATORSHIFT"/>
+        <rollback>
+            <dropNotNullConstraint tableName="OPERATORSHIFT" columnName="LOGIN_UTC" columnDataType="DATETIME2"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="185157ec-25a1-4551-b70e-9284a69eec18" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for OPERATORSHIFT.OPERATOR as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="OPERATORSHIFT" columnName="OPERATOR"/>
+        </preConditions>
+        <comment>AHS-8791: AddNotNullConstraint to OPERATORSHIFT.OPERATOR</comment>
+        <sql>DELETE FROM OPERATORSHIFT WHERE OPERATOR IS NULL</sql>
+        <addNotNullConstraint columnName="OPERATOR" columnDataType="BIGINT" tableName="OPERATORSHIFT"/>
+        <rollback>
+            <dropNotNullConstraint tableName="OPERATORSHIFT" columnName="OPERATOR" columnDataType="BIGINT"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd"
+        >
+  <bean id="cycleUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/cycleUCC"/>
+    <property name="serviceInterface" value="minestar.production.uifacade.cycle.CycleUCCFacade"/>
+  </bean>
+
+  <bean id="destinationBlendUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/destinationBlendUCC"/>
+    <property name="serviceInterface" value="minestar.mine.uifacade.blend.DestinationBlendUCCFacade"/>
+  </bean>
+
+  <bean id="machineUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/machineUCC"/>
+    <property name="serviceInterface" value="minestar.pitlink.uifacade.machine.MachineUCCFacade"/>
+  </bean>
+
+  <bean id="monitorUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/monitorUCC"/>
+    <property name="serviceInterface" value="minestar.platform.uifacade.monitor.MonitorUCCFacade"/>
+  </bean>
+
+  <bean id="userUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/userUCC"/>
+    <property name="serviceInterface" value="minestar.platform.uifacade.user.UserUCCFacade"/>
+  </bean>
+
+  <bean id="kpiUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/kpiUCC"/>
+    <property name="serviceInterface" value="minestar.production.uifacade.kpi.KpiUCCFacade"/>
+  </bean>
+
+  <bean id="shiftProductionPlanUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/shiftProductionPlanUCC"/>
+    <property name="serviceInterface" value="minestar.production.uifacade.shift.ShiftProductionPlanUCCFacade"/>
+  </bean>
+
+  <bean id="payloadUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/payloadUCC"/>
+    <property name="serviceInterface" value="minestar.production.uifacade.btd.PayloadUCCFacade"/>
+  </bean>
+
+  <bean id="operatorAllocationUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/operatorAllocationUCC"/>
+    <property name="serviceInterface" value="minestar.production.uifacade.shift.OperatorAllocationUCCFacade"/>
+  </bean>
+
+  <bean id="settingsUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/settingsUCC"/>
+    <property name="serviceInterface" value="minestar.platform.uifacade.settings.SettingsUCCFacade"/>
+  </bean>
+
+  <bean id="locationUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/locationUCC"/>
+    <property name="serviceInterface" value="minestar.mine.uifacade.location.LocationUCCFacade"/>
+  </bean>
+
+  <bean id="waypointUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/waypointUCC"/>
+    <property name="serviceInterface" value="minestar.mine.uifacade.waypoint.WaypointUCCFacade"/>
+  </bean>
+
+  <bean id="gradeBlockUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/gradeBlockUCC"/>
+    <property name="serviceInterface" value="minestar.mine.uifacade.gradeblock.GradeBlockUCCFacade"/>
+  </bean>
+
+  <bean id="personUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/personUCC"/>
+    <property name="serviceInterface" value="minestar.mine.uifacade.person.PersonUCCFacade"/>
+  </bean>
+
+  <bean class="minestar.api.pitlink.machine.Machines">
+    <property name="machineUCC" ref="machineUCC"/>
+  </bean>
+
+  <bean id="monitorApi" class="minestar.api.platform.monitor.Monitor">
+    <property name="monitorUCC" ref="monitorUCC"/>
+  </bean>
+
+  <bean class="minestar.api.production.cycle.Cycle">
+    <property name="cycleUCC" ref="cycleUCC"/>
+  </bean>
+
+  <bean class="minestar.api.production.blend.DestinationBlend">
+    <property name="destinationBlendUCC" ref="destinationBlendUCC"/>
+    <property name="monitorUCC" ref="monitorUCC"/>
+    <property name="kpiUCC" ref="kpiUCC"/>
+  </bean>
+
+  <bean class="minestar.api.production.kpi.KPIs">
+    <property name="kpiUCC" ref="kpiUCC"/>
+  </bean>
+
+  <bean id="restPayloadResource" class="minestar.api.production.payload.PayloadResource" lazy-init="true">
+    <property name="payloadFacade" ref="payloadUCC"/>
+  </bean>
+
+  <bean class="minestar.api.production.shift.ProductionPlan">
+    <property name="shiftProductionPlanUCC" ref="shiftProductionPlanUCC"/>
+    <property name="monitorApi" ref="monitorApi"/>
+  </bean>
+
+  <bean class="minestar.api.production.shift.OperatorAllocation">
+    <property name="operatorAllocationUCC" ref="operatorAllocationUCC"/>
+    <property name="monitorApi" ref="monitorApi"/>
+  </bean>
+
+  <bean class="minestar.api.platform.user.UserAPI">
+    <property name="userUCC" ref="userUCC"/>
+  </bean>
+
+  <bean class="minestar.api.platform.settings.SettingsAPI">
+    <property name="settingsUCC" ref="settingsUCC"/>
+  </bean>
+
+  <bean class="minestar.api.map.features.LocationsAPI">
+    <property name="locationUCC" ref="locationUCC"/>
+  </bean>
+
+  <bean class="minestar.api.map.features.RoadsAPI">
+    <property name="waypointUCC" ref="waypointUCC"/>
+  </bean>
+
+  <bean class="minestar.api.map.geology.MiningBlocksAPI">
+    <property name="gradeBlockUCC" ref="gradeBlockUCC"/>
+  </bean>
+
+  <bean id="onboardUCC" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/onboardUCC"/>
+    <property name="serviceInterface" value="minestar.production.uifacade.onboard.OnboardUCCFacade"/>
+  </bean>
+
+  <bean id="securityService" parent="parentRemote">
+    <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/securityServiceImpl"/>
+    <property name="serviceInterface" value="minestar.control.service.security.SecurityService"/>
+  </bean>
+
+  <bean class="minestar.api.production.onboard.Onboard">
+    <property name="onboardUCC" ref="onboardUCC"/>
+  </bean>
+
+  <bean class="minestar.api.pitlink.operator.OperatorsAPI">
+    <property name="personUCC" ref="personUCC"/>
+  </bean>
+
+</beans>

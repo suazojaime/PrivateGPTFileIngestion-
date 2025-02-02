@@ -1,0 +1,1253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="7240daf9-8ef7-471b-b51f-a9d846e93433" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_DUMP_CRUSHER.PLAN_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_DUMP_CRUSHER" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_DUMP_CRUSHER.PLAN_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_DUMP_CRUSHER" columnName="PLAN_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="f57b55fe-1f2e-4acf-9c40-f6578e09b344" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID to table PROD_PLAN_DUMP_CRUSHER as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_DUMP_CRUSHER"/>
+            <not>
+                <indexExists indexName="PLAN_OID" tableName="PROD_PLAN_DUMP_CRUSHER"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex PLAN_OID on PROD_PLAN_DUMP_CRUSHER (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_DUMP_CRUSHER" indexName="PLAN_OID">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="bd2867d6-5403-4e3e-ac16-b53f601d86cd" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_DUMP_STOCKPILE.PLAN_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_DUMP_STOCKPILE" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_DUMP_STOCKPILE.PLAN_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_DUMP_STOCKPILE" columnName="PLAN_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="fbe9ef80-b229-4f3b-ad30-ebc23bab152d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID to table PROD_PLAN_DUMP_STOCKPILE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_DUMP_STOCKPILE"/>
+            <not>
+                <indexExists indexName="PLAN_OID" tableName="PROD_PLAN_DUMP_STOCKPILE"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex PLAN_OID on PROD_PLAN_DUMP_STOCKPILE (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_DUMP_STOCKPILE" indexName="PLAN_OID">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="faab940c-9fb9-49cb-be6c-37d06a2c08b5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_JOB_ALTERNATE_DUMP.JOB_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_JOB_ALTERNATE_DUMP" columnName="JOB_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_JOB_ALTERNATE_DUMP.JOB_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_JOB_ALTERNATE_DUMP" columnName="JOB_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="d15a0a9b-e296-48ef-a124-71614ec50be6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for JOB_OID to table PROD_PLAN_JOB_ALTERNATE_DUMP as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_ALTERNATE_DUMP"/>
+            <not>
+                <indexExists indexName="JOB_OID" tableName="PROD_PLAN_JOB_ALTERNATE_DUMP"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex JOB_OID on PROD_PLAN_JOB_ALTERNATE_DUMP (JOB_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_JOB_ALTERNATE_DUMP" indexName="JOB_OID">
+            <column name="JOB_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="565baf4c-5338-440b-ae83-ea73cf0a3cc2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_JOB_ALTERNATE_SOURCE.JOB_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE" columnName="JOB_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_JOB_ALTERNATE_SOURCE.JOB_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE" columnName="JOB_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="7fab32f9-ba98-4f8b-923f-2ed9ad6ea7c3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for JOB_OID to table PROD_PLAN_JOB_ALTERNATE_SOURCE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE"/>
+            <not>
+                <indexExists indexName="JOB_OID" tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex JOB_OID on PROD_PLAN_JOB_ALTERNATE_SOURCE (JOB_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE" indexName="JOB_OID">
+            <column name="JOB_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="3bf523d1-bf0f-42b1-a26f-bb6b61373826" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_JOB_PRIMARY_DUMP.JOB_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_JOB_PRIMARY_DUMP" columnName="JOB_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_JOB_PRIMARY_DUMP.JOB_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_JOB_PRIMARY_DUMP" columnName="JOB_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="78cd8c49-4d19-4497-a222-122fafc8af02" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for JOB_OID to table PROD_PLAN_JOB_PRIMARY_DUMP as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_PRIMARY_DUMP"/>
+            <not>
+                <indexExists indexName="JOB_OID" tableName="PROD_PLAN_JOB_PRIMARY_DUMP"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex JOB_OID on PROD_PLAN_JOB_PRIMARY_DUMP (JOB_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_JOB_PRIMARY_DUMP" indexName="JOB_OID">
+            <column name="JOB_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="1a30b33c-aa2a-44b0-9cf1-f8c45cd68347" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_JOB_PRIMARY_SOURCE.JOB_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_JOB_PRIMARY_SOURCE" columnName="JOB_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_JOB_PRIMARY_SOURCE.JOB_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_JOB_PRIMARY_SOURCE" columnName="JOB_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="e8c8eebb-89a9-4552-84d9-faddeec63d43" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for JOB_OID to table PROD_PLAN_JOB_PRIMARY_SOURCE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_PRIMARY_SOURCE"/>
+            <not>
+                <indexExists indexName="JOB_OID" tableName="PROD_PLAN_JOB_PRIMARY_SOURCE"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex JOB_OID on PROD_PLAN_JOB_PRIMARY_SOURCE (JOB_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_JOB_PRIMARY_SOURCE" indexName="JOB_OID">
+            <column name="JOB_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="55fac114-eb59-432e-856b-506be75cee76" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_NON_PRODUCTION_TASK.PLAN_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_NON_PRODUCTION_TASK" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_NON_PRODUCTION_TASK.PLAN_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_NON_PRODUCTION_TASK" columnName="PLAN_OID" columnDataType="BIGINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="1616c0ae-3cf6-4f59-bfdb-65cf4f06395d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID to table PROD_PLAN_NON_PRODUCTION_TASK as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_NON_PRODUCTION_TASK"/>
+            <not>
+                <indexExists indexName="PLAN_OID" tableName="PROD_PLAN_NON_PRODUCTION_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex PLAN_OID on PROD_PLAN_NON_PRODUCTION_TASK (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_NON_PRODUCTION_TASK" indexName="PLAN_OID">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="d6352c1f-8720-432a-863e-1eb52b2dfddc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_SOURCE_BLOCK.PLAN_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_SOURCE_BLOCK" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_SOURCE_BLOCK.PLAN_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_SOURCE_BLOCK" columnName="PLAN_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="9d0022fb-262a-4fef-ba48-d81b9e62c8be" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID to table PROD_PLAN_SOURCE_BLOCK as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_SOURCE_BLOCK"/>
+            <not>
+                <indexExists indexName="PLAN_OID" tableName="PROD_PLAN_SOURCE_BLOCK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex PLAN_OID on PROD_PLAN_SOURCE_BLOCK (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_SOURCE_BLOCK" indexName="PLAN_OID">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="5132ebd5-a461-43c5-8ddf-ba058e99cff2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for PROD_PLAN_SOURCE_STOCKPILE.PLAN_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from PROD_PLAN_SOURCE_STOCKPILE.PLAN_OID</comment>
+        <dropNotNullConstraint tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="PLAN_OID" columnDataType="BIGINT"/>
+    </changeSet>
+    <changeSet id="f4a06d4a-71e1-460a-80fe-413d21e86cf3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for PROD_PLAN_SOURCE_STOCKPILE.GEOMETRY as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="GEOMETRY"/>
+        </preConditions>
+        <comment>MO-3569: ChangeDataType of PROD_PLAN_SOURCE_STOCKPILE.GEOMETRY from NVARCHAR(4000) to VARCHAR(4000)</comment>
+        <modifyDataType columnName="GEOMETRY" newDataType="VARCHAR(4000)" tableName="PROD_PLAN_SOURCE_STOCKPILE"/>
+        <rollback>
+            <modifyDataType columnName="GEOMETRY" newDataType="NVARCHAR(4000)" tableName="PROD_PLAN_SOURCE_STOCKPILE"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="c2ba1063-c863-49e6-b5f8-2a51be6b0631" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for PROD_PLAN_SOURCE_STOCKPILE.GEOMETRY as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="GEOMETRY"/>
+        </preConditions>
+        <comment>MO-3569: AddNotNullConstraint to PROD_PLAN_SOURCE_STOCKPILE.GEOMETRY</comment>
+        <sql>UPDATE PROD_PLAN_SOURCE_STOCKPILE SET GEOMETRY = '' WHERE GEOMETRY IS NULL</sql>
+        <addNotNullConstraint columnName="GEOMETRY" columnDataType="VARCHAR(4000)" tableName="PROD_PLAN_SOURCE_STOCKPILE"/>
+        <rollback>
+            <dropNotNullConstraint tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="GEOMETRY" columnDataType="VARCHAR(4000)"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="db71cf46-06b3-48f1-a60d-252481fd0277" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID to table PROD_PLAN_SOURCE_STOCKPILE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_SOURCE_STOCKPILE"/>
+            <not>
+                <indexExists indexName="PLAN_OID" tableName="PROD_PLAN_SOURCE_STOCKPILE"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex PLAN_OID on PROD_PLAN_SOURCE_STOCKPILE (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_SOURCE_STOCKPILE" indexName="PLAN_OID">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="1a406a47-25e3-4445-bcbb-daf700a810e7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropPrimaryKey for V2_PROD_PLAN_TASK_PK of table V2_PROD_PLAN_TASK as primaryKey does not exist." onFail="MARK_RAN">
+            <primaryKeyExists primaryKeyName="V2_PROD_PLAN_TASK_PK" tableName="V2_PROD_PLAN_TASK"/>
+        </preConditions>
+        <comment>MO-3569: DropPrimaryKey V2_PROD_PLAN_TASK_PK from V2_PROD_PLAN_TASK (PLAN_OID,JOB_NR)</comment>
+        <dropPrimaryKey constraintName="V2_PROD_PLAN_TASK_PK" tableName="V2_PROD_PLAN_TASK"/>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="a2c40c10-2146-4140-b226-040f3bdd2bcb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for V2_PROD_PLAN_TASK.PLAN_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="V2_PROD_PLAN_TASK" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from V2_PROD_PLAN_TASK.PLAN_OID</comment>
+        <dropNotNullConstraint tableName="V2_PROD_PLAN_TASK" columnName="PLAN_OID" columnDataType="BIGINT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="01e6bbbc-263d-4846-8925-950523b39387" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropNotNullConstraint for V2_PROD_PLAN_TASK.JOB_NR as column does not exist or is already nullable" onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="V2_PROD_PLAN_TASK" columnName="JOB_NR"/>
+        </preConditions>
+        <comment>MO-3569: DropNotNullConstraint from V2_PROD_PLAN_TASK.JOB_NR</comment>
+        <dropNotNullConstraint tableName="V2_PROD_PLAN_TASK" columnName="JOB_NR" columnDataType="INT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="b3b07952-72ee-469a-ad70-79b1191586c5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for OID to table V2_PROD_PLAN_TASK as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_TASK"/>
+            <not>
+                <columnExists tableName="V2_PROD_PLAN_TASK" columnName="OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddColumn V2_PROD_PLAN_TASK.OID</comment>
+        <addColumn tableName="V2_PROD_PLAN_TASK">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback/>
+    </changeSet>
+    <changeSet id="2fdcf18e-5ff2-4852-b8d4-e273f8c2615a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddPrimaryKey for V2_PROD_PLAN_TASK_PK to table V2_PROD_PLAN_TASK as table does not exist or primaryKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_TASK"/>
+            <not>
+                <primaryKeyExists primaryKeyName="V2_PROD_PLAN_TASK_PK" tableName="V2_PROD_PLAN_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddPrimaryKey V2_PROD_PLAN_TASK_PK to V2_PROD_PLAN_TASK (OID)</comment>
+        <sql dbms="oracle">DELETE FROM V2_PROD_PLAN_TASK WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY OID ORDER BY ROWID) RN FROM V2_PROD_PLAN_TASK) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY OID ORDER BY %%physloc%%) AS ROW_NUM FROM V2_PROD_PLAN_TASK) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <addPrimaryKey columnNames="OID" constraintName="V2_PROD_PLAN_TASK_PK" tablespace="MW_IDXENT" tableName="V2_PROD_PLAN_TASK"/>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="722b5701-a9d9-4c59-88d1-618675d20bb1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID to table V2_PROD_PLAN_TASK as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_TASK"/>
+            <not>
+                <indexExists indexName="PLAN_OID" tableName="V2_PROD_PLAN_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateIndex PLAN_OID on V2_PROD_PLAN_TASK (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="V2_PROD_PLAN_TASK" indexName="PLAN_OID">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="4d26a601-9994-42dc-9f70-c48601892bac" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for V2_PROD_PLAN_COMMENT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_COMMENT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable V2_PROD_PLAN_COMMENT</comment>
+        <dropTable tableName="V2_PROD_PLAN_COMMENT"/>
+        <rollback>
+            <createTable tablespace="" tableName="V2_PROD_PLAN_COMMENT">
+                <column name="PLAN_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="COMMENT_TYPE" type="VARCHAR(255)">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="REFERENCE_OID" type="BIGINT"/>
+                <column name="PLAN_COMMENT" type="CLOB"/>
+            </createTable>
+            <addPrimaryKey columnNames="OID" constraintName="V2_PROD_PLAN_COMMENT_PK" tablespace="" tableName="V2_PROD_PLAN_COMMENT"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="6a9a71f7-a622-4a49-a349-d6c1b4c89e7d" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <validCheckSum>8:20c64c1ffc345858912b6de45fd7c3b6</validCheckSum>
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT</comment>
+        <createTable tablespace="MW_ENT" tableName="PROD_PLAN_CMT">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COMMENT_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_CMT_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_CMT"/>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="f68ed515-8ce6-4563-8f29-09821d9789cb" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_DUMP_BLEND_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_DUMP_BLEND_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_DUMP_BLEND_CMT</comment>
+        <createTable tableName="PROD_PLAN_DUMP_BLEND_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_DUMP_BLEND_CMT_PK" tableName="PROD_PLAN_DUMP_BLEND_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="9e262b60-c73a-42a6-bb65-cc9244e1967a" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_DUMP_CRUSHER_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_DUMP_CRUSHER_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_DUMP_CRUSHER_CMT</comment>
+        <createTable tableName="PROD_PLAN_DUMP_CRUSHER_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_DUMP_CRUSHER_CMT_PK" tableName="PROD_PLAN_DUMP_CRUSHER_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="71769981-e91a-4fab-a679-dfac371e2d45" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_DUMP_STOCKPILE_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_DUMP_STOCKPILE_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_DUMP_STOCKPILE_CMT</comment>
+        <createTable tableName="PROD_PLAN_DUMP_STOCKPILE_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_DUMP_STOCKPILE_CM_PK" tableName="PROD_PLAN_DUMP_STOCKPILE_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="b8c500d0-4329-484e-abb7-d49d68c5ae81" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_JOB_ALT_DUMP_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_JOB_ALT_DUMP_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_JOB_ALT_DUMP_CMT</comment>
+        <createTable tableName="PROD_PLAN_JOB_ALT_DUMP_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_JOB_ALT_DUMP_CMT_PK" tableName="PROD_PLAN_JOB_ALT_DUMP_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="5b6cc570-c1c5-4f9f-9868-03520df9d163" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_JOB_ALT_SRC_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_JOB_ALT_SRC_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_JOB_ALT_SRC_CMT</comment>
+        <createTable tableName="PROD_PLAN_JOB_ALT_SRC_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_JOB_ALT_SRC_CMT_PK" tableName="PROD_PLAN_JOB_ALT_SRC_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="5611f6ef-b47b-4b5a-9016-d91c94bf8581" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_JOB_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_JOB_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_JOB_CMT</comment>
+        <createTable tableName="PROD_PLAN_JOB_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_JOB_CMT_PK" tableName="PROD_PLAN_JOB_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="2418262d-a8f0-4da0-bc29-8650af9ec7f9" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_JOB_PRI_DUMP_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_JOB_PRI_DUMP_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_JOB_PRI_DUMP_CMT</comment>
+        <createTable tableName="PROD_PLAN_JOB_PRI_DUMP_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_JOB_PRI_DUMP_CMT_PK" tableName="PROD_PLAN_JOB_PRI_DUMP_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="14d0a534-3670-4c5e-9189-70ddd10c0eb4" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_JOB_PRI_SRC_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_JOB_PRI_SRC_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_JOB_PRI_SRC_CMT</comment>
+        <createTable tableName="PROD_PLAN_JOB_PRI_SRC_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_JOB_PRI_SRC_CMT_PK" tableName="PROD_PLAN_JOB_PRI_SRC_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="a7ff0a86-a265-41f0-8eea-1ce2f3e5d3d2" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_NON_PROD_TASK_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_NON_PROD_TASK_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_NON_PROD_TASK_CMT</comment>
+        <createTable tableName="PROD_PLAN_NON_PROD_TASK_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_NON_PROD_TASK_CMT_PK" tableName="PROD_PLAN_NON_PROD_TASK_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="3a8ecf10-43b1-48ca-9d0e-a7521256a005" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_OPERATIONAL_TASK_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_OPERATIONAL_TASK_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_OPERATIONAL_TASK_CMT</comment>
+        <createTable tableName="PROD_PLAN_OPERATIONAL_TASK_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_OPERATIONAL_TASK__PK" tableName="PROD_PLAN_OPERATIONAL_TASK_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="319005bd-bcce-4faf-9559-fe20ce173672" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_SOURCE_BLOCK_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_SOURCE_BLOCK_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_SOURCE_BLOCK_CMT</comment>
+        <createTable tableName="PROD_PLAN_SOURCE_BLOCK_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_SOURCE_BLOCK_CMT_PK" tableName="PROD_PLAN_SOURCE_BLOCK_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="386c1aa0-39a2-4474-8e6f-42b1ce1eb74e" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_SOURCE_STOCKPILE_CMT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_SOURCE_STOCKPILE_CMT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_SOURCE_STOCKPILE_CMT</comment>
+        <createTable tableName="PROD_PLAN_SOURCE_STOCKPILE_CMT">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_SOURCE_STOCKPILE__PK" tableName="PROD_PLAN_SOURCE_STOCKPILE_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="f034c22e-ba20-4d75-a484-dbb6139bcd02" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_PLAN_OID_FK to table PROD_PLAN_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT" foreignKeyName="PROD_PLAN_CMT_PLAN_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_PLAN_OID_FK to PROD_PLAN_CMT (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_CMT.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_CMT_PLAN_OID_FK" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="9a289997-894e-4bae-8571-a082fc1be329" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_DUMP_BLEND_CMT_FK1 to table PROD_PLAN_DUMP_BLEND_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_DUMP_BLEND_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_DUMP_BLEND" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_DUMP_BLEND_CMT" foreignKeyName="PROD_PLAN_DUMP_BLEND_CMT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_DUMP_BLEND_CMT_FK1 to PROD_PLAN_DUMP_BLEND_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_DUMP_BLEND_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_DUMP_BLEND WHERE PROD_PLAN_DUMP_BLEND.OID = PROD_PLAN_DUMP_BLEND_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_BLEND_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_DUMP_BLEND_CMT_FK1" referencedTableName="PROD_PLAN_DUMP_BLEND" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="ffb6464c-39f0-4499-9839-f1a7f6c2c3ac" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_DUMP_CRUSHER_CMT_FK1 to table PROD_PLAN_DUMP_CRUSHER_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_DUMP_CRUSHER_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_DUMP_CRUSHER" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_DUMP_CRUSHER_CMT" foreignKeyName="PROD_PLAN_DUMP_CRUSHER_CMT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_DUMP_CRUSHER_CMT_FK1 to PROD_PLAN_DUMP_CRUSHER_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_DUMP_CRUSHER_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_DUMP_CRUSHER WHERE PROD_PLAN_DUMP_CRUSHER.OID = PROD_PLAN_DUMP_CRUSHER_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_CRUSHER_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_DUMP_CRUSHER_CMT_FK1" referencedTableName="PROD_PLAN_DUMP_CRUSHER" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="2a877689-b2b8-4bb8-b09b-bf2bff76b211" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_DUMP_STOCKPILE_C_FK1 to table PROD_PLAN_DUMP_STOCKPILE_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_DUMP_STOCKPILE_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_DUMP_STOCKPILE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_DUMP_STOCKPILE_CMT" foreignKeyName="PROD_PLAN_DUMP_STOCKPILE_C_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_DUMP_STOCKPILE_C_FK1 to PROD_PLAN_DUMP_STOCKPILE_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_DUMP_STOCKPILE_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_DUMP_STOCKPILE WHERE PROD_PLAN_DUMP_STOCKPILE.OID = PROD_PLAN_DUMP_STOCKPILE_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_STOCKPILE_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_DUMP_STOCKPILE_C_FK1" referencedTableName="PROD_PLAN_DUMP_STOCKPILE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="eeafc2e0-7e1c-41ba-82a9-c1ae0b126217" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_JOB_ALT_DUMP_CMT_FK1 to table PROD_PLAN_JOB_ALT_DUMP_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_JOB_ALT_DUMP_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_JOB_ALTERNATE_DUMP" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_JOB_ALT_DUMP_CMT" foreignKeyName="PROD_PLAN_JOB_ALT_DUMP_CMT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_JOB_ALT_DUMP_CMT_FK1 to PROD_PLAN_JOB_ALT_DUMP_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_JOB_ALT_DUMP_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_JOB_ALTERNATE_DUMP WHERE PROD_PLAN_JOB_ALTERNATE_DUMP.OID = PROD_PLAN_JOB_ALT_DUMP_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_JOB_ALT_DUMP_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_JOB_ALT_DUMP_CMT_FK1" referencedTableName="PROD_PLAN_JOB_ALTERNATE_DUMP" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="ddbce682-a814-4118-9567-c11d494745a0" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_JOB_ALT_SRC_CMT_FK1 to table PROD_PLAN_JOB_ALT_SRC_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_JOB_ALT_SRC_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_JOB_ALT_SRC_CMT" foreignKeyName="PROD_PLAN_JOB_ALT_SRC_CMT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_JOB_ALT_SRC_CMT_FK1 to PROD_PLAN_JOB_ALT_SRC_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_JOB_ALT_SRC_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_JOB_ALTERNATE_SOURCE WHERE PROD_PLAN_JOB_ALTERNATE_SOURCE.OID = PROD_PLAN_JOB_ALT_SRC_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_JOB_ALT_SRC_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_JOB_ALT_SRC_CMT_FK1" referencedTableName="PROD_PLAN_JOB_ALTERNATE_SOURCE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="d774e725-180a-4432-b17d-0db0dfba2771" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_JOB_CMT_REFERENCE_FK to table PROD_PLAN_JOB_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_JOB_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="V2_PROD_PLAN_JOB" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_JOB_CMT" foreignKeyName="PROD_PLAN_JOB_CMT_REFERENCE_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_JOB_CMT_REFERENCE_FK to PROD_PLAN_JOB_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_JOB_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN_JOB WHERE V2_PROD_PLAN_JOB.OID = PROD_PLAN_JOB_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_JOB_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_JOB_CMT_REFERENCE_FK" referencedTableName="V2_PROD_PLAN_JOB" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="692d5d1e-a8ad-4edf-bcaa-5f9b25480799" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_JOB_PRI_DUMP_CMT_FK1 to table PROD_PLAN_JOB_PRI_DUMP_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_JOB_PRI_DUMP_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_JOB_PRIMARY_DUMP" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_JOB_PRI_DUMP_CMT" foreignKeyName="PROD_PLAN_JOB_PRI_DUMP_CMT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_JOB_PRI_DUMP_CMT_FK1 to PROD_PLAN_JOB_PRI_DUMP_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_JOB_PRI_DUMP_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_JOB_PRIMARY_DUMP WHERE PROD_PLAN_JOB_PRIMARY_DUMP.OID = PROD_PLAN_JOB_PRI_DUMP_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_JOB_PRI_DUMP_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_JOB_PRI_DUMP_CMT_FK1" referencedTableName="PROD_PLAN_JOB_PRIMARY_DUMP" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="fe72d04b-cd5a-4718-aa72-a0f3fa954d3e" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_JOB_PRI_SRC_CMT_FK1 to table PROD_PLAN_JOB_PRI_SRC_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_JOB_PRI_SRC_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_JOB_PRIMARY_SOURCE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_JOB_PRI_SRC_CMT" foreignKeyName="PROD_PLAN_JOB_PRI_SRC_CMT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_JOB_PRI_SRC_CMT_FK1 to PROD_PLAN_JOB_PRI_SRC_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_JOB_PRI_SRC_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_JOB_PRIMARY_SOURCE WHERE PROD_PLAN_JOB_PRIMARY_SOURCE.OID = PROD_PLAN_JOB_PRI_SRC_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_JOB_PRI_SRC_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_JOB_PRI_SRC_CMT_FK1" referencedTableName="PROD_PLAN_JOB_PRIMARY_SOURCE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="9796379a-80f9-4f14-a47f-aac2ba0a3188" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_NON_PROD_TASK_CM_FK1 to table PROD_PLAN_NON_PROD_TASK_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_NON_PROD_TASK_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_NON_PRODUCTION_TASK" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_NON_PROD_TASK_CMT" foreignKeyName="PROD_PLAN_NON_PROD_TASK_CM_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_NON_PROD_TASK_CM_FK1 to PROD_PLAN_NON_PROD_TASK_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_NON_PROD_TASK_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_NON_PRODUCTION_TASK WHERE PROD_PLAN_NON_PRODUCTION_TASK.OID = PROD_PLAN_NON_PROD_TASK_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_NON_PROD_TASK_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_NON_PROD_TASK_CM_FK1" referencedTableName="PROD_PLAN_NON_PRODUCTION_TASK" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="2a37bd12-ad9f-410d-8191-22188718d390" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_OPERATIONAL_TASK_FK1 to table PROD_PLAN_OPERATIONAL_TASK_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_OPERATIONAL_TASK_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="V2_PROD_PLAN_OPERATIONAL_TASK" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_OPERATIONAL_TASK_CMT" foreignKeyName="PROD_PLAN_OPERATIONAL_TASK_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_OPERATIONAL_TASK_FK1 to PROD_PLAN_OPERATIONAL_TASK_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_OPERATIONAL_TASK_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN_OPERATIONAL_TASK WHERE V2_PROD_PLAN_OPERATIONAL_TASK.OID = PROD_PLAN_OPERATIONAL_TASK_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_OPERATIONAL_TASK_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_OPERATIONAL_TASK_FK1" referencedTableName="V2_PROD_PLAN_OPERATIONAL_TASK" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="04696e64-c82f-4770-8ab5-70478f37ccf4" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_SOURCE_BLOCK_CMT_FK1 to table PROD_PLAN_SOURCE_BLOCK_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_SOURCE_BLOCK_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_SOURCE_BLOCK" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_SOURCE_BLOCK_CMT" foreignKeyName="PROD_PLAN_SOURCE_BLOCK_CMT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_SOURCE_BLOCK_CMT_FK1 to PROD_PLAN_SOURCE_BLOCK_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_SOURCE_BLOCK_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_SOURCE_BLOCK WHERE PROD_PLAN_SOURCE_BLOCK.OID = PROD_PLAN_SOURCE_BLOCK_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_SOURCE_BLOCK_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_SOURCE_BLOCK_CMT_FK1" referencedTableName="PROD_PLAN_SOURCE_BLOCK" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="e8002655-881d-4d4a-a7ef-2b3db6556b25" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_SOURCE_STOCKPILE_FK2 to table PROD_PLAN_SOURCE_STOCKPILE_CMT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_SOURCE_STOCKPILE_CMT" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_SOURCE_STOCKPILE_CMT" foreignKeyName="PROD_PLAN_SOURCE_STOCKPILE_FK2"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_SOURCE_STOCKPILE_FK2 to PROD_PLAN_SOURCE_STOCKPILE_CMT (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_SOURCE_STOCKPILE_CMT WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_SOURCE_STOCKPILE WHERE PROD_PLAN_SOURCE_STOCKPILE.OID = PROD_PLAN_SOURCE_STOCKPILE_CMT.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_SOURCE_STOCKPILE_CMT" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_SOURCE_STOCKPILE_FK2" referencedTableName="PROD_PLAN_SOURCE_STOCKPILE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    
+    <!--rework : rename comment tables name-->
+    
+    <changeSet id="96a44fe7-099e-4c6b-955e-c62ce2ab9e14" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_DUMP_BLEND_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_DUMP_BLEND_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_DUMP_BLEND_CMT</comment>
+        <dropTable tableName="PROD_PLAN_DUMP_BLEND_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="8e1fe072-4681-4784-8d0d-ff763e047627" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_DUMP_CRUSHER_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_DUMP_CRUSHER_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_DUMP_CRUSHER_CMT</comment>
+        <dropTable tableName="PROD_PLAN_DUMP_CRUSHER_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="8c605af2-ceb1-4db4-a6ad-2c2772925ab5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_DUMP_STOCKPILE_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_DUMP_STOCKPILE_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_DUMP_STOCKPILE_CMT</comment>
+        <dropTable tableName="PROD_PLAN_DUMP_STOCKPILE_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="f987d20c-0839-4c7e-9838-5e1d6787983f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_JOB_ALT_DUMP_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_ALT_DUMP_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_JOB_ALT_DUMP_CMT</comment>
+        <dropTable tableName="PROD_PLAN_JOB_ALT_DUMP_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="58d9b66b-8e27-4556-b667-5b4b67547088" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_JOB_ALT_SRC_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_ALT_SRC_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_JOB_ALT_SRC_CMT</comment>
+        <dropTable tableName="PROD_PLAN_JOB_ALT_SRC_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="a6b5c11b-ce77-4a7c-b4db-285aee56a730" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_JOB_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_JOB_CMT</comment>
+        <dropTable tableName="PROD_PLAN_JOB_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="894f93af-5dfd-423e-a2a8-895cc555fb24" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_JOB_PRI_DUMP_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_PRI_DUMP_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_JOB_PRI_DUMP_CMT</comment>
+        <dropTable tableName="PROD_PLAN_JOB_PRI_DUMP_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="3a3c8d58-e069-46c4-99a2-04f55e6836c4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_JOB_PRI_SRC_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_PRI_SRC_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_JOB_PRI_SRC_CMT</comment>
+        <dropTable tableName="PROD_PLAN_JOB_PRI_SRC_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="e9c7ff47-b99c-454b-8f18-730e6a1df4ba" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_NON_PROD_TASK_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_NON_PROD_TASK_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_NON_PROD_TASK_CMT</comment>
+        <dropTable tableName="PROD_PLAN_NON_PROD_TASK_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="37be888a-b2ce-4370-8e05-1fbf018db681" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_OPERATIONAL_TASK_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_OPERATIONAL_TASK_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_OPERATIONAL_TASK_CMT</comment>
+        <dropTable tableName="PROD_PLAN_OPERATIONAL_TASK_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="3271bc23-8a69-48ec-92c6-749684b00a6e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_SOURCE_BLOCK_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_SOURCE_BLOCK_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_SOURCE_BLOCK_CMT</comment>
+        <dropTable tableName="PROD_PLAN_SOURCE_BLOCK_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="15195f21-e5da-458d-af72-1fae03fc357b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_SOURCE_STOCKPILE_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_SOURCE_STOCKPILE_CMT"/>
+        </preConditions>
+        <comment>MO-3569: DropTable PROD_PLAN_SOURCE_STOCKPILE_CMT</comment>
+        <dropTable tableName="PROD_PLAN_SOURCE_STOCKPILE_CMT"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="7dcbecee-8a4c-43be-ae50-8f9c453d8e79" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_DUMP_BLEND as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_DUMP_BLEND"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_DUMP_BLEND</comment>
+        <createTable tableName="PROD_PLAN_CMT_DUMP_BLEND">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_DUMP_BLEND_PK" tableName="PROD_PLAN_CMT_DUMP_BLEND"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="348d1dcf-c9f4-4fb9-a5ab-cca29d22dfc2" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_DUMP_CRUSHER as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_DUMP_CRUSHER"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_DUMP_CRUSHER</comment>
+        <createTable tableName="PROD_PLAN_CMT_DUMP_CRUSHER">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_DUMP_CRUSHER_PK" tableName="PROD_PLAN_CMT_DUMP_CRUSHER"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="45d439ad-054d-44a7-a74a-3c562b710b92" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_DUMP_STOCKPILE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_DUMP_STOCKPILE"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_DUMP_STOCKPILE</comment>
+        <createTable tableName="PROD_PLAN_CMT_DUMP_STOCKPILE">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_DUMP_STOCKPIL_PK" tableName="PROD_PLAN_CMT_DUMP_STOCKPILE"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="88b52896-eec4-49a4-a7b7-a73237276105" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_JOB as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_JOB"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_JOB</comment>
+        <createTable tableName="PROD_PLAN_CMT_JOB">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_JOB_PK" tableName="PROD_PLAN_CMT_JOB"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="54df080b-7249-4bc0-8113-5dd91884d16e" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_JOB_ALT_DUMP as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_JOB_ALT_DUMP"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_JOB_ALT_DUMP</comment>
+        <createTable tableName="PROD_PLAN_CMT_JOB_ALT_DUMP">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_JOB_ALT_DUMP_PK" tableName="PROD_PLAN_CMT_JOB_ALT_DUMP"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="619014ab-02fa-46c5-a1b5-142c640970b2" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_JOB_ALT_SRC as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_JOB_ALT_SRC"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_JOB_ALT_SRC</comment>
+        <createTable tableName="PROD_PLAN_CMT_JOB_ALT_SRC">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_JOB_ALT_SRC_PK" tableName="PROD_PLAN_CMT_JOB_ALT_SRC"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="6c00d66f-e1c2-41bd-bed9-e5d15f136cab" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_JOB_PRI_DUMP as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_JOB_PRI_DUMP"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_JOB_PRI_DUMP</comment>
+        <createTable tableName="PROD_PLAN_CMT_JOB_PRI_DUMP">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_JOB_PRI_DUMP_PK" tableName="PROD_PLAN_CMT_JOB_PRI_DUMP"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="bb8df7c1-a4a3-4787-94ed-ed12004bbeb0" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_JOB_PRI_SRC as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_JOB_PRI_SRC"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_JOB_PRI_SRC</comment>
+        <createTable tableName="PROD_PLAN_CMT_JOB_PRI_SRC">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_JOB_PRI_SRC_PK" tableName="PROD_PLAN_CMT_JOB_PRI_SRC"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="b691bb7a-604e-4192-95b5-4f364329b02c" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_NON_PROD_TASK as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_NON_PROD_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_NON_PROD_TASK</comment>
+        <createTable tableName="PROD_PLAN_CMT_NON_PROD_TASK">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_NON_PROD_TASK_PK" tableName="PROD_PLAN_CMT_NON_PROD_TASK"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="e9398dc7-942b-41f9-ab94-1dcb352cb6d3" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_OPERATIONAL_TASK as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_OPERATIONAL_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_OPERATIONAL_TASK</comment>
+        <createTable tableName="PROD_PLAN_CMT_OPERATIONAL_TASK">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_OPERATIONAL_T_PK" tableName="PROD_PLAN_CMT_OPERATIONAL_TASK"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="92ce9a9c-c412-42a4-9069-5647da00113e" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_SOURCE_BLOCK as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_SOURCE_BLOCK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_SOURCE_BLOCK</comment>
+        <createTable tableName="PROD_PLAN_CMT_SOURCE_BLOCK">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_SOURCE_BLOCK_PK" tableName="PROD_PLAN_CMT_SOURCE_BLOCK"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="85a278fc-ea0a-4e34-aa08-2194f7ea3219" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_CMT_SOURCE_STOCKPILE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_CMT_SOURCE_STOCKPILE"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: CreateTable PROD_PLAN_CMT_SOURCE_STOCKPILE</comment>
+        <createTable tableName="PROD_PLAN_CMT_SOURCE_STOCKPILE">
+            <column name="REFERENCE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_ORDER" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT"/>
+            <column name="PLAN_COMMENT" type="CLOB"/>
+        </createTable>
+        <addPrimaryKey columnNames="REFERENCE_OID,DISPLAY_ORDER" constraintName="PROD_PLAN_CMT_SOURCE_STOCKP_PK" tableName="PROD_PLAN_CMT_SOURCE_STOCKPILE"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="c0bb7a81-8047-4088-bb21-2b26970513b0" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_DUMP_BLEND_FK1 to table PROD_PLAN_CMT_DUMP_BLEND as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_DUMP_BLEND" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_DUMP_BLEND" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_DUMP_BLEND" foreignKeyName="PROD_PLAN_CMT_DUMP_BLEND_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_DUMP_BLEND_FK1 to PROD_PLAN_CMT_DUMP_BLEND (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_DUMP_BLEND WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_DUMP_BLEND WHERE PROD_PLAN_DUMP_BLEND.OID = PROD_PLAN_CMT_DUMP_BLEND.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_DUMP_BLEND" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_DUMP_BLEND_FK1" referencedTableName="PROD_PLAN_DUMP_BLEND" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="e96814cb-fa59-4d30-a8f3-3a0f0f14e404" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_DUMP_CRUSHER_FK1 to table PROD_PLAN_CMT_DUMP_CRUSHER as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_DUMP_CRUSHER" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_DUMP_CRUSHER" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_DUMP_CRUSHER" foreignKeyName="PROD_PLAN_CMT_DUMP_CRUSHER_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_DUMP_CRUSHER_FK1 to PROD_PLAN_CMT_DUMP_CRUSHER (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_DUMP_CRUSHER WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_DUMP_CRUSHER WHERE PROD_PLAN_DUMP_CRUSHER.OID = PROD_PLAN_CMT_DUMP_CRUSHER.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_DUMP_CRUSHER" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_DUMP_CRUSHER_FK1" referencedTableName="PROD_PLAN_DUMP_CRUSHER" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="6187e9d3-b356-4f95-b558-acf7c11caf9f" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_DUMP_STOCKPI_FK1 to table PROD_PLAN_CMT_DUMP_STOCKPILE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_DUMP_STOCKPILE" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_DUMP_STOCKPILE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_DUMP_STOCKPILE" foreignKeyName="PROD_PLAN_CMT_DUMP_STOCKPI_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_DUMP_STOCKPI_FK1 to PROD_PLAN_CMT_DUMP_STOCKPILE (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_DUMP_STOCKPILE WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_DUMP_STOCKPILE WHERE PROD_PLAN_DUMP_STOCKPILE.OID = PROD_PLAN_CMT_DUMP_STOCKPILE.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_DUMP_STOCKPILE" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_DUMP_STOCKPI_FK1" referencedTableName="PROD_PLAN_DUMP_STOCKPILE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="49360ce8-d1d0-4fbf-b65a-3c68bd95c1bf" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_JOB_REFERENCE_FK to table PROD_PLAN_CMT_JOB as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_JOB" columnName="REFERENCE_OID"/>
+            <columnExists tableName="V2_PROD_PLAN_JOB" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_JOB" foreignKeyName="PROD_PLAN_CMT_JOB_REFERENCE_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_JOB_REFERENCE_FK to PROD_PLAN_CMT_JOB (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_JOB WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN_JOB WHERE V2_PROD_PLAN_JOB.OID = PROD_PLAN_CMT_JOB.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_JOB" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_JOB_REFERENCE_FK" referencedTableName="V2_PROD_PLAN_JOB" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="5f5a3f8f-3f33-44d0-aa10-6cafed8d3eaf" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_JOB_ALT_DUMP_FK1 to table PROD_PLAN_CMT_JOB_ALT_DUMP as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_JOB_ALT_DUMP" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_JOB_ALTERNATE_DUMP" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_JOB_ALT_DUMP" foreignKeyName="PROD_PLAN_CMT_JOB_ALT_DUMP_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_JOB_ALT_DUMP_FK1 to PROD_PLAN_CMT_JOB_ALT_DUMP (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_JOB_ALT_DUMP WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_JOB_ALTERNATE_DUMP WHERE PROD_PLAN_JOB_ALTERNATE_DUMP.OID = PROD_PLAN_CMT_JOB_ALT_DUMP.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_JOB_ALT_DUMP" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_JOB_ALT_DUMP_FK1" referencedTableName="PROD_PLAN_JOB_ALTERNATE_DUMP" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="5359c7d5-8a7f-4ec6-a084-319c7646c525" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_JOB_ALT_SRC_FK1 to table PROD_PLAN_CMT_JOB_ALT_SRC as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_JOB_ALT_SRC" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_JOB_ALT_SRC" foreignKeyName="PROD_PLAN_CMT_JOB_ALT_SRC_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_JOB_ALT_SRC_FK1 to PROD_PLAN_CMT_JOB_ALT_SRC (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_JOB_ALT_SRC WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_JOB_ALTERNATE_SOURCE WHERE PROD_PLAN_JOB_ALTERNATE_SOURCE.OID = PROD_PLAN_CMT_JOB_ALT_SRC.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_JOB_ALT_SRC" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_JOB_ALT_SRC_FK1" referencedTableName="PROD_PLAN_JOB_ALTERNATE_SOURCE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="0c3ebdf2-62fc-495a-9880-1cd6d11f17ac" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_JOB_PRI_DUMP_FK1 to table PROD_PLAN_CMT_JOB_PRI_DUMP as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_JOB_PRI_DUMP" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_JOB_PRIMARY_DUMP" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_JOB_PRI_DUMP" foreignKeyName="PROD_PLAN_CMT_JOB_PRI_DUMP_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_JOB_PRI_DUMP_FK1 to PROD_PLAN_CMT_JOB_PRI_DUMP (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_JOB_PRI_DUMP WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_JOB_PRIMARY_DUMP WHERE PROD_PLAN_JOB_PRIMARY_DUMP.OID = PROD_PLAN_CMT_JOB_PRI_DUMP.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_JOB_PRI_DUMP" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_JOB_PRI_DUMP_FK1" referencedTableName="PROD_PLAN_JOB_PRIMARY_DUMP" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="d42638d8-5999-41e7-bb62-1242bf440daf" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_JOB_PRI_SRC_FK1 to table PROD_PLAN_CMT_JOB_PRI_SRC as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_JOB_PRI_SRC" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_JOB_PRIMARY_SOURCE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_JOB_PRI_SRC" foreignKeyName="PROD_PLAN_CMT_JOB_PRI_SRC_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_JOB_PRI_SRC_FK1 to PROD_PLAN_CMT_JOB_PRI_SRC (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_JOB_PRI_SRC WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_JOB_PRIMARY_SOURCE WHERE PROD_PLAN_JOB_PRIMARY_SOURCE.OID = PROD_PLAN_CMT_JOB_PRI_SRC.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_JOB_PRI_SRC" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_JOB_PRI_SRC_FK1" referencedTableName="PROD_PLAN_JOB_PRIMARY_SOURCE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="d329fe27-cff6-45e3-b6af-38cb206796c8" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_NON_PROD_TAS_FK1 to table PROD_PLAN_CMT_NON_PROD_TASK as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_NON_PROD_TASK" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_NON_PRODUCTION_TASK" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_NON_PROD_TASK" foreignKeyName="PROD_PLAN_CMT_NON_PROD_TAS_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_NON_PROD_TAS_FK1 to PROD_PLAN_CMT_NON_PROD_TASK (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_NON_PROD_TASK WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_NON_PRODUCTION_TASK WHERE PROD_PLAN_NON_PRODUCTION_TASK.OID = PROD_PLAN_CMT_NON_PROD_TASK.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_NON_PROD_TASK" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_NON_PROD_TAS_FK1" referencedTableName="PROD_PLAN_NON_PRODUCTION_TASK" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="3b962d61-9eea-4067-912a-a6d6722ba3fe" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_OPERATIONAL_FK1 to table PROD_PLAN_CMT_OPERATIONAL_TASK as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_OPERATIONAL_TASK" columnName="REFERENCE_OID"/>
+            <columnExists tableName="V2_PROD_PLAN_OPERATIONAL_TASK" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_OPERATIONAL_TASK" foreignKeyName="PROD_PLAN_CMT_OPERATIONAL_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_OPERATIONAL_FK1 to PROD_PLAN_CMT_OPERATIONAL_TASK (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_OPERATIONAL_TASK WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN_OPERATIONAL_TASK WHERE V2_PROD_PLAN_OPERATIONAL_TASK.OID = PROD_PLAN_CMT_OPERATIONAL_TASK.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_OPERATIONAL_TASK" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_OPERATIONAL_FK1" referencedTableName="V2_PROD_PLAN_OPERATIONAL_TASK" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="15a165df-c12c-4acc-8a11-bfe406100a08" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_SOURCE_BLOCK_FK1 to table PROD_PLAN_CMT_SOURCE_BLOCK as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_SOURCE_BLOCK" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_SOURCE_BLOCK" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_SOURCE_BLOCK" foreignKeyName="PROD_PLAN_CMT_SOURCE_BLOCK_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_SOURCE_BLOCK_FK1 to PROD_PLAN_CMT_SOURCE_BLOCK (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_SOURCE_BLOCK WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_SOURCE_BLOCK WHERE PROD_PLAN_SOURCE_BLOCK.OID = PROD_PLAN_CMT_SOURCE_BLOCK.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_SOURCE_BLOCK" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_SOURCE_BLOCK_FK1" referencedTableName="PROD_PLAN_SOURCE_BLOCK" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="8be838d6-daa6-4efb-9acd-5accf6269095" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_SOURCE_STOCK_FK1 to table PROD_PLAN_CMT_SOURCE_STOCKPILE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_SOURCE_STOCKPILE" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_SOURCE_STOCKPILE" foreignKeyName="PROD_PLAN_CMT_SOURCE_STOCK_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-3569: AddForeignKeyConstraint PROD_PLAN_CMT_SOURCE_STOCK_FK1 to PROD_PLAN_CMT_SOURCE_STOCKPILE (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_SOURCE_STOCKPILE WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_SOURCE_STOCKPILE WHERE PROD_PLAN_SOURCE_STOCKPILE.OID = PROD_PLAN_CMT_SOURCE_STOCKPILE.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_SOURCE_STOCKPILE" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_SOURCE_STOCK_FK1" referencedTableName="PROD_PLAN_SOURCE_STOCKPILE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    
+</databaseChangeLog>

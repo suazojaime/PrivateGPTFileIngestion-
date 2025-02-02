@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2016, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <!-- Actions to execute pre migration changes -->
+  <include file="db/changelog/4_5/historical/premigrate/ahs-5115-clear-changeset-checksums-for-historical.xml"/>
+
+</databaseChangeLog>

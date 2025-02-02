@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2013, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:condbean="http://www.minestar.au.cat.com/springbeans/condbean"
+       xsi:schemaLocation="
+            http://www.minestar.au.cat.com/springbeans/condbean http://www.minestar.au.cat.com/springbeans/condbean/condbeans.xsd
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+    <!-- Kind of similar to the diagnosticService defined in uifacade, but I think I might need to define this here as the existing is for
+    uiFacade, and this is needed for mstarrun calls?  If this isn't true, it's possible to refactor this later -->
+    <bean id="resourceDiagnosticsService" class="minestar.platform.application.performance.ResourceDiagnosticsServiceImpl" lazy-init="true">
+        <property name="diagnosticDataSourcesBean" ref="diagnosticDataSources"/>
+        <property name="settingsService" ref="settingsServiceImpl"/>
+        <property name="notification" ref="notification"/>
+    </bean>
+
+    <bean id="registerResourceDiagnosticsService" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Resource Diagnostics Service"/>
+        <constructor-arg value="minestar.platform.application.performance.ResourceDiagnosticsService"/>
+        <constructor-arg ref="resourceDiagnosticsService"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class
+            name="minestar.platform.persistence.SchemaConstraints"
+            table="SCHEMA_CONSTRAINTS"
+    >
+        <meta attribute="table">
+            tablespace=MW_ECF
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXECF
+        </meta>
+        <meta attribute="description">Schema constraints.</meta>
+
+        <id
+                name="constraintName"
+                type="java.lang.String"
+                column="CONSTRAINT_NAME"
+        >
+            <meta attribute="description">Constraint name</meta>
+            <generator class="assigned"/>
+        </id>
+
+        <property
+                name="constraintType"
+                type="java.lang.String"
+                column="CONSTRAINT_TYPE"
+                not-null="true"
+                length="1"
+        >
+            <meta attribute="description">Constraint type</meta>
+        </property>
+        <property
+                name="tableName"
+                type="java.lang.String"
+                column="TABLE_NAME"
+                length="30"
+        >
+            <meta attribute="description">Constraint table name</meta>
+        </property>
+        <property
+                name="columnName"
+                type="java.lang.String"
+                column="COLUMN_NAME"
+                length="30"
+        >
+            <meta attribute="description">Constraint column name</meta>
+        </property>
+        <property
+                name="refTableName"
+                type="java.lang.String"
+                column="REF_TABLE_NAME"
+                length="30"
+        >
+            <meta attribute="description">Constraint table name reference</meta>
+        </property>
+        <property
+                name="refColumnName"
+                type="java.lang.String"
+                column="REF_COLUMN_NAME"
+                length="30"
+        >
+            <meta attribute="description">Constraint column name reference</meta>
+        </property>
+
+
+        <!-- associations -->
+        <!-- bi-directional one-to-many association to EcfClass -->
+    </class>
+</hibernate-mapping>

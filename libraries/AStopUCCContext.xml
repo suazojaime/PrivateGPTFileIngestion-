@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+<!-- internal cache beans, not available for remoting or serviceFactory -->
+    <bean id="autStopDeviceCacheImpl" class="minestar.mine.uifacade.astop.collection.AutStopDeviceCollectionCache"
+          lazy-init="true" parent="cacheParent">
+        <property name="notification" ref="notification" />
+        <property name="autStopTestService" ref="autStopTestServiceImpl"/>
+        <property name="mineFleetService" ref="mineFleetServiceImpl"/>        
+    </bean>
+
+    <!-- must have this -->
+    <bean id="aStopUCCImpl" class="minestar.mine.uifacade.astop.impl.AStopUCCImpl"
+          lazy-init="true">
+        <property name="machineUCC" ref="machineUCCImpl"/>
+        <property name="deviceCache" ref="autStopDeviceCacheImpl"/>
+        <property name="personUCC" ref="personUCCImpl"/>
+        <property name="userUCC" ref="userUCCImpl"/>
+        <property name="userContext" ref="userContextImpl"/>
+        <property name="autStopTestService" ref="autStopTestServiceImpl"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerAStopUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="AStop UCC"/>
+        <constructor-arg value="minestar.mine.uifacade.astop.AStopUCCFacade"/>
+        <constructor-arg ref="aStopUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="aStopUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="aStopUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="aStopUCC"/>
+        <property name="service" ref="aStopUCCProxy"/>
+        <property name="serviceInterface" value="minestar.mine.uifacade.astop.AStopUCCFacade"/>
+    </bean>
+
+</beans>

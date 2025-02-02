@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="edfb5462-0949-46d2-b695-812ac6dc3f94" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for USERREF to table PERSON as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PERSON"/>
+            <not>
+                <columnExists tableName="PERSON" columnName="USERREF"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5763: AddColumn PERSON.USERREF</comment>
+        <addColumn tableName="PERSON">
+            <column name="USERREF" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="618a7626-af27-4396-a667-80ef4abc0c08" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for UG_EXTRA_FUNCTIONS as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="UG_EXTRA_FUNCTIONS"/>
+        </preConditions>
+        <comment>FUG-5763: DropTable UG_EXTRA_FUNCTIONS</comment>
+        <dropTable tableName="UG_EXTRA_FUNCTIONS"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="6a874a5a-1901-448f-9071-c4c7958a2dfb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for UG_PERSON as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="UG_PERSON"/>
+        </preConditions>
+        <comment>FUG-5763: DropTable UG_PERSON</comment>
+        <dropTable tableName="UG_PERSON"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="2ae92c7b-cc5a-41aa-9281-e882b3ebce6d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for UG_WEB_DIAG as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="UG_WEB_DIAG"/>
+        </preConditions>
+        <comment>FUG-5763: DropTable UG_WEB_DIAG</comment>
+        <dropTable tableName="UG_WEB_DIAG"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+    <changeSet id="373187ec-62ff-4964-8c02-464b0059e459" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PERSON_USERREF_FK to table PERSON as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PERSON" columnName="USERREF"/>
+            <columnExists tableName="USER1" columnName="USER_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PERSON" foreignKeyName="PERSON_USERREF_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5763: AddForeignKeyConstraint PERSON_USERREF_FK to PERSON (USERREF)</comment>
+        <sql>UPDATE PERSON SET USERREF = NULL WHERE USERREF IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM USER1 WHERE USER1.USER_OID = PERSON.USERREF)</sql>
+        <addForeignKeyConstraint baseTableName="PERSON" baseColumnNames="USERREF" constraintName="PERSON_USERREF_FK" referencedTableName="USER1" referencedColumnNames="USER_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PERSON" constraintName="PERSON_USERREF_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

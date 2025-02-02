@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="01714242-ec18-4f58-9402-2ebaad237d8d" author="MineStar" context="Underground/Underground_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ROCK_BREAKER to table ORE_PASS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <not>
+                <columnExists tableName="ORE_PASS" columnName="ROCK_BREAKER"/>
+            </not>
+        </preConditions>
+        <comment>FUG-312: AddColumn ORE_PASS.ROCK_BREAKER</comment>
+        <addColumn tableName="ORE_PASS">
+            <column name="ROCK_BREAKER" type="BIGINT" remarks="Reference to rock breaker associated with ore pass."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="ORE_PASS" columnName="ROCK_BREAKER"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="db31093e-462d-45d4-a7c4-8c87621a1283" author="MineStar" context="Underground/Underground_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for ORE_PASS_ROCK_BREAKER_FK to table ORE_PASS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="ORE_PASS"/>
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="ORE_PASS" foreignKeyName="ORE_PASS_ROCK_BREAKER_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-312: AddForeignKeyConstraint ORE_PASS_ROCK_BREAKER_FK to ORE_PASS (ROCK_BREAKER)</comment>
+        <sql>UPDATE ORE_PASS SET ROCK_BREAKER = NULL WHERE ROCK_BREAKER IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = ORE_PASS.ROCK_BREAKER)</sql>
+        <addForeignKeyConstraint baseTableName="ORE_PASS" baseColumnNames="ROCK_BREAKER" constraintName="ORE_PASS_ROCK_BREAKER_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="ORE_PASS" constraintName="ORE_PASS_ROCK_BREAKER_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

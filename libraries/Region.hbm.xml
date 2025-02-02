@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.Region"
+           table="REGION"
+           dynamic-update="true"
+           discriminator-value="Region">
+
+        <meta attribute="view-master">true</meta>
+
+        <meta attribute="index">
+            name=REGION_NAME
+            unique=true
+            columns=NAME
+        </meta>
+
+        <meta attribute="description">The definition of a mine model region</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="REGION_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="REGION_TYPE" length="30"/>
+
+        <property name="name" type="string" column="NAME" not-null="true">
+            <meta attribute="description">The regions name</meta>
+        </property>
+
+        <property name="active" type="boolean" column="ACTIVE" not-null="true">
+            <meta attribute="description">Is this region active?</meta>
+        </property>
+
+        <property name="layerUpdateVersion" type="long">
+            <meta attribute="description">The layer update version when the region was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true"/>
+        </property>
+
+        <property name="geometryWKT" type="string" column="GEOMETRY" length="4000" not-null="true">
+            <meta attribute="alias">geometry</meta>
+        </property>
+
+        <subclass name="minestar.mine.domain.minemodel.NarrowRegion"
+                  discriminator-value="NarrowRegion">
+        </subclass>
+
+        <subclass name="minestar.mine.domain.minemodel.DriveBehaviorRegion"
+                  discriminator-value="DriveBehaviorRegion">
+
+            <property name="doNotEnterToStop" type="boolean" column="IS_DO_NOT_ENTER_TO_STOP" not-null="true"/>
+            <property name="perceptionDetuned" type="boolean" column="IS_PERCEPTION_DETUNED" not-null="true"/>
+            <property name="speedControlMode" type="boolean" column="IS_SPEED_CONTROL_MODE" not-null="true"/>
+            <property name="highRimpullMode" type="boolean" column="IS_HIGH_RIMPULL_MODE" not-null="true"/>
+            <property name="highPerformanceAllowed" type="boolean">
+                <column name="IS_HIGH_PERFORMANCE_ALLOWED" not-null="true" default="0"/>
+            </property>
+            <property name="pathIndexingAllowed" type="boolean" column="IS_PATH_INDEXING_ALLOWED" not-null="true"/>
+            <property name="gearLimit" type="int" column="GEAR_LIMIT" not-null="true"/>
+            <many-to-one name="zone" class="minestar.mine.domain.minemodel.ZoneReference" column="ZONE_OID"/>
+            <property name="zoneColorRGB" type="int" column="ZONE_COLOR" not-null="true"/>
+            <property name="zoneMessageOnEntry" type="string" column="ZONE_MESSAGE_ON_ENTRY"/>
+        </subclass>
+
+    </class>
+
+</hibernate-mapping>

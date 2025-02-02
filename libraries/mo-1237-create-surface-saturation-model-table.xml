@@ -1,0 +1,29 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="c3f9d9a5-841d-46fd-afd2-e85e54f99c7a" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for SURFACE_SATURATION as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SURFACE_SATURATION"/>
+            </not>
+        </preConditions>
+        <comment>MO-1237: CreateTable SURFACE_SATURATION</comment>
+        <createTable tablespace="MW_ENT" remarks="The vehicle provided location specific data." tableName="SURFACE_SATURATION">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="X" type="INT" remarks="The bottom-left coordinate of the cell at which the truck reported the vehicle data.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="Y" type="INT" remarks="The bottom-left coordinate of the cell at which the truck reported the vehicle data.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SATURATION_LEVEL" type="DOUBLE" remarks="The traction value measured by the truck.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SATURATION_LEVEL_TS_UTC" type="DATETIME2" remarks="The time when the traction event occurred."/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="SURFACE_SATURATION_PK" tablespace="MW_IDXENT" tableName="SURFACE_SATURATION"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

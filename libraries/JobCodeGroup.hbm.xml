@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.production.domain.JobCodeGroup"
+           table="JOBCODE_GROUP">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=JOBCODEGROUP_NAME
+            columns=NAME
+            tablespace=MW_IDXENT
+            unique=true
+        </meta>
+        <meta attribute="alias">JobCodeGroup</meta>
+        <meta attribute="lookupExpr">name</meta>
+        <meta attribute="description">The job code group</meta>
+
+        <id name="OID" type="long" column="JOBCODE_GROUP_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="name" type="string" column="NAME" length="254" not-null="true">
+            <meta attribute="description">The name of the group</meta>
+        </property>
+
+        <property name="description" type="string" column="DESCRIPTION" length="254">
+            <meta attribute="description">The description of the group</meta>
+        </property>
+
+        <many-to-one name="parentGroup" class="minestar.production.domain.JobCodeGroupReference" column="PARENT_GROUP_OID">
+            <meta attribute="description">For non-root groups, a reference to the parent group</meta>
+        </many-to-one>
+    </class>
+
+    <!-- A lightweight reference to a JobCodeGroup -->
+    <class name="minestar.production.domain.JobCodeGroupReference" table="JOBCODE_GROUP" mutable="false" lazy="false">
+
+        <meta attribute="alias" inherit="false">JOBCODE_GROUP_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to an job code group.</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="JOBCODE_GROUP_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+    </class>
+    
+</hibernate-mapping>

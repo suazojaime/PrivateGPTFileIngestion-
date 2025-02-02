@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.pitlink.domain.event.TruthPositioningSystemEvent" table="TPS_EVENT">
+        <meta attribute="description">An event received from a truth positioning receiver.</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="viewproperty-machineClassOID" inherit="false">
+            type=string
+            description=The machine class OID, of the entity source, when the entity source is a machine.
+            expression=lookupResource.baseEvent.machineClassOID.query
+        </meta>
+        <meta attribute="viewproperty-machineClass_N" inherit="false">
+            type=string
+            description=The machine class name, of the entity source, when the entity source is a machine.
+            expression=lookupResource.baseEvent.machineClass_N.query
+        </meta>
+        <meta attribute="viewproperty-interpolatedSMU" inherit="false">
+            type=float
+            description=The SMU as determined by the SMU Interpolation Service. To be used when SMU value is not available directly from the event.
+            unitType=service meter hours
+            expression=lookupResource.baseEvent.interpolatedSMU.query
+        </meta>
+
+        <cache usage="nonstrict-read-write" region="eventInstances"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="EVENT_OID">
+            <meta attribute="description">The object identifier of the entity, unique within its manager.</meta>
+            <generator class="com.mincom.env.base.persistence.TableHiLoGenerator"/>
+        </id>
+
+        <many-to-one name="machineRef"
+                     column="MACHINE_OID"
+                     not-null="true"
+                     class="minestar.pitlink.domain.machine.MachineReference">
+            <meta attribute="alias">machine</meta>
+            <meta attribute="description">The entity the event came from.</meta>
+        </many-to-one>
+
+        <property name="arrivalTime"
+                  type="TimestampType"
+                  column="ARRIVAL_TIME_UTC">
+            <meta attribute="utc-description">The utc time the event arrived in the office.</meta>
+            <meta attribute="description">The time the event arrived in the office.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="timestamp"
+                  type="TimestampType"
+                  column="TIMESTAMP_UTC"
+                  not-null="true">
+            <meta attribute="utc-description">The utc time the event was created.</meta>
+            <meta attribute="description">The time the event was created.</meta>
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="sourceTimestamp"
+                  type="TimestampType"
+                  column="SOURCE_TIMESTAMP_UTC"
+                  not-null="true">
+            <meta attribute="utc-description">The utc time the original source of the event says the event was
+                created.
+            </meta>
+            <meta attribute="description">The time the original source of the event says the event was created.</meta>
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="eventCode"
+                  column="CODE"
+                  not-null="true">
+            <meta attribute="description">Code to identify what happened</meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.pitlink.domain.event.TruthPositioningSystemEventCode</param>
+            </type>
+        </property>
+
+        <property name="eventOutcome"
+                  column="OUTCOME">
+            <meta attribute="description">Outcome of what happened</meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.pitlink.domain.event.TruthPositioningSystemEventOutcome</param>
+            </type>
+        </property>
+
+        <property name="originalText"
+                  type="java.lang.String"
+                  column="ORIGINAL"
+                  length="254">
+            <meta attribute="description">The original text received from the TPS receiver.</meta>
+        </property>
+
+    </class>
+</hibernate-mapping>

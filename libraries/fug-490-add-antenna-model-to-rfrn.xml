@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a65e9c84-b99a-47c8-9894-ef1ebed5cb4e" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ANTENNA_MODEL to table SENSOR as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SENSOR"/>
+            <not>
+                <columnExists tableName="SENSOR" columnName="ANTENNA_MODEL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-490: AddColumn SENSOR.ANTENNA_MODEL</comment>
+        <addColumn tableName="SENSOR">
+            <column name="ANTENNA_MODEL" type="VARCHAR(255)" remarks="The manufacturer's model identifier of the antenna on this RFR node."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="SENSOR" columnName="ANTENNA_MODEL"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="731857d6-ffd7-4811-a091-37be05b8788e" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored remove 'RFRNodeAntenna' rows as SENSOR table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="SENSOR"/>
+        </preConditions>
+        <comment>FUG-490: Remove rows from SENSOR table where type is 'RFRNodeAntenna'.</comment>
+        <sql>delete from SENSOR where SENSOR_TYPE = 'RFRNodeAntenna'</sql>
+        <rollback />
+    </changeSet>
+    <changeSet id="642d745c-2217-4c2a-b645-76176358047c" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored set antenna model as SENSOR table does not exist or ANTENNA_MODEL column does not exist." onFail="MARK_RAN">
+            <tableExists tableName="SENSOR"/>
+            <columnExists tableName="SENSOR" columnName="ANTENNA_MODEL"/>
+        </preConditions>
+        <comment>FUG-490: Set once-off default value of antenna model of RFR nodes.</comment>
+        <sql>update SENSOR set ANTENNA_MODEL = 'Part 447-0331' where SENSOR_TYPE = 'RFRNode' and ANTENNA_MODEL is null</sql>
+        <rollback />
+    </changeSet>
+</databaseChangeLog>

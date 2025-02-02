@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping default-access="field" schema="historical">
+
+    <class
+            name="minestar.mine.domain.minemodel.watering.productionrecording.domain.WaterTruckMetricsEvent"
+            table="WATERTRUCK_METRICS_EVENT">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">Representing Autonomous Water Truck metrics recorded at predefined time intervals.</meta>
+
+        <meta attribute="index">
+            name=WATERTRUCK_METRICS_IDX1
+            columns=TIMESTAMP_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=WATERTRUCK_METRICS_IDX2
+            columns=MACHINE
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="OID"
+            access="field"
+        >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one name="machine"
+                     column="MACHINE"
+                     class="minestar.pitlink.domain.machine.MachineReference"
+                     not-found="ignore"
+                     not-null="true">
+            <meta attribute="description">A reference to the Autonomous Water Truck machine.</meta>
+        </many-to-one>
+
+        <property name="eventTime"
+                  type="TimestampType"
+                  column="TIMESTAMP_UTC"
+                  not-null="true">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="description">The time the event occurred.</meta>
+            <meta attribute="utc-description">The utc time the event occurred.</meta>
+        </property>
+
+        <property name="machineName"
+                  type="java.lang.String"
+                  column="MACHINE_NAME"
+                  not-null="true">
+            <meta attribute="description">The name of the Autonomous Water Truck the event relates to.</meta>
+        </property>
+
+        <property name="machineMode"
+                  type="java.lang.String"
+                  column="MACHINE_MODE"
+                  not-null="true">
+            <meta attribute="description">The mode the Autonomous Water Truck was in at the time of the event.</meta>
+        </property>
+
+        <property name="waterLevel"
+                  column="WATER_LEVEL"
+                  not-null="true">
+            <meta attribute="description">The water level of the Autonomous Water Truck at the time of the event.</meta>
+            <type name="quantity">
+                <param name="unitType">ratio</param>
+            </type>
+        </property>
+
+        <property
+                name="fuelLevel"
+                column="FUEL_LEVEL"
+                not-null="true">
+            <meta attribute="description">The fuel level of the Autonomous Water Truck at the time of the event.</meta>
+            <type name="quantity">
+                <param name="unitType">ratio</param>
+            </type>
+        </property>
+
+        <property
+                name="areaWatered"
+                column="AREA_WATERED"
+                not-null="true">
+            <meta attribute="description">The area watered since the last recorded event.</meta>
+            <type name="quantity">
+                <param name="unitType">area</param>
+            </type>
+        </property>
+
+        <property
+                name="waterDistributed"
+                column="WATER_DISTRIBUTED"
+                not-null="true">
+            <meta attribute="description">The volume of watered delivered since the last recorded event.</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="distanceTravelled"
+                  column="DISTANCE_TRAVELLED"
+                  not-null="true">
+            <meta attribute="description">The distance travelled since the last recorded event.</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="fdd3bd9d-b9d7-4d48-b9e7-b058dce85f2a" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for STATUS_OID to table OP_TIME_LINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="OP_TIME_LINE"/>
+            <not>
+                <columnExists tableName="OP_TIME_LINE" columnName="STATUS_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4274: AddColumn OP_TIME_LINE.STATUS_OID</comment>
+        <addColumn tableName="OP_TIME_LINE">
+            <column name="STATUS_OID" type="BIGINT" remarks="The OID of the operating status that the ore pass changed to."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="02c50edb-5fb8-45f2-a173-04c8e854c0e0" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for STATUS_OID to table UP_TIME_LINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="UP_TIME_LINE"/>
+            <not>
+                <columnExists tableName="UP_TIME_LINE" columnName="STATUS_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4274: AddColumn UP_TIME_LINE.STATUS_OID</comment>
+        <addColumn tableName="UP_TIME_LINE">
+            <column name="STATUS_OID" type="BIGINT" remarks="The OID of the status that the underground panel changed to."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="d2b0b854-02d0-4920-aad4-5f45ddc06c4e" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for OLD_STATUS_OID to table OP_TIME_LINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="OP_TIME_LINE"/>
+            <not>
+                <columnExists tableName="OP_TIME_LINE" columnName="OLD_STATUS_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4274: AddColumn OP_TIME_LINE.OLD_STATUS_OID</comment>
+        <addColumn tableName="OP_TIME_LINE">
+            <column name="OLD_STATUS_OID" type="BIGINT" remarks="The OID of the previous operating status that the ore pass changed from."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="4317f19a-bbf0-41f9-883c-a9a980f8ddba" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for OLD_STATUS_OID to table UP_TIME_LINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="UP_TIME_LINE"/>
+            <not>
+                <columnExists tableName="UP_TIME_LINE" columnName="OLD_STATUS_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4274: AddColumn UP_TIME_LINE.OLD_STATUS_OID</comment>
+        <addColumn tableName="UP_TIME_LINE">
+            <column name="OLD_STATUS_OID" type="BIGINT" remarks="The OID of the status that the underground panel changed from."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="17da815e-a85f-466c-bee1-4821dc00f6b7" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for DP_STATUS_OID to table DP_TIME_LINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DP_TIME_LINE"/>
+            <not>
+                <columnExists tableName="DP_TIME_LINE" columnName="DP_STATUS_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4274: AddColumn DP_TIME_LINE.DP_STATUS_OID</comment>
+        <addColumn tableName="DP_TIME_LINE">
+            <column name="DP_STATUS_OID" type="BIGINT" remarks="The OID of the operating status that the draw point changed to."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="e0c0bcc5-90ea-4b6d-99ec-9674d0f5600f" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for P_STATUS_OID to table DP_TIME_LINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DP_TIME_LINE"/>
+            <not>
+                <columnExists tableName="DP_TIME_LINE" columnName="P_STATUS_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4274: AddColumn DP_TIME_LINE.P_STATUS_OID</comment>
+        <addColumn tableName="DP_TIME_LINE">
+            <column name="P_STATUS_OID" type="BIGINT" remarks="The OID of the operating status that the panel changed to."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="a4a46110-0d5c-469a-ad1c-caa45ff77415" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for DP_OLD_STATUS_OID to table DP_TIME_LINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DP_TIME_LINE"/>
+            <not>
+                <columnExists tableName="DP_TIME_LINE" columnName="DP_OLD_STATUS_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4274: AddColumn DP_TIME_LINE.DP_OLD_STATUS_OID</comment>
+        <addColumn tableName="DP_TIME_LINE">
+            <column name="DP_OLD_STATUS_OID" type="BIGINT" remarks="The OID of the operating status that the draw point changed from."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="41774c7e-31a9-415d-8150-92f5ffa644df" author="MineStar" failOnError="false" context="Underground/Underground_Management">
+        <preConditions onFailMessage="Ignored AddColumn for P_OLD_STATUS_OID to table DP_TIME_LINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DP_TIME_LINE"/>
+            <not>
+                <columnExists tableName="DP_TIME_LINE" columnName="P_OLD_STATUS_OID"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4274: AddColumn DP_TIME_LINE.P_OLD_STATUS_OID</comment>
+        <addColumn tableName="DP_TIME_LINE">
+            <column name="P_OLD_STATUS_OID" type="BIGINT" remarks="The OID of the operating status that the panel changed from."/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
+

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+
+<!-- Classdefs for Fuel and Lube -->
+
+<classdefs>
+    <classdef name="minestar.production.domain.fuel.FuelAndLubeType">
+        <propertydef name="OID" access="readonly">
+            <typedef><type code="long"/></typedef>
+            <uidef visiblewhen="false"/>
+        </propertydef>
+
+        <propertydef name="name">
+            <description>The name value of the fuel and lube type.</description>
+        </propertydef>
+
+        <propertydef name="id">
+            <uidef enabledwhen="false" updateable="false"/>
+            <description>The onboard id value.</description>
+        </propertydef>
+
+        <propertydef name="description">
+            <description>The description value of the fuel and lube type.</description>
+        </propertydef>
+
+        <propertydef name="category">
+            <description>The category value of the fuel and lube type.</description>
+        </propertydef>
+
+        <propertydef name="unitType">
+            <description>The unit type of the fuel and lube type.</description>
+        </propertydef>
+
+        <propertydef name="fieldInputUnitName">
+            <description>The unit in which to interpret values received from the field.</description>
+        </propertydef>
+    </classdef>
+
+    <classdef name="minestar.production.domain.event.FluidAndSmuRecord">
+        <propertydef name="timestamp">
+            <description>The record timestamp.</description>
+        </propertydef>
+        <propertydef name="machineOID">
+            <description>The machine associated with the event.</description>
+        </propertydef>
+        <propertydef name="smu">
+            <description>The smu of the event.</description>
+        </propertydef>
+        <propertydef name="odometer">
+            <description>The equipment odometer information at the time of the event.</description>
+        </propertydef>
+        <propertydef name="fuelAttendantOID">
+            <description>The fuel attendant associated with the event.</description>
+        </propertydef>
+        <propertydef name="operatorOID">
+            <description>The operator associated with the event.</description>
+        </propertydef>
+        <propertydef name="dataSource">
+            <defaultvalue>0</defaultvalue>
+            <description>The data source associated with the event.</description>
+        </propertydef>
+        <propertydef name="fluids">
+            <description>The fuel associated with service hours event.</description>
+        </propertydef>
+    </classdef>
+
+</classdefs>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b598d852-c8c7-4ba1-aeaa-a7a2d2923df9" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for HGB_OVCONT_VAL as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="HGB_OVCONT_VAL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6540: CreateTable HGB_OVCONT_VAL</comment>
+        <createTable tablespace="MW_ENT" remarks="Mining block continuous grade values" tableName="HGB_OVCONT_VAL">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRADE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VALUE" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,GRADE_OID" constraintName="HGB_OVCONT_VAL_PK" tablespace="MW_IDXENT" tableName="HGB_OVCONT_VAL"/>
+        <createIndex unique="false" tablespace="MW_IDXOBJ" tableName="HGB_OVCONT_VAL" indexName="GRADEBLOCK_CONT_VALUE_12U">
+            <column name="OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="6f4b114b-4007-4a7f-94fd-a3fc68c07b97" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for HGB_OVDISC_VAL as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="HGB_OVDISC_VAL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6540: CreateTable HGB_OVDISC_VAL</comment>
+        <createTable tablespace="MW_ENT" remarks="The discrete grade values for the block" tableName="HGB_OVDISC_VAL">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRADE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VALUE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,GRADE_OID" constraintName="HGB_OVDISC_VAL_PK" tablespace="MW_IDXENT" tableName="HGB_OVDISC_VAL"/>
+        <createIndex unique="false" tablespace="MW_IDXOBJ" tableName="HGB_OVDISC_VAL" indexName="GRADEBLOCK_DISC_VALUE_12U">
+            <column name="OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="f58bbf1a-7196-48cf-80f0-177faa570a46" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for HGB_OVERRIDE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="HGB_OVERRIDE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6540: CreateTable HGB_OVERRIDE</comment>
+        <createTable tablespace="MW_ENT" remarks="A historical record of grade block overrides." tableName="HGB_OVERRIDE">
+            <column name="GB_OVERRIDE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRADE_BLOCK" type="BIGINT" remarks="A reference to the grade (MSMODEL.GRADE) that this historical record applies to.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER1" type="BIGINT" remarks="A reference to the user (MSMODEL.USER) who applied the override.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of when this override became active.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EXPIRY_TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of when this override will expire.">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="GB_OVERRIDE_OID" constraintName="HGB_OVERRIDE_PK" tablespace="MW_IDXENT" tableName="HGB_OVERRIDE"/>
+        <createIndex unique="false" tableName="HGB_OVERRIDE" indexName="IDX_GB_TIMESTAMP">
+            <column name="GRADE_BLOCK"/>
+            <column name="TIMESTAMP_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="53dbe8a0-6a38-4715-95ee-d1b7f2765fbb" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for HGB_OVCONT_VAL_OID_FK to table HGB_OVCONT_VAL as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="HGB_OVCONT_VAL" columnName="OID"/>
+            <columnExists tableName="HGB_OVERRIDE" columnName="GB_OVERRIDE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="HGB_OVCONT_VAL" foreignKeyName="HGB_OVCONT_VAL_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6540: AddForeignKeyConstraint HGB_OVCONT_VAL_OID_FK to HGB_OVCONT_VAL (OID)</comment>
+        <sql>DELETE FROM HGB_OVCONT_VAL WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM HGB_OVERRIDE WHERE HGB_OVERRIDE.GB_OVERRIDE_OID = HGB_OVCONT_VAL.OID)</sql>
+        <addForeignKeyConstraint baseTableName="HGB_OVCONT_VAL" baseColumnNames="OID" constraintName="HGB_OVCONT_VAL_OID_FK" referencedTableName="HGB_OVERRIDE" referencedColumnNames="GB_OVERRIDE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="HGB_OVCONT_VAL" constraintName="HGB_OVCONT_VAL_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="b1728862-a8c0-43ca-b672-cc4e68faacd9" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for HGB_OVDISC_VAL_OID_FK to table HGB_OVDISC_VAL as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="HGB_OVDISC_VAL" columnName="OID"/>
+            <columnExists tableName="HGB_OVERRIDE" columnName="GB_OVERRIDE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="HGB_OVDISC_VAL" foreignKeyName="HGB_OVDISC_VAL_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6540: AddForeignKeyConstraint HGB_OVDISC_VAL_OID_FK to HGB_OVDISC_VAL (OID)</comment>
+        <sql>DELETE FROM HGB_OVDISC_VAL WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM HGB_OVERRIDE WHERE HGB_OVERRIDE.GB_OVERRIDE_OID = HGB_OVDISC_VAL.OID)</sql>
+        <addForeignKeyConstraint baseTableName="HGB_OVDISC_VAL" baseColumnNames="OID" constraintName="HGB_OVDISC_VAL_OID_FK" referencedTableName="HGB_OVERRIDE" referencedColumnNames="GB_OVERRIDE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="HGB_OVDISC_VAL" constraintName="HGB_OVDISC_VAL_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

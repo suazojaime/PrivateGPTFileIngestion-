@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="SystemSnapshot"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="20"
+		 rightMargin="20"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<parameter name="SUBREPORT_FILE_NAME" isForPrompting="true" class="java.lang.String">
+		<parameterDescription><![CDATA[File Name for Sub-Report]]></parameterDescription>
+		<defaultValueExpression><![CDATA["D:\\mstar\\ext\\Platform\\Platform_Management\\reports\\OracleStorageSubRep.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MONITORSEQUENCE" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="SERVERNAME" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="MONITORTYPE" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="SUBREPORT_SYSPROCESS" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression><![CDATA["D:\\mstar\\ext\\Platform\\Platform_Management\\reports\\SystemProcessSubRep.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_FILESYSTEM" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression><![CDATA["D:\\mstar\\ext\\Platform\\Platform_Management\\reports\\SystemStorageSubRep.jasper"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="REPORT_PATH" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression><![CDATA["D:\\mstar\\ext\\Platform\\Platform_Management\\reports"]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[Select * from SYSTEMMONITOR Where ServerName = $P{SERVERNAME} and MonitorType = $P{MONITORTYPE} and MonitorSequence = convert($P{MONITORSEQUENCE}, INT)]]></queryString>
+	<field name="SERVERNAME" class="java.lang.String"/>
+	<field name="MONITORSEQUENCE" class="java.lang.Integer"/>
+	<field name="MSTARHOMEDRIVE" class="java.lang.String"/>
+	<field name="STARTUPTIME" class="java.sql.Timestamp"/>
+	<field name="PROCESSES" class="java.lang.Integer"/>
+	<field name="UPTIMEDAYS" class="java.lang.Integer"/>
+	<field name="UPTIMEHOURS" class="java.lang.Integer"/>
+	<field name="UPTIMEMINUTES" class="java.lang.Integer"/>
+	<field name="UPTIMESECONDS" class="java.lang.Integer"/>
+	<field name="STATUS" class="java.lang.String"/>
+	<field name="MONITORTIME" class="java.sql.Timestamp"/>
+	<field name="LASTMONITORTIME" class="java.sql.Timestamp"/>
+	<field name="MONITORTYPE" class="java.lang.String"/>
+	<variable name="test" class="java.lang.String" resetType="None" calculation="Nothing">
+		<variableExpression><![CDATA["test"]]></variableExpression>		<initialValueExpression><![CDATA["test"]]></initialValueExpression>	</variable>
+	<variable name="SUBREP_SYSPROCESS" class="java.lang.String" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$P{REPORT_PATH} + "\\SystemProcessSubRep.jasper"]]></variableExpression>	</variable>
+	<variable name="SUBREP_FILESYSTEM" class="java.lang.String" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[$P{REPORT_PATH} + "\\SystemStorageSubRep.jasper"]]></variableExpression>	</variable>
+		<background>
+			<band height="0">
+			</band>
+		</background>
+		<title>
+			<band height="1">
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="-46"
+						width="534"
+						height="0"
+						forecolor="#808080"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<graphicElement stretchType="NoStretch" pen="2Point" fill="Solid" />
+				</line>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="2">
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0">
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="197">
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="199"
+						y="3"
+						width="151"
+						height="34"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="20" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<text> Snapshot as at </text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="41"
+						width="534"
+						height="0"
+						forecolor="#808080"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<graphicElement stretchType="NoStretch" pen="2Point" fill="Solid" />
+				</line>
+				<line direction="BottomUp">
+					<reportElement
+						mode="Opaque"
+						x="1"
+						y="0"
+						width="535"
+						height="0"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<graphicElement stretchType="NoStretch" pen="2Point" fill="Solid" />
+				</line>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="3"
+						y="3"
+						width="193"
+						height="34"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="20" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String">$F{SERVERNAME}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="80"
+						y="65"
+						width="26"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String">$F{MSTARHOMEDRIVE}</textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="58"
+						y="51"
+						width="69"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" pdfEncoding ="Cp1250" isStrikeThrough="false" />
+					</textElement>
+				<text>MSTAR HOME</text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd-MMM-yyyy HH:mm" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="134"
+						y="64"
+						width="80"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.sql.Timestamp">$F{STARTUPTIME}</textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="133"
+						y="51"
+						width="77"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" pdfEncoding ="Cp1250" isStrikeThrough="false" />
+					</textElement>
+				<text>STARTED TIME</text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd-MMM-yyyy HH:mm" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="452"
+						y="64"
+						width="72"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.sql.Timestamp">$F{LASTMONITORTIME}</textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="450"
+						y="51"
+						width="77"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" pdfEncoding ="Cp1250" isStrikeThrough="false" />
+					</textElement>
+				<text>LAST MONITOR</text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="18"
+						y="65"
+						width="18"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer">$F{MONITORSEQUENCE}</textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="3"
+						y="51"
+						width="51"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" pdfEncoding ="Cp1250" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[MON. SEQ]]></text>
+				</staticText>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="6"
+						y="84"
+						width="298"
+						height="28"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<subreportParameter  name="SERVERNAME">
+						<subreportParameterExpression>$F{SERVERNAME}</subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="MONITORSEQUENCE">
+						<subreportParameterExpression>$F{MONITORSEQUENCE}</subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="MONITORTYPE">
+						<subreportParameterExpression>$F{MONITORTYPE}</subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression>$P{REPORT_CONNECTION}</connectionExpression>
+					<subreportExpression  class="java.lang.String">$V{SUBREP_SYSPROCESS}</subreportExpression>
+				</subreport>
+				<textField isStretchWithOverflow="true" pattern="dd-MMM-yyyy HH:mm" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="353"
+						y="3"
+						width="182"
+						height="34"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="20" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.sql.Timestamp">$F{MONITORTIME}</textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="214"
+						y="51"
+						width="63"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Uptime Days</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="284"
+						y="51"
+						width="31"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Hours</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="322"
+						y="51"
+						width="25"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Mins</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="355"
+						y="51"
+						width="24"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Secs</text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="240"
+						y="64"
+						width="35"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer">$F{UPTIMEDAYS}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="283"
+						y="64"
+						width="28"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer">$F{UPTIMEHOURS}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="322"
+						y="64"
+						width="23"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer">$F{UPTIMEMINUTES}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="353"
+						y="64"
+						width="24"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer">$F{UPTIMESECONDS}</textFieldExpression>
+				</textField>
+				<subreport  isUsingCache="true">
+					<reportElement
+						mode="Opaque"
+						x="310"
+						y="83"
+						width="219"
+						height="30"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<subreportParameter  name="SERVERNAME">
+						<subreportParameterExpression>$F{SERVERNAME}</subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="MONITORSEQUENCE">
+						<subreportParameterExpression>$F{MONITORSEQUENCE}</subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="MONITORTYPE">
+						<subreportParameterExpression>$F{MONITORTYPE}</subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression>$P{REPORT_CONNECTION}</connectionExpression>
+					<subreportExpression  class="java.lang.String">$V{SUBREP_FILESYSTEM}</subreportExpression>
+				</subreport>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="389"
+						y="51"
+						width="51"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-BoldOblique" size="10" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Processes</text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="405"
+						y="64"
+						width="23"
+						height="12"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer">$F{PROCESSES}</textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0">
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="27">
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="325"
+						y="4"
+						width="174"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="499"
+						y="4"
+						width="36"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						mode="Opaque"
+						x="1"
+						y="3"
+						width="535"
+						height="0"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<graphicElement stretchType="NoStretch" pen="2Point" fill="Solid" />
+				</line>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="1"
+						y="6"
+						width="209"
+						height="19"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="Helvetica" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0">
+			</band>
+		</summary>
+</jasperReport>

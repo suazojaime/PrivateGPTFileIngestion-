@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.underground.drawpoint.DrawPointImpl"
+           proxy="minestar.mine.domain.minemodel.underground.drawpoint.DrawPoint"
+           table="DRAW_POINT"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">DRAWPOINT</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">
+            A location in the extraction level of a block-cave mine where ore is available for load-haul-dump (LHD)
+            trucks to take their loads from.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=DRAWPOINT_ID
+            unique=true
+            columns=ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=DP_NAME
+            unique=true
+            columns=DP_NAME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="DRAWPOINT_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="DP_NAME"
+                  length="254"
+                  not-null="true">
+            <meta attribute="description">The unique, user-entered identifier for this draw point.</meta>
+        </property>
+
+        <property name="id"
+                  type="java.lang.Integer"
+                  column="ID"
+                  not-null="true">
+            <meta attribute="description">The unique, system-assigned identifier for this draw point.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <property name="active"
+                  type="java.lang.Boolean"
+                  column="IS_ACTIVE"
+                  not-null="true">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">
+                Whether this draw point is active or archived.
+                (This flag is '1' if it is active and '0' if archived.)
+            </meta>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  type="java.lang.Long"
+                  column="MODEL_UPDATE_VERSION">
+            <meta attribute="description">The is a copy of the system wide version number.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <many-to-one name="operatingStatus"
+                     class="minestar.mine.domain.minemodel.underground.operatingstatus.DrawPointOperatingStatusImpl"
+                     column="OPERATING_STATUS"
+                     lazy="false">
+            <meta attribute="description">
+                A reference to the operating status (MSMODEL.OPERATING_STATUS) that describes the current operating
+                conditions of this draw point.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="gradeBlock"
+                     class="minestar.mine.domain.material.GradeBlockReference"
+                     column="GRADEBLOCK"
+                     lazy="false">
+            <meta attribute="description">
+                A reference to the grade block (MSMODEL.GRADEBLOCK) that is associated with this draw point.
+                The draw point's fragmentation and moisture values are stored as discrete grades in its grade block.
+                Its ore grade values are stored as continuous grades in its grade block.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="associatedLocation"
+                     class="minestar.mine.domain.minemodel.LocationReference"
+                     column="ASSOC_LOCATION"
+                     lazy="false">
+            <meta attribute="alias" inherit="false">associatedLocation</meta>
+            <meta attribute="description">
+                A reference to the location (MSMODEL.LOCATION) that is associated with this draw point.
+                An LHD cycle has as its source a reference to a location, rather than a reference to a draw point.
+                This association is used to identify which draw point that the LHD took a load from in the cycle.
+                Additionally, the draw point's position and boundary polygon are stored in the bounding waypoint of
+                its associated location.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="areaRef"
+                     class="minestar.mine.domain.minemodel.underground.area.UndergroundAreaReference"
+                     column="AREA_OID"
+                     lazy="false">
+            <meta attribute="description">
+                A reference to the underground area (MSMODEL.UNDERGROUND_AREA) that this draw point is located at.
+            </meta>
+        </many-to-one>
+
+        <property name="position"
+                  type="XYZCoordinate">
+            <meta attribute="description">
+                (DEPRECATED) This field is no longer used. It used to store the XYZ coordinate of the draw point's
+                position, which is now stored in the bounding waypoint of its associated location.
+            </meta>
+            <column name="POSITION_POINT_X"/>
+            <column name="POSITION_POINT_Y"/>
+            <column name="POSITION_POINT_Z"/>
+        </property>
+
+        <property name="externalRef" type="java.lang.String" column="EXTERNALREF" length="254">
+            <meta attribute="description">The external system reference of this draw point</meta>
+        </property>
+
+        <property name="externalDesc" type="java.lang.String" column="EXTERNALDESC" length="254">
+            <meta attribute="description">The External System Description</meta>
+        </property>
+
+    </class>
+
+    <!-- A lightweight reference to a Draw Point -->
+    <class name="minestar.mine.domain.minemodel.underground.drawpoint.DrawPointReference"
+           table="DRAW_POINT"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">DrawPointReference</meta>
+        <meta attribute="description">A minimal reference to a draw point.</meta>
+        <meta attribute="lookupExpr" inherit="false">name</meta>
+        <meta attribute="viewproperty-name" inherit="false">
+            type=string
+            description=The name for the draw point.
+            expression=lookupResource.drawpoint.name.query
+        </meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID"
+            type="long"
+            column="DRAWPOINT_OID"
+            access="field"/>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="DP_NAME"
+                  access="field"/>
+    </class>
+
+</hibernate-mapping>

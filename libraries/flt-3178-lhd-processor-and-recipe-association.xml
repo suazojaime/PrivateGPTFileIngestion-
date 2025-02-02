@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b47c30bf-597e-45b6-a72d-785b05e60a8d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LOADER_RECIPE_OID to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="LOADER_RECIPE_OID"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3178: AddColumn MACHINE_IN_PIT.LOADER_RECIPE_OID</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="LOADER_RECIPE_OID" type="BIGINT">
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="be6b8edd-5be6-43bf-8bc2-7d3bd1a1cac3" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for LOADINGTOOL_PROCESSORS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LOADINGTOOL_PROCESSORS"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3178: CreateTable LOADINGTOOL_PROCESSORS</comment>
+        <createTable tablespace="MW_ENT" remarks="Processors a loading tool in lhd should be loading." tableName="LOADINGTOOL_PROCESSORS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PROCESSOR_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="LOADINGTOOL_PROCESSORS" constraintName="LOADINGTOOL_PROCESSORS_PK" columnNames="OID,PROCESSOR_OID"/>
+        <addForeignKeyConstraint baseTableName="LOADINGTOOL_PROCESSORS" baseColumnNames="OID" constraintName="LOADINGTOOL_OID_FK" referencedTableName="MACHINE_IN_PIT" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="LOADINGTOOL_PROCESSORS" constraintName="LOADINGTOOL_OID_FK"/>
+            <dropTable tableName="LOADINGTOOL_PROCESSORS"/>
+        </rollback>
+
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

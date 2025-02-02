@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    
+    <changeSet id="997bf923-13ab-4755-95ff-512b718e301e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for INCIDENT_MESSAGE_EVENTHANDLE of table INCIDENT_MESSAGE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="INCIDENT_MESSAGE_EVENTHANDLE" tableName="INCIDENT_MESSAGE"/>
+        </preConditions>
+        <comment>MO-11019: DropIndex INCIDENT_MESSAGE_EVENTHANDLE from INCIDENT_MESSAGE (EVENT_HANDLE)</comment>
+        <dropIndex indexName="INCIDENT_MESSAGE_EVENTHANDLE" tableName="INCIDENT_MESSAGE"/>
+        <rollback>
+            <createIndex unique="false" tableName="INCIDENT_MESSAGE" indexName="INCIDENT_MESSAGE_EVENTHANDLE">
+                <column name="EVENT_HANDLE"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="94a301fd-3836-4cba-b927-84ae565fcb1e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for INCIDENT_MESSAGE_EVENT_TIME of table INCIDENT_MESSAGE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="INCIDENT_MESSAGE_EVENT_TIME" tableName="INCIDENT_MESSAGE"/>
+        </preConditions>
+        <comment>MO-11019: DropIndex INCIDENT_MESSAGE_EVENT_TIME from INCIDENT_MESSAGE (EVENT_TIMESTAMP_UTC)</comment>
+        <dropIndex indexName="INCIDENT_MESSAGE_EVENT_TIME" tableName="INCIDENT_MESSAGE"/>
+        <rollback>
+            <createIndex unique="false" tableName="INCIDENT_MESSAGE" indexName="INCIDENT_MESSAGE_EVENT_TIME">
+                <column name="EVENT_TIMESTAMP_UTC"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="337de8bb-c02d-49f1-b9d2-23f01db60303" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for INCIDENT_MESSAGE.ALARM_LEVEL as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="INCIDENT_MESSAGE" columnName="ALARM_LEVEL"/>
+        </preConditions>
+        <comment>MO-11019: AddNotNullConstraint to INCIDENT_MESSAGE.ALARM_LEVEL</comment>
+        <sql>UPDATE INCIDENT_MESSAGE SET ALARM_LEVEL = 0 WHERE ALARM_LEVEL IS NULL</sql>
+        <addNotNullConstraint columnName="ALARM_LEVEL" columnDataType="INT" tableName="INCIDENT_MESSAGE"/>
+        <rollback>
+            <dropNotNullConstraint tableName="INCIDENT_MESSAGE" columnName="ALARM_LEVEL" columnDataType="INT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="d37d4205-434f-46bc-8d27-f87bee373e0d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for INCIDENT_MESSAGE.EVENT_HANDLE as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="INCIDENT_MESSAGE" columnName="EVENT_HANDLE"/>
+        </preConditions>
+        <comment>MO-11019: AddNotNullConstraint to INCIDENT_MESSAGE.EVENT_HANDLE</comment>
+        <sql>DELETE FROM INCIDENT_MESSAGE WHERE EVENT_HANDLE IS NULL</sql>
+        <addNotNullConstraint columnName="EVENT_HANDLE" columnDataType="BIGINT" tableName="INCIDENT_MESSAGE"/>
+        <rollback>
+            <dropNotNullConstraint tableName="INCIDENT_MESSAGE" columnName="EVENT_HANDLE" columnDataType="BIGINT"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="c23f271a-63bd-4549-97e4-2de44ecc4da8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for INCIDENT_MESSAGE.EVENT_TIMESTAMP_UTC as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="INCIDENT_MESSAGE" columnName="EVENT_TIMESTAMP_UTC"/>
+        </preConditions>
+        <comment>MO-11019: AddNotNullConstraint to INCIDENT_MESSAGE.EVENT_TIMESTAMP_UTC</comment>
+        <sql>DELETE FROM INCIDENT_MESSAGE WHERE EVENT_TIMESTAMP_UTC IS NULL</sql>
+        <addNotNullConstraint columnName="EVENT_TIMESTAMP_UTC" columnDataType="DATETIME2" tableName="INCIDENT_MESSAGE"/>
+        <rollback>
+            <dropNotNullConstraint tableName="INCIDENT_MESSAGE" columnName="EVENT_TIMESTAMP_UTC" columnDataType="DATETIME2"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="6f67c9cd-a7e3-4b20-b5b0-f526331f75f2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for INCIDENT_MESSAGE.EVENT_ACTIVITY as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="INCIDENT_MESSAGE" columnName="EVENT_ACTIVITY"/>
+        </preConditions>
+        <comment>MO-11019: AddNotNullConstraint to INCIDENT_MESSAGE.EVENT_ACTIVITY</comment>
+        <sql>DELETE FROM INCIDENT_MESSAGE WHERE EVENT_ACTIVITY IS NULL</sql>
+        <addNotNullConstraint columnName="EVENT_ACTIVITY" columnDataType="VARCHAR(255)" tableName="INCIDENT_MESSAGE"/>
+        <rollback>
+            <dropNotNullConstraint tableName="INCIDENT_MESSAGE" columnName="EVENT_ACTIVITY" columnDataType="VARCHAR(255)"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="e2470737-2925-424a-a632-77075e534a28" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for INCIDENT_MESSAGE.MACHINE as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="INCIDENT_MESSAGE" columnName="MACHINE"/>
+        </preConditions>
+        <comment>MO-11019: AddNotNullConstraint to INCIDENT_MESSAGE.MACHINE</comment>
+        <sql>DELETE FROM INCIDENT_MESSAGE WHERE MACHINE IS NULL</sql>
+        <addNotNullConstraint columnName="MACHINE" columnDataType="BIGINT" tableName="INCIDENT_MESSAGE"/>
+        <rollback>
+            <dropNotNullConstraint tableName="INCIDENT_MESSAGE" columnName="MACHINE" columnDataType="BIGINT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0e59ce83-fa1e-4f3c-9901-9dbcdbc04bfc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for INCIDENT_MESSAGE_EVENT_TIME to table INCIDENT_MESSAGE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_MESSAGE"/>
+            <not>
+                <indexExists indexName="INCIDENT_MESSAGE_EVENT_TIME" tableName="INCIDENT_MESSAGE"/>
+            </not>
+        </preConditions>
+        <comment>MO-14961: CreateIndex INCIDENT_MESSAGE_EVENT_TIME on INCIDENT_MESSAGE (EVENT_TIMESTAMP_UTC)</comment>
+        <createIndex unique="false" indexName="INCIDENT_MESSAGE_EVENT_TIME" tableName="INCIDENT_MESSAGE">
+            <column name="EVENT_TIMESTAMP_UTC"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="e7acffa4-9c20-4381-a041-083093f49972" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateUniqueIndex for INCIDENT_MESSAGE_UNIQUE to table INCIDENT_MESSAGE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_MESSAGE"/>
+            <not>
+                <indexExists indexName="INCIDENT_MESSAGE_UNIQUE" tableName="INCIDENT_MESSAGE"/>
+            </not>
+        </preConditions>
+        <comment>MO-11019: CreateUniqueIndex INCIDENT_MESSAGE_UNIQUE on INCIDENT_MESSAGE (EVENT_HANDLE, EVENT_TIMESTAMP_UTC, EVENT_ACTIVITY, MACHINE, INCIDENT_TYPE)</comment>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY EVENT_HANDLE, EVENT_TIMESTAMP_UTC, EVENT_ACTIVITY, MACHINE, INCIDENT_TYPE ORDER BY %%physloc%%) AS ROW_NUM FROM INCIDENT_MESSAGE) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="INCIDENT_MESSAGE" indexName="INCIDENT_MESSAGE_UNIQUE">
+            <column name="EVENT_HANDLE"/>
+            <column name="EVENT_TIMESTAMP_UTC"/>
+            <column name="EVENT_ACTIVITY"/>
+            <column name="MACHINE"/>
+            <column name="INCIDENT_TYPE"/>
+        </createIndex>
+        <rollback>
+            <dropIndex tableName="INCIDENT_MESSAGE" indexName="INCIDENT_MESSAGE_UNIQUE"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

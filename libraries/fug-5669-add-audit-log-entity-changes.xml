@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="5b951701-5a62-4bde-980e-56281c89d3d6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for EVENT_LOG_PROVIDER as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="EVENT_LOG_PROVIDER"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5669: add table EVENT_LOG_PROVIDER</comment>
+        <createTable tablespace="MW_ENT" remarks="An historical event log provider." tableName="EVENT_LOG_PROVIDER">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EVENT_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REF_OID" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="REF_NAME" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="TIMESTAMP_UTC" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="EVENT_LOG_PROVIDER_PK" tablespace="MW_IDXENT" tableName="EVENT_LOG_PROVIDER"/>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="EVENT_LOG_PROVIDER" indexName="EVENT_LOG_PROVIDER_I1">
+            <column name="EVENT_TYPE"/>
+            <column name="REF_OID"/>
+            <column name="REF_NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="971891ef-f764-4667-a9a6-82bd960cf582" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for EVENT_LOG_ENTRY as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="EVENT_LOG_ENTRY"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5669: add table EVENT_LOG_ENTRY</comment>
+        <createTable tablespace="MW_ENT" remarks="An historical event log." tableName="EVENT_LOG_ENTRY">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EVENT_PROV_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP_UTC" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EVENT_CONTENT" type="VARCHAR(4000)"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="EVENT_LOG_ENTRY_PK" tablespace="MW_IDXENT" tableName="EVENT_LOG_ENTRY"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="EVENT_LOG_ENTRY" indexName="EVENT_LOG_ENTRY_I1">
+            <column name="EVENT_PROV_OID"/>
+            <column name="TIMESTAMP_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="15e18957-d063-499d-9187-8f869a896c04" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddForeignKeyConstraint for EVENT_LOG_PROVIDER_FK to table EVENT_LOG_ENTRY as (1) the source or referenced column does not exist, or (2) the foreignKey already exists."
+                onFail="MARK_RAN">
+            <columnExists tableName="EVENT_LOG_PROVIDER" columnName="OID"/>
+            <columnExists tableName="EVENT_LOG_ENTRY" columnName="EVENT_PROV_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="EVENT_LOG_ENTRY" foreignKeyName="EVENT_LOG_PROVIDER_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5669: add table EVENT_LOG_ENTRY FK</comment>
+        <addForeignKeyConstraint baseTableName="EVENT_LOG_ENTRY" baseColumnNames="EVENT_PROV_OID"
+                                 constraintName="EVENT_LOG_PROVIDER_FK" referencedTableName="EVENT_LOG_PROVIDER"
+                                 referencedColumnNames="OID" onDelete="NO ACTION"/>
+    </changeSet>
+
+</databaseChangeLog>
+

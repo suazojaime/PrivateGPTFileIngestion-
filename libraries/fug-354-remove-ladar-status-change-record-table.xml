@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="0046fc14-72ae-4b05-9ef9-7ba21e6c8a8e" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for LADAR_STATUS_CHANGE_RECORD as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="LADAR_STATUS_CHANGE_RECORD"/>
+        </preConditions>
+        <comment>FUG-354: DropTable LADAR_STATUS_CHANGE_RECORD</comment>
+        <dropTable tableName="LADAR_STATUS_CHANGE_RECORD"/>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

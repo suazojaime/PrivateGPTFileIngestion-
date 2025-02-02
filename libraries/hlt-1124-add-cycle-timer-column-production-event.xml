@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe1" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CYCLE_TIMER_TIMESTAMP to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="CYCLE_TIMER_TIMESTAMP"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn CYCLE_TIMER_TIMESTAMP to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="CYCLE_TIMER_TIMESTAMP" type="DATETIME2"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe2" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CYCLE_TIMER_IDENTIFIER to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="CYCLE_TIMER_IDENTIFIER"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn CYCLE_TIMER_IDENTIFIER to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="CYCLE_TIMER_IDENTIFIER" type="VARCHAR(254)" remarks="Type of the Cycle."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe3" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CYCLE_INSTANCE_NO to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="CYCLE_INSTANCE_NO"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn CYCLE_INSTANCE_NO to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="CYCLE_INSTANCE_NO" type="INT" remarks="The Instance No."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe4" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for CYCLE_SEG_IDENTIFIER to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="CYCLE_SEG_IDENTIFIER"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn CYCLE_SEG_IDENTIFIER to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="CYCLE_SEG_IDENTIFIER" type="VARCHAR(254)" remarks="Name of the Segment ."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe5" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for LOAD_CYCLE_TIME to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="LOAD_CYCLE_TIME"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn LOAD_CYCLE_TIME to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="LOAD_CYCLE_TIME" type="INT" remarks="Load cycle time."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe6" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for FUEL_CONS_RATE to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="FUEL_CONS_RATE"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn FUEL_CONS_RATE to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="FUEL_CONS_RATE" type="DOUBLE" remarks="Cycle fuel consumption rate."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe7" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ECM_TIME_ZONE_1 to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="ECM_TIME_ZONE_1"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn ECM_TIME_ZONE_1 to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="ECM_TIME_ZONE_1" type="VARCHAR(254)" remarks="Cycle ECM time zone1."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe8" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ECM_TIME_ZONE_2 to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="ECM_TIME_ZONE_2"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn ECM_TIME_ZONE_2 to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="ECM_TIME_ZONE_2" type="VARCHAR(254)" remarks="Cycle ECM time zone2."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbe9" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ECM_TIME_ZONE_3 to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="ECM_TIME_ZONE_3"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn ECM_TIME_ZONE_3 to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="ECM_TIME_ZONE_3" type="VARCHAR(254)" remarks="Cycle ECM time zone3."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e489341f-93b6-4cfb-b672-f824a4eebbea" context="Machine_Tracking/Machine_Tracking_Management" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored AddColumn for ECM_TIME_ZONE_4 to table PRODUCTION_EVENT as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="ECM_TIME_ZONE_4"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1124 AddColumn ECM_TIME_ZONE_4 to table PRODUCTION_EVENT</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="ECM_TIME_ZONE_4" type="VARCHAR(254)" remarks="Cycle ECM time zone4."/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

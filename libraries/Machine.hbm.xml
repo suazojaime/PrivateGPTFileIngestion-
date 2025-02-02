@@ -1,0 +1,1876 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2022 Caterpillar
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <class name="minestar.pitlink.domain.machine.MachineImpl"
+           table="MACHINE"
+           discriminator-value="XAEntity.Machine">
+
+        <meta attribute="view-master">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index" inherit="false">
+            name=MACHINE_ECF_CLASS_ID
+            columns=ECF_CLASS_ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index" inherit="false">
+            name=MACHINE_ID
+            unique=true
+            columns=ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index" inherit="false">
+            name=MACHINE_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=PSEUDOLITE_ID_UK
+            unique=true
+            columns=PSEUDOLITE_ID
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="import-order">0</meta>
+        <meta attribute="view-create-order">2</meta>
+
+        <meta attribute="description">A piece of equipment.</meta>
+
+        <cache usage="read-write" region="model"/>
+        <id name="OID" type="java.lang.Long" column="MACHINE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID" not-null="false"/>
+
+        <property name="active" type="boolean">
+            <!-- default value is for ECF. When Machine is no longer ECF this can go -->
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Is this machine active</meta>
+            <column name="IS_ACTIVE" not-null="true" default="1"/>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  type="long">
+            <meta attribute="description">The mine model update version when the machine was created/modified.</meta>
+            <column name="MODEL_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property name="layerUpdateVersion"
+                  type="long">
+            <meta attribute="description">The layer update version when the machine was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property name="name" type="java.lang.String" column="NAME" length="254" not-null="true">
+            <meta attribute="description">The name of this machine</meta>
+        </property>
+
+        <property name="serialNumber" type="java.lang.String" column="SERIALNUMBER" length="254">
+            <meta attribute="description">The manufacturer supplied serial number</meta>
+        </property>
+
+        <property name="externalRef" type="java.lang.String" column="EXTERNALREF" length="254">
+            <meta attribute="description">The external system reference of this machine</meta>
+        </property>
+
+        <property name="externalDesc" type="java.lang.String" column="EXTERNALDESC" length="254">
+            <meta attribute="description">The External System Description</meta>
+        </property>
+
+        <many-to-one name="machineClassRef" class="minestar.pitlink.domain.machine.MachineClassReference" column="CLASS" not-null="true">
+            <meta attribute="alias">machineClass</meta>
+        </many-to-one>
+
+        <property name="id" type="java.lang.Short" column="ID" not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <property name="ignoreForAssignment" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="IGNOREFORASSIGNMENT" not-null="true" default="0"/>
+        </property>
+
+        <property name="nonProduction" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="NONPRODUCTION" not-null="true" default="0"/>
+        </property>
+
+        <property name="excludeFromOperatorAllocation" type="boolean">
+            <meta attribute="alias" inherit="false">excludeFromOperAlloc</meta>
+            <meta attribute="defaultValue">false</meta>
+            <column name="EXCLUDEFROMOPERATORALLOCATION" not-null="true" default="0"/>
+        </property>
+
+        <property name="excludeFromTransportAllocation" type="boolean">
+            <meta attribute="alias" inherit="false">excludeFromTransAlloc</meta>
+            <meta attribute="defaultValue">false</meta>
+            <column name="EXCLUDEFROMTRANSPORTALLOCATION" not-null="true" default="0"/>
+        </property>
+
+        <property name="productivity" column="PRODUCTIVITY">
+            <meta attribute="unitType">ratio</meta>
+            <type name="quantity">
+                <param name="unitType">ratio</param>
+            </type>
+        </property>
+
+        <property name="useDynamicProductivity" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="USEDYNAMICPRODUCTIVITY" not-null="true" default="0"/>
+        </property>
+
+        <property name="gpsAntennaOverride" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="ANTENNA_OVERRIDE" not-null="true" default="0"/>
+        </property>
+
+        <property name="gpsAntenna" type="XYZCoordinate">
+            <meta attribute="description">
+                The offset of the gps antenna relative to the right rear.
+            </meta>
+            <column name="ANTENNA_X"/>
+            <column name="ANTENNA_Y"/>
+            <column name="ANTENNA_Z"/>
+        </property>
+
+        <!-- Data collection -->
+        <!--Override-->
+        <property name="dataCollectionOverride" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="DATA_COLLECTION_OVERRIDE" not-null="true" default="0"/>
+        </property>
+
+        <!--Front-->
+        <property name="dataCollectionFrontLeft" type="XYZCoordinate" >
+            <meta attribute="description">
+                Data Collection Front Left Values, as of now Z is a dummy value
+            </meta>
+            <column name="DATA_COLL_FRONT_LEFT_X"/>
+            <column name="DATA_COLL_FRONT_LEFT_Y"/>
+            <column name="DATA_COLL_FRONT_LEFT_Z"/>
+        </property>
+
+        <property name="dataCollectionFrontRight" type="XYZCoordinate" >
+            <meta attribute="description">
+                Data Collection Front Right Values, as of now Z is a dummy value
+            </meta>
+            <column name="DATA_COLL_FRONT_RIGHT_X"/>
+            <column name="DATA_COLL_FRONT_RIGHT_Y"/>
+            <column name="DATA_COLL_FRONT_RIGHT_Z"/>
+        </property>
+
+        <!--Rear-->
+        <property name="dataCollectionRearLeft" type="XYZCoordinate" >
+            <meta attribute="description">
+                Data Collection Rear Left Values, as of now Z is a dummy value
+            </meta>
+            <column name="DATA_COLL_REAR_LEFT_X"/>
+            <column name="DATA_COLL_REAR_LEFT_Y"/>
+            <column name="DATA_COLL_REAR_LEFT_Z"/>
+        </property>
+
+        <property name="dataCollectionRearRight" type="XYZCoordinate" >
+            <meta attribute="description">
+                Data Collection Rear Right Values, as of now Z is a dummy value
+            </meta>
+            <column name="DATA_COLL_REAR_RIGHT_X"/>
+            <column name="DATA_COLL_REAR_RIGHT_Y"/>
+            <column name="DATA_COLL_REAR_RIGHT_Z"/>
+        </property>
+
+
+        <property name="useClassFuelLevels" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="USECLASSFUELLEVELS" not-null="true" default="0"/>
+        </property>
+
+        <property name="useClassBurnRates" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="USECLASSBURNRATES" not-null="true" default="0"/>
+        </property>
+
+        <property name="useClassRefueling" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="USECLASSREFUELING" not-null="true" default="0"/>
+        </property>
+
+        <property name="useClassCapabilities" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="USECLASSCAPABILITIES" not-null="true" default="0"/>
+        </property>
+
+        <property name="fuelCapacity" column="FUELCAPACITY">
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <many-to-one name="fuelType" class="minestar.production.domain.fuel.FuelAndLubeTypeReference" column="FUELTYPE"/>
+
+        <property name="minimumRefuelAmount" column="MINIMUMREFUELAMOUNT">
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="refuelLevel" column="REFUELLEVEL">
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="criticalFuelLevel" column="CRITICALFUELLEVEL">
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="expectedDuratnBetweenRefuels" column="EXPECTEDDURATIONBETWEENREFUELS">
+            <meta attribute="alias" inherit="false">expectedDuratnBtnRefuels</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property name="currentFuelLevel" column="CURRENTFUELLEVEL">
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="currentFuelStatus" type="minestar.pitlink.domain.machine.FuelStatus$UserType" column="CURRENTFUELSTATUS">
+            <meta attribute="unitType" inherit="false">unitless</meta>
+            <meta attribute="choices" inherit="false">choice:currentFuelStatus</meta>
+        </property>
+
+        <property name="lastFuelStatusUpdateTime" type="TimestampType" column="LASTFUELSTATUSUPDATETIME_UTC">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The last fuel status update utc time.</meta>
+            <meta attribute="description">The last fuel status update time.</meta>
+        </property>
+
+        <property name="lastFuelLevelUpdateTime" type="TimestampType" column="LASTFUELLEVELUPDATETIME_UTC">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The last fuel level update utc time.</meta>
+            <meta attribute="description">The last fuel level update time.</meta>
+        </property>
+
+        <property name="lastRefuelTime" type="TimestampType" column="LASTREFUELTIME_UTC">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The last refuel utc time.</meta>
+            <meta attribute="description">The last refuel time.</meta>
+        </property>
+
+        <property name="lastRefuelQuantity" column="LASTREFUELQUANTITY">
+            <meta attribute="unitType" inherit="false">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="lastRefuelEstimate" column="LASTREFUELESTIMATE">
+            <meta attribute="unitType" inherit="false">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="lastDurationBetweenRefuels" column="LASTDURATIONBETWEENREFUELINGS">
+            <meta attribute="alias" inherit="false">lastDurationBtnRefuels</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property name="useDynamicFuelBurnRate" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="USEDYNAMICFUELBURNRATE" not-null="true" default="0"/>
+        </property>
+
+        <property name="fuelBurnAlgorithm" type="minestar.pitlink.domain.machine.FuelBurnAlgorithm$UserType" column="FUELBURNALGORITHM" not-null="true"/>
+
+        <property name="idleFuelBurnRate" column="IDLEFUELBURNRATE">
+            <meta attribute="unitType">fuel burn per time</meta>
+            <type name="quantity">
+                <param name="unitType">fuel burn per time</param>
+            </type>
+        </property>
+
+        <property name="workingFuelBurnRate" column="WORKINGFUELBURNRATE">
+            <meta attribute="unitType">fuel burn per time</meta>
+            <type name="quantity">
+                <param name="unitType">fuel burn per time</param>
+            </type>
+        </property>
+
+        <property name="ignoreVimsFuelSensor" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="IGNORE_VIMS_FUEL_SENSOR" not-null="true" default="0"/>
+        </property>
+
+        <property name="useDieselExhaustFluid" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="USE_DIESEL_EXHAUST_FLUID" not-null="true" default="0"/>
+        </property>
+
+        <property name="dieselExhaustFluidCapacity" column="DIESEL_EXHAUST_FLUID_CAPACITY">
+            <meta attribute="description">The diesel exhaust fluid capacity for all machines of this class.</meta>
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="currentDefLevel" column="CURRENT_DEF_LEVEL">
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="warningDefLevel" column="WARNING_DEF_LEVEL">
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <property name="criticalDefLevel" column="CRITICAL_DEF_LEVEL">
+            <meta attribute="unitType">liquid volume</meta>
+            <type name="quantity">
+                <param name="unitType">liquid volume</param>
+            </type>
+        </property>
+
+        <map name="activityFuelBurnRates" table="MACHINE_FUEL_BURN" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=MACHINE_FUEL_BURN_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="element-unitType">fuel burn per time</meta>
+            <meta attribute="description">The rate at which this machine burns fuel while engaged in various activities.</meta>
+
+            <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                 an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                 Do not cache Machine collections until ECF is removed from Machines.
+            <cache usage="read-write" region="model"/>
+            -->
+
+            <key column="OID" not-null="true"/>
+            <index-many-to-many class="minestar.production.domain.ActivityReference" column="ACTIVITY_OID"/>
+            <element column="RATE" not-null="true">
+                <type name="quantity">
+                    <param name="unitType">fuel burn per time</param>
+                </type>
+            </element>
+        </map>
+
+        <many-to-one name="shiftChangeGroup" class="minestar.assignment.domain.AssGroupReference" column="SHIFTCHANGEGROUP"/>
+
+        <many-to-one name="shiftChangeLocation" column="SHIFTCHANGE_LOCATION" class="minestar.mine.domain.minemodel.LocationReference"/>
+
+        <many-to-one name="shiftChangeLoadingTool" column="SHIFTCHANGE_LOADINGTOOL" class="minestar.pitlink.domain.machine.MachineReference"/>
+
+        <property name="hasOnboardHardware" column="HAS_ONBOARD_HARDWARE" type="boolean" not-null="true"/>
+
+        <property name="healthPlatform" type="int">
+            <meta attribute="choices" inherit="false">choice:eqmthealthPlatform</meta>
+            <meta attribute="viewchoices" inherit="false">choice:eqmthealthPlatform</meta>
+            <column name="HEALTH_PLATFORM" not-null="true" default="0"/>
+        </property>
+
+        <many-to-one name="dataBridgeRef" class="minestar.pitlink.domain.machine.MachineReference" column="DATA_BRIDGE_REF">
+            <meta attribute="alias">dataBridge</meta>
+        </many-to-one>
+
+        <property name="endpointId" column="ENDPOINT_ID" type="int"/>
+
+        <property name="crusher" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="IS_CRUSHER" not-null="true" default="0"/>
+        </property>
+
+        <property name="hasRockBreaker" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <column name="HAS_ROCK_BREAKER" not-null="true" default="0"/>
+        </property>
+
+        <!-- associations -->
+        <set name="capabilities" table="MACHINE_CAPABILITY" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="choices" inherit="false">choice:machineCapabilities</meta>
+            <meta attribute="description">The machine capabilities set</meta>
+
+            <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                 an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                 Do not cache Machine collections until ECF is removed from Machines.
+            <cache usage="read-write" region="model"/>
+            -->
+
+            <key column="OID" not-null="true"/>
+            <element type="java.lang.Integer" column="CAPABILITY_ID" not-null="true"/>
+        </set>
+
+        <map name="communications" table="MACHINE_COMMS_URL" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=MACHINE_COMMS_URL_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias">interfaceName</meta>
+            <meta attribute="description">The machine communications URLs</meta>
+
+            <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                 an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                 Do not cache Machine collections until ECF is removed from Machines.
+            <cache usage="read-write" region="model"/>
+            -->
+
+            <key column="OID" not-null="true"/>
+            <index type="java.lang.String" column="INTERFACE_NAME"/>
+            <element type="java.lang.String" column="COMMS_URL" not-null="true"/>
+        </map>
+
+        <map name="installedDevices" table="MACHINE_INSTALLED_DEVICE" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=MACHINE_INSTALLED_DEVICE_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias">device</meta>
+            <meta attribute="description">The installed devices for the machine</meta>
+
+            <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                 an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                 Do not cache Machine collections until ECF is removed from Machines.
+            <cache usage="read-write" region="model"/>
+            -->
+
+            <key column="OID" not-null="true"/>
+            <index type="java.lang.String" column="DEVICE_ID"/>
+            <element type="java.lang.Integer" column="SERVICE_ID" not-null="true"/>
+        </map>
+
+        <set name="assignGroups" table="MACHINE_ASSIGN_GROUP" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The machine assignment groups</meta>
+            <meta attribute="view-reference">minestar.assignment.domain.AssGroup</meta>
+
+            <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                 an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                 Do not cache Machine collections until ECF is removed from Machines.
+            <cache usage="read-write" region="model"/>
+            -->
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.assignment.domain.AssGroupReference" column="ASSIGN_GROUP_OID"/>
+        </set>
+
+        <map name="featureFlags" table="MACHINE_FEATURE_FLAGS" fetch="subselect">
+            <meta attribute="description">Feature flags associated with the machine.</meta>
+
+            <key column="MACHINE_OID" not-null="true"/>
+            <index type="string" column="FEATURE_NAME"/>
+            <element type="boolean" column="FLAG" not-null="true"/>
+        </map>
+
+        <map name="automationConfig" table="MACHINE_AUTOMATION_CONFIG" fetch="subselect">
+            <meta attribute="description">The automation config for various actions.</meta>
+
+            <key column="MACHINE_OID" not-null="true"/>
+            <index type="string" column="ACTION_NAME"/>
+            <composite-element class="minestar.pitlink.domain.machine.AutomationConfig">
+                <property
+                        name="automationLevel"
+                        column="AUTOMATION_LEVEL"
+                        type="minestar.pitlink.domain.machine.AutomationLevel$UserType"
+                        not-null="true">
+                    <meta attribute="description">The level of automation (0..3)</meta>
+                </property>
+
+                <property
+                        name="timeoutDuration"
+                        column="TIMEOUT_DURATION"
+                        not-null="true">
+                    <meta attribute="unitType">duration</meta>
+                    <meta attribute="description">For automation level 2 (accept/reject), an optional timeout duration.  0 implies no timeout.</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                    </type>
+                </property>
+
+                <property
+                        name="timeoutAction"
+                        column="TIMEOUT_ACTION"
+                        type="minestar.pitlink.domain.machine.AutomationAction$UserType"
+                        not-null="true">
+                    <meta attribute="description">For automation level 2 (accept/reject), the action to take on timeout</meta>
+                </property>
+
+            </composite-element>
+        </map>
+
+        <!--subclasses -->
+
+        <subclass name="minestar.pitlink.domain.machine.AuxiliaryMachineImpl">
+            <meta attribute="description">An auxiliary machine.</meta>
+
+            <subclass name="minestar.pitlink.domain.machine.AuxMobileImpl" 
+                      discriminator-value="XAEntity.Machine.Auxiliary.AuxMobile">
+                <meta attribute="description">Mobile auxiliary machine.</meta>
+
+
+                <subclass name="minestar.pitlink.domain.machine.BlastholeDrillImpl" discriminator-value="XAEntity.Machine.BlastholeDrill">
+                    <meta attribute="description">Blasthole Drill.</meta>
+                    <property name="overrideClassCableLength" type="java.lang.Boolean" column="OVERRIDE_CLASS_CABLE_LENGTH"/>
+                    <property name="electricCableLength" column="ELECTRIC_CABLE_LENGTH">
+                        <meta attribute="description">The length of electric cable on the spool of this particular electric drill rig.</meta>
+                        <meta attribute="unitType">length</meta>
+                        <type name="quantity">
+                            <param name="unitType">length</param>
+                        </type>
+                    </property>
+                    <property name="maxHoleDepth" column="MAX_HOLE_DEPTH">
+                        <meta attribute="description">The maximum hole depth this particular rig can drill.</meta>
+                        <meta attribute="unitType">length</meta>
+                        <type name="quantity">
+                            <param name="unitType">length</param>
+                        </type>
+                    </property>
+                    <property name="availableForTeleRemote" type="java.lang.Boolean" column="AVAILABLE_FOR_TELEREMOTE">
+                        <meta attribute="description">Set if this drill rig is available for teleremote appliances to take control.</meta>
+                    </property>
+                    <property name="turningCircle" column="TURNING_CIRCLE">
+                        <meta attribute="description">The radius of the preferred minimum turning circle for this particular drill rig.</meta>
+                        <meta attribute="unitType">length</meta>
+                        <type name="quantity">
+                            <param name="unitType">length</param>
+                        </type>
+                    </property>
+                    <property name="tramSpeed" column="TRAM_SPEED">
+                        <meta attribute="description">The maximum tramming speed for this particular drill rig.</meta>
+                        <meta attribute="unitType">speed</meta>
+                        <type name="quantity">
+                            <param name="unitType">speed</param>
+                        </type>
+                    </property>
+                </subclass>
+
+                <subclass name="minestar.pitlink.domain.machine.DraglineImpl" discriminator-value="XAEntity.Machine.Dragline">
+                    <meta attribute="description">Dragline.</meta>
+                </subclass>
+
+                <subclass name="minestar.pitlink.domain.machine.WaterTruckImpl" discriminator-value="XAEntity.Machine.WaterTruck">
+                    <meta attribute="description">Water truck.</meta>
+                </subclass>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.AuxFixedPlantImpl" 
+                      discriminator-value="XAEntity.Machine.Auxiliary.AuxFixedPlant">
+                <subclass name="minestar.pitlink.domain.machine.AuxFixedPlantNetwork"
+                          discriminator-value="XAEntity.Machine.Auxiliary.AuxFixedPlant.Network">
+                    <meta attribute="description">Stationary auxiliary machine.</meta>
+                </subclass>
+            </subclass>
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.machine.MobileMachineImpl" 
+                  discriminator-value="XAEntity.Machine.Mobile">
+
+            <meta attribute="description">Mobile machine.</meta>
+            <property name="officeBadGPS" type="java.lang.Boolean" column="OFFICEBADGPS"/>
+            <property name="autoRefuel" type="java.lang.Boolean" column="AUTO_REFUEL">
+                <meta attribute="defaultValue">true</meta>
+            </property>
+
+            <subclass name="minestar.pitlink.domain.machine.TruckImpl" 
+                      discriminator-value="XAEntity.Machine.Mobile.Truck">
+                <meta attribute="description">A truck machine type.</meta>
+                <many-to-one name="defaultLocation" column="DEFAULTLOCATION" class="minestar.mine.domain.minemodel.LocationReference">
+                    <meta attribute="alias" inherit="false">defaultDestination</meta>
+                </many-to-one>
+                <property name="refuelWindow" column="REFUELWINDOW">
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                    </type>
+                </property>
+
+                <property name="refuelLoadState" type="minestar.domain.model.persistence.LoadStateUserType" column="REFUELLOADSTATE"/>
+
+                <many-to-one name="refuelAssignDelayRef" column="REFUELASSIGNDELAY" class="minestar.production.domain.DelayClassReference">
+                    <meta attribute="alias" inherit="false">refuelAssignDelay</meta>
+                </many-to-one>
+
+                <many-to-one name="refuelArriveDelayRef" column="REFUELARRIVEDELAY" class="minestar.production.domain.DelayClassReference">
+                    <meta attribute="alias" inherit="false">refuelArriveDelay</meta>
+                </many-to-one>
+
+                <property name="travelEmptyFuelBurnRate" column="TRAVELEMPTYFUELBURNRATE">
+                    <meta attribute="unitType">fuel burn per distance</meta>
+                    <type name="quantity">
+                        <param name="unitType">fuel burn per distance</param>
+                    </type>
+                </property>
+                <property name="travelFullFuelBurnRate" column="TRAVELFULLFUELBURNRATE">
+                    <meta attribute="unitType">fuel burn per distance</meta>
+                    <type name="quantity">
+                        <param name="unitType">fuel burn per distance</param>
+                    </type>
+                </property>
+                <property name="useNomNotActPayload" type="java.lang.Boolean" column="RECORDNOMINALNOTACTUALPAYLOAD"/>
+                <property name="tkphRate" column="TKPHRATE">
+                    <meta attribute="description">The maximum TKPH of the minimun rated TKPH tyre for trucks of this class.</meta>
+                    <meta attribute="unitType">mass speed</meta>
+                    <meta attribute="expression">lookupResource.machine.tkphRate.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass speed</param>
+                    </type>
+                </property>
+
+                <property name="useTruckClassTyres" column="USECLASSTYRES" type="java.lang.Boolean">
+                    <meta attribute="defaultValue">true</meta>
+                    <meta attribute="description">The tyre settings from the trucks class.</meta>
+                </property>
+
+                <property name="tkphMaxPercent" column="TKPHMAXPERCENT">
+                    <meta attribute="description">The maximum TKPH percent for this truck.</meta>
+                    <meta attribute="unitType">ratio</meta>
+                    <meta attribute="expression">lookupResource.machine.tkphMaxPercent.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+                <property name="frontTyreTread" column="FRONTTYRETREAD">
+                    <meta attribute="description">The front tyre tread value for this truck.</meta>
+                    <meta attribute="unitType">length</meta>
+                    <meta attribute="expression">lookupResource.machine.frontTyreTread.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+
+                <property name="useVimsTkphInfo" type="boolean">
+                    <meta attribute="defaultValue">false</meta>
+                    <column name="USE_VIMS_TKPH_INFO" not-null="true" default="0"/>
+                </property>
+
+
+
+                <set name="allowableLoadingTools" table="TRUCK_ALLOWABLE_LOADINGTOOL" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">All LoadingTools that this truck is allowed to go to.</meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="LOADINGTOOL_OID"/>
+                </set>
+
+                <!-- Payload overrides -->
+
+                <property name="useTruckClassPayload" type="java.lang.Boolean">
+                    <meta attribute="defaultValue">true</meta>
+                    <meta attribute="description">Use payload settings from the trucks class.</meta>
+                    <column name="USECLASSPAYLOAD" not-null="true" default="1"/>
+                </property>
+                <property name="maxPayload" column="MAXPAYLOAD">
+                    <meta attribute="description">The maximum payload for this truck.</meta>
+                    <meta attribute="unitType">mass</meta>
+                    <meta attribute="expression">lookupResource.machine.maxPayload.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+                <property name="nominalPayload" column="NOMINALPAYLOAD">
+                    <meta attribute="description">The nominal payload map for this truck.</meta>
+                    <meta attribute="unitType">mass</meta>
+                    <meta attribute="expression">lookupResource.machine.nominalPayload.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+                <property name="payloadAccuracy" column="PAYLOADACCURACY">
+                    <meta attribute="description">The payload accuracy value for this truck.</meta>
+                    <meta attribute="unitType">ratio</meta>
+                    <meta attribute="expression">lookupResource.machine.payloadAccuracy.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+                <property name="overLoad" column="OVERLOAD">
+                    <meta attribute="description">The over loaded value for this truck.</meta>
+                    <meta attribute="unitType">mass</meta>
+                    <meta attribute="expression">lookupResource.machine.overLoad.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+                <property name="underLoad" column="UNDERLOAD">
+                    <meta attribute="description">The under load value for this truck.</meta>
+                    <meta attribute="unitType">mass</meta>
+                    <meta attribute="expression">lookupResource.machine.underLoad</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+                <property name="heapedCapacity" column="HEAPEDCAPACITY">
+                    <meta attribute="description">The heaped capacity value for this truck.</meta>
+                    <meta attribute="unitType">volume</meta>
+                    <meta attribute="expression">lookupResource.machine.heapedCapacity.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">volume</param>
+                    </type>
+                </property>
+                <property name="struckCapacity" column="STRUCKCAPACITY">
+                    <meta attribute="description">The struck capacity value for this truck.</meta>
+                    <meta attribute="unitType">volume</meta>
+                    <meta attribute="expression">lookupResource.machine.struckCapacity.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">volume</param>
+                    </type>
+                </property>
+                <property name="rearDistributionEmpty" column="REARDISTRIBUTIONEMPTY">
+                    <meta attribute="description">The rear distribution empty value for this truck.</meta>
+                    <meta attribute="unitType">ratio</meta>
+                    <meta attribute="expression">lookupResource.machine.rearDistributionEmpty.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+                <property name="rearDistributionLoaded" column="REARDISTRIBUTIONLOADED">
+                    <meta attribute="description">The rear distribution loaded value for this truck.</meta>
+                    <meta attribute="expression">lookupResource.machine.rearDistributionLoaded.query</meta>
+                    <meta attribute="unitType">ratio</meta>
+                    <type name="quantity">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+                <property name="frontDistributionEmpty" column="FRONTDISTRIBUTIONEMPTY">
+                    <meta attribute="description">The front distribution empty value for this truck.</meta>
+                    <meta attribute="expression">lookupResource.machine.frontDistributionEmpty.query</meta>
+                    <meta attribute="unitType">ratio</meta>
+                    <type name="quantity">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+                <property name="frontDistributionLoaded" column="FRONTDISTRIBUTIONLOADED">
+                    <meta attribute="description">The front distribution loaded value for this truck.</meta>
+                    <meta attribute="unitType">ratio</meta>
+                    <meta attribute="expression">lookupResource.machine.frontDistributionLoaded.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+                <list name="payloadPriorities" table="MACHINE_PAYLOAD_PRIORITIES">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">An list of payload source systems ordered by priority.</meta>
+                    <meta attribute="index-alias">sortOrder</meta>
+                    <key column="OID" not-null="true"/>
+                    <list-index column="SORT_ORDER"/>
+                    <element type="minestar.pitlink.domain.machine.MachinePayloadSourceSystem$UserType" column="SOURCE_SYSTEM" not-null="true"/>
+                </list>
+
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.LoadingToolImpl" 
+                      discriminator-value="XAEntity.Machine.Mobile.LoadingTool">
+                <meta attribute="description">Loading Tool, grouping for all machines that can load a truck.</meta>
+                <property name="operatingMode" type="minestar.domain.model.persistence.LoadingToolOperatingModeUserType" column="OPERATINGMODE"/>
+                <many-to-one name="defaultMaterial" class="minestar.machinetracking.domain.MaterialReference" column="DEFAULTMATERIAL"/>
+                <property name="ignoresAssignMaterial" type="java.lang.Boolean" column="IGNORESASSIGNMATERIAL"/>
+                <property name="skipStartLoadingAssgn" type="java.lang.Boolean" column="SKIPSTARTLOADINGASSGN"/>
+                <property name="usePredictedMat" type="java.lang.Boolean" column="USEPREDICTEDMATERIAL"/>
+                <property name="assignOnMatChange" type="java.lang.Boolean" column="ASSIGNONMATERIALCHANGE"/>
+                <property name="assignForObstacleClearing" type="java.lang.Boolean" column="ASSIGNFOROBSTACLECLEARING"/>
+                <property name="useGradeProcessor" type="java.lang.Boolean" column="USEGRADEPROCESSOR"/>
+                <property name="assignability" type="minestar.domain.model.persistence.AssignabilityUserType" column="ASSIGNABILITY"/>
+
+                <!-- Payload overrides -->
+
+                <property name="useClassPayload" type="java.lang.Boolean">
+                    <meta attribute="defaultValue">true</meta>
+                    <meta attribute="description">Use payload settings from the loading tool class.</meta>
+                    <column name="USECLASSPAYLOAD" not-null="true" default="1"/>
+                </property>
+                <property name="maxPayload" column="MAXPAYLOAD">
+                    <meta attribute="description">The maximum payload for this loading tool.</meta>
+                    <meta attribute="unitType">mass</meta>
+                    <meta attribute="expression">lookupResource.machine.maxPayload.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+                <property name="nominalPayload" column="NOMINALPAYLOAD">
+                    <meta attribute="description">The nominal payload map for this loading tool.</meta>
+                    <meta attribute="unitType">mass</meta>
+                    <meta attribute="expression">lookupResource.machine.nominalPayload.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+                <property name="heapedCapacity" column="HEAPEDCAPACITY">
+                    <meta attribute="description">The heaped capacity value for this loading tool.</meta>
+                    <meta attribute="unitType">volume</meta>
+                    <meta attribute="expression">lookupResource.machine.heapedCapacity.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">volume</param>
+                    </type>
+                </property>
+                <property name="struckCapacity" column="STRUCKCAPACITY">
+                    <meta attribute="description">The struck capacity value for this loading tool.</meta>
+                    <meta attribute="unitType">volume</meta>
+                    <meta attribute="expression">lookupResource.machine.struckCapacity.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">volume</param>
+                    </type>
+                </property>
+
+                <property name="useLoaderPayload" type="java.lang.Boolean">
+                    <meta attribute="defaultValue">false</meta>
+                    <meta attribute="description">Specifies either to use loader payload or truck payload for cycles.</meta>
+                    <column name="USELOADERPAYLOAD" not-null="true" default="0"/>
+                </property>
+
+                <set name="currentMaterials" table="LOADINGTOOL_MATERIAL" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">A list of the materials currently being loaded.</meta>
+                    <meta attribute="view-reference">minestar.machinetracking.domain.MaterialImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.machinetracking.domain.MaterialReference" column="MATERIAL_OID"/>
+                </set>
+
+                <property name="useClassTruckTimes" type="java.lang.Boolean" column="USECLASSTRUCKTIMES" access="field">
+                    <meta attribute="defaultValue">true</meta>
+                    <meta attribute="description">Specifies whether to use the machine class values for truck loading and spotting times.</meta>
+                </property>
+
+                <map name="loadingTimes" table="MACHINE_LOAD_TIME" fetch="select" batch-size="100">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="description">An association of the time taken to load each truck class for a specific loading tool.</meta>
+                    <meta attribute="index-alias">TruckClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="export-marshall-included-config"/>
+                    <cache usage="read-write" region="model"/>
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference"  column="TRUCK_CLASS_OID"/>
+                    <element column="LOADING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+
+                <map name="spottingTimes" table="MACHINE_SPOT_TIME" fetch="select" batch-size="100">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="description">An association of the time taken to spot for each truck class for a specific loading tool.</meta>
+                    <meta attribute="index-alias">TruckClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="export-marshall-included-config"/>
+                    <cache usage="read-write" region="model"/>
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference"  column="TRUCK_CLASS_OID"/>
+                    <element column="SPOTTING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+
+                <set name="loadableTrucks" table="MACHINE_LOADABLE_TRUCK_CLASS" fetch="select" batch-size="100">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">A list of all loadable truck classes for a specific loading tool.</meta>
+                    <meta attribute="export-marshall-included-config"/>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+                    <cache usage="read-write" region="model"/>
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="TRUCK_CLASS_OID"/>
+                </set>
+
+                <list name="payloadPriorities" table="MACHINE_PAYLOAD_PRIORITIES">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">An list of payload source systems ordered by priority.</meta>
+                    <meta attribute="index-alias">sortOrder</meta>
+                    <key column="OID" not-null="true"/>
+                    <list-index column="SORT_ORDER"/>
+                    <element type="minestar.pitlink.domain.machine.MachinePayloadSourceSystem$UserType" column="SOURCE_SYSTEM" not-null="true"/>
+                </list>
+
+                <subclass name="minestar.pitlink.domain.machine.LoaderImpl" discriminator-value="XAEntity.Machine.Mobile.LoadingTool.Loader">
+                    <meta attribute="description">Loader, a type of loading tool.</meta>
+                </subclass>
+
+                <subclass name="minestar.pitlink.domain.machine.LoadoutUnitImpl" discriminator-value="XAEntity.Machine.Mobile.LoadingTool.LoadoutUnit">
+                    <meta attribute="description">Loadout unit, a special type of fixed plant loading tool.</meta>
+                </subclass>
+
+                <subclass name="minestar.pitlink.domain.machine.AutomatedLoadoutUnitImpl" discriminator-value="XAEntity.Machine.Mobile.LoadingTool.AutomatedLoadoutUnit">
+                    <meta attribute="description">AutomatedLoadout unit, a special type of fixed plant loading tool.</meta>
+                    <property name="bayCount" type="java.lang.Integer" column="MACHINESATATIME"/>
+                    <property name="maxQueueSize" type="java.lang.Integer" column="MAXQUEUESIZE"/>
+                    <property name="inputMassFlowRate" column="INPUT_MASS_FLOW_RATE">
+                        <meta attribute="description">The Input mass flow rate for this automated loadout unit.</meta>
+                        <meta attribute="unitType">rate</meta>
+                        <type name="quantity">
+                            <param name="unitType">rate</param>
+                        </type>
+                    </property>
+                    <set name="capacitySet" table="ALU_CAPACITY_PROPERTIES"  lazy="true" fetch="select" cascade="all">
+                        <key>
+                            <column name="MACHINE_OID" not-null="true" />
+                        </key>
+                        <one-to-many class="minestar.pitlink.domain.machine.Capacity"  />
+                    </set>
+                </subclass>
+
+                <subclass name="minestar.pitlink.domain.machine.ShovelImpl" discriminator-value="XAEntity.Machine.Mobile.LoadingTool.Shovel">
+                    <meta attribute="description">Shovel, a type of loading tool.</meta>
+                </subclass>
+                <subclass name="minestar.pitlink.domain.machine.SurfaceMinerImpl" discriminator-value="XAEntity.Machine.Mobile.LoadingTool.SurfaceMiner">
+                    <meta attribute="description">Surface Miner, a type of loading tool.</meta>
+                </subclass>
+                <subclass name="minestar.pitlink.domain.machine.LoadingBayImpl" discriminator-value="XAEntity.Machine.FixedPlant.LoadingBay">
+                    <meta attribute="description">An underground stope loading bay machine that is a proxy for the LHD for assignment.</meta>
+
+                    <property name="flowRate"
+                              column="RATE">
+                        <meta attribute="description">The rate that material flows through the bay</meta>
+                        <meta attribute="unitType">rate</meta>
+                        <type name="quantity">
+                            <param name="unitType">rate</param>
+                        </type>
+                    </property>
+
+                </subclass>
+
+                <subclass name="minestar.pitlink.domain.machine.ChuteImpl"
+                          discriminator-value="XAEntity.Machine.FixedPlant.Chute">
+                    <!-- Note: Chute is a loading tool that is a fixed plant, and not a mobile machine. -->
+                    <meta attribute="description">An equipment where ore is dumped on one mine level and taken from
+                        another level</meta>
+
+                    <property name="flowRate"
+                              column="RATE">
+                        <meta attribute="description">The rate that material flows through the chute</meta>
+                        <meta attribute="unitType">rate</meta>
+                        <type name="quantity">
+                            <param name="unitType">rate</param>
+                        </type>
+                    </property>
+
+                    <many-to-one name="material"
+                                 column="MATERIAL"
+                                 class="minestar.machinetracking.domain.MaterialReference"
+                                >
+                        <meta attribute="description">The material in the chute</meta>
+                        <meta attribute="alias" inherit="false">material</meta>
+                    </many-to-one>
+
+                    <property name="totalCapacity"
+                              column="CHUTE_TOTAL_CAPACITY">
+                        <meta attribute="description">The amount of ore that the chute can hold</meta>
+                        <meta attribute="unitType">mass</meta>
+                        <type name="quantity">
+                            <param name="unitType">mass</param>
+                        </type>
+                    </property>
+                </subclass>
+                <subclass name="minestar.pitlink.domain.machine.LoadHaulDumpImpl" discriminator-value="XAEntity.Machine.Mobile.LoadHaulDump">
+                    <meta attribute="description">Load Haul Dump machine type</meta>
+
+                    <property name="useNomNotActPayload" type="java.lang.Boolean" column="RECORDNOMINALNOTACTUALPAYLOAD"/>
+
+                    <property name="aimsID" type="java.lang.String" column="AIMS_ID" length="254" not-null="false">
+                        <meta attribute="description">The corresponding Machine ID in the AIMS system.</meta>
+                    </property>
+                </subclass>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.MobileProcessorImpl" discriminator-value="XAEntity.Machine.Mobile.MobileProcessor">
+                <meta attribute="description">Mobile processor, takes material from a truck.</meta>
+
+                <property name="trucksAtATime" type="java.lang.Integer" column="TRUCKSATATIME"/>
+
+                <property name="rate" column="RATE">
+                    <meta attribute="unitType">rate</meta>
+                    <type name="quantity">
+                        <param name="unitType">rate</param>
+                    </type>
+                </property>
+
+                <set name="materialMixes" table="PROCESSOR_MATERIAL_MIX" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The associated material mixes</meta>
+                    <meta attribute="view-reference">minestar.machinetracking.domain.MaterialMix</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.machinetracking.domain.MaterialMixReference" column="MATERIAL_MIX_OID"/>
+                </set>
+
+                <set name="materials" table="PROCESSOR_MATERIAL" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The associated materials</meta>
+                    <meta attribute="view-reference">minestar.machinetracking.domain.MaterialImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.machinetracking.domain.MaterialReference" column="MATERIAL_OID"/>
+                </set>
+
+                <set name="unLoadableTrucks" table="PROCESSOR_UNLOADABLE_TRUCK" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The unloadable trucks</meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="TRUCK_CLASS_OID"/>
+                </set>
+
+                <map name="unLoadingTimes" table="MACHINE_CLASS_UNLOAD_TIME" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="index" inherit="false">
+                        name=MACHINE_CLASS_UNLOAD_TIME_12U
+                        columns=OID
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="index-alias">TruckClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="description">A mapping of the times that trucks will take to unload.</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="TRUCK_CLASS_OID"/>
+                    <element column="UNLOADING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+
+                <map name="spottingTimes"
+                     table="DUMP_SPOT_TIME" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="description">An association of the time taken to spot for each truck class.</meta>
+                    <meta attribute="index-alias">TruckClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference"  column="TRUCK_CLASS_OID"/>
+                    <element column="SPOTTING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.SecondaryBreakageUnitImpl" discriminator-value="XAEntity.Machine.Mobile.SecondaryBreakageUnit">
+                <meta attribute="description">Secondary Breakage Unit machine type</meta>
+            </subclass>
+
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.machine.ExternalMachineImpl" discriminator-value="XAEntity.Machine.ExternalMachine">
+            <meta attribute="description">External machines.</meta>
+            <subclass name="minestar.pitlink.domain.machine.DataBridgeImpl" discriminator-value="XAEntity.Machine.ExternalMachine.DataBridge">
+                <meta attribute="description">Data Bridge Machine</meta>
+            </subclass>
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.machine.FixedPlantImpl" discriminator-value="XAEntity.Machine.FixedPlant">
+            <meta attribute="description">Non-mobile machines.</meta>
+            <subclass name="minestar.pitlink.domain.machine.FixedProcessorImpl" discriminator-value="XAEntity.Machine.FixedPlant.Processor">
+                <meta attribute="description">Fixed processor, takes material from a truck.</meta>
+                <property name="trucksAtATime" type="java.lang.Integer" column="TRUCKSATATIME"/>
+                <property name="rate" column="RATE">
+                    <meta attribute="unitType">rate</meta>
+                    <type name="quantity">
+                        <param name="unitType">rate</param>
+                    </type>
+                </property>
+                <property name="stationary" type="java.lang.Boolean" column="STATIONARY"/>
+                <property name="simultaneousDumping" type="java.lang.Boolean" column="SIMULTANEOUS_DUMPING"/>
+
+                <set name="materialMixes" table="PROCESSOR_MATERIAL_MIX" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The associated material mixes</meta>
+                    <meta attribute="view-reference">minestar.machinetracking.domain.MaterialMix</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.machinetracking.domain.MaterialMixReference" column="MATERIAL_MIX_OID"/>
+                </set>
+
+                <set name="materials" table="PROCESSOR_MATERIAL" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The associated materials</meta>
+                    <meta attribute="view-reference">minestar.machinetracking.domain.MaterialImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.machinetracking.domain.MaterialReference" column="MATERIAL_OID"/>
+                </set>
+
+                <set name="unLoadableTrucks" table="PROCESSOR_UNLOADABLE_TRUCK" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The unloadable trucks</meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="TRUCK_CLASS_OID"/>
+                </set>
+
+                <map name="unLoadingTimes" table="MACHINE_CLASS_UNLOAD_TIME" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="index" inherit="false">
+                        name=MACHINE_CLASS_UNLOAD_TIME_12U
+                        columns=OID
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="index-alias">TruckClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="description">A mapping of the times that trucks will take to unload.</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="TRUCK_CLASS_OID"/>
+                    <element column="UNLOADING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+
+                <map name="spottingTimes"
+                     table="DUMP_SPOT_TIME" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="description">An association of the time taken to spot for each truck class.</meta>
+                    <meta attribute="index-alias">TruckClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference"  column="TRUCK_CLASS_OID"/>
+                    <element column="SPOTTING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.FuelBayImpl" discriminator-value="XAEntity.Machine.FixedPlant.FuelBay">
+
+                <meta attribute="description">A fuel bay, where machines get fuel from.</meta>
+                <property name="machinesAtATime" type="java.lang.Integer" column="MACHINESATATIME"/>
+
+                <property name="maxQueueSize" type="java.lang.Integer" column="MAXQUEUESIZE"/>
+
+                <set name="refuelClasses" table="FUELBAY_REFUEL_CLASS" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The fuel bay refuelling classes</meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+                </set>
+
+                <set name="supportedFuels" table="FUELBAY_SUPPORTED_FUELS" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The fuel bay supported fuels</meta>
+                    <meta attribute="view-reference">minestar.production.domain.fuel.FuelAndLubeType</meta>
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.production.domain.fuel.FuelAndLubeTypeReference" column="FUEL_AND_LUBE_TYPE_OID"/>
+                </set>
+
+                <map name="refuelTimes" table="MACHINE_CLASS_REFUEL_TIME" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="index" inherit="false">
+                        name=MACHINE_CLASS_REFUEL_TIME_12U
+                        columns=OID
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="index-alias">MachineClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="description">The fuel bay refuelling times</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+                    <element column="REFUEL_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+                <map name="chargingTimes" table="MACHINE_CLASS_CHARGING_TIME" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="index" inherit="false">
+                        name=MACHINE_CLASS_CHARGING_TIME_12U
+                        columns=OID
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="index-alias">MachineClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="description">The fuel bay charging times</meta>
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+                    <element column="CHARGING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+            </subclass>
+
+
+            <subclass name="minestar.pitlink.domain.machine.LayoverImpl" discriminator-value="XAEntity.Machine.FixedPlant.Layover">
+                <meta attribute="description">A layover.</meta>
+
+                <property name="numberOfBays" type="java.lang.Integer" column="MACHINESATATIME"/>
+                <property name="maxQueueSize" type="java.lang.Integer" column="MAXQUEUESIZE"/>
+
+                <set name="allowedClasses" table="LAYOVER_ALLOWED_CLASS" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The layover allowed classes</meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+                </set>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.MaterialServiceImpl" discriminator-value="XAEntity.Machine.FixedPlant.MaterialService">
+                <meta attribute="description">A machine that provides material-related services like a lime silo.</meta>
+
+                <property name="limeSilo" type="boolean">
+                    <meta attribute="description">Whether this material service has lime silo capabilities (e.g. can spray
+                        lime material onto a loaded truck before it goes to a dump)</meta>
+                    <meta attribute="defaultValue">true</meta>
+                    <column name="LIME_SILO" not-null="true" default="1"/>
+                </property>
+
+                <property name="nominalPayload" column="NOMINALPAYLOAD">
+                    <meta attribute="description">Nominal amount added to a truck's payload after the material service is performed on the truck</meta>
+                    <meta attribute="unitType">mass</meta>
+                    <meta attribute="expression">lookupResource.machine.nominalPayload.query</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+
+                <property name="maxQueueLength" type="java.lang.Integer" column="MAXQUEUESIZE" access="field">
+                    <meta attribute="description">Maximum number of trucks that are allowed to queue at this material service</meta>
+                </property>
+
+                <many-to-one name="defaultMaterial" class="minestar.machinetracking.domain.MaterialReference" column="DEFAULTMATERIAL">
+                    <meta attribute="description">Default material that this material service serves up</meta>
+                </many-to-one>
+
+                <property name="useClassTruckTimes" type="java.lang.Boolean" column="USECLASSTRUCKTIMES" access="field">
+                    <meta attribute="defaultValue">true</meta>
+                    <meta attribute="description">Specifies whether to use the machine class values for truck loading and spotting times.</meta>
+                </property>
+
+                <set name="allowedTruckClasses" table="MACHINE_LOADABLE_TRUCK_CLASS" fetch="select" batch-size="100">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">A list of all truck classes that are allowed to go to this material service.</meta>
+                    <meta attribute="export-marshall-included-config"/>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+                    <cache usage="read-write" region="model"/>
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="TRUCK_CLASS_OID"/>
+                </set>
+
+                <map name="serviceTimes" table="MACHINE_LOAD_TIME" fetch="select" batch-size="100">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="description">An association of the time taken to provide the material-related service to each truck class</meta>
+                    <meta attribute="index-alias">TruckClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="export-marshall-included-config"/>
+                    <cache usage="read-write" region="model"/>
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference"  column="TRUCK_CLASS_OID"/>
+                    <element column="LOADING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+
+                <map name="spottingTimes" table="MACHINE_SPOT_TIME" fetch="select" batch-size="100">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="description">An association of the time taken to spot for each truck class for this material service.</meta>
+                    <meta attribute="index-alias">TruckClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="export-marshall-included-config"/>
+                    <cache usage="read-write" region="model"/>
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference"  column="TRUCK_CLASS_OID"/>
+                    <element column="SPOTTING_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.AutonomousWaterRefillStationImpl" discriminator-value="XAEntity.Machine.FixedPlant.AutonomousWaterRefillStation">
+
+                <meta attribute="description">A water refill station, where machines get water refilled from.</meta>
+                <property name="machinesAtATime" type="java.lang.Integer" column="MACHINESATATIME"/>
+
+                <property name="maxQueueSize" type="java.lang.Integer" column="MAXQUEUESIZE"/>
+
+                <property name="activeLatencySecs" type="java.lang.Integer" column="ACTIVE_LATENCY_SECS"/>
+                <property name="inactiveLatencySecs" type="java.lang.Integer" column="INACTIVE_LATENCY_SECS"/>
+                <property name="normalFlowLatencySecs" type="java.lang.Integer" column="NORMAL_FLOW_LATENCY_SECS"/>
+                <property name="ceaseFlowLatencySecs" type="java.lang.Integer" column="CEASE_FLOW_LATENCY_SECS"/>
+
+                <set name="refillableClasses" table="WATER_STATION_REFILLABLE_CLASS" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The water refill station refillable classes</meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+                </set>
+
+                <map name="refillTimes" table="MACHINE_CLASS_REFILL_TIME" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="index" inherit="false">
+                        name=MACHINE_CLASS_REFILL_TIME_12U
+                        columns=OID
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="index-alias">MachineClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="description">The water refilling times</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+                    <element column="REFILL_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+            </subclass>
+
+
+            <subclass name="minestar.pitlink.domain.machine.PayloadServiceImpl" discriminator-value="XAEntity.Machine.FixedPlant.PayloadService">
+                <meta attribute="description">A scale, where machines are weighed and receive an independent payload analysis .</meta>
+                <property name="machinesAtATime" type="java.lang.Integer" column="MACHINESATATIME"/>
+
+                <property name="maxQueueSize" type="java.lang.Integer" column="MAXQUEUESIZE"/>
+                <property name="stopOnScale" type="boolean">
+                    <meta attribute="defaultValue">false</meta>
+                    <column name="STOP_REQUIRED" not-null="true" default="0"/>
+                </property>
+                <property name="stopDuration" column="STOP_DURATION">
+                    <meta attribute="description">The duration the truck must stop on the scale if configured to do so.</meta>
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+                <property name="overSizedSensing" type="boolean">
+                    <meta attribute="defaultValue">false</meta>
+                    <column name="OVER_SIZE_DETECTION" not-null="true" default="0"/>
+                </property>
+                <property name="allowThroughTraffic" type="boolean">
+                    <meta attribute="defaultValue">false</meta>
+                    <column name="ALLOW_ON_TRAFFIC" not-null="true" default="0"/>
+                </property>
+                <property name="weighbridge" type="boolean">
+                    <meta attribute="defaultValue">false</meta>
+                    <column name="WEIGH_BRIDGE" not-null="true" default="0"/>
+                </property>
+                <set name="measurableMachineClasses" table="SCALE_MEASURABLE_CLASS" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">The machine classes which can be measured at the scale</meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+                </set>
+
+                <map name="measureTimes" table="MACHINE_CLASS_MEASURE_TIME" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+
+                    <meta attribute="index" inherit="false">
+                        name=MACHINE_CLASS_MEASURE_TIME_12U
+                        columns=OID
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="index-alias">MachineClass</meta>
+                    <meta attribute="element-unitType">duration</meta>
+                    <meta attribute="description">The measure time at a scale for a specific machine class</meta>
+
+                    <!-- Machines are currently managed mostly by ECF.  It seems that when collections of
+                         an entity are updated via SQL that the Hibernate 2nd level cache can become stale.
+                         Do not cache Machine collections until ECF is removed from Machines.
+                    <cache usage="read-write" region="model"/>
+                    -->
+
+                    <key column="OID" not-null="true"/>
+                    <index-many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+                    <element column="MEASURE_TIME" not-null="true">
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                        </type>
+                    </element>
+                </map>
+            </subclass>
+
+
+            <subclass name="minestar.pitlink.domain.machine.AStopTestStationImpl" discriminator-value="XAEntity.Machine.FixedPlant.AStopTestStation">
+                <meta attribute="description">A device used to test A-Stop devices.</meta>
+
+                <property name="portNumber" type="java.lang.Integer" column="PORT_NUM">
+                    <meta attribute="description">The port to connect to for the A-Stop Test Station.</meta>
+                </property>
+                <property name="ipAddress" type="java.lang.String" column="IP_ADDRESS" length="254">
+                    <meta attribute="description">The hostname or IP address of the A-Stop Test Station.</meta>
+                </property>
+
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.InfrastructureImpl" discriminator-value="XAEntity.Machine.FixedPlant.Infrastructure">
+                <meta attribute="description">A possibly moveable but not independently mobile piece of mine infrastructure.</meta>
+
+                <subclass name="minestar.pitlink.domain.machine.PerceptionTargetImpl" discriminator-value="XAEntity.Machine.FixedPlant.Infrastructure.PerceptionTarget">
+                    <meta attribute="description">A fixed perception target used by autonomous trucks for positioning verification and localization.</meta>
+                    <subclass name="minestar.pitlink.domain.machine.PerceptionBasedLocalizationTargetImpl" discriminator-value="XAEntity.Machine.FixedPlant.Infrastructure.PerceptionTarget.PerceptionBasedLocalizationTarget">
+                        <meta attribute="description">A feature that uses fixed landmarks that are seen by the perception system to localize a position of a truck.</meta>
+                    </subclass>
+                    <subclass name="minestar.pitlink.domain.machine.PerceptionCalibrationVerificationTargetImpl" discriminator-value="XAEntity.Machine.FixedPlant.Infrastructure.PerceptionTarget.PerceptionCalibrationVerificationTarget">
+                        <meta attribute="description">A feature that validates that the perception system is within calibration and safe for continued use.</meta>
+                    </subclass>
+                    <subclass name="minestar.pitlink.domain.machine.AutomaticObjectDetectionVerificationTargetImpl" discriminator-value="XAEntity.Machine.FixedPlant.Infrastructure.PerceptionTarget.AutomaticObjectDetectionVerificationTarget">
+                        <meta attribute="description">A feature that is used to benchmark the performance of the perception system on the autonomous truck.</meta>
+                    </subclass>
+                </subclass>
+                <subclass name="minestar.pitlink.domain.machine.PseudoliteImpl" discriminator-value="XAEntity.Machine.FixedPlant.Infrastructure.Pseudolite">
+                    <meta attribute="description">Pseudolite.</meta>
+                    <property name="pseudoliteId" type="java.lang.Integer" column="PSEUDOLITE_ID"/>
+
+                    <many-to-one name="exclusionZone"
+                                 class="minestar.mine.domain.minemodel.ZoneReference"
+                                 column="EXCLUSION_ZONE">
+                        <meta attribute="description">A zone used to indicate an area around a pseudolite that machines need to avoid.</meta>
+                        <meta attribute="foreign-key">
+                            on-delete=SET_NULL
+                        </meta>
+                    </many-to-one>
+                </subclass>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.ConveyorImpl"
+                      discriminator-value="XAEntity.Machine.FixedPlant.Conveyor">
+                <meta attribute="description">A Conveyor found in the haulage layer of underground block cave mines.</meta>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.CommandProxyImpl" discriminator-value="XAEntity.Machine.FixedPlant.CommandProxy">
+                <meta attribute="description">Server that listens to events from the Command for Underground system.</meta>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.machine.RockBreakerImpl"
+                      discriminator-value="XAEntity.Machine.FixedPlant.RockBreaker">
+                <meta attribute="description">A rock breaker found in crushers or in the extraction layer of underground block cave mines</meta>
+                <set name="processors" table="ROCK_BREAKER_CRUSHER" access="field">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineImpl</meta>
+                    <key column="ROCK_BREAKER_OID" not-null="true" />
+                    <many-to-many column="CRUSHER_OID" class="minestar.pitlink.domain.machine.MachineReference"/>
+                </set>
+            </subclass>
+            <subclass name="minestar.pitlink.domain.machine.EntryImpl"
+                      discriminator-value="XAEntity.Machine.FixedPlant.Barrier">
+                <meta attribute="description">A Barrier found in the extraction layer of underground block cave mines</meta>
+            </subclass>
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.machine.TruthPositioningReceiverImpl"
+                  discriminator-value="XAEntity.Machine.FixedPlant.Infrastructure.TPSReceiver">
+            <meta attribute="description">A device used as a fixed location for the Truth Positioning System.</meta>
+
+            <property name="tpsPort" type="java.lang.Integer" column="TPSPORT">
+                <meta attribute="description">The port to connect to for TPS messages.</meta>
+            </property>
+            <property name="tpsHost" type="java.lang.String" column="TPSHOST" length="254">
+                <meta attribute="description">The hostname or IP address of the TPR.</meta>
+            </property>
+            <property name="latestMessage" type="java.lang.String" column="LATEST" length="254">
+                <meta attribute="description">The latest message received from the TPR.</meta>
+            </property>
+            <property name="latestMessageDate" type="TimestampType" column="LATESTMESSAGETIME_UTC">
+                <meta attribute="utc-description">The utc time at which we received the latest message.</meta>
+                <meta attribute="description">The time at which we received the latest message.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </property>
+            <property name="latestError" type="java.lang.String" column="LATESTERROR" length="254">
+                <meta attribute="description">The magnitude of the error in the last valid message received from the TPR.</meta>
+            </property>
+            <property name="latestErrorDate" type="TimestampType" column="LATESTERRORTIME_UTC">
+                <meta attribute="utc-description">The utc time at which we observed the latest error.</meta>
+                <meta attribute="description">The time at which we observed the latest error.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </property>
+            <property name="latestErrorMessage" type="java.lang.String" column="LATESTERRORMESG" length="254">
+                <meta attribute="description">The latest message received from the TPR from which an error was calculated.</meta>
+            </property>
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.machine.TeleremoteControlImpl" discriminator-value="XAEntity.Machine.TeleremoteControl">
+            <meta attribute="description">Teleremote Control.</meta>
+        </subclass>
+        <subclass name="minestar.pitlink.domain.machine.PanelImpl" discriminator-value="XAEntity.Machine.Panel">
+            <meta attribute="description">Panel</meta>
+        </subclass>
+
+    </class>
+
+    <!-- A lightweight reference to a Machine -->
+    <class name="minestar.pitlink.domain.machine.MachineReference"
+           table="MACHINE" schema="model"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">MACHINE_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a machine.</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="MACHINE_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+        <property name="id" type="short" column="ID" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

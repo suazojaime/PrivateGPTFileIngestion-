@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Grader Unit">
+
+    <machineClass xsi:type="auxMobileClassImpl">
+        <name>Cat16H</name>
+        <manufacturer>Caterpillar</manufacturer>
+        <description>Caterpillar 16H Grader</description>
+        <allowAllMaterials>false</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="0.49" unit="cubic metres"/>
+        <minimumRefuelAmount magnitude="0.00" unit="cubic metres"/>
+        <refuelLevel magnitude="0.049" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.02" unit="cubic metres"/>
+        <idleFuelBurnRate magnitude="0.0000020278" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.0000069444" unit="cubic metres per second"/>
+    </machineClass>
+
+</machineClassExport>

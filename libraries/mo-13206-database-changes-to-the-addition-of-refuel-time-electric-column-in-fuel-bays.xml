@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="22ec7141-3bdf-4ebd-9d60-532d4fa92c72" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_CLASS_CHARGING_TIME as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_CLASS_CHARGING_TIME"/>
+            </not>
+        </preConditions>
+        <comment>MO-13206: CreateTable MACHINE_CLASS_CHARGING_TIME</comment>
+        <createTable tablespace="MW_ENT" remarks="The fuel bay charging times" tableName="MACHINE_CLASS_CHARGING_TIME">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CHARGING_TIME" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,MACHINE_CLASS_OID" constraintName="MACHINE_CLASS_CHARGING_TIME_PK" tablespace="MW_IDXENT" tableName="MACHINE_CLASS_CHARGING_TIME"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="MACHINE_CLASS_CHARGING_TIME_12U" tableName="MACHINE_CLASS_CHARGING_TIME">
+            <column name="OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="59d03470-7b27-4bc7-af41-2ee3ed3e0e23" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_CLASS_CHARGING_TIM_FK1 to table MACHINE_CLASS_CHARGING_TIME as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_CLASS_CHARGING_TIME" columnName="OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_CLASS_CHARGING_TIME" foreignKeyName="MACHINE_CLASS_CHARGING_TIM_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-13206: AddForeignKeyConstraint MACHINE_CLASS_CHARGING_TIM_FK1 to MACHINE_CLASS_CHARGING_TIME (OID)</comment>
+        <sql>DELETE FROM MACHINE_CLASS_CHARGING_TIME WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = MACHINE_CLASS_CHARGING_TIME.OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_CLASS_CHARGING_TIME" baseColumnNames="OID" constraintName="MACHINE_CLASS_CHARGING_TIM_FK1" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_CLASS_CHARGING_TIME" constraintName="MACHINE_CLASS_CHARGING_TIM_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="e8aa6a9b-db56-4a2e-b4c1-4b2808a18261" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_CLASS_CHARGING_TIM_FK2 to table MACHINE_CLASS_CHARGING_TIME as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_CLASS_CHARGING_TIME" columnName="MACHINE_CLASS_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_CLASS_CHARGING_TIME" foreignKeyName="MACHINE_CLASS_CHARGING_TIM_FK2"/>
+            </not>
+        </preConditions>
+        <comment>MO-13206: AddForeignKeyConstraint MACHINE_CLASS_CHARGING_TIM_FK2 to MACHINE_CLASS_CHARGING_TIME (MACHINE_CLASS_OID)</comment>
+        <sql>DELETE FROM MACHINE_CLASS_CHARGING_TIME WHERE MACHINE_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = MACHINE_CLASS_CHARGING_TIME.MACHINE_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_CLASS_CHARGING_TIME" baseColumnNames="MACHINE_CLASS_OID" constraintName="MACHINE_CLASS_CHARGING_TIM_FK2" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_CLASS_CHARGING_TIME" constraintName="MACHINE_CLASS_CHARGING_TIM_FK2"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

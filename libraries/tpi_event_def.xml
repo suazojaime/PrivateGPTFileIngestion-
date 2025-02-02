@@ -1,0 +1,271 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE EventDefinitions [
+<!ELEMENT EventDefinitions (EventDefinition)+>
+<!ELEMENT EventDefinition EMPTY>
+<!ATTLIST EventDefinition
+schema CDATA #REQUIRED
+id CDATA #REQUIRED
+description CDATA #REQUIRED
+channelId CDATA #REQUIRED
+eventLevel CDATA #REQUIRED
+actuateLevel CDATA #REQUIRED
+deactuateLevel CDATA #REQUIRED
+errorType CDATA #REQUIRED
+duplicate CDATA #IMPLIED
+>
+]>
+<!--
+$Revision: 1.2 $
+$Log: not supported by cvs2svn $
+Revision 1.1  2005/08/08 00:25:29  darrylc
+Added support for family to allow better tpi integration
+
+Revision 1.2  2003/12/01 22:09:08  darrylc
+Added EAM support
+
+Revision 1.1.2.1  2003/12/01 05:59:12  darrylc
+First cut
+
+Revision 1.2  2003/10/26 22:22:35  darrylc
+TPI & fixes from 1.2.3.8
+
+Revision 1.1.2.4.2.2  2003/09/12 04:26:46  darrylc
+TPI
+
+-->
+<EventDefinitions>
+    <EventDefinition schema="CENSE" id="111" description="ECM Hardware" channelId="629" eventLevel="3" errorType="12" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="115" description="Both Engine Speed and or Position Signal Lost" channelId="190" eventLevel="3" errorType="2" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="121" description="One Engine Speed Signal Lost Intermitent" channelId="190" eventLevel="3" errorType="10" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="122" description="LB Intake Manifold Pressure Sensor Failed High" channelId="102" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="123" description="LB Intake Manifold Pressure Sensor Failed Low" channelId="102" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="124" description="High Intake Manifold Pressure LB" channelId="102" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="125" description="Low Intake Manifold Pressure LB" channelId="102" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="126" description="High Intake Manifold Pressure RB" channelId="1129" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="127" description="Low Intake Manifold Pressure RB" channelId="1129" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="128" description="RB Intake Manifold Pressure Sensor Failed High" channelId="1129" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="129" description="RB Intake Manifold Pressure Sensor Failed Low" channelId="1129" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="132" description="Throttle Position – Component Shorted Low (J1587)" channelId="91" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="135" description="Oil Pressure Sensor Failed High" channelId="100" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="136" description="Pre Oil Filter Pressure Sensor Failed High" channelId="1208" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="137" description="Pre Oil Filter Pressure Sensor Failed Low" channelId="1208" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="141" description="Oil Pressure Sensor Failed Low" channelId="100" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="143" description="Low Oil Pressure" channelId="100" eventLevel="3" errorType="1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="144" description="Coolant Temperature Sensor Failed High" channelId="110" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="145" description="Coolant Temperature Sensor Failed Low" channelId="110" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="151" description="High Coolant Temperature" channelId="110" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="153" description="LBF Intake Manifold Temperature Sensor Failed High" channelId="105" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="154" description="LBF Intake Manifold Temperature Sensor Failed Low" channelId="105" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="155" description="High Intake Manifold Temperature LBF" channelId="105" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="156" description="LBR Intake Manifold Temperature Sensor Failed High" channelId="1131" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="157" description="LBR Intake Manifold Temperature Sensor Failed Low" channelId="1131" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="158" description="High Intake Manifold Temperature LBR" channelId="1131" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="159" description="RBF Intake Manifold Temperature Sensor Failed High" channelId="1132" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="161" description="RBF Intake Manifold Temperature Sensor Failed Low" channelId="1132" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="162" description="High Intake Manifold Temperature RBF" channelId="1132" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="163" description="RBR Intake Manifold Temperature Sensor Failed High" channelId="1133" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="164" description="RBR Intake Manifold Temperature Sensor Failed Low" channelId="1133" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="165" description="High Intake Manifold Temperature RBR" channelId="1133" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="212" description="Oil Temperature Sensor Failed High" channelId="175" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="213" description="Oil Temperature Sensor Failed Low" channelId="175" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="214" description="High Oil Temperature" channelId="175" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="221" description="Ambient Air Pressure Sensor Failed High" channelId="108" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="222" description="Ambient Air Pressure Sensor Failed Low" channelId="108" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="231" description="Coolant Pressure Sensor Failed High" channelId="109" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="223" description="Coolant Pressure Sensor Failed Low" channelId="109" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="233" description="Low Coolant Pressure" channelId="109" eventLevel="3" errorType="1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="234" description="Engine Overspeed" channelId="190" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="235" description="Low Coolant Level" channelId="111" eventLevel="3" errorType="1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="236" description="Oil Level Invalid (Sensor)" channelId="98" eventLevel="3" errorType="2" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="253" description="Low Oil Level" channelId="98" eventLevel="3" errorType="1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="417" description="Oil Filter Bypass Valve – Open" channelId="103" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="422" description="Coolant Level Signal – Invalid (Sensor)" channelId="111" eventLevel="3" errorType="2" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="441" description="Battery Voltage – Data Below Normal Range (J1587)" channelId="168" eventLevel="3" errorType="1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="446" description="GSP Communication Failure" channelId="524391" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="447" description="RPC Number Not Supported" channelId="524392" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="448" description="RPC Argument Mismatch" channelId="524393" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="449" description="High Fuel Pressure" channelId="157" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="451" description="Fuel Pressure Sensor Failed High" channelId="157" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="452" description="Fuel Pressure Sensor Failed Low" channelId="157" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="555" description="High Blowby Pressure" channelId="1264" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="611" description="Engine Hot Shutdown" channelId="1384" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="612" description="High Lube Filter Restriction" channelId="99" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="615" description="Non-zero Engine Speed at Power-up" channelId="524396" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="616" description="High Turbo Compressor Inlet Temp RB" channelId="1173" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="617" description="High Turbo Compressor Inlet Temp LB" channelId="1172" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="618" description="High Intake Restriction LB" channelId="107" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="619" description="High Intake Restriction RB" channelId="524294" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="621" description="Low #1 LB Cylinder Power" channelId="1137" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="622" description="Low #2 LB Cylinder Power" channelId="1138" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="623" description="Low #3 LB Cylinder Power" channelId="1139" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="624" description="Low #4 LB Cylinder Power" channelId="1140" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="625" description="Low #5 LB Cylinder Power" channelId="1141" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="626" description="Low #6 LB Cylinder Power" channelId="1142" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="627" description="Low #7 LB Cylinder Power" channelId="1143" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="628" description="Low #8 LB Cylinder Power" channelId="1144" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="629" description="Intake Air Leak LB" channelId="524405" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="631" description="Low #1 RB Cylinder Power" channelId="1145" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="632" description="Low #2 RB Cylinder Power" channelId="1146" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="633" description="Low #3 RB Cylinder Power" channelId="1147" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="634" description="Low #4 RB Cylinder Power" channelId="1148" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="635" description="Low #5 RB Cylinder Power" channelId="1149" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="636" description="Low #6 RB Cylinder Power" channelId="1150" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="637" description="Low #7 RB Cylinder Power" channelId="1151" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="638" description="Low #8 RB Cylinder Power" channelId="1152" eventLevel="3" errorType="18" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="639" description="Intake Air Leak RB" channelId="524414" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="641" description="High #1 LB Cylinder Exhaust Temperature" channelId="1137" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="642" description="High #2 LB Cylinder Exhaust Temperature" channelId="1138" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="643" description="High #3 LB Cylinder Exhaust Temperature" channelId="1139" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="644" description="High #4 LB Cylinder Exhaust Temperature" channelId="1140" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="645" description="High #5 LB Cylinder Exhaust Temperature" channelId="1141" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="646" description="High #6 LB Cylinder Exhaust Temperature" channelId="1142" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="647" description="High #7 LB Cylinder Exhaust Temperature" channelId="1143" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="648" description="High #8 LB Cylinder Exhaust Temperature" channelId="1144" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="649" description="Change Oil and Filter" channelId="1378" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="651" description="High #1 RB Cylinder Exhaust Temperature" channelId="1145" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="652" description="High #2 RB Cylinder Exhaust Temperature" channelId="1146" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="653" description="High #3 RB Cylinder Exhaust Temperature" channelId="1147" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="654" description="High #4 RB Cylinder Exhaust Temperature" channelId="1148" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="655" description="High #5 RB Cylinder Exhaust Temperature" channelId="1149" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="656" description="High #6 RB Cylinder Exhaust Temperature" channelId="1150" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="657" description="High #7 RB Cylinder Exhaust Temperature" channelId="1151" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="658" description="High #8 RB Cylinder Exhaust Temperature" channelId="1152" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="659" description="Change Fuel Filter" channelId="524416" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="661" description="High #1 LB Cylinder Power" channelId="1145" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="662" description="High #2 LB Cylinder Power" channelId="1146" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="663" description="High #3 LB Cylinder Power" channelId="1147" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="664" description="High #4 LB Cylinder Power" channelId="1148" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="665" description="High #5 LB Cylinder Power" channelId="1149" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="666" description="High #6 LB Cylinder Power" channelId="1150" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="667" description="High #7 LB Cylinder Power" channelId="1151" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="668" description="High #8 LB Cylinder Power" channelId="1152" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="669" description="Change Coolant Filter" channelId="524417" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="671" description="Cyl #1 LB Exhaust Temp Sens Failed Low" channelId="1137" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="672" description="Cyl #2 LB Exhaust Temp Sens Failed Low" channelId="1138" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="673" description="Cyl #3 LB Exhaust Temp Sens Failed Low" channelId="1139" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="674" description="Cyl #4 LB Exhaust Temp Sens Failed Low" channelId="1140" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="675" description="Cyl #5 LB Exhaust Temp Sens Failed Low" channelId="1141" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="676" description="Cyl #6 LB Exhaust Temp Sens Failed Low" channelId="1142" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="677" description="Cyl #7 LB Exhaust Temp Sens Failed Low" channelId="1143" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="678" description="Cyl #8 LB Exhaust Temp Sens Failed Low" channelId="1144" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="679" description="Change Coolant" channelId="524418" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="691" description="LB Turbo Comp Inlet Temp Sens Failed High" channelId="1172" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="692" description="LB Turbo Comp Inlet Temp Sens Failed Low" channelId="1172" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="694" description="RB Turbo Comp Inlet Temp Sens Failed High" channelId="1173" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="695" description="RB Turbo Comp Inlet Temp Sens Failed Low" channelId="1173" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="711" description="High #1 RB Cylinder Power" channelId="1145" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="712" description="High #2 RB Cylinder Power" channelId="1146" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="713" description="High #3 RB Cylinder Power" channelId="1147" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="714" description="High #4 RB Cylinder Power" channelId="1148" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="715" description="High #5 RB Cylinder Power" channelId="1149" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="716" description="High #6 RB Cylinder Power" channelId="1150" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="717" description="High #7 RB Cylinder Power" channelId="1151" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="718" description="High #8 RB Cylinder Power" channelId="1152" eventLevel="3" errorType="16" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="719" description="Blowby Sensor Failed High" channelId="1264" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="721" description="Cyl #1 RB Exhaust Temp Sens Failed Low" channelId="1145" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="722" description="Cyl #2 RB Exhaust Temp Sens Failed Low" channelId="1146" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="723" description="Cyl #3 RB Exhaust Temp Sens Failed Low" channelId="1147" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="724" description="Cyl #4 RB Exhaust Temp Sens Failed Low" channelId="1148" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="725" description="Cyl #5 RB Exhaust Temp Sens Failed Low" channelId="1149" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="726" description="Cyl #6 RB Exhaust Temp Sens Failed Low" channelId="1150" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="727" description="Cyl #7 RB Exhaust Temp Sens Failed Low" channelId="1151" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="728" description="Cyl #8 RB Exhaust Temp Sens Failed Low" channelId="1152" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="729" description="Blowby Sensor Failed Low" channelId="1264" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="741" description="LB Intake Restriction Sensor Failed High" channelId="107" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="742" description="LB Intake Restriction Sensor Failed Low" channelId="107" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="744" description="RB Intake Restriction Sensor Failed High" channelId="524294" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="745" description="RB Intake Restriction Sensor Failed Low" channelId="524294" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="747" description="Trend Data Memory Nearly Full" channelId="524419" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="748" description="Trend Data Memory Full" channelId="524419" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="749" description="Fault Log Snapshot Data Nearly Full" channelId="524420" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="754" description="Fault Log Snapshot Data Full" channelId="524420" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="1000" description="Manual Trigger" channelId="524421" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="23296" description="Accel Pedel" channelId="91" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="40192" description="Rail" channelId="157" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="43008" description="Battery Potential" channelId="168" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="CENSE" id="48640" description="Eng Speed" channelId="190" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="000" description="Reset All" channelId="525200" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="001" description="Low Level Ground Fault" channelId="524556" eventLevel="3" errorType="1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="002" description="High Level Ground Fault" channelId="524556" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="008" description="Pedal Accel" channelId="91" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="009" description="Pedal Retard" channelId="1085" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="010" description="GF Contactor" channelId="525201" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="011" description="GFR Relay" channelId="525202" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="012" description="MF Contactor" channelId="525203" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="013" description="P1 Contactor" channelId="525204" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="014" description="P2 Contactor" channelId="525205" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="017" description="RP1 Contactor" channelId="525206" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="018" description="RP2 Contactor" channelId="525207" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="019" description="RP3 Contactor" channelId="525208" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="020" description="RP4 Contactor" channelId="525209" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="021" description="RP5 Contactor" channelId="525210" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="022" description="RP6 Contactor" channelId="525211" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="023" description="RP7 Contactor" channelId="525212" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="024" description="RP8 Contactor" channelId="525213" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="025" description="RP9 Contactor" channelId="525214" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="026" description="Forward Coil" channelId="525215" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="027" description="Reverse Coil" channelId="525216" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="030" description="Analog Output" channelId="525217" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="031" description="Frequency Output" channelId="525218" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="032" description="Analog Input" channelId="525219" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="033" description="Frequency Input" channelId="525220" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="037" description="Hardware Startup" channelId="525221" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="041" description="Illegal Comb of MstCtrlSwitch Speed Reduc Contacts" channelId="525222" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="042" description="Trolley Line Volt Limit Exceeded" channelId="524548" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="044" description="Pantograph Operating Valve" channelId="525223" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="045" description="Diode Fault" channelId="525224" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="046" description="Motor 1 Overcurrent" channelId="524544" eventLevel="3" errorType="6" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="047" description="Motor 2 Overcurrent" channelId="524546" eventLevel="3" errorType="6" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="048" description="Motor Field Fault" channelId="525225" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="049" description="Motor Field Overcurrent" channelId="524549" eventLevel="3" errorType="6" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="050" description="Motor Stall" channelId="525226" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="051" description="Motor Spin" channelId="525227" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="052" description="Alternator Tertiary Overcurrent" channelId="525228" eventLevel="3" errorType="6" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="053" description="Motor Tertiary Overcurrent" channelId="525229" eventLevel="3" errorType="6" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="054" description="+15 Power" channelId="525230" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="055" description="-15 Power" channelId="525231" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="056" description="+19 Power" channelId="525232" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="057" description="Motor Polarity" channelId="525233" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="058" description="Analog Input-FB155 Card" channelId="525234" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="059" description="PTU Configuration" channelId="525235" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="061" description="Grid Motor 1 Failure" channelId="525236" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="062" description="Grid Motor 2 Failure" channelId="525237" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="063" description="Low Axle Box Pressure" channelId="525238" eventLevel="3" errorType="1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="064" description="Motor 1 Over Temperature" channelId="524559" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="065" description="Motor 2 Over Temperature" channelId="524561" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="066" description="Overspeed Retarding" channelId="524545" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="067" description="Speed Retard Exceeded" channelId="524545" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="068" description="Retard OverCurrent" channelId="525239" eventLevel="3" errorType="6" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="069" description="Horsepower Low" channelId="524551" eventLevel="3" errorType="1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="070" description="Horsepower Limit Exceeded" channelId="524551" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="071" description="Engine Overspeed Exceeded" channelId="190" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="072" description="Oil Pressure Warning" channelId="100" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="073" description="Oil Pressure Shutdown" channelId="100" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="074" description="Coolant Pressure Warning" channelId="109" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="075" description="Coolant Pressure Shutdown" channelId="109" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="076" description="Crankcase Overpressure" channelId="101" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="077" description="Coolant Overtemperature" channelId="110" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="078" description="Engine Service" channelId="525065" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="079" description="Engine Shutdown" channelId="525064" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="080" description="Engine Speed Retard" channelId="525240" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="081" description="Motor 1 Voltage Limit Exceeded" channelId="525241" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="082" description="Motor 2 Voltage Limit Exceeded" channelId="524553" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="083" description="Alternator Field Current Level" channelId="115" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="084" description="Trolley Notching Contactors" channelId="525242" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="085" description="Trolley Line Contactors" channelId="525243" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="086" description="Ground Interrupt Contactor" channelId="525244" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="087" description="Diesel/Trolley Field Switching Contactor" channelId="525245" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="088" description="Lamp" channelId="525246" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="089" description="Drive Off Trolley Wire" channelId="525247" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="090" description="Battery Volts Low" channelId="168" eventLevel="3" errorType="4" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="091" description="Battery Volts High" channelId="168" eventLevel="3" errorType="3" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="092" description="Bad Engine Sensor" channelId="525248" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="093" description="Motor Speed Sensor" channelId="525249" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="094" description="Leakage Current Fault" channelId="524552" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="095" description="Overcurrent Fault" channelId="524553" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="096" description="Grid Protection Fault" channelId="524554" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="097" description="Motor Overtemp While On Trolley In Reduced Notch" channelId="524555" eventLevel="3" errorType="0" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="098" description="Data Store" channelId="524556" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+    <EventDefinition schema="STATEX" id="099" description="Software" channelId="524557" eventLevel="3" errorType="-1" actuateLevel="0" deactuateLevel="0"/>
+</EventDefinitions>
+

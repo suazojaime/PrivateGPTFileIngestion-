@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="c9b22bcb-1f8b-4fee-ba3e-abc584f9c258" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_ASSIGNABLE to table DUMP_GOAL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DUMP_GOAL"/>
+            <not>
+                <columnExists tableName="DUMP_GOAL" columnName="IS_ASSIGNABLE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-823: AddColumn DUMP_GOAL.IS_ASSIGNABLE</comment>
+        <addColumn tableName="DUMP_GOAL">
+            <column name="IS_ASSIGNABLE" type="BOOLEAN" defaultValueBoolean="true" remarks="Whether this dump goal is assignable. (This flag is '1' if it is assignable and '0' if not assignable.)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="DUMP_GOAL" columnName="IS_ASSIGNABLE"/>
+        </rollback>
+    </changeSet>  
+</databaseChangeLog>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="8e6ee8c8-e474-446b-ac57-a7bf39a54e01" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ASSOCIATED_ZONE to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="ASSOCIATED_ZONE"/>
+            </not>
+        </preConditions>
+        <comment>MO-11048: AddColumn SPOT_POINT.ASSOCIATED_ZONE</comment>
+        <addColumn tableName="SPOT_POINT">
+            <column name="ASSOCIATED_ZONE" type="BIGINT" remarks="The zone associated with this loading point"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="191d58a5-b781-456c-81d8-bce66845b8c5" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_ASSOCIATED_ZONE_FK to table SPOT_POINT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="ASSOCIATED_ZONE"/>
+            <columnExists tableName="ZONE" columnName="ZONE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT" foreignKeyName="SPOT_POINT_ASSOCIATED_ZONE_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-11048: AddForeignKeyConstraint SPOT_POINT_ASSOCIATED_ZONE_FK to SPOT_POINT (ASSOCIATED_ZONE)</comment>
+        <sql>UPDATE SPOT_POINT SET ASSOCIATED_ZONE = NULL WHERE ASSOCIATED_ZONE IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM ZONE WHERE ZONE.ZONE_OID = SPOT_POINT.ASSOCIATED_ZONE)</sql>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT" baseColumnNames="ASSOCIATED_ZONE" constraintName="SPOT_POINT_ASSOCIATED_ZONE_FK" referencedTableName="ZONE" referencedColumnNames="ZONE_OID" onDelete="SET NULL"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOT_POINT" constraintName="SPOT_POINT_ASSOCIATED_ZONE_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

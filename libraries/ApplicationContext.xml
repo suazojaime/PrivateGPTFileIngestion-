@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2011, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+
+    <bean id="coverageService" parent="parentRemote">
+        <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/coverageService"/>
+        <property name="serviceInterface" value="minestar.geometry.wcs.CoverageService"/>
+    </bean>
+
+    <bean id="wcs" class="minestar.geometry.wcs.WCSGetCoverage">
+        <property name="coverageService" ref="coverageService"/>
+    </bean>
+
+    <bean id="dxfRasterizer" parent="parentRemote">
+        <property name="serviceUrl" value="rmi://${MSTAR_BUS_HOST}:${MSTAR_BUS_PORT}/dxfRasterizer"/>
+        <property name="serviceInterface" value="minestar.geometry.surface.DxfRasterizer"/>
+    </bean>
+
+    <bean id="dxfRasterizerService" class="minestar.geometry.surface.DxfRasterizerService">
+        <property name="dxfRasterizer" ref="dxfRasterizer"/>
+    </bean>
+
+
+</beans>

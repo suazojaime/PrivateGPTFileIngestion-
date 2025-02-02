@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="f27ea233-5451-4bec-8944-fc951dd8346f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for LOGIN_USERID_STATUS of table LOGIN as index does not exist."
+                       onFail="MARK_RAN">
+            <indexExists indexName="LOGIN_USERID_STATUS" tableName="LOGIN"/>
+        </preConditions>
+        <comment>MO-11704: DropIndex LOGIN_USERID_STATUS from LOGIN (USER_ID,STATUS)</comment>
+        <dropIndex indexName="LOGIN_USERID_STATUS" tableName="LOGIN"/>
+        <rollback>
+            <!-- This index should not exist - do not rollback this change -->
+            <comment>@EmptyRollback</comment>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

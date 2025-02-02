@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b3a321ee-4873-4a5b-81ed-d5f1664f0cd6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ACTUAL_MASS to table PROD_PLAN_METRIC as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_METRIC"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_METRIC" columnName="ACTUAL_MASS"/>
+            </not>
+        </preConditions>
+        <comment>MO-1649: AddColumn PROD_PLAN_METRIC.ACTUAL_MASS</comment>
+        <addColumn tableName="PROD_PLAN_METRIC">
+            <column name="ACTUAL_MASS" type="DOUBLE" remarks="Actual Mass"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

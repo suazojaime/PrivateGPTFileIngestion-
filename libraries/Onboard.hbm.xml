@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <class name="minestar.pitlink.domain.machine.OnboardHardware"
+           table="MACHINE_ONBOARD_HARDWARE">
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">Onboard hardware info and equipment configuration</meta>
+        <meta attribute="view-master">true</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="OID">
+            <!-- This is actually a Machine.OID -->
+            <generator class="assigned"/>
+        </id>
+
+        <property name="onboardPlatformCode" column="ONBOARD_PLATFORM_ID" type="int">
+            <meta attribute="choices" inherit="false">onboard:platforms</meta>
+            <meta attribute="viewchoices" inherit="false">choice:eqmtOnboardPlatform</meta>
+            <meta attribute="description">This specifies the onboard platform ID. For example, 0 stands for TOPE on CD550</meta>
+            <meta attribute="alias" inherit="false">onboardPlatform</meta>
+        </property>
+
+        <property name="configurationName" column="CONFIGURATION_NAME" type="string">
+            <meta attribute="choices" inherit="false">choice:eqmtOnboardConfigName</meta>
+            <meta attribute="description">This specifies the equipment configuration name. For example, Motor grader
+            </meta>
+        </property>
+
+        <property name="operatorInterface" type="int" column="OPERATOR_INTERFACE" not-null="true">
+            <meta attribute="choices" inherit="false">choice:eqmtOperatorInterface</meta>
+            <meta attribute="viewchoices" inherit="false">choice:eqmtOperatorInterface</meta>
+        </property>
+
+        <property name="cameras" type="boolean" column="CAMERAS" not-null="true"/>
+
+        <property name="camerasAndRadar" type="boolean" column="CAMERAS_AND_RADAR" not-null="true"/>
+
+        <property name="proximityAwareness" type="boolean" column="PROXIMITY_AWARENESS" not-null="true"/>
+
+        <property name="customConfiguration" type="string" column="CUSTOM_CONFIGURATION" length="254"/>
+
+        <set name="fileVersions" table="ONBOARD_FILE_VERSION" fetch="subselect">
+            <meta attribute="description">Machine onboard hardware files information</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_OBJ
+            </meta>
+            <meta attribute="collection-primary-key">
+                name=ONBOARD_FILE_VERSION_PK
+                columns=HARDWARE_OID, FILE_TYPE
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias">onboardFileName</meta>
+
+            <key column="HARDWARE_OID" not-null="true"/>
+            <element type="minestar.pitlink.domain.machine.FileVersionInfoUserType" not-null="true">
+                <column name="FILE_TYPE" not-null="true"/>
+                <column name="VERSION_INFO"/>
+                <column name="DATE_ACTIVATED"/>
+            </element>
+        </set>
+    </class>
+
+</hibernate-mapping>

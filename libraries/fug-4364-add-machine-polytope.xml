@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="1f2a77fa-af77-4227-a4fc-37fb5aa03bf0" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for UG_POLYTOPE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="UG_POLYTOPE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4364: CreateTable UG_POLYTOPE</comment>
+        <createTable tablespace="MW_ENT" remarks="Machine outline as SVG." tableName="UG_POLYTOPE">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_CLASS" type="BIGINT" remarks="A reference to the machine class that the polytope represents."/>
+            <column name="SERVER_FILENAME" type="VARCHAR(255)" remarks="The filename used to store the data on the server">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP" type="DATETIME2" remarks="The time the polytope was created">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SVG" type="BLOB" remarks="The SVG representation of the polytope">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="UG_POLYTOPE_PK" tablespace="MW_IDXENT" tableName="UG_POLYTOPE"/>
+        <addUniqueConstraint columnNames="MACHINE_CLASS" constraintName="UG_POLYTOPE_MACHINE_CLASS_UK" tableName="UG_POLYTOPE"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="8add25e2-f59e-4eeb-bc75-de79053c15bf" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for UG_POLYTOPE_MACHINE_CLASS_FK to table UG_POLYTOPE as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="UG_POLYTOPE"/>
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="UG_POLYTOPE" foreignKeyName="UG_POLYTOPE_MACHINE_CLASS_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-4364: AddForeignKeyConstraint UG_POLYTOPE_MACHINE_CLASS_FK to UG_POLYTOPE (MACHINE_CLASS)</comment>
+        <sql>UPDATE UG_POLYTOPE SET MACHINE_CLASS = NULL WHERE MACHINE_CLASS IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = UG_POLYTOPE.MACHINE_CLASS)</sql>
+        <addForeignKeyConstraint baseTableName="UG_POLYTOPE" baseColumnNames="MACHINE_CLASS" constraintName="UG_POLYTOPE_MACHINE_CLASS_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="UG_POLYTOPE" constraintName="UG_POLYTOPE_MACHINE_CLASS_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

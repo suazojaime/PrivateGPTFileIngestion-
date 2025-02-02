@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2017, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="82f2486c-f03a-4d53-ba06-1c8a20422617" author="MineStar" context="Pit_Link/Pit_Link_Management"
+               failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for LOADER_RECIPE_RATE to table MACHINE_IN_PIT as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="LOADER_RECIPE_RATE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-5277: AddColumn MACHINE_IN_PIT.LOADER_RECIPE_RATE</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="LOADER_RECIPE_RATE" type="DOUBLE"
+                    remarks="Interpret NULL as 100%, otherwise larger than 49%, less than 151%"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

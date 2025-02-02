@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="2b8c0332-7b9e-4caa-8329-a1fd37ce67de" context="Production/Production_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for DISPLAY_ORDER to table V2_PROD_PLAN_COMMENT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_COMMENT"/>
+            <not>
+                <columnExists tableName="V2_PROD_PLAN_COMMENT" columnName="DISPLAY_ORDER"/>
+            </not>
+        </preConditions>
+        <comment>MO-2943: AddColumn V2_PROD_PLAN_COMMENT.DISPLAY_ORDER</comment>
+        <addColumn tableName="V2_PROD_PLAN_COMMENT">
+            <column name="DISPLAY_ORDER" type="BIGINT"/>
+        </addColumn>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

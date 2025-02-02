@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="9af5df8f-cc12-4c15-83e6-cb7a792b4b61" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MODEL_UPDATE_VERSION to table LOAD_GOAL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOAD_GOAL"/>
+            <not>
+                <columnExists tableName="LOAD_GOAL" columnName="MODEL_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>FUG-714: AddColumn LOAD_GOAL.MODEL_UPDATE_VERSION</comment>
+        <addColumn tableName="LOAD_GOAL">
+            <column name="MODEL_UPDATE_VERSION" type="BIGINT" remarks="The is a copy of the system wide version number."/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="LOAD_GOAL" columnName="MODEL_UPDATE_VERSION"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

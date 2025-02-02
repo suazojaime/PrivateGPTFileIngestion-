@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="a793a416-1a6f-4549-8da7-a06c3061c6e0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for HISTOGRAM_OID to table HISTOGRAM_VIMS3_DETAILS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="HISTOGRAM_VIMS3_DETAILS"/>
+            <not>
+                <columnExists tableName="HISTOGRAM_VIMS3_DETAILS" columnName="HISTOGRAM_OID"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddColumn HISTOGRAM_VIMS3_DETAILS.HISTOGRAM_OID</comment>
+        <addColumn tableName="HISTOGRAM_VIMS3_DETAILS">
+            <column name="HISTOGRAM_OID" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

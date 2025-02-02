@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Changesets to add the storage of notes in separate tables into NOTES columns -->
+    
+    <changeSet id="04e161d4-0cc5-495b-b266-fffdf30bc6cf" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for NOTES to table V2_PROD_PLAN_JOB as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_JOB"/>
+            <not>
+                <columnExists tableName="V2_PROD_PLAN_JOB" columnName="NOTES"/>
+            </not>
+        </preConditions>
+        <comment>MO-4256: AddColumn V2_PROD_PLAN_JOB.NOTES</comment>
+        <addColumn tableName="V2_PROD_PLAN_JOB">
+            <column name="NOTES" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="e3932554-0895-484f-aeae-81129b461fee" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for NOTES to table PROD_PLAN_TASK_OPERATIONAL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="NOTES"/>
+            </not>
+        </preConditions>
+        <comment>MO-4256: AddColumn PROD_PLAN_TASK_OPERATIONAL.NOTES</comment>
+        <addColumn tableName="PROD_PLAN_TASK_OPERATIONAL">
+            <column name="NOTES" type="CLOB"/>
+        </addColumn>
+        <rollback/>
+    </changeSet>
+    
+    <changeSet id="c21db813-a527-43f3-8574-85cd6f31246b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for NOTES to table PROD_PLAN_TASK_NON_PRODUCTION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="NOTES"/>
+            </not>
+        </preConditions>
+        <comment>MO-4256: AddColumn PROD_PLAN_TASK_NON_PRODUCTION.NOTES</comment>
+        <addColumn tableName="PROD_PLAN_TASK_NON_PRODUCTION">
+            <column name="NOTES" type="CLOB"/>
+        </addColumn>
+        <rollback/>
+    </changeSet>
+    
+    <changeSet id="899e11a8-7351-40c3-b026-5f39d1afe60b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for NOTES to table PROD_PLAN_TASK_PRODUCTION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_PRODUCTION"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK_PRODUCTION" columnName="NOTES"/>
+            </not>
+        </preConditions>
+        <comment>MO-4256: AddColumn PROD_PLAN_TASK_PRODUCTION.NOTES</comment>
+        <addColumn tableName="PROD_PLAN_TASK_PRODUCTION">
+            <column name="NOTES" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

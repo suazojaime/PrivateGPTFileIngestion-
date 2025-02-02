@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="41a41594-9d7a-46ce-8030-e8a104d79998" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for WATER_REFILL_STATION to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="WATER_REFILL_STATION"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13039 AddColumn PLAN_MODEL.WATER_REFILL_STATION</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="WATER_REFILL_STATION" type="BIGINT" remarks="The water refill station that this plan is for."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="e0278580-af46-4ebc-9d1c-06375186b41d" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_MODEL_WATER_REFILL_STA_FK to table PLAN_MODEL as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="WATER_REFILL_STATION"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_MODEL" foreignKeyName="PLAN_MODEL_WATER_REFILL_STA_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-13039 AddForeignKeyConstraint PLAN_MODEL_WATER_REFILL_STA_FK to PLAN_MODEL (WATER_REFILL_STATION)</comment>
+        <sql>UPDATE PLAN_MODEL SET WATER_REFILL_STATION = NULL WHERE WATER_REFILL_STATION IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = PLAN_MODEL.WATER_REFILL_STATION)</sql>
+        <addForeignKeyConstraint baseTableName="PLAN_MODEL" baseColumnNames="WATER_REFILL_STATION" constraintName="PLAN_MODEL_WATER_REFILL_STA_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PLAN_MODEL" constraintName="PLAN_MODEL_WATER_REFILL_STA_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

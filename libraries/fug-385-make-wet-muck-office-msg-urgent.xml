@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="681b7cb2-c843-4e0e-9038-00fd86662653" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <comment>FUG-385: Change priority and severity of Wet Muck Warning Message Failure alarms to urgent</comment>
+        <sql>update ALARMTYPE set PRIORITY = 5, SEVERITY = 5 where NAME = 'Wet Muck Warning Message Failure'</sql>
+        <rollback />
+    </changeSet>
+</databaseChangeLog>

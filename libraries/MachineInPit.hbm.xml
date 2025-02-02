@@ -1,0 +1,972 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2022 Caterpillar
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="pitmodel">
+
+    <class name="minestar.pitlink.domain.pitmodel.MachineInPitImpl"
+           abstract="true"
+           table="MACHINE_IN_PIT"
+           discriminator-value="MachineInPit">
+
+        <meta attribute="view-include">true</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">The in pit machine definition.</meta>
+        <cache usage="read-write" region="model" />
+
+        <id name="OID" type="long" column="MACHINE_OID">
+            <!-- Equals Machine.OID -->
+            <generator class="assigned"/>
+        </id>
+
+        <discriminator column="CLASS_NAME" not-null="false"/>
+
+        <many-to-one name="machineRef"
+                     class="minestar.pitlink.domain.machine.MachineReference"
+                     formula="MACHINE_OID"
+                     not-null="true"
+                     lazy="false"/>
+
+        <property name="status"
+                  type="minestar.domain.model.persistence.MachineStatusUserType"
+                  column="STATUS"
+                  not-null="true">
+            <meta attribute="description">A numerical representation of the state.</meta>
+            <!--<meta attribute="choices" inherit="false">choice:truckStatus</meta>-->
+        </property>
+
+        <property name="statusLastUpdated"
+                  type="TimestampType"
+                  column="STATUS_LAST_UPDATED_UTC">
+            <meta attribute="utc-description">The utc time when the status was last updated.</meta>
+            <meta attribute="description">The time when the status was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="softState" type="int" column="SOFT_STATE">
+            <meta attribute="description">The last known soft state value.</meta>
+        </property>
+
+        <many-to-one name="locationRef"
+                     class="minestar.mine.domain.minemodel.LocationReference"
+                     column="LOCATION_OID"
+                     not-found="ignore">
+            <meta attribute="description">The current location.</meta>
+            <meta attribute="alias" inherit="false">destination</meta>
+        </many-to-one>
+
+        <property name="locationLastUpdated"
+                  type="TimestampType"
+                  column="LOCATION_LAST_UPDATED_UTC">
+            <meta attribute="utc-description">The utc time when the location was last updated.</meta>
+            <meta attribute="description">The time when the location was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <many-to-one name="beaconRef"
+                     class="minestar.mine.domain.minemodel.WaypointReference"
+                     column="WAYPOINT_OID"
+                     not-found="ignore">
+            <meta attribute="description">The last waypoint entered.</meta>
+            <meta attribute="alias" inherit="false">waypoint</meta>
+        </many-to-one>
+
+        <property name="beaconLastUpdated"
+                  type="TimestampType"
+                  column="WAYPOINT_LAST_UPDATED_UTC">
+            <meta attribute="utc-description">The utc time when the beacon was last updated.</meta>
+            <meta attribute="description">The time when the beacon was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="timeAtBeacon"
+                  type="TimestampType"
+                  column="TIME_AT_WAYPOINT_UTC">
+            <meta attribute="utc-description">The utc time when this machine entered the last waypoint.
+                ZERO means that this value is unknown.
+            </meta>
+            <meta attribute="description">The time when this machine entered the last waypoint.
+                ZERO means that this value is unknown.
+            </meta>
+            <meta attribute="alias" inherit="false">timeAtWaypoint</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <many-to-one name="currentOperatorRef"
+                     class="minestar.machinetracking.domain.PersonReference"
+                     column="CURRENT_OPERATOR_OID"
+                     not-found="ignore">
+            <meta attribute="alias">currentOperator</meta>
+            <meta attribute="description">The current operator.</meta>
+        </many-to-one>
+
+        <property name="currentOperatorLastUpdated"
+                  type="TimestampType"
+                  column="CURR_OPERATOR_LAST_UPDATED_UTC">
+            <meta attribute="utc-description">The utc time when the current operator was last updated.</meta>
+            <meta attribute="description">The time when the current operator was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="timeTillRefuel" column="TIME_TILL_REFUEL">
+            <meta attribute="description">Operating time till estimated fuel level reaches the refuel amount.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <property name="timeTillCriticalRefuel" column="TIME_TILL_CRIT_REFUEL">
+            <meta attribute="description">Operating time till estimated fuel level reaches the critical amount.</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+            </type>
+        </property>
+
+        <many-to-one name="jobCodeRef"
+                     class="minestar.production.domain.JobCodeReference"
+                     column="JOBCODE_OID"
+                     not-found="ignore">
+            <meta attribute="alias">jobCode</meta>
+            <meta attribute="description">The last known JobCode.</meta>
+        </many-to-one>
+
+        <property name="jobCodeLastUpdated"
+                  type="TimestampType"
+                  column="JOB_CODE_LAST_UPDATED_UTC">
+            <meta attribute="utc-description">The utc time when the job code was last updated.</meta>
+            <meta attribute="description">The time when the job code was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <many-to-one name="materialRef"
+                     class="minestar.machinetracking.domain.MaterialReference"
+                     column="MATERIAL_OID"
+                     not-found="ignore">
+            <meta attribute="alias">material</meta>
+            <meta attribute="description">The material that this machine is currently operating with.</meta>
+        </many-to-one>
+
+        <property name="materialLastUpdated"
+                  type="TimestampType"
+                  column="MATERIAL_LAST_UPDATED_UTC">
+            <meta attribute="utc-description">The utc time when the material was last updated.</meta>
+            <meta attribute="description">The time when the material was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="materialDetermination"
+                  type="minestar.domain.model.persistence.MaterialDeterminationUserType"
+                  column="MATERIAL_DETERMINATION">
+            <meta attribute="description">How the material was determined.</meta>
+        </property>
+
+        <property name="lastPositionReportDate"
+                  type="TimestampType"
+                  column="LAST_POSITION_REPORT_DATE_UTC">
+            <meta attribute="utc-description">The utc time when the position report was last updated.</meta>
+            <meta attribute="description">The time when the position report was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="position" type="XYZCoordinate">
+            <meta attribute="description">The last known location of the machine.</meta>
+            <column name="X" />
+            <column name="Y" />
+            <column name="Z" />
+        </property>
+
+        <property name="positionAccuracy" column="POSITION_ACCURACY">
+            <meta attribute="description">The reported accuracy of the position.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="machineShutdown"
+                  type="boolean"
+                  column="MACHINE_SHUTDOWN"
+                  not-null="true">
+            <meta attribute="description">When true, the machine has been shut down.</meta>
+            <meta attribute="defaultValue">true</meta>
+        </property>
+
+        <property name="notInUse"
+                  type="boolean"
+                  column="NOT_IN_USE"
+                  not-null="true">
+            <meta attribute="description">When true, the machine has been marked as not currently in use and will be
+                ignored by autonomous machines.
+            </meta>
+            <meta attribute="defaultValue">true</meta>
+        </property>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.MobileMachineInPitImpl"
+                  discriminator-value="MobileMachineInPit">
+            <meta attribute="description">The in pit mobile machine definition.</meta>
+
+            <component name="macState" class="minestar.domain.model.MachineState">
+                <property name="oldLoadStatus" type="minestar.domain.model.persistence.MachineLoadStatusUserType"
+                          column="MSTATE_OLDLOADSTATUS">
+                    <meta attribute="description">The previous load status.</meta>
+                </property>
+                <property name="loadStatus" type="minestar.domain.model.persistence.MachineLoadStatusUserType"
+                          column="MSTATE_LOADSTATUS">
+                    <meta attribute="description">The current load status.</meta>
+                </property>
+                <property name="oldStatus" type="minestar.domain.model.persistence.MachineStatusUserType"
+                          column="MSTATE_OLDSTATE">
+                    <meta attribute="description">The previous machine status.</meta>
+                </property>
+                <property name="status" type="minestar.domain.model.persistence.MachineStatusUserType" formula="STATUS">
+                    <meta attribute="description">The current machine status.</meta>
+                </property>
+                <property name="manualOverride" type="boolean" column="MSTATE_MANUALOVERRIDE">
+                    <meta attribute="description">Is a manual override in effect</meta>
+                </property>
+            </component>
+
+            <property name="fieldBadGPS"
+                      type="boolean"
+                      column="FIELD_BAD_GPS">
+                <meta attribute="description">When true we have detected a maintenance event specifying
+                    that the GPS is not operating.
+                </meta>
+            </property>
+
+            <many-to-one name="serviceMachineRef"
+                         class="minestar.pitlink.domain.machine.MachineReference"
+                         column="SERVICE_MACHINE_OID"
+                         not-found="ignore">
+                <meta attribute="alias">serviceMachine</meta>
+                <meta attribute="description">The Machine where this machine will be serviced when it
+                    reaches its destination.
+                </meta>
+                <meta attribute="export-marshall">false</meta>
+            </many-to-one>
+
+            <many-to-one name="lastLoaderRef"
+                         class="minestar.pitlink.domain.machine.MachineReference"
+                         column="LAST_LOADER_OID"
+                         not-found="ignore">
+                <meta attribute="alias">lastLoader</meta>
+                <meta attribute="description">The last loading tool this machine was loaded at.</meta>
+                <meta attribute="export-marshall">false</meta>
+            </many-to-one>
+
+            <many-to-one name="lastProcessorRef"
+                         class="minestar.pitlink.domain.machine.MachineReference"
+                         column="LAST_PROCESSOR_OID"
+                         not-found="ignore">
+                <meta attribute="alias">lastProcessor</meta>
+                <meta attribute="description">The last processor this machine dumped at.</meta>
+                <meta attribute="export-marshall">false</meta>
+            </many-to-one>
+
+            <property name="timeCommencedService"
+                      type="TimestampType"
+                      column="TIME_COMMENCED_SERVICE_UTC">
+                <meta attribute="utc-description">The utc time when this machine last commenced service.</meta>
+                <meta attribute="description">The time when this machine last commenced service.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </property>
+
+            <property name="timeCompletedService"
+                      type="TimestampType"
+                      column="TIME_COMPLETED_SERVICE_UTC">
+                <meta attribute="utc-description">The utc time when this machine last completed service.</meta>
+                <meta attribute="description">The time when this machine last completed service.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </property>
+
+            <property name="serviceInfoLastUpdated"
+                      type="TimestampType"
+                      column="SERVICE_INFO_LAST_UPDATED_UTC">
+                <meta attribute="utc-description">The utc time when the service info for this machine was last
+                    updated.
+                </meta>
+                <meta attribute="description">The time when the service info for this machine was last updated.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </property>
+
+            <property name="speed" column="SPEED">
+                <meta attribute="description">The current speed of the machine.</meta>
+                <meta attribute="unitType">speed</meta>
+                <type name="quantity">
+                    <param name="unitType">speed</param>
+                </type>
+            </property>
+
+            <property name="heading" column="HEADING">
+                <meta attribute="description">The current heading of the machine.</meta>
+                <meta attribute="unitType">plane angle</meta>
+                <type name="quantity">
+                    <param name="unitType">plane angle</param>
+                </type>
+            </property>
+
+            <property name="freeDestPercent" column="FREEDESTPERCENT">
+                <meta attribute="description">The percent of destinations available for assignment</meta>
+                <type name="quantity">
+                    <param name="unitType">ratio</param>
+                </type>
+            </property>
+
+            <property name="freeGrpDestPercent" column="FREEGRPDESTPERCENT">
+                <meta attribute="description">The percent of group destinations available for assignment</meta>
+                <type name="quantity">
+                    <param name="unitType">ratio</param>
+                </type>
+            </property>
+
+            <subclass name="minestar.pitlink.domain.pitmodel.TruckInPitImpl"
+                      discriminator-value="TruckInPit">
+                <meta attribute="description">The in pit truck definition.</meta>
+
+                <property name="loaded"
+                          type="boolean"
+                          column="LOADED">
+                    <meta attribute="description">When true this truck is full, otherwise it is empty.</meta>
+                    <!--<meta attribute="choices" inherit="false">choice:truckLoadStatus</meta>-->
+                </property>
+
+                <property name="currentPayload"
+                          column="CURRENT_PAYLOAD">
+                    <meta attribute="description">The current payload in this load</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+
+                <property name="payloadLastUpdated"
+                          type="TimestampType"
+                          column="CURR_PAYLOAD_LAST_UPDATED_UTC">
+                    <meta attribute="utc-description">The last payload update utc time</meta>
+                    <meta attribute="description">The last payload update time</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+
+                <property name="lastPayload"
+                          column="LAST_PAYLOAD">
+                    <meta attribute="description">The last payload in this load</meta>
+                    <type name="quantity">
+                        <param name="unitType">mass</param>
+                    </type>
+                </property>
+
+                <property name="payloadUpdateSource"
+                          type="minestar.pitlink.domain.pitmodel.PayloadUpdateSourceEnumUserType"
+                          column="PAYLOAD_UPDATE_SOURCE">
+                    <meta attribute="description">The source of the payload value.</meta>
+                </property>
+
+                <many-to-one name="lastMaterialRef"
+                             class="minestar.machinetracking.domain.MaterialReference"
+                             column="LAST_MATERIAL_OID"
+                             not-found="ignore">
+                    <meta attribute="alias">lastMaterial</meta>
+                    <meta attribute="description">The last material that was in this truck.</meta>
+                </many-to-one>
+
+                <many-to-one name="lastGradeBlockRef"
+                             class="minestar.mine.domain.material.GradeBlockReference"
+                             column="LAST_GRADE_BLOCK_OID"
+                             not-found="ignore">
+                    <meta attribute="alias">lastMiningBlock</meta>
+                    <meta attribute="description">The last mining block that was in the truck.</meta>
+                </many-to-one>
+
+                <many-to-one name="currentGradeBlockRef"
+                             class="minestar.mine.domain.material.GradeBlockReference"
+                             column="CURRENT_GRADE_BLOCK_OID"
+                             not-found="ignore">
+                    <meta attribute="alias">currentMiningBlock</meta>
+                    <meta attribute="description">The current minestar mining block for this load</meta>
+                </many-to-one>
+
+                <property name="gradeBlockLastUpdated"
+                          type="TimestampType"
+                          column="CUR_GRADE_BLK_LAST_UPDATED_UTC">
+                    <meta attribute="alias">miningBlockLastUpdated</meta>
+                    <meta attribute="utc-description">The last grade block update utc time</meta>
+                    <meta attribute="description">The last grade block update time</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+
+                <property name="gradeBlockDetermination"
+                          type="minestar.domain.model.persistence.GradeBlockDeterminationUserType"
+                          column="GRADE_BLOCK_DETERMINATION">
+                    <meta attribute="alias">miningBlockDetermination</meta>
+                    <meta attribute="description">How minestar determined the mining block for this load</meta>
+                </property>
+
+                <many-to-one name="lastLoadWaypointRef"
+                              class="minestar.mine.domain.minemodel.WaypointReference"
+                              column="LAST_LOAD_WAYPOINT_OID"
+                              not-found="ignore"
+                              lazy="false">
+                    <meta attribute="description">Reference to the last loading waypoint that the Truck took a load.</meta>
+                </many-to-one>
+
+                <many-to-one name="lastDumpWaypointRef"
+                             class="minestar.mine.domain.minemodel.WaypointReference"
+                             column="LAST_DUMP_WAYPOINT_OID"
+                             not-found="ignore"
+                             lazy="false">
+                    <meta attribute="description">Reference to the last dumping waypoint that the Truck dumped.</meta>
+                </many-to-one>
+
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.pitmodel.LoadingToolInPitImpl"
+                      discriminator-value="LoadingToolInPit">
+                <meta attribute="description">The in pit loading tool definition.</meta>
+
+                <many-to-one name="gradeBlockRef"
+                             class="minestar.mine.domain.material.GradeBlockReference"
+                             column="GRADE_BLOCK_OID"
+                             not-found="ignore">
+                    <meta attribute="alias">miningBlock</meta>
+                    <meta attribute="description">The current/default minestar mining block</meta>
+                </many-to-one>
+
+                <many-to-one name="gradeBlockGroupRef"
+                             class="minestar.mine.domain.material.GradeBlockGroupReference"
+                             column="GRADE_BLOCK_GROUP_OID"
+                             not-found="ignore">
+                    <meta attribute="alias">miningBlockGroupLT</meta>
+                    <meta attribute="description">The current bench for this LT</meta>
+                </many-to-one>
+
+                <many-to-one name="lastLoadedGradeBlockRef"
+                             class="minestar.mine.domain.material.GradeBlockReference"
+                             column="LAST_LOADED_GRADE_BLOCK_OID"
+                             not-found="ignore">
+                    <meta attribute="alias">lastLoadedMiningBlock</meta>
+                    <meta attribute="description">The last loaded minestar mining block.</meta>
+                </many-to-one>
+
+                <set name="gradeBlockRefs" table="MACHINE_IN_PIT_GB_LIST" fetch="subselect">
+                    <meta attribute="alias">miningBlockList</meta>
+                    <meta attribute="description">The list of minestar mining blocks active for this LT</meta>
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="view-reference">minestar.mine.domain.material.GradeBlockImpl</meta>
+
+                    <key column="MACHINE_OID" not-null="true"/>
+                    <many-to-many class="minestar.mine.domain.material.GradeBlockReference"
+                                  column="GRADE_BLOCK_OID" not-found="ignore"/>
+                </set>
+
+                <property name="loaderCycleMode"
+                          type="minestar.pitlink.domain.pitmodel.LoaderCycleModeEnumUserType"
+                          column="LOADER_CYCLE_MODE">
+                    <meta attribute="description">The mode that the machine is currently in.</meta>
+                </property>
+
+                <property name="currentBenchFile" type="string" column="CURRENT_BENCH_FILE" length="255">
+                    <meta attribute="description">The current bench .cat file, selected by the operator</meta>
+                </property>
+
+                <set name="loadProcessors" table="LOADINGTOOL_PROCESSORS" fetch="subselect">
+                    <meta attribute="collection-table">
+                        tablespace=MW_ENT
+                    </meta>
+                    <meta attribute="collection-primary-key">
+                        tablespace=MW_IDXENT
+                    </meta>
+                    <meta attribute="description">A list of the processors a loading tool is to load directly or with truck assistance as an Load-Haul-Dump type loading tool.</meta>
+                    <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineImpl</meta>
+
+                    <key column="OID" not-null="true"/>
+                    <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="PROCESSOR_OID"
+                                  not-found="ignore"/>
+                </set>
+
+                <many-to-one name="loaderRecipe" column="LOADER_RECIPE_OID"
+                             class="minestar.production.domain.LoaderRecipeReference" not-found="ignore">
+                    <meta attribute="description">The loader recipe the loading tool is being asked to lfollow</meta>
+                </many-to-one>
+
+                <property name="loaderRecipeAppliedDateTime"
+                          type="TimestampType"
+                          column="LOADER_RECIPE_APPLIED_UTC">
+                    <meta attribute="utc-description">The utc time when the Loader Recipe is applied</meta>
+                    <meta attribute="description">The utc time when the Loader Recipe is applied</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+
+                <property name="loaderRecipeRate" column="LOADER_RECIPE_RATE">
+                    <meta attribute="unitType">ratio</meta>
+                    <meta attribute="description">Interpret NULL as 100%, otherwise larger than 49%, less than 151%</meta>
+                    <type name="quantity">
+                        <param name="unitType">ratio</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+
+                <property name="haulageEstimatedTimeOfArrival"
+                          type="TimestampType"
+                          column="HAULAGE_ETA_UTC">
+                    <meta attribute="utc-description">The utc time when the haulage is expected to arrive</meta>
+                    <meta attribute="description">The utc time when the haulage is expected to arrive</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+
+                <subclass name="minestar.pitlink.domain.pitmodel.ChuteInPitImpl"
+                          discriminator-value="ChuteInPit">
+                    <!-- Note: Chute is a loading tool that is a fixed plant, and not a mobile machine. -->
+
+                    <property name="dumpedAmount"
+                              column="CHUTE_DUMPED_AMOUNT">
+                        <meta attribute="description">The amount of ore that was dumped into the chute since the start of the
+                            current shift
+                        </meta>
+                        <meta attribute="unitType">mass</meta>
+                        <type name="quantity">
+                            <param name="unitType">mass</param>
+                        </type>
+                    </property>
+
+                    <property name="takenAmount"
+                              column="CHUTE_TAKEN_AMOUNT">
+                        <meta attribute="description">The amount of ore that has been taken from the chute since the start of
+                            the current shift
+                        </meta>
+                        <meta attribute="unitType">mass</meta>
+                        <type name="quantity">
+                            <param name="unitType">mass</param>
+                        </type>
+                    </property>
+
+                    <property name="currentLevel"
+                              column="CHUTE_CURRENT_LEVEL">
+                        <meta attribute="description">The amount of ore that should currently be in the chute</meta>
+                        <meta attribute="unitType">mass</meta>
+                        <type name="quantity">
+                            <param name="unitType">mass</param>
+                        </type>
+                    </property>
+
+                    <property name="lastDumpedTimestamp"
+                              type="TimestampType"
+                              column="CHUTE_LAST_DUMPED_UTC">
+                        <meta attribute="utc-description">The utc time when ore was last dumped into the chute</meta>
+                        <meta attribute="description">The time when ore was last dumped into the chute</meta>
+                        <meta attribute="view-localtime">true</meta>
+                    </property>
+
+                    <property name="dumpedRate"
+                              column="CHUTE_DUMPED_RATE">
+                        <meta attribute="description">The rate in which ore is being dumped into the chute</meta>
+                        <meta attribute="unitType">rate</meta>
+                        <type name="quantity">
+                            <param name="unitType">rate</param>
+                        </type>
+                    </property>
+                </subclass>
+
+                <subclass name="minestar.pitlink.domain.pitmodel.LoadingBayInPitImpl"
+                          discriminator-value="LoadingBayInPit">
+                    <!-- Note: Loading bay is a loading tool that is a fixed plant, and not a mobile machine. -->
+
+                    <set name="associatedLoaderRefs" table="LOADINGBAY_LOADERS" fetch="subselect">
+                        <meta attribute="collection-table">
+                            tablespace=MW_ENT
+                        </meta>
+                        <meta attribute="collection-primary-key">
+                            tablespace=MW_IDXENT
+                        </meta>
+                        <meta attribute="description">A collection of loaders associated with the loading bay for assignment.</meta>
+                        <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineImpl</meta>
+
+                        <key column="OID" not-null="true"/>
+                        <many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="LOADER_OID"
+                                    not-found="ignore"/>
+                    </set>
+
+                </subclass>
+
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.pitmodel.LoadHaulDumpInPitImpl"
+                      discriminator-value="LoadHaulDumpInPit">
+
+                <property name="loaded"
+                          type="boolean"
+                          column="LOADED">
+                    <meta attribute="description">When true this LHD is full, otherwise it is empty.</meta>
+                </property>
+
+                <property name="operationMode"
+                          type="minestar.pitlink.domain.pitmodel.UndergroundOperationModeEnumUserType"
+                          column="UG_MODE">
+                    <meta attribute="description">
+                        The current operation mode of underground LHD machines.
+                    </meta>
+                </property>
+
+                <property name="modeStatusLastReceived"
+                          type="TimestampType"
+                          column="UG_MODE_MSG_TIME_UTC">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="description">The date and time that the LHD machine last sent a ModeStatus
+                        message
+                    </meta>
+                    <meta attribute="utc-description">The utc time that the LHD machine last sent a ModeStatus
+                        message
+                    </meta>
+                </property>
+
+                <many-to-one name="lastLoadWaypointRef"
+                             class="minestar.mine.domain.minemodel.WaypointReference"
+                             column="LAST_LOAD_WAYPOINT_OID"
+                             not-found="ignore"
+                             lazy="false">
+                    <meta attribute="description">Reference to the last loading waypoint that the Truck took a load.</meta>
+                </many-to-one>
+
+                <many-to-one name="lastDumpWaypointRef"
+                             class="minestar.mine.domain.minemodel.WaypointReference"
+                             column="LAST_DUMP_WAYPOINT_OID"
+                             not-found="ignore"
+                             lazy="false">
+                    <meta attribute="description">Reference to the last dumping waypoint that the Truck dumped.</meta>
+                </many-to-one>
+
+                <property name="localizationState"
+                          type="minestar.pitlink.domain.machine.underground.UndergroundLocalizationStateEnumUserType"
+                          column="UG_LOC_STATE">
+                    <meta attribute="description">
+                        The last localization state sent by the LHD.
+                    </meta>
+                </property>
+
+                <property name="localizationWarning"
+                          type="minestar.pitlink.domain.machine.underground.UndergroundLocalizationWarningEnumUserType"
+                          column="UG_LOC_WARNING">
+                    <meta attribute="description">
+                        The last localization warning sent by the LHD.
+                    </meta>
+                </property>
+
+                <property name="articulation"
+                          column="ARTICULATION">
+                    <meta attribute="description">
+                        The angle that the front part of the machine is from the rear part.
+                        Positive numbers mean that the front is angled towards the right.
+                        Negative numbers mean that the front is angled towards the left.
+                    </meta>
+                    <type name="quantity">
+                        <param name="unitType">angle</param>
+                    </type>
+                </property>
+
+                <property name="aimsStatus"
+                          column="AIMS_STATUS"
+                          not-null="false">
+                    <type name="minestar.health.domain.data.HibernateIntegerEnumType">
+                        <param name="enumClass">minestar.mine.domain.minemodel.underground.aims.AIMSMachineArmStatus</param>
+                    </type>
+                </property>
+
+                <property name="aimsMachineFault" type="java.lang.String" column="AIMS_MACHINE_FAULT"
+                          length="254" not-null="false">
+                    <meta attribute="description">The AIMS machine fault status.</meta>
+                </property>
+                <property name="aimsLastMessageTime" type="TimestampType" column="AIMS_LAST_MESSAGE_UTC">
+                    <meta attribute="utc-description">The utc time at which we received the latest AIMS message.
+                    </meta>
+                    <meta attribute="description">The time at which we received the latest AIMS message.</meta>
+                    <meta attribute="view-localtime">true</meta>
+                </property>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.pitmodel.SecondaryBreakageUnitInPitImpl"
+                      discriminator-value="SecondaryBreakageUnitInPit">
+
+                <property name="operationMode"
+                          type="minestar.pitlink.domain.pitmodel.UndergroundOperationModeEnumUserType"
+                          column="UG_MODE">
+                    <meta attribute="description">
+                        The current operation mode of underground LHD machines.
+                    </meta>
+                </property>
+
+                <property name="modeStatusLastReceived"
+                          type="TimestampType"
+                          column="UG_MODE_MSG_TIME_UTC">
+                    <meta attribute="timestamp">true</meta>
+                    <meta attribute="description">The date and time that the SBU machine last sent a ModeStatus
+                        message
+                    </meta>
+                    <meta attribute="utc-description">The utc time that the SBU machine last sent a ModeStatus
+                        message
+                    </meta>
+                </property>
+
+                <property name="localizationState"
+                          type="minestar.pitlink.domain.machine.underground.UndergroundLocalizationStateEnumUserType"
+                          column="UG_LOC_STATE">
+                    <meta attribute="description">
+                        The last localization state sent by the LHD.
+                    </meta>
+                </property>
+
+                <property name="localizationWarning"
+                          type="minestar.pitlink.domain.machine.underground.UndergroundLocalizationWarningEnumUserType"
+                          column="UG_LOC_WARNING">
+                    <meta attribute="description">
+                        The last localization warning sent by the LHD.
+                    </meta>
+                </property>
+
+                <property name="articulation"
+                          column="ARTICULATION">
+                    <meta attribute="description">
+                        The angle that the front part of the machine is from the rear part.
+                        Positive numbers mean that the front is angled towards the right.
+                        Negative numbers mean that the front is angled towards the left.
+                    </meta>
+                    <type name="quantity">
+                        <param name="unitType">angle</param>
+                    </type>
+                </property>
+
+            </subclass>
+
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.ProcessorInPitImpl"
+                  discriminator-value="ProcessorInPit">
+            <meta attribute="description">The in pit processor definition.</meta>
+
+            <property name="lastServiceAmount"
+                      column="LAST_SERVICE_AMOUNT">
+                <meta attribute="description">The amount of material that the last truck dumped.</meta>
+                <type name="quantity">
+                    <param name="unitType">mass</param>
+                </type>
+            </property>
+
+            <property name="lastServiceAmountLastUpdated"
+                      type="TimestampType"
+                      column="LAST_SRV_AMT_LAST_UPDATED_UTC">
+                <meta attribute="utc-description">The utc time that the service amount was updated.</meta>
+                <meta attribute="description">The time that the service amount was updated.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </property>
+
+            <property name="lastServiceStart"
+                      type="TimestampType"
+                      column="LAST_SERVICE_START_UTC">
+                <meta attribute="utc-description">The utc time that the last truck started dumping.</meta>
+                <meta attribute="description">The time that the last truck started dumping.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </property>
+
+            <property name="lastServiceStartLastUpdated"
+                      type="TimestampType"
+                      column="LAST_SRV_STRT_LAST_UPDATED_UTC">
+                <meta attribute="utc-description">The update utc time for the last service start.</meta>
+                <meta attribute="description">The update time for the last service start.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </property>
+
+            <property name="dumpedAmount"
+                      column="DUMPED_AMOUNT_CURRENT_SHIFT">
+                <meta attribute="description">The amount of material dumped during the current shift.</meta>
+                <type name="quantity">
+                    <param name="unitType">mass</param>
+                </type>
+            </property>
+
+            <property name="returnLoadedTrucksToQueue" type="boolean">
+                <meta attribute="description">When true, automatically send trucks back to the queue. When false, use Manual Intervention</meta>
+                <column name="RETURN_LOADED_TRUCKS_TO_QUEUE" default="0" not-null="true"/>
+            </property>
+
+            <component name="prohibitedSequence" class="minestar.pitlink.domain.pitmodel.ProhibitedSequence" access="field">
+                <property name="materialModifier" type="string">
+                    <meta attribute="description">The material modifier that is limited to be dumped in the processor</meta>
+                    <column name="PROHIBITED_SEQ_MATERIAL_MODIFIER" default="" not-null="true" length="255"/>
+                </property>
+
+                <property name="occurrences" type="int">
+                    <meta attribute="description">The number of times that material modifier cannot be dumped in the processor in sequence</meta>
+                    <column name="PROHIBITED_SEQ_OCCURRENCES" default="0" not-null="true"/>
+                </property>
+            </component>
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.FuelBayInPitImpl"
+                  discriminator-value="FuelBayInPit">
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.AutonomousWaterRefillStationInPitImpl"
+                  discriminator-value="AutonomousWaterRefillStationInPit">
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.MaterialServiceInPitImpl"
+                  discriminator-value="MaterialServiceInPit">
+
+            <many-to-one name="gradeBlockRef"
+                         class="minestar.mine.domain.material.GradeBlockReference"
+                         column="GRADE_BLOCK_OID"
+                         not-found="ignore">
+                <meta attribute="alias">miningBlock</meta>
+                <meta attribute="description">Mining block served up by the material service</meta>
+            </many-to-one>
+
+            <property name="loaderCycleMode" type="minestar.pitlink.domain.pitmodel.LoaderCycleModeEnumUserType" column="LOADER_CYCLE_MODE">
+                <meta attribute="description">The mode that the machine is currently in.</meta>
+            </property>
+
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.PayloadServiceInPitImpl"
+                  discriminator-value="PayloadServiceInPit">
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.InfrastructureInPitImpl"
+                  discriminator-value="InfrastructureInPit">
+            <subclass name="minestar.pitlink.domain.pitmodel.PerceptionTargetInPitImpl"
+                      discriminator-value="PerceptionTargetInPit">
+                <subclass name="minestar.pitlink.domain.pitmodel.AutomaticObjectDetectionVerificationTargetInPitImpl"
+                          discriminator-value="AutomaticObjectDetectionVerificationTargetInPit">
+                    <property name="heading" column="Heading">
+                        <meta attribute="description">a heading for larger AODV targets.</meta>
+                        <type name="quantity">
+                            <param name="unitType">heading</param>
+                        </type>
+                    </property>
+                </subclass>
+            </subclass>
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.ConveyorInPitImpl"
+                  discriminator-value="ConveyorInPit">
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.CommandProxyInPitImpl"
+                  discriminator-value="CommandProxyInPit">
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.RockBreakerInPitImpl"
+                  discriminator-value="RockBreakerInPit">
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.EntryInPitImpl"
+                  discriminator-value="BarrierInPit">
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.AuxiliaryMachineInPitImpl"
+                  discriminator-value="AuxiliaryMachineInPit">
+
+            <property name="speed" column="SPEED">
+                <meta attribute="description">The current speed of the machine.</meta>
+                <meta attribute="unitType">speed</meta>
+                <type name="quantity">
+                    <param name="unitType">speed</param>
+                </type>
+            </property>
+
+            <property name="heading" column="HEADING">
+                <meta attribute="description">The current heading of the machine.</meta>
+                <meta attribute="unitType">plane angle</meta>
+                <type name="quantity">
+                    <param name="unitType">plane angle</param>
+                </type>
+            </property>
+
+            <subclass name="minestar.pitlink.domain.pitmodel.BlastholeDrillInPitImpl"
+                      discriminator-value="BlastholeDrillInPit">
+                <meta attribute="description">The in pit blasthole drill definition.</meta>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.pitmodel.DraglineInPitImpl"
+                      discriminator-value="DraglineInPit">
+                <meta attribute="description">The in pit dragline definition.</meta>
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.pitmodel.PanelInPitImpl"
+                      discriminator-value="PanelInPit">
+            </subclass>
+
+            <subclass name="minestar.pitlink.domain.pitmodel.WaterTruckInPitImpl"
+                      discriminator-value="WaterTruckInPit">
+
+                <property name="waterTankLevel" column="WATER_TANK_LEVEL">
+                    <meta attribute="description">Percentage of the tank capacity that the water truck currently holds</meta>
+                    <type name="quantity">
+                        <param name="unitType">ratio</param>
+                    </type>
+                </property>
+
+                <property name="refillStatus" column="WATER_REFILL_STATUS">
+                    <meta attribute="description">Status to determine if the water truck should be sent to a water refill station</meta>
+                    <type name="org.hibernate.type.EnumType">
+                        <param name="enumClass">minestar.autonomy.domain.watertruck.AWTRefillStatus</param>
+                    </type>
+                </property>
+
+                <property name="refillStatusSource" column="WATER_REFILL_STATUS_SOURCE">
+                    <meta attribute="description">Whether the refill status was set by the field or by MineStar</meta>
+                    <type name="org.hibernate.type.EnumType">
+                        <param name="enumClass">minestar.autonomy.domain.watertruck.AWTRefillStatusSource</param>
+                    </type>
+                </property>
+
+                <property name="refuelStatus" column="WATER_REFUEL_STATUS">
+                    <meta attribute="description">Status to determine if the water truck should avoid being sent to refuel because its water tank level is above the refuel threshold</meta>
+                    <type name="org.hibernate.type.EnumType">
+                        <param name="enumClass">minestar.autonomy.domain.watertruck.AWTRefuelStatus</param>
+                    </type>
+                </property>
+
+                <many-to-one name="allocatedWaterCircuitRef"
+                             class="minestar.mine.domain.minemodel.watering.WateringCircuitReference"
+                             column="ALLOCATED_WATERING_CIRCUIT_OID"
+                             not-found="ignore">
+                    <meta attribute="description">Water circuit that the water truck will return given no other assignment</meta>
+                </many-to-one>
+
+                <property name="layoverReason" column="LAYOVER_REASON">
+                    <meta attribute="description">Reason why water truck was sent to a layover</meta>
+                    <type name="org.hibernate.type.EnumType">
+                        <param name="enumClass">minestar.autonomy.domain.watertruck.AWTLayoverReason</param>
+                    </type>
+                </property>
+
+            </subclass>
+
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.TeleremoteControlInPitImpl"
+                  discriminator-value="TeleremoteControlInPit">
+            <meta attribute="description">The in pit teleremote control definition.</meta>
+        </subclass>
+
+        <subclass name="minestar.pitlink.domain.pitmodel.AStopTestStationInPitImpl"
+                  discriminator-value="AStopTestStationInPit">
+        </subclass>
+
+    </class>
+
+</hibernate-mapping>

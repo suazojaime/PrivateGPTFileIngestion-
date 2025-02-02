@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2018, Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.production.domain.orepass.ActiveOrePassDataImpl"
+           proxy="minestar.production.domain.orepass.ActiveOrePassData"
+           table="ORE_PASS_DATA"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">ACTIVEOREPASSDATA</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">The details of the production data for ore passes for the current period.</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="ORE_PASS_DATA_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="orePassDataDate"
+                  type="java.util.Date"
+                  column="ORE_PASS_DATA_DATE"
+                  not-null="true">
+            <meta attribute="description">The date that the information in this ore pass data applies to.</meta>
+        </property>
+
+        <many-to-one name="shift"
+                     class="minestar.platform.domain.calendar.ShiftImpl"
+                     column="SHIFT"
+                     not-null="false"
+                     lazy="false">
+            <meta attribute="description">
+                A reference to the shift (MSMODEL.SHIFT) that the information in this ore pass data applies to.
+                (Not applicable if this ore pass data is for the entire day.)
+            </meta>
+        </many-to-one>
+
+        <map name="entryMap" lazy="false" inverse="true" cascade="all-delete-orphan">
+
+            <meta attribute="description">The entries in this ore pass data.</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="ORE_PASS_DATA_OID"/>
+            <map-key-many-to-many class="minestar.mine.domain.minemodel.underground.orepass.OrePassReference"
+                                  column="ORE_PASS"/>
+            <one-to-many class="minestar.production.domain.orepass.ActiveOrePassDataEntry"/>
+        </map>
+    </class>
+
+    <class name="minestar.production.domain.orepass.ActiveOrePassDataEntry"
+           table="ORE_PASS_DATA_ENTRY"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">ACTIVEOREPASSDATAENTRY</meta>
+        <meta attribute="description">
+            An entry that contains the production data for an ore pass for the current period.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="ORE_PASS_DATA_ENTRY_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one name="parent"
+                     column="ORE_PASS_DATA_OID"
+                     class="minestar.production.domain.orepass.ActiveOrePassDataImpl"
+                     not-null="true">
+            <meta attribute="description">
+                A reference to the ore pass data (MSMODEL.ORE_PASS_DATA) for the current period that contains this
+                entry.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="orePass"
+                     class="minestar.mine.domain.minemodel.underground.orepass.OrePassReference"
+                     column="ORE_PASS"
+                     unique="true"
+                     not-null="true">
+            <meta attribute="description">
+                A reference to the ore pass (MSMODEL.ORE_PASS) that this entry applies to.
+            </meta>
+        </many-to-one>
+
+        <property name="dumpedCount"
+                  column="DUMPED_COUNT"
+                  type="java.lang.Integer">
+            <meta attribute="description">The number of loads that have been dumped into the ore pass.</meta>
+        </property>
+
+        <property name="dumped"
+                  column="DUMPED_TONS">
+            <meta attribute="description">The amount of ore that have been dumped into the ore pass.</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+            </type>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

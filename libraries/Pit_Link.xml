@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+
+    <classdef name="ManualWaypointUpdate" >
+        
+        <propertygroup name="standardOptions">
+            
+            <uigroupdef layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+
+            <propertygroup name="machineOptions">
+                <uigroupdef mode="plain" layout="horizontal" layoutInfo='{rowSpec="fill:default:grow"}'/>
+                <propertydef name="machines" label="">
+                    <typedef>
+                        <javaclass name="minestar.pitlink.domain.machine.Machine" choices="machine.AssignableMachine"/>
+                        <dimension name="entityOID"  />
+                    </typedef>
+                    <uidef widget="machineSelector"/>
+                </propertydef>
+            </propertygroup>
+
+        </propertygroup>
+        
+        <propertygroup name="extendedOptions">
+            <uigroupdef layout="vertical"/>
+            <propertydef name="includeXY" label="Include X,Y coordinates">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the route point in the update to be sent to the machine</description>
+            </propertydef>
+
+            <propertydef name="includeName" label="Include Name">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the waypoint name in the update to be sent to the machine</description>
+            </propertydef>
+
+            <propertydef name="includeMinZ" label="Include Minimum Z coordinate">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the lower Z coordinate in the update to be sent to the machine</description>
+            </propertydef>
+
+            <propertydef name="includeMaxZ" label="Include Maximum Z coordinate">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the upper Z coordinate in the update to be sent to the machine</description>
+            </propertydef>
+
+            <propertydef name="includeColor" label="Include Waypoint Color">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the waypoint color in the update to be sent to the machine</description>
+            </propertydef>
+
+            <propertydef name="includePolygon" label="Include Waypoint Polygon">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the waypoint polygon in the update to be sent to the machine</description>
+            </propertydef>        
+
+            <propertydef name="includeType" label="Include Waypoint Type">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the waypoint type in the update to be sent to the machine</description>
+            </propertydef>        
+
+            <propertydef name="includeFlags" label="Include Waypoint Flags">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the waypoint flags in the update to be sent to the machine</description>
+            </propertydef>        
+
+            <propertydef name="includeVersion" label="Include Waypoint Version">
+                <typedef><type code="boolean"/></typedef>
+                <defaultvalue class="java.lang.Boolean">true</defaultvalue>
+                <description>Include the waypoint version in the update to be sent to the machine</description>
+            </propertydef>        
+
+        </propertygroup>
+
+    </classdef>
+
+</classdefs>

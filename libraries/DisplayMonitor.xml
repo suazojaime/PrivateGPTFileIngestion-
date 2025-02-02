@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+    <classdef name="KPISpecification">
+        <propertygroup name="kpiSpecs" label="Specify KPI Parameters">
+            <uigroupdef mode="region"/>
+            <!--<propertydef name="dataSets" label="" manualAudited="SitePersonnel">-->
+                <!--<typedef><javaclass name="java.util.List"/></typedef>-->
+                <!--<uidef widget="collection"-->
+                    <!--custom='{groupFormat="none", itemFormat="table", itemLabel="KPI Specifications",-->
+                        <!--navigationPaneSize="20", infoPosition="right", infoButtonSet="manage", itemButtonSet="edit",-->
+                        <!--widget.model="list:kpisummaries:KPIDefinitions", valueMode="itemDetail",-->
+                        <!--itemProperties="name,description"}'/>-->
+            <!--</propertydef>-->
+            <propertydef name="kpiName">
+                <typedef>
+                    <type code="string" choices='{"loadingToolLoadingStats":"Loading stats for loading tools",
+                                                    "truckLoadingStats":"Loading stats for trucks",
+                                                    "processorActivity":"Activity Kpis",
+                                                    "fuelBurnRate":"Dynamic Fuel Monitoring"}'
+                        />
+                </typedef>
+                <uidef widget="combo"/>
+            </propertydef>
+            <propertydef name="kpiDimension">
+                <typedef>
+                    <type code="string" choices='{"machineClass":"Machine Class",
+                                                    "machine":"Machine"}'
+                        />
+                </typedef>
+                <uidef widget="combo"/>
+            </propertydef>
+            <propertydef name="kpiMeasure">
+                <typedef>
+                    <type code="string" choices='["workingBurnRateByMachine","loadingTime","dumpQueuingTime"]'
+                        />
+                </typedef>
+                <uidef widget="combo"/>
+            </propertydef>
+        </propertygroup>
+    </classdef>
+</classdefs>

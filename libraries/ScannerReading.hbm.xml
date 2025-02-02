@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.production.domain.ScannerReading"
+           table="SCANNER_READING"
+           dynamic-update="true">
+
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <meta attribute="index">
+            name=SCNRD_SCANNER_MACHINE_OID
+            columns=SCANNER_MACHINE_OID
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=SCNRD_TIMESTAMP_UTC
+            columns=TIMESTAMP_UTC
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=SCNRD_MACHINE_OID
+            columns=MACHINE_OID
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=SCNRD_CYCLE_OID
+            columns=CYCLE_OID
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <meta attribute="description">A scale reading.</meta>
+
+        <cache usage="read-write" region="historical"/>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="SCANNER_READING_OID"
+        >
+            <meta attribute="description">The object identifier of the entity, unique within its manager.</meta>
+            <generator class="com.mincom.env.base.persistence.TableHiLoGenerator"/>
+        </id>
+        <many-to-one
+                name="scannerMachine"
+                column="SCANNER_MACHINE_OID"
+                not-null="true"
+                class="minestar.pitlink.domain.machine.MachineReference"
+        >
+            <meta attribute="description">The entity the event came from.</meta>
+        </many-to-one>
+        <property
+                name="timestamp"
+                type="TimestampType"
+                not-null="true"
+                column="TIMESTAMP_UTC"
+        >
+            <meta attribute="utc-description">The utc time the reading was taken.</meta>
+            <meta attribute="description">The utc time the reading was taken.</meta>
+        </property>
+        <many-to-one
+                name="machine"
+                column="MACHINE_OID"
+                not-null="false"
+                class="minestar.pitlink.domain.machine.MachineReference"
+        >
+            <meta attribute="description">The machine entity that was weighed.</meta>
+        </many-to-one>
+        <many-to-one
+                name="cycle"
+                column="CYCLE_OID"
+                not-null="false"
+                class="minestar.production.domain.cycle.CycleReference"
+        >
+            <meta attribute="description">The machine cycle.</meta>
+        </many-to-one>
+        <property
+                name="volume"
+                type="java.lang.Float"
+                column="VOLUME"
+                not-null="false">
+            <meta attribute="description">The volume of the reading.</meta>
+        </property>
+        <property
+                name="horizontalBiasPct"
+                type="java.lang.Float"
+                column="HORIZONTAL_BIAS_PCT"
+                not-null="false">
+            <meta attribute="description">Horizontal bias percentage.</meta>
+        </property>
+        <property
+                name="verticalBiasPct"
+                type="java.lang.Float"
+                column="VERTICAL_BIAS_PCT"
+                not-null="false">
+            <meta attribute="description">Vertical bias percentage.</meta>
+        </property>
+    </class>
+
+</hibernate-mapping>

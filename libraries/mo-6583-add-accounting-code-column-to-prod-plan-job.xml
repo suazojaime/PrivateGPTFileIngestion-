@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="1f3c4663-e7fc-42a1-aa16-ccec31aaf984" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ACCOUNTING_CODE to table PROD_PLAN_JOB as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB" columnName="ACCOUNTING_CODE"/>
+            </not>
+        </preConditions>
+        <comment>MO-6583: AddColumn PROD_PLAN_JOB.ACCOUNTING_CODE</comment>
+        <addColumn tableName="PROD_PLAN_JOB">
+            <column name="ACCOUNTING_CODE" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

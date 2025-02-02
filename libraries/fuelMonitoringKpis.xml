@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<kpiSummaries>
+    <fact name="main">
+        <measure name="idleDuration" expr="cycle.activities.idleDuration.doubleValue() + cycle.allDelays.idleDuration.doubleValue()" unitType="duration" category="activity" desc='The idle duration of the cycle' reserved="true"/>
+        <measure name="workingDuration" expr="cycle.activities.workingDuration" unitType="duration" category="activity" desc='The working duration of the cycle' reserved="true"/>
+        <!-- Fuel Burn Rate -->
+        <measure name="workingBurnRate" expr="main.estimatedFuelUsed * 3600 / main.workingDuration if main.workingDuration > 0 else 0" unitType="fuel burn per time" category="fuel" reserved="true"/>
+        <measure if="truck" name="workingBurnRate" expr="main.fuelUsed * 3600 / main.workingDuration if primaryMachine.isVimsEnabled and main.workingDuration > 0 else main.workingBurnRate" unitType="fuel burn per time" category="fuel" reserved="true"/>
+        <measure name="operatingBurnRate" expr="main.estimatedFuelUsed * 3600 / main.operatingTime if main.operatingTime > 0 else 0" unitType="fuel burn per time" category="fuel" reserved="true"/>
+        <measure if="truck" name="operatingBurnRate" expr="main.fuelUsed * 3600 / main.operatingTime if primaryMachine.isVimsEnabled and main.operatingTime > 0 else main.operatingBurnRate" unitType="fuel burn per time" category="fuel" reserved="true"/>
+    </fact>
+    
+    <realtimeKpi name="fuelBurnRate" fact="main" desc="For Dynamic Fuel Monitoring" reserved="true">
+        <timestamp>
+            <detailRef name="endTime"/>
+        </timestamp>
+        <dimensions>
+            <dimensionRef name="primaryMachine" dimension="machine">
+                <dimensionAttributeRef name="classOID"/>
+                <dimensionAttributeRef name="machineOID"/>
+            </dimensionRef>
+        </dimensions>
+        <measures>
+            <measureRef name="workingBurnRate"/>
+            <measureRef name="operatingBurnRate"/>
+        </measures>
+        <kpis>
+            <kpi name="workingBurnRateByMachine" stat="weighted" unitType="flow" active="true">
+                <parameter name="weights" value="40,30,20,10" unit="count" unitType="unitless"/>
+                <parameter name="minMeasure" value="10" unit="gallons per hour" unitType="fuel burn per time"/>
+                <parameter name="maxMeasure" value="300" unit="gallons per hour" unitType="fuel burn per time"/>
+                <parameter name="measure" valueRef="workingBurnRate"/>
+            </kpi>
+            <kpi name="operatingBurnRateByMachine" stat="weighted" unitType="flow" active="true">
+                <parameter name="weights" value="40,30,20,10" unit="count" unitType="unitless"/>
+                <parameter name="minMeasure" value="10" unit="gallons per hour" unitType="fuel burn per time"/>
+                <parameter name="maxMeasure" value="300" unit="gallons per hour" unitType="fuel burn per time"/>
+                <parameter name="measure" valueRef="operatingBurnRate"/>
+            </kpi>
+            <rolledupKpi name="workingBurnRateByClass" rollupOf="workingBurnRateByMachine"/>
+            <rolledupKpi name="operatingBurnRateByClass" rollupOf="operatingBurnRateByMachine"/>
+        </kpis>
+    </realtimeKpi>
+
+</kpiSummaries>

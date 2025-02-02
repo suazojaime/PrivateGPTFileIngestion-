@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="566cfddf-9b77-428b-8b1e-e6afb40ec21c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for LOGIN.RESETPWD as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="LOGIN" columnName="RESETPWD"/>
+        </preConditions>
+        <comment>AHS-7093: AddNotNullConstraint to LOGIN.RESETPWD</comment>
+        <sql>UPDATE LOGIN SET RESETPWD = 0 WHERE RESETPWD IS NULL</sql>
+        <addNotNullConstraint columnName="RESETPWD" columnDataType="BOOLEAN" tableName="LOGIN"/>
+        <rollback>
+            <dropNotNullConstraint tableName="LOGIN" columnName="RESETPWD" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="5e633ff3-02e6-48f8-b74e-aa39b283472b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for USER1.ACTIVE as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="USER1" columnName="ACTIVE"/>
+        </preConditions>
+        <comment>AHS-7093: AddNotNullConstraint to USER1.ACTIVE</comment>
+        <sql>UPDATE USER1 SET ACTIVE = 1 WHERE ACTIVE IS NULL</sql>
+        <addNotNullConstraint columnName="ACTIVE" columnDataType="BOOLEAN" tableName="USER1"/>
+        <rollback>
+            <dropNotNullConstraint tableName="USER1" columnName="ACTIVE" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="8e53d30a-7672-4548-8404-64ea976ebfe6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for USER1.PASSWORDRESET as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="USER1" columnName="PASSWORDRESET"/>
+        </preConditions>
+        <comment>AHS-7093: AddNotNullConstraint to USER1.PASSWORDRESET</comment>
+        <sql>UPDATE USER1 SET PASSWORDRESET = 0 WHERE PASSWORDRESET IS NULL</sql>
+        <addNotNullConstraint columnName="PASSWORDRESET" columnDataType="BOOLEAN" tableName="USER1"/>
+        <rollback>
+            <dropNotNullConstraint tableName="USER1" columnName="PASSWORDRESET" columnDataType="BOOLEAN"/>
+        </rollback>
+    </changeSet>    
+
+</databaseChangeLog>

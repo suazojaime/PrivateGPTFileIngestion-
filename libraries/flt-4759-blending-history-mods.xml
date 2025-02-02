@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+
+
+    <changeSet id="5d96bb3e-12e7-43a1-b57e-2fe6d16c21c6" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored remove not null constraint for BLEND_INFORMATION_RECORD.PROCESSOR_OID as column doesn't exist or column is already nullable." onFail="MARK_RAN">
+            <and>
+                <columnExists tableName="BLEND_INFORMATION_RECORD" columnName="PROCESSOR_OID"/>
+                <ext:columnIsNotNullable tableName="BLEND_INFORMATION_RECORD" columnName="PROCESSOR_OID"/>
+            </and>
+        </preConditions>
+        <comment>4.6 Remove not null BLEND_INFORMATION_RECORD.PROCESSOR_OID</comment>
+        <dropNotNullConstraint tableName="BLEND_INFORMATION_RECORD" columnName="PROCESSOR_OID" columnDataType="BIGINT"/>
+    </changeSet>
+
+    <changeSet id="8847e138-7e12-4578-9e85-2464660b7ac1" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored add column for MATERIAL_CRITERIA_DETAIL as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="MATERIAL_CRITERIA_DETAIL" columnName="MATERIAL_OID"/>
+            </not>
+        </preConditions>
+        <comment>4.6 Add column MATERIAL_CRITERIA_DETAIL.MATERIAL_OID</comment>
+        <addColumn tableName="MATERIAL_CRITERIA_DETAIL">
+            <column name="MATERIAL_OID" type="BIGINT" remarks="The material oid">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="f4e1c777-8982-4be3-bbf8-d600dc4e7842" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored add column for DISCRETE_GRADE_CRITERIA_DETAIL.GRADE_OID as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="DISCRETE_GRADE_CRITERIA_DETAIL" columnName="GRADE_OID"/>
+            </not>
+        </preConditions>
+        <comment>4.6 Add column DISCRETE_GRADE_CRITERIA_DETAIL.GRADE_OID</comment>
+        <addColumn tableName="DISCRETE_GRADE_CRITERIA_DETAIL">
+            <column name="GRADE_OID" type="BIGINT" remarks="The grade oid">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="3b616706-2999-4b15-8479-c969d72a12bd" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored add column for CONT_GRADE_CRITERIA_DETAIL.GRADE_OID as column already exists." onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="CONT_GRADE_CRITERIA_DETAIL" columnName="GRADE_OID"/>
+            </not>
+        </preConditions>
+        <comment>4.6 Add column CONT_GRADE_CRITERIA_DETAIL.GRADE_OID</comment>
+        <addColumn tableName="CONT_GRADE_CRITERIA_DETAIL">
+            <column name="GRADE_OID" type="BIGINT" remarks="The grade oid">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

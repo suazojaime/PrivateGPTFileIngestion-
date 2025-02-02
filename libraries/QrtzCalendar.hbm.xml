@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class
+            name="minestar.external.domain.QrtzCalendar"
+            table="QRTZ_CALENDARS"
+    >
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">The Quartz calendar.</meta>
+
+        <id
+                name="calendarName"
+                type="java.lang.String"
+                column="CALENDAR_NAME"
+        >
+            <meta attribute="description">The calendar name.</meta>
+            <generator class="assigned"/>
+        </id>
+
+        <property
+                name="calendar"
+                type="java.lang.Float"
+                column="CALENDAR"
+                not-null="true"
+                length="4000"
+        >
+            <meta attribute="description">The calendar.</meta>
+        </property>
+        <property name="schedName" type="java.lang.String">
+            <meta attribute="description">The Scheduler name.</meta>
+            <column name="SCHED_NAME" length="120" not-null="true" default="Sched1" />
+        </property>
+
+        <!-- associations -->
+
+    </class>
+</hibernate-mapping>

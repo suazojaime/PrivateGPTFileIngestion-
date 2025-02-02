@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="53236112-1e83-472c-ab1b-56deab7dd9c4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for VERSION of table SAFETY_CHECK_ACTION as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SAFETY_CHECK_ACTION" columnName="VERSION"/>
+        </preConditions>
+        <comment>AHS-8771: DropColumn SAFETY_CHECK_ACTION.VERSION</comment>
+        <dropColumn columnName="VERSION" tableName="SAFETY_CHECK_ACTION"/>
+        <rollback>
+            <addColumn tableName="SAFETY_CHECK_ACTION">
+                <column name="VERSION" type="INT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="024e3022-f880-41c1-8c69-a490d5a16de8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for VERSION of table SAFETY_CHECK_ITEM as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SAFETY_CHECK_ITEM" columnName="VERSION"/>
+        </preConditions>
+        <comment>AHS-8771: DropColumn SAFETY_CHECK_ITEM.VERSION</comment>
+        <dropColumn columnName="VERSION" tableName="SAFETY_CHECK_ITEM"/>
+        <rollback>
+            <addColumn tableName="SAFETY_CHECK_ITEM">
+                <column name="VERSION" type="INT"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0dfb9429-2c49-4149-9bd3-ce2efa320f96" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SAFETYCHECKITEM_NAME to table SAFETY_CHECK_ITEM as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="SAFETY_CHECK_ITEM"/>
+            <not>
+                <indexExists indexName="SAFETYCHECKITEM_NAME" tableName="SAFETY_CHECK_ITEM"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8771: CreateUniqueIndex SAFETYCHECKITEM_NAME on SAFETY_CHECK_ITEM (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="SAFETYCHECKITEM_NAME" tableName="SAFETY_CHECK_ITEM">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

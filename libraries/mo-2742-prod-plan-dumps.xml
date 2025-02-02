@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="b961501c-443e-4e66-8ac6-4727f8794fd9" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_DUMP_BLEND as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_DUMP_BLEND"/>
+            </not>
+        </preConditions>
+        <comment>MO-2742: CreateTable PROD_PLAN_DUMP_BLEND</comment>
+        <createTable tablespace="MW_ENT" remarks="Store Plan Dump Blend details" tableName="PROD_PLAN_DUMP_BLEND">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BLEND_REFERENCE_ID" type="VARCHAR(255)"/>
+            <column name="BLEND_OID" type="BIGINT"/>
+            <column name="MATERIAL_CONTROL_TYPE" type="VARCHAR(255)" remarks="Mass or Time control type"/>
+            <column name="MATERIAL_CONTROL_MASS" type="DOUBLE" remarks="Mass"/>
+            <column name="MATERIAL_CONTROL_TIME" type="DOUBLE" remarks="Time"/>
+            <column name="PLAN_OID" type="BIGINT"/>
+            <column name="DUMP_BLEND_NR" type="INT"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_DUMP_BLEND_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_DUMP_BLEND"/>
+        <createIndex unique="false" tablespace="MW_IDXENT" indexName="PLAN_OID" tableName="PROD_PLAN_DUMP_BLEND">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="d2c3951b-7c31-4e56-9a78-43aee87f282d" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_DUMP_BLEND_MATERIAL as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_DUMP_BLEND_MATERIAL"/>
+            </not>
+        </preConditions>
+        <comment>MO-2742: CreateTable PROD_PLAN_DUMP_BLEND_MATERIAL</comment>
+        <createTable tablespace="MW_ENT" tableName="PROD_PLAN_DUMP_BLEND_MATERIAL">
+            <column name="DUMP_BLEND_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFERENCE_ID" type="VARCHAR(255)"/>
+            <column name="MATERIAL_OID" type="BIGINT"/>
+            <column name="MIN_PERCENTAGE" type="DOUBLE"/>
+            <column name="MAX_PERCENTAGE" type="DOUBLE"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_DUMP_BLEND_MATERI_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_DUMP_BLEND_MATERIAL"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="050fa58d-59d1-44f5-8c4e-54134b47cc09" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_DUMP_CRUSHER as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_DUMP_CRUSHER"/>
+            </not>
+        </preConditions>
+        <comment>MO-2742: CreateTable PROD_PLAN_DUMP_CRUSHER</comment>
+        <createTable tablespace="MW_ENT" tableName="PROD_PLAN_DUMP_CRUSHER">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFERENCE_ID" type="VARCHAR(255)"/>
+            <column name="CRUSHER_OID" type="BIGINT"/>
+            <column name="TARGET_MASS" type="DOUBLE"/>
+            <column name="TARGET_VOLUME" type="DOUBLE"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_DUMP_CRUSHER_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_DUMP_CRUSHER"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="688e9c58-c914-4d5e-9916-8a5d19f2b268" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_DUMP_STOCKPILE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_DUMP_STOCKPILE"/>
+            </not>
+        </preConditions>
+        <comment>MO-2742: CreateTable PROD_PLAN_DUMP_STOCKPILE</comment>
+        <createTable tablespace="MW_ENT" tableName="PROD_PLAN_DUMP_STOCKPILE">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFERENCE_ID" type="VARCHAR(255)"/>
+            <column name="STOCKPILE_OID" type="BIGINT"/>
+            <column name="TARGET_MASS" type="DOUBLE"/>
+            <column name="TARGET_VOLUME" type="DOUBLE"/>
+            <column name="GEOMETRY" type="VARCHAR(4000)"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_DUMP_STOCKPILE_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_DUMP_STOCKPILE"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="aa51e262-b16f-4dad-a294-fcf43f70b86b" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_DUMP_BLEND_PLAN_O_FK to table PROD_PLAN_DUMP_BLEND as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_DUMP_BLEND" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_DUMP_BLEND" foreignKeyName="PROD_PLAN_DUMP_BLEND_PLAN_O_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-2742: AddForeignKeyConstraint PROD_PLAN_DUMP_BLEND_PLAN_O_FK to PROD_PLAN_DUMP_BLEND (PLAN_OID)</comment>
+        <sql>UPDATE PROD_PLAN_DUMP_BLEND SET PLAN_OID = NULL WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_DUMP_BLEND.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_BLEND" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_DUMP_BLEND_PLAN_O_FK" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_BLEND" constraintName="PROD_PLAN_DUMP_BLEND_PLAN_O_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="6f90183c-2fd1-4523-9bc2-24f4097dbf1f" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_DUMP_BLEND_MATER_FK1 to table PROD_PLAN_DUMP_BLEND_MATERIAL as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_DUMP_BLEND_MATERIAL" columnName="DUMP_BLEND_OID"/>
+            <columnExists tableName="PROD_PLAN_DUMP_BLEND" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_DUMP_BLEND_MATERIAL" foreignKeyName="PROD_PLAN_DUMP_BLEND_MATER_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2742: AddForeignKeyConstraint PROD_PLAN_DUMP_BLEND_MATER_FK1 to PROD_PLAN_DUMP_BLEND_MATERIAL (DUMP_BLEND_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_DUMP_BLEND_MATERIAL WHERE DUMP_BLEND_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_DUMP_BLEND WHERE PROD_PLAN_DUMP_BLEND.OID = PROD_PLAN_DUMP_BLEND_MATERIAL.DUMP_BLEND_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_BLEND_MATERIAL" baseColumnNames="DUMP_BLEND_OID" constraintName="PROD_PLAN_DUMP_BLEND_MATER_FK1" referencedTableName="PROD_PLAN_DUMP_BLEND" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_BLEND_MATERIAL" constraintName="PROD_PLAN_DUMP_BLEND_MATER_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="1dce10f0-2a12-430a-a406-f625254fb338" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_DUMP_CRUSHER_PLAN_FK to table PROD_PLAN_DUMP_CRUSHER as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_DUMP_CRUSHER" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_DUMP_CRUSHER" foreignKeyName="PROD_PLAN_DUMP_CRUSHER_PLAN_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-2742: AddForeignKeyConstraint PROD_PLAN_DUMP_CRUSHER_PLAN_FK to PROD_PLAN_DUMP_CRUSHER (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_DUMP_CRUSHER WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_DUMP_CRUSHER.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_CRUSHER" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_DUMP_CRUSHER_PLAN_FK" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_CRUSHER" constraintName="PROD_PLAN_DUMP_CRUSHER_PLAN_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="b6146de1-be35-4670-9814-4c5dd6c7cac3" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_DUMP_STOCKPILE_FK1 to table PROD_PLAN_DUMP_STOCKPILE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_DUMP_STOCKPILE" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_DUMP_STOCKPILE" foreignKeyName="PROD_PLAN_DUMP_STOCKPILE_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2742: AddForeignKeyConstraint PROD_PLAN_DUMP_STOCKPILE_FK1 to PROD_PLAN_DUMP_STOCKPILE (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_DUMP_STOCKPILE WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_DUMP_STOCKPILE.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_STOCKPILE" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_DUMP_STOCKPILE_FK1" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_DUMP_STOCKPILE" constraintName="PROD_PLAN_DUMP_STOCKPILE_FK1"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="61064c02-25fa-4c20-8971-2bf9b05b41b3" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropNotNullConstraint for WDS_DETAILS.TANK_CAPACITY as column does not exist or is already nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="WDS_DETAILS" columnName="TANK_CAPACITY"/>
+        </preConditions>
+        <comment>AHS-12874: DropNotNullConstraint from WDS_DETAILS.TANK_CAPACITY</comment>
+        <dropNotNullConstraint tableName="WDS_DETAILS" columnName="TANK_CAPACITY" columnDataType="DOUBLE"/>
+    </changeSet>
+    <changeSet id="ad33dcde-3a16-4d42-941c-479043bbb4be" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropNotNullConstraint for WDS_DETAILS.TANK_FULL_THRESHOLD as column does not exist or is already nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="WDS_DETAILS" columnName="TANK_FULL_THRESHOLD"/>
+        </preConditions>
+        <comment>AHS-12874: DropNotNullConstraint from WDS_DETAILS.TANK_FULL_THRESHOLD</comment>
+        <dropNotNullConstraint tableName="WDS_DETAILS" columnName="TANK_FULL_THRESHOLD" columnDataType="DOUBLE"/>
+    </changeSet>
+    <changeSet id="60933422-a573-476c-97f0-baa6040fadef" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropNotNullConstraint for WDS_DETAILS.TANK_EMPTY_THRESHOLD as column does not exist or is already nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNotNullable tableName="WDS_DETAILS" columnName="TANK_EMPTY_THRESHOLD"/>
+        </preConditions>
+        <comment>AHS-12874: DropNotNullConstraint from WDS_DETAILS.TANK_EMPTY_THRESHOLD</comment>
+        <dropNotNullConstraint tableName="WDS_DETAILS" columnName="TANK_EMPTY_THRESHOLD" columnDataType="DOUBLE"/>
+    </changeSet>
+    <changeSet id="fe8f37fa-cffc-42ea-8442-07f1f449ad46" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for MINIMUM_SPREAD_RATE to table WDS_DETAILS as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="WDS_DETAILS"/>
+            <not>
+                <columnExists tableName="WDS_DETAILS" columnName="MINIMUM_SPREAD_RATE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12874: AddColumn WDS_DETAILS.MINIMUM_SPREAD_RATE</comment>
+        <addColumn tableName="WDS_DETAILS">
+            <column name="MINIMUM_SPREAD_RATE" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="9c5f836c-7946-4b12-b137-29923814b00a" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for MAXIMUM_SPREAD_RATE to table WDS_DETAILS as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="WDS_DETAILS"/>
+            <not>
+                <columnExists tableName="WDS_DETAILS" columnName="MAXIMUM_SPREAD_RATE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12874: AddColumn WDS_DETAILS.MAXIMUM_SPREAD_RATE</comment>
+        <addColumn tableName="WDS_DETAILS">
+            <column name="MAXIMUM_SPREAD_RATE" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2888ffe5-77e2-4e9c-a5e8-44e834f53237" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for MINIMUM_FLOW_RATE to table WDS_DETAILS as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="WDS_DETAILS"/>
+            <not>
+                <columnExists tableName="WDS_DETAILS" columnName="MINIMUM_FLOW_RATE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12874: AddColumn WDS_DETAILS.MINIMUM_FLOW_RATE</comment>
+        <addColumn tableName="WDS_DETAILS">
+            <column name="MINIMUM_FLOW_RATE" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="f6059dcb-d31a-4763-ac1f-4250272c1b98" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for MAXIMUM_FLOW_RATE to table WDS_DETAILS as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="WDS_DETAILS"/>
+            <not>
+                <columnExists tableName="WDS_DETAILS" columnName="MAXIMUM_FLOW_RATE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12874: AddColumn WDS_DETAILS.MAXIMUM_FLOW_RATE</comment>
+        <addColumn tableName="WDS_DETAILS">
+            <column name="MAXIMUM_FLOW_RATE" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="acf8bac2-f511-466d-ad35-2461d1e1ba48" author="MineStar" context="Pit_Link/Pit_Link_Management"
+               failOnError="false" runAlways="true" runOnChange="true">
+        <comment>AHS-12874: Create default water distribution settings for existing water truck classes</comment>
+        <sql>
+            INSERT INTO WDS_DETAILS (OID, MINIMUM_SPREAD_RATE, MAXIMUM_SPREAD_RATE, REAR_SPRAY_HEAD_COUNT, LEFT_SPRAY_HEAD_COUNT, RIGHT_SPRAY_HEAD_COUNT)
+            SELECT MACHINECLASS_OID, 0, 1.2, 0, 0, 0 FROM MACHINECLASS
+            WHERE ECF_CLASS_ID = 'XAEntity.MachineClass.AuxiliaryClass.AuxMobileClass.WaterTruckClass'
+            AND MACHINECLASS_OID NOT IN (SELECT OID FROM WDS_DETAILS)
+        </sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

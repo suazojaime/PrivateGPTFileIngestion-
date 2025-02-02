@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.cat.minestar</groupId>
+        <artifactId>minestar-units-project</artifactId>
+        <version>1.8.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>minestar-units</artifactId>
+    <name>MineStar Units Implementation</name>
+
+    <properties>
+        <typescript.installDir>${basedir}/target</typescript.installDir>
+        <typescript.compiler>tsc.cmd</typescript.compiler>
+        <npm.module.folder>${basedir}/target/npm-module</npm.module.folder>
+        <npm.module.version>${project.version}</npm.module.version>
+        <npm.command>npm.cmd</npm.command>
+    </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Generate Java source from units.xml -->
+                <groupId>com.cat.minestar</groupId>
+                <artifactId>minestar-units-java-generator</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-units</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate-sources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <!-- Generate TypeScript source from units.xml -->
+                <groupId>com.cat.minestar</groupId>
+                <artifactId>minestar-units-typescript-generator</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-units</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate-sources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-npm-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${npm.module.folder}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/npm-resources</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.10</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/target/generated-sources</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${basedir}/target/generated-test-sources</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Attach Sources -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <!-- Installs NPM dependencies -->
+                    <execution>
+                        <id>install NPM modules</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <executable>${npm.command}</executable>
+                            <arguments>
+                                <argument>install</argument>
+                                <argument>--prefix</argument>
+                                <argument>${basedir}/target</argument>
+                                <argument>typescript@2.5.3</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Compiles the generated typescript to a javascript file with typescript bindings-->
+                    <execution>
+                        <id>compile-typescript</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <executable>${typescript.installDir}/${typescript.compiler}</executable>
+                            <arguments>
+                                <argument>${basedir}/target/generated-sources/units.ts</argument>
+                                <argument>--module</argument>
+                                <argument>commonjs</argument>
+                                <argument>--outDir</argument>
+                                <argument>${npm.module.folder}</argument>
+                                <argument>--target</argument>
+                                <argument>ES5</argument>
+                                <argument>-d</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Publishes the npm module to the local registry -->
+                    <execution>
+                        <id>publish-npm-module</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                        <configuration>
+                            <executable>${npm.command}</executable>
+                            <arguments>
+                                <argument>publish</argument>
+                                <argument>${npm.module.folder}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.cat.minestar</groupId>
+            <artifactId>minestar-units-schema</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+            <version>3.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons-lang.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>${commons-math3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <!-- Added for Jenkins builds -->
+            <id>LinuxEnv</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <name>linux</name>
+                </os>
+            </activation>
+            <properties>
+                <typescript.installDir>${basedir}/target/node_modules/typescript/bin</typescript.installDir>
+                <typescript.compiler>tsc</typescript.compiler>
+                <npm.command>npm</npm.command>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

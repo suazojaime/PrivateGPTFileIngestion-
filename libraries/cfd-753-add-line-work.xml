@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="4a9788e4-3dcc-4030-a797-1d1618e360b2" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_LINE_WORK as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_LINE_WORK"/>
+            </not>
+        </preConditions>
+        <comment>CFD-753: CreateTable MACHINE_LINE_WORK</comment>
+        <createTable tablespace="MW_ENT" remarks="Guidance of optimal path for machine to follow" tableName="MACHINE_LINE_WORK">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT" remarks="The layer update version when the line work was created/modified.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(254)" remarks="Name of line work."/>
+            <column name="COLOUR" type="VARCHAR(254)" remarks="Color of line work."/>
+            <column name="TYPE" type="VARCHAR(254)" remarks="Type of line work.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_OID" type="BIGINT" remarks="The machine that will follow the guidance">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_DATE_UTC" type="DATETIME2" remarks="The creation timestamp"/>
+            <column name="LAST_UPDATED_DATE_UTC" type="DATETIME2" remarks="The updated timestamp"/>
+            <column name="GEOMETRY_WKT" type="VARCHAR(4000)" remarks="Well Known Text representation of the geometry."/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="MACHINE_LINE_WORK_PK" tablespace="MW_IDXENT" tableName="MACHINE_LINE_WORK"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

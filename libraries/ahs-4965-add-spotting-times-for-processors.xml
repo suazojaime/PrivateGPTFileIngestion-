@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="adbe39fd-a1d5-4f54-82f0-9ab288b617f2" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for DUMP_SPOT_TIME as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="DUMP_SPOT_TIME"/>
+            </not>
+        </preConditions>
+        <comment>AHS-4695: CreateTable DUMP_SPOT_TIME</comment>
+        <createTable tablespace="MW_ENT" remarks="An association of the time taken to spot for each truck class." tableName="DUMP_SPOT_TIME">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPOTTING_TIME" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRUCK_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,TRUCK_CLASS_OID" constraintName="DUMP_SPOT_TIME_PK" tablespace="MW_IDXENT" tableName="DUMP_SPOT_TIME"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="9bdef6b1-0193-4680-9f3e-e08eac2ff498" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for DUMP_SPOT_TIME_OID_FK to table DUMP_SPOT_TIME as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="DUMP_SPOT_TIME"/>
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DUMP_SPOT_TIME" foreignKeyName="DUMP_SPOT_TIME_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-4695: AddForeignKeyConstraint DUMP_SPOT_TIME_OID_FK to DUMP_SPOT_TIME (OID)</comment>
+        <sql>DELETE FROM DUMP_SPOT_TIME WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = DUMP_SPOT_TIME.OID)</sql>
+        <addForeignKeyConstraint baseTableName="DUMP_SPOT_TIME" baseColumnNames="OID" constraintName="DUMP_SPOT_TIME_OID_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DUMP_SPOT_TIME" constraintName="DUMP_SPOT_TIME_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="9e8d9bd4-01f2-4156-b0b5-9ba4bd4a60cc" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for DUMP_SPOT_TIME_TRUCK_CLASS_FK to table DUMP_SPOT_TIME as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="DUMP_SPOT_TIME"/>
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="DUMP_SPOT_TIME" foreignKeyName="DUMP_SPOT_TIME_TRUCK_CLASS_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-4695: AddForeignKeyConstraint DUMP_SPOT_TIME_TRUCK_CLASS_FK to DUMP_SPOT_TIME (TRUCK_CLASS_OID)</comment>
+        <sql>DELETE FROM DUMP_SPOT_TIME WHERE TRUCK_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = DUMP_SPOT_TIME.TRUCK_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="DUMP_SPOT_TIME" baseColumnNames="TRUCK_CLASS_OID" constraintName="DUMP_SPOT_TIME_TRUCK_CLASS_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="DUMP_SPOT_TIME" constraintName="DUMP_SPOT_TIME_TRUCK_CLASS_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

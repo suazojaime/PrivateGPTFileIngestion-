@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <class name="minestar.production.domain.LoaderRecipe" table="LOADER_RECIPE">
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">A loader recipe</meta>
+
+        <id name="OID" type="long" column="RECIPE_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <version name="version">
+            <meta attribute="description">The version number for the loader recipe</meta>
+        </version>
+
+        <property name="name" type="string" column="NAME" not-null="true">
+            <meta attribute="description">The name of the loader recipe</meta>
+        </property>
+
+        <property name="active" type="boolean">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">This flag is set to 'False' if the loader recipe is archived, 'True'
+                otherwise
+            </meta>
+            <column name="IS_ACTIVE" not-null="true" default="1"/>
+        </property>
+
+        <property name="volume" type="boolean">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">This loader recipe is based on volumes not mass.</meta>
+            <column name="ISVOLUME" not-null="true" default="1"/>
+        </property>
+
+        <property name="dynamic" type="boolean">
+            <meta attribute="defaultValue">false</meta>
+            <meta attribute="description">This loader recipe is dynamic and depends on blending requirements not
+                static.
+            </meta>
+            <column name="ISDYNAMIC" not-null="true" default="0"/>
+        </property>
+
+        <list name="activities" table="TOOL_KEY_DEFINITION" cascade="all-delete-orphan">
+            <meta attribute="description">The activity list for the loader recipe.</meta>
+            <meta attribute="choices" inherit="false">loaderrecipe:activities</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="RECIPE_OID" not-null="true"/>
+            <list-index column="TOOLKEY_ID"/>
+            <composite-element class="minestar.production.domain.ToolKeyDef">
+                <property name="activityCount" type="short" column="ACTIVITY_COUNT" not-null="true">
+                    <meta attribute="description">The activity count</meta>
+                    <meta attribute="universe-type-measure">true</meta>
+                </property>
+                <many-to-one name="activity" class="minestar.production.domain.ActivityReference" column="ACTION_OID" not-null="true"/>
+            </composite-element>
+        </list>
+
+        <list name="loaderRecipeStockpiles" table="LOADER_RECIPE_STOCKPILES" cascade="all-delete-orphan">
+            <meta attribute="description">An ordered list of stockpile constituting a loader recipe.</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="RECIPE_OID" not-null="true"/>
+            <list-index column="INGREDIENT_ORDER"/>
+            <composite-element class="minestar.production.domain.LoaderRecipeStockpileDef">
+                <property name="drawCount" type="short" column="DRAW_COUNT" not-null="true">
+                    <meta attribute="description">The draw count</meta>
+                </property>
+                <many-to-one name="stockpile" class="minestar.mine.domain.material.GradeBlockReference" column="STOCKPILE_OID" not-null="true"/>
+                <property name="emptyDuration" column="EMPTYDURATION">
+                    <meta attribute="unitType">duration</meta>
+                    <meta attribute="description">Travelling empty duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+                <property name="digFullDumpDuration" column="DIGFULLDUMPDURATION">
+                    <meta attribute="unitType">duration</meta>
+                    <meta attribute="description">Dig, travelling full and dump duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+            </composite-element>
+        </list>
+    </class>
+
+    <!-- A lightweight reference to a LoaderRecipe -->
+    <class name="minestar.production.domain.LoaderRecipeReference"
+           table="LOADER_RECIPE"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="description">A minimal reference to a loader recipe.</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="RECIPE_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

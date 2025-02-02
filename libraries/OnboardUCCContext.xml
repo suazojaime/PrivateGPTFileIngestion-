@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="onboardUCCImpl" class="minestar.production.uifacade.onboard.OnboardUCCFacadeImpl"
+        init-method="init"  lazy-init="true">
+        <property name="machineUCC" ref="machineUCCImpl"/>
+        <property name="fleetService" ref="mineFleetServiceImpl"/>
+        <property name="onboardHardwareService" ref="onboardHardwareServiceImpl"/>
+        <property name="onboardV2XUpdateService" ref="onboardV2XUpdateServiceImpl"/>
+        <property name="machineRebootRequestService" ref="machineRebootRequestServiceImpl"/>
+    </bean>
+
+    <bean id="registerOnboardUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Onboard UCC"/>
+        <constructor-arg value="minestar.production.uifacade.onboard.OnboardUCCFacade"/>
+        <constructor-arg ref="onboardUCCImpl"/>
+    </bean>
+
+    <!-- support for remoting -->
+    <bean id="onboardUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="onboardUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="onboardUCC"/>
+        <property name="service" ref="onboardUCCProxy"/>
+        <property name="serviceInterface" value="minestar.production.uifacade.onboard.OnboardUCCFacade"/>
+    </bean>
+
+</beans>

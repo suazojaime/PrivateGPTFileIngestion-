@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model">
+
+    <class name="minestar.health.api.definition.MeasureGroup" table="MEASURE_GROUP">
+
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+        <meta attribute="lookupExpr" inherit="false">name</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="alias-where">
+            name=CHAN_GRP_DEF
+            where=MEASURE_GROUP.GROUP_TYPE='System'
+        </meta>
+        <meta attribute="alias-where">
+            name=VIMS_MEASURE_GROUPS
+            where=MEASURE_GROUP.GROUP_TYPE='User'
+        </meta>
+
+        <meta attribute="viewproperty-description" inherit="false">
+            type=java.lang.String
+            description=The alternate name of the group
+            expression=lookupResource.measureGroup.name.query
+        </meta>
+
+        <meta attribute="viewproperty-machineClassOid" inherit="false">
+            type=java.lang.String
+            description=The alternate name of the machine class this group applies too
+            expression=lookupResource.measureGroup.machineClassOid.query
+        </meta>
+
+        <meta attribute="viewproperty-machineClass_n" inherit="false">
+            type=java.lang.String
+            description=The alternate name of the machine class name this group applies too
+            expression=lookupResource.measureGroup.machineClass_n.query
+        </meta>
+
+        <meta attribute="viewproperty-family" inherit="false">
+            type=java.lang.String
+            description=The family of the group
+            expression=lookupResource.null.query
+        </meta>
+
+        <meta attribute="viewproperty-universeclassname" inherit="false">
+            type=java.lang.String
+            description=The family of the group
+            expression=lookupResource.null.query
+        </meta>
+
+        <meta attribute="viewproperty-id" inherit="false">
+            type=java.lang.String
+            description=The id of the group
+            expression=lookupResource.measureGroup.id.query
+        </meta>
+
+
+        <id name="oid" type="long">
+            <column name="OID" />
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="name" type="java.lang.String" length="128" column="NAME" />
+
+        <property name="alternateName" type="java.lang.String" length="128" column="ALTERNATENAME" />
+
+        <property name="model" type="java.lang.String" length="64" column="MACHINE_MODEL">
+            <meta attribute="view-include">false</meta>
+        </property>
+
+        <property name="favorite" type="boolean" column="FAVORITE" />
+
+        <property name="groupType"
+                  type="minestar.health.impl.definition.MeasureGroupUserType"
+                  column="GROUP_TYPE"
+                  length="32"
+                  not-null="true">
+        </property>
+
+        <bag name="measures" table="MEASURE_GROUP_MEASURES" lazy="false">
+            <meta attribute="viewproperty-groupName" inherit="false">
+                type=java.lang.String
+                description=The name of the measure group
+                expression=lookupResource.measureGroupMeasures.groupName.query
+            </meta>
+
+            <meta attribute="viewproperty-groupAlternativeName" inherit="false">
+                type=java.lang.String
+                description=The alternate name of the group
+                expression=lookupResource.measureGroupMeasures.groupAlternativeName.query
+            </meta>
+            <meta attribute="viewproperty-groupType" inherit="false">
+                type=java.lang.String
+                description=The group type
+                expression=lookupResource.measureGroupMeasures.groupType.query
+            </meta>
+            <meta attribute="viewproperty-machineClassOid" inherit="false">
+                type=java.lang.String
+                description=The alternate name of the machine class this group applies too
+                expression=lookupResource.measureGroupMeasures.machineClassOid.query
+            </meta>
+
+            <meta attribute="viewproperty-machineClass_n" inherit="false">
+                type=java.lang.String
+                description=The alternate name of the machine class name this group applies too
+                expression=lookupResource.measureGroupMeasures.machineClass_n.query
+            </meta>
+
+            <meta attribute="viewproperty-upperLimit_q" inherit="false">
+                type=java.lang.Number
+                description=The upper limit defined for the measure group
+                expression=lookupResource.measureGroupMeasures.upperLimit.query
+            </meta>
+
+            <meta attribute="viewproperty-extremeUpperLimit_q" inherit="false">
+                type=java.lang.Number
+                description=The upper limit defined for the measure group
+                expression=lookupResource.measureGroupMeasures.extremeUpperLimit.query
+            </meta>
+
+            <meta attribute="viewproperty-target_q" inherit="false">
+                type=java.lang.Number
+                description=The upper limit defined for the measure group
+                expression=lookupResource.measureGroupMeasures.target.query
+            </meta>
+
+            <meta attribute="viewproperty-lowerLimit_q" inherit="false">
+                type=java.lang.Number
+                description=The upper limit defined for the measure group
+                expression=lookupResource.measureGroupMeasures.lowerLimit.query
+            </meta>
+
+            <meta attribute="viewproperty-extremeLowerLimit_q" inherit="false">
+                type=java.lang.Number
+                description=The upper limit defined for the measure group
+                expression=lookupResource.measureGroupMeasures.extremeLowerLimit.query
+            </meta>
+
+            <meta attribute="viewproperty-upperLimit_u" inherit="false">
+                type=java.lang.String
+                description=The unit for the limit 
+                expression=lookupResource.measureUnitName.query
+            </meta>
+            
+            <meta attribute="viewproperty-extremeUpperLimit_u" inherit="false">
+                type=java.lang.String
+                description=The unit for the limit 
+                expression=lookupResource.measureUnitName.query
+            </meta>
+            
+            <meta attribute="viewproperty-target_u" inherit="false">
+                type=java.lang.String
+                description=The unit for the limit 
+                expression=lookupResource.measureUnitName.query
+            </meta>
+            
+            <meta attribute="viewproperty-extremeLowerLimit_u" inherit="false">
+                type=java.lang.String
+                description=The unit for the limit 
+                expression=lookupResource.measureUnitName.query
+            </meta>
+            
+            <meta attribute="viewproperty-lowerLimit_u" inherit="false">
+                type=java.lang.String
+                description=The unit for the limit 
+                expression=lookupResource.measureUnitName.query
+            </meta>
+            
+            <key column="MEASURE_GROUP_OID" not-null="true"/>
+            <many-to-many column="MEASURE_OID" class="minestar.health.api.definition.Measure" lazy="false"/>
+
+        </bag>
+
+    </class>
+</hibernate-mapping>

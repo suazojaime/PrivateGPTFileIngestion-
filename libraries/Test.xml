@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+    <classdef name="Count Down Task">
+		<implclass name='{jobUrl:com.mincom.jive.task.std.CountDownTask}'/>
+		<tag>testing</tag>
+		<propertygroup name="standardOptions">
+			<propertydef name="nrSteps" label="Nr Steps">
+				<typedef><type code="string" /></typedef>
+				<uidef widget="spinner"/>
+			</propertydef>
+			<propertydef name="executorName" label="Remote Executor">
+				<typedef><type code="string" /></typedef>
+				<defaultvalue>JobExecutionService</defaultvalue>
+			</propertydef>
+		</propertygroup>
+        <description>Counts down from the specified number.</description>
+    </classdef>
+
+    <classdef name="Local Jython Count Down Task">
+		<implclass name='{jobUrl:"jython:PythonCountDownTask.py",preferredStyle:messageTree}'/>
+		<tag>testing</tag>
+		<propertygroup name="standardOptions">
+			<propertydef name="nrSteps" label="Nr Steps">
+				<typedef><type code="string" /></typedef>
+				<uidef widget="spinner"/>
+			</propertydef>
+		</propertygroup>
+        <description>Counts down from the specified number. Runs locally.</description>
+    </classdef>
+
+    <classdef name="Jython Count Down Task">
+		<implclass name='{jobUrl:"jython:PythonCountDownTask.py",preferredStyle:messageTree}'/>
+		<tag>testing</tag>
+		<propertygroup name="standardOptions">
+			<propertydef name="nrSteps" label="Nr Steps">
+				<typedef><type code="string" /></typedef>
+				<uidef widget="spinner"/>
+			</propertydef>
+			<propertydef name="executorName" label="Remote Executor">
+				<typedef><type code="string" /></typedef>
+				<defaultvalue>JobExecutionService</defaultvalue>
+			</propertydef>
+		</propertygroup>
+        <description>Counts down from the specified number.</description>
+    </classdef>
+<!--
+    <classdef name="Groovy Count Down Task">
+		<implclass name='{jobUrl:"groovy:GroovyCountDownTask.gy"}'/>
+		<tag>development</tag>
+		<propertygroup name="standardOptions">
+			<propertydef name="nrSteps" label="Nr Steps">
+				<typedef><type code="string" /></typedef>
+				<uidef widget="spinner"/>
+			</propertydef>
+		</propertygroup>
+    </classdef>
+-->
+</classdefs>

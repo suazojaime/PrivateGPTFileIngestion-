@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="07dc5f30-f909-461c-9ace-cb6c249c10a0" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropDefaultValue for REGION.LAYER_UPDATE_VERSION as column does not exist or column does not have a default value"
+                onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="REGION" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9955: DropDefaultValue '0' from REGION.LAYER_UPDATE_VERSION</comment>
+        <dropDefaultValue columnName="LAYER_UPDATE_VERSION" columnDataType="BIGINT" tableName="REGION"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="ce625a96-23b2-44a4-ad38-322ecffeb543" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table REGION as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="REGION"/>
+            <not>
+                <columnExists tableName="REGION" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>AHS-9450: AddColumn REGION.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="REGION">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT"
+                    remarks="The layer update version when the region was created/modified."/>
+        </addColumn>
+        <sql>UPDATE REGION SET LAYER_UPDATE_VERSION = 0</sql>
+        <addNotNullConstraint tableName="REGION" columnName="LAYER_UPDATE_VERSION" columnDataType="BIGINT"/>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Region"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+            <param name="supportsArchiving" value="false"/>
+        </customChange>
+        <rollback>
+            <dropColumn tableName="REGION" columnName="LAYER_UPDATE_VERSION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="950c7531-839c-4b72-8b4b-9e6f065cb2cd" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored Update REGION_TYPE as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="REGION"/>
+        </preConditions>
+        <comment>AHS-9450: Update REGION discriminator</comment>
+        <sql>UPDATE REGION SET REGION_TYPE = 'DriveBehaviorRegion' WHERE REGION_TYPE = 'DriveBehaviourRegion'</sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

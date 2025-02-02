@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- must have this -->
+    <bean id="userUCCImpl" class="minestar.platform.uifacade.user.impl.UserUCCImpl"
+          lazy-init="true">
+        <property name="authenticationService" ref="authenticationServiceImpl"/>
+        <property name="userService" ref="userServiceImpl"/>
+        <property name="passwordEvaluationService" ref="passwordEvaluationServiceImpl"/>
+        <property name="settingsUCC" ref="settingsUCCImpl"/>
+        <property name="userContext" ref="userContextImpl"/>
+        <property name="publisher" ref="updatePublisher"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerUserUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="User UCC"/>
+        <constructor-arg value="minestar.platform.uifacade.user.UserUCCFacade"/>
+        <constructor-arg ref="userUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="userUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="userUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="userUCC"/>
+        <property name="service" ref="userUCCProxy"/>
+        <property name="serviceInterface" value="minestar.platform.uifacade.user.UserUCCFacade"/>
+    </bean>
+
+</beans>

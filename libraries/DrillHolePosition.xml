@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+
+<classdefs>
+    <classdef name="minestar.production.domain.cycle.DrillHolePosition">
+        <propertydef name="drillStart">
+            <description>The time drilling started</description>
+        </propertydef>
+        <propertydef name="drillFinish">
+            <description>The time drilling finished</description>
+        </propertydef>
+        <propertydef name="accuracyHorizontal">
+            <description></description>
+        </propertydef>
+        <propertydef name="accuracyVertical">
+            <description></description>
+        </propertydef>
+        <propertydef name="collarElevationActual">
+            <description></description>
+        </propertydef>
+        <propertydef name="eastingActual">
+            <description></description>
+        </propertydef>
+        <propertydef name="northingActual">
+            <description></description>
+        </propertydef>
+        <propertydef name="elevationActual">
+            <description></description>
+        </propertydef>
+        <propertydef name="headingActual">
+            <description></description>
+        </propertydef>
+        <propertydef name="mastAngleActual">
+            <description></description>
+        </propertydef>
+        <propertydef name="eastingDesign">
+            <description></description>
+        </propertydef>
+        <propertydef name="northingDesign">
+            <description></description>
+        </propertydef>
+        <propertydef name="elevationDesign">
+            <description></description>
+        </propertydef>
+        <propertydef name="headingDesign">
+            <description></description>
+        </propertydef>
+        <propertydef name="mastAngleDesign">
+            <description></description>
+        </propertydef>
+    </classdef>
+</classdefs>
+

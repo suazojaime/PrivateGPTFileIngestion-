@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="9701c015-0d6a-423a-a89d-4d51bde6088c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for DELAY_ACTIVITY_CLASS.NAME as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="DELAY_ACTIVITY_CLASS" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-7893: AddNotNullConstraint to DELAY_ACTIVITY_CLASS.NAME</comment>
+        <addNotNullConstraint columnName="NAME" columnDataType="VARCHAR(254)" tableName="DELAY_ACTIVITY_CLASS"/>
+    </changeSet>
+
+    <changeSet id="0363c565-281c-45d5-9ad1-65dc6a3663d3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for DELAY_ACTIVITY_CLASS_NAME to table DELAY_ACTIVITY_CLASS as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="DELAY_ACTIVITY_CLASS"/>
+            <not>
+                <indexExists indexName="DELAY_ACTIVITY_CLASS_NAME" tableName="DELAY_ACTIVITY_CLASS"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7893: CreateUniqueIndex DELAY_ACTIVITY_CLASS_NAME on DELAY_ACTIVITY_CLASS (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="DELAY_ACTIVITY_CLASS_NAME" tableName="DELAY_ACTIVITY_CLASS">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="ce20f642-a5ca-4b8d-993e-25b68bde2a05" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for DELAYACTIVITYTYPE_NAME of table DELAY_ACTIVITY_TYPE as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="DELAYACTIVITYTYPE_NAME" tableName="DELAY_ACTIVITY_TYPE"/>
+        </preConditions>
+        <comment>AHS-7893: DropIndex DELAYACTIVITYTYPE_NAME from DELAY_ACTIVITY_TYPE (NAME)</comment>
+        <dropIndex indexName="DELAYACTIVITYTYPE_NAME" tableName="DELAY_ACTIVITY_TYPE"/>
+        <rollback>
+            <createIndex unique="true" tablespace="MW_IDXENT" indexName="DELAYACTIVITYTYPE_NAME" tableName="DELAY_ACTIVITY_TYPE">
+                <column name="NAME"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="98288493-bebb-48df-9612-b9e41430e0ae" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for DELAY_ACTIVITY_TYPE.NAME as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="DELAY_ACTIVITY_TYPE" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-7893: AddNotNullConstraint to DELAY_ACTIVITY_TYPE.NAME</comment>
+        <addNotNullConstraint columnName="NAME" columnDataType="VARCHAR(254)" tableName="DELAY_ACTIVITY_TYPE"/>
+    </changeSet>
+
+    <changeSet id="eaa78735-8bef-4b09-85a0-738ed6a9059b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for DELAYACTIVITYTYPE_NAME to table DELAY_ACTIVITY_TYPE as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="DELAY_ACTIVITY_TYPE"/>
+            <not>
+                <indexExists indexName="DELAYACTIVITYTYPE_NAME" tableName="DELAY_ACTIVITY_TYPE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7893: CreateUniqueIndex DELAYACTIVITYTYPE_NAME on DELAY_ACTIVITY_TYPE (NAME)</comment>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="DELAYACTIVITYTYPE_NAME" tableName="DELAY_ACTIVITY_TYPE">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

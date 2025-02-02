@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="182d0945-0b30-4d08-8ecd-53c8c7de27b2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for INCIDENT_MESSAGE_ZONE to table INCIDENT_MESSAGE as (1) table does not exist, or
+(2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_MESSAGE"/>
+            <not>
+                <indexExists indexName="INCIDENT_MESSAGE_ZONE" tableName="INCIDENT_MESSAGE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-5317: CreateIndex INCIDENT_MESSAGE_ZONE on INCIDENT_MESSAGE (Z_ZONE)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="INCIDENT_MESSAGE" indexName="INCIDENT_MESSAGE_ZONE">
+            <column name="Z_ZONE"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

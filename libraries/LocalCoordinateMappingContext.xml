@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+    <bean name="latency.provider" class="minestar.pitlink.util.heatmap.dataprovider.RadioLatencyDataProvider"
+          scope="prototype"/>
+    <bean name="latency.renderer" class="com.mincom.integ.page.gwview.DefaultPacketStatisticsRenderer"
+          scope="prototype">
+        <constructor-arg index="0" value="20"/>
+        <constructor-arg index="1" value="0"/>
+        <constructor-arg index="2" value="5"/>
+        <constructor-arg index="3" value="true"/>
+        <constructor-arg index="4" value="s"/>
+    </bean>
+
+    <bean name="messageRetries.provider" class="minestar.pitlink.util.heatmap.dataprovider.MessageRetriesDataProvider"
+          scope="prototype"/>
+    <bean name="messageRetries.renderer" class="com.mincom.integ.page.gwview.DefaultPacketStatisticsRenderer"
+          scope="prototype">
+        <constructor-arg index="0" value="20"/>
+        <constructor-arg index="1" value="0"/>
+        <constructor-arg index="2" value="5"/>
+        <constructor-arg index="3" value="false"/>
+        <constructor-arg index="4" value=""/>
+    </bean>
+
+    <bean name="duplicates.provider" class="minestar.pitlink.util.heatmap.dataprovider.DuplicateCountDataProvider"
+          scope="prototype"/>
+    <bean name="duplicates.renderer" class="com.mincom.integ.page.gwview.DefaultPacketStatisticsRenderer"
+          scope="prototype">
+        <constructor-arg index="0" value="20"/>
+        <constructor-arg index="1" value="0"/>
+        <constructor-arg index="2" value="20"/>
+        <constructor-arg index="3" value="true"/>
+        <constructor-arg index="4" value="%"/>
+    </bean>
+
+    <bean name="accuracy.provider" class="minestar.pitlink.util.heatmap.dataprovider.GpsAccuracyDataProvider"
+          scope="prototype"/>
+    <bean name="accuracy.renderer" class="com.mincom.integ.page.gwview.DefaultPacketStatisticsRenderer"
+          scope="prototype">
+        <constructor-arg index="0" value="10"/>
+        <constructor-arg index="1" value="0"/>
+        <constructor-arg index="2" value="10"/>
+        <constructor-arg index="3" value="true"/>
+        <constructor-arg index="4" value=""/>
+    </bean>
+
+    <bean name="satellites.provider" class="minestar.pitlink.util.heatmap.dataprovider.GPSSatellitesDataProvider"
+          scope="prototype"/>
+    <bean name="satellites.renderer" class="com.mincom.integ.page.gwview.SatelliteRenderer" scope="prototype">
+        <constructor-arg index="0" value="2"/>
+        <constructor-arg index="1" value="10"/>
+    </bean>
+
+    <bean name="inverseDistanceWeighting" class="minestar.pitlink.util.heatmap.mapping.InverseDistanceWeighting"
+          scope="prototype"/>
+
+</beans>

@@ -1,0 +1,139 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="8767ec80-9182-4edc-886a-b4aad6fc7924" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for SPOIL_PILE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SPOIL_PILE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8359: CreateTable SPOIL_PILE</comment>
+        <createTable tablespace="MW_ENT" remarks="The definition of a mine model spoil pile" tableName="SPOIL_PILE">
+            <column name="SPOIL_PILE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISCRIMINATOR_ID" type="VARCHAR(255)"/>
+            <column name="PLAN_OID" type="BIGINT" remarks="The plan the spoil pile was dumped in.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_OID" type="BIGINT" remarks="The machine that dumped the spoil pile.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MATERIAL_OID" type="BIGINT" remarks="The material that was dumped to make the spoil pile."/>
+            <column name="ZONE_OID" type="BIGINT" remarks="The zone created for the spoil pile."/>
+            <column name="DUMPED_DATE_UTC" type="DATETIME2" remarks="The spoil pile dumped timestamp"/>
+            <column name="CREATED_DATE_UTC" type="DATETIME2" remarks="The zone creation timestamp"/>
+            <column name="LAST_UPDATED_DATE_UTC" type="DATETIME2" remarks="The zone updated timestamp"/>
+            <column name="MASS_DUMPED" type="DOUBLE" remarks="The mass dumped at the spoil pile."/>
+            <column name="CENTROID_POINT_X" type="DOUBLE" remarks="The Spoil Pile polygon"/>
+            <column name="CENTROID_POINT_Y" type="DOUBLE" remarks="The Spoil Pile polygon"/>
+            <column name="CENTROID_POINT_Z" type="DOUBLE" remarks="The Spoil Pile polygon"/>
+        </createTable>
+        <addPrimaryKey columnNames="SPOIL_PILE_OID" constraintName="SPOIL_PILE_PK" tablespace="MW_IDXENT" tableName="SPOIL_PILE"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="1587fb24-615f-4e3e-9162-e64244e4626f" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for SPOIL_PILE_POLYGON_POINT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SPOIL_PILE_POLYGON_POINT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8359: CreateTable SPOIL_PILE_POLYGON_POINT</comment>
+        <createTable tableName="SPOIL_PILE_POLYGON_POINT">
+            <column name="SPOIL_PILE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="POINT_NR" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="POINT_X" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="POINT_Y" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="POINT_Z" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="SPOIL_PILE_OID,POINT_NR" constraintName="SPOIL_PILE_POLYGON_POINT_PK" tableName="SPOIL_PILE_POLYGON_POINT"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="075c30f9-3bb1-49ee-aa75-a079af91998b" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOIL_PILE_MACHINE_OID_FK to table SPOIL_PILE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPOIL_PILE" columnName="MACHINE_OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOIL_PILE" foreignKeyName="SPOIL_PILE_MACHINE_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8359: AddForeignKeyConstraint SPOIL_PILE_MACHINE_OID_FK to SPOIL_PILE (MACHINE_OID)</comment>
+        <sql>DELETE FROM SPOIL_PILE WHERE MACHINE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = SPOIL_PILE.MACHINE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOIL_PILE" baseColumnNames="MACHINE_OID" constraintName="SPOIL_PILE_MACHINE_OID_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOIL_PILE" constraintName="SPOIL_PILE_MACHINE_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="bc919f7a-cbce-429e-8547-1b603cb3c4ae" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOIL_PILE_MATERIAL_OID_FK to table SPOIL_PILE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPOIL_PILE" columnName="MATERIAL_OID"/>
+            <columnExists tableName="MATERIAL" columnName="MATERIAL_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOIL_PILE" foreignKeyName="SPOIL_PILE_MATERIAL_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8359: AddForeignKeyConstraint SPOIL_PILE_MATERIAL_OID_FK to SPOIL_PILE (MATERIAL_OID)</comment>
+        <sql>UPDATE SPOIL_PILE SET MATERIAL_OID = NULL WHERE MATERIAL_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MATERIAL WHERE MATERIAL.MATERIAL_OID = SPOIL_PILE.MATERIAL_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOIL_PILE" baseColumnNames="MATERIAL_OID" constraintName="SPOIL_PILE_MATERIAL_OID_FK" referencedTableName="MATERIAL" referencedColumnNames="MATERIAL_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOIL_PILE" constraintName="SPOIL_PILE_MATERIAL_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="5cf81a7c-81bd-4564-8fa0-f8fec7fb6e6e" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOIL_PILE_ZONE_OID_FK to table SPOIL_PILE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPOIL_PILE" columnName="ZONE_OID"/>
+            <columnExists tableName="ZONE" columnName="ZONE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOIL_PILE" foreignKeyName="SPOIL_PILE_ZONE_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8359: AddForeignKeyConstraint SPOIL_PILE_ZONE_OID_FK to SPOIL_PILE (ZONE_OID)</comment>
+        <sql>UPDATE SPOIL_PILE SET ZONE_OID = NULL WHERE ZONE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM ZONE WHERE ZONE.ZONE_OID = SPOIL_PILE.ZONE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOIL_PILE" baseColumnNames="ZONE_OID" constraintName="SPOIL_PILE_ZONE_OID_FK" referencedTableName="ZONE" referencedColumnNames="ZONE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOIL_PILE" constraintName="SPOIL_PILE_ZONE_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="43897502-c09c-479a-8a84-821168e40081" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOIL_PILE_POLYGON_POINT_FK1 to table SPOIL_PILE_POLYGON_POINT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPOIL_PILE_POLYGON_POINT" columnName="SPOIL_PILE_OID"/>
+            <columnExists tableName="SPOIL_PILE" columnName="SPOIL_PILE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOIL_PILE_POLYGON_POINT" foreignKeyName="SPOIL_PILE_POLYGON_POINT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8359: AddForeignKeyConstraint SPOIL_PILE_POLYGON_POINT_FK1 to SPOIL_PILE_POLYGON_POINT (SPOIL_PILE_OID)</comment>
+        <sql>DELETE FROM SPOIL_PILE_POLYGON_POINT WHERE SPOIL_PILE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SPOIL_PILE WHERE SPOIL_PILE.SPOIL_PILE_OID = SPOIL_PILE_POLYGON_POINT.SPOIL_PILE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOIL_PILE_POLYGON_POINT" baseColumnNames="SPOIL_PILE_OID" constraintName="SPOIL_PILE_POLYGON_POINT_FK1" referencedTableName="SPOIL_PILE" referencedColumnNames="SPOIL_PILE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOIL_PILE_POLYGON_POINT" constraintName="SPOIL_PILE_POLYGON_POINT_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="a2c69b1f-e815-4bb8-8d02-dfab286cea79" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOIL_PILE_PLAN_OID_FK to table SPOIL_PILE as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="SPOIL_PILE" columnName="PLAN_OID"/>
+            <columnExists tableName="PLAN_MODEL" columnName="PLAN_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOIL_PILE" foreignKeyName="SPOIL_PILE_PLAN_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-8359: AddForeignKeyConstraint SPOIL_PILE_PLAN_OID_FK to SPOIL_PILE (PLAN_OID)</comment>
+        <sql>DELETE FROM SPOIL_PILE WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PLAN_MODEL WHERE PLAN_MODEL.PLAN_OID = SPOIL_PILE.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="SPOIL_PILE" baseColumnNames="PLAN_OID" constraintName="SPOIL_PILE_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="SPOIL_PILE" constraintName="SPOIL_PILE_PLAN_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

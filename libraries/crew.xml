@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+
+<classdefs>
+    <classdef name="minestar.platform.domain.roster.CrewImpl" keyproperty="name" >
+        <implclass name="minestar.platform.domain.roster.CrewBuilder"/>
+        <beanclass name="minestar.platform.domain.roster.CrewBuilder"/>
+
+        <propertydef name="OID" access="readonly">
+            <uidef visiblewhen="false"/>
+        </propertydef>        
+        <propertydef name="name">
+            <validationdef name="required" type="shared"/>
+            <description>The name of the crew.</description>
+        </propertydef>
+        <validationgroup name="Name Check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+    </classdef>
+</classdefs>

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Changesets to migrate the storage of comments in separate tables into COMMENTS columns -->
+
+    <changeSet id="22f6ac7b-73ba-468f-b077-ae613f633c44" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_COMMENT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_COMMENT"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: CreateTable PROD_PLAN_COMMENT</comment>
+        <createTable tableName="PROD_PLAN_COMMENT">
+            <column name="PLAN_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COMMENT_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COMMENTS" type="CLOB">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="PLAN_OID,COMMENT_TYPE" constraintName="PROD_PLAN_COMMENT_PK" tableName="PROD_PLAN_COMMENT"/>
+    </changeSet>
+
+    <changeSet id="71566a79-7460-4209-aea5-ee3b442b9278" author="MineStar" failOnError="false">
+        <validCheckSum>8:c16b0f8cfecd4b0bc5c74b381058f30d</validCheckSum>
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT</comment>
+        <dropTable tableName="PROD_PLAN_CMT"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="284342e9-df2a-4ac2-98b9-8a16969ab4dd" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_COMMENT_PLAN_OID_FK to table PROD_PLAN_COMMENT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_COMMENT" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_COMMENT" foreignKeyName="PROD_PLAN_COMMENT_PLAN_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddForeignKeyConstraint PROD_PLAN_COMMENT_PLAN_OID_FK to PROD_PLAN_COMMENT (PLAN_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_COMMENT WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_COMMENT.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_COMMENT" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_COMMENT_PLAN_OID_FK" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_COMMENT" constraintName="PROD_PLAN_COMMENT_PLAN_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="131f3019-10f0-4335-ad61-963b87e5b296" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_DUMP_BLEND as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_DUMP_BLEND"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_DUMP_BLEND" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_DUMP_BLEND.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_DUMP_BLEND">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="1725d813-6092-4ce3-9b3d-eea74ef4f9fc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_DUMP_CRUSHER as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_DUMP_CRUSHER"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_DUMP_CRUSHER" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_DUMP_CRUSHER.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_DUMP_CRUSHER">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="db81be49-c8d6-4c17-9542-c3fb5c71d775" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_DUMP_STOCKPILE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_DUMP_STOCKPILE"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_DUMP_STOCKPILE" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_DUMP_STOCKPILE.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_DUMP_STOCKPILE">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="b44fb954-4ef3-4508-893d-9d98d37bd20e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_JOB_ALTERNATE_DUMP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_ALTERNATE_DUMP"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB_ALTERNATE_DUMP" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_JOB_ALTERNATE_DUMP.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_JOB_ALTERNATE_DUMP">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="34eefccd-9ce6-497f-a332-e7befac5441d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_JOB_ALTERNATE_SOURCE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_JOB_ALTERNATE_SOURCE.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_JOB_ALTERNATE_SOURCE">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="d822a708-177a-46e1-ac07-088096bc08e3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_JOB_PRIMARY_DUMP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_PRIMARY_DUMP"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB_PRIMARY_DUMP" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_JOB_PRIMARY_DUMP.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_JOB_PRIMARY_DUMP">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="aca35ce0-ca38-43f5-8e0e-1d7e83686adf" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_JOB_PRIMARY_SOURCE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_JOB_PRIMARY_SOURCE"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_JOB_PRIMARY_SOURCE" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_JOB_PRIMARY_SOURCE.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_JOB_PRIMARY_SOURCE">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="3204e9d0-b25d-4862-b2bf-7b2897394e09" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_SOURCE_BLOCK as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_SOURCE_BLOCK"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_SOURCE_BLOCK" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_SOURCE_BLOCK.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_SOURCE_BLOCK">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="56d3dfde-1cf1-4a93-9b10-7b7ee89dba6b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_SOURCE_STOCKPILE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_SOURCE_STOCKPILE"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_SOURCE_STOCKPILE" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_SOURCE_STOCKPILE.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_SOURCE_STOCKPILE">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="f7ed6080-d854-46ad-bab4-4ade224430a9" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_TASK_NON_PRODUCTION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_TASK_NON_PRODUCTION.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_TASK_NON_PRODUCTION">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+        <rollback/>
+    </changeSet>
+    
+    <changeSet id="78ee8be6-3c8f-4585-aefc-428eabdd6fc1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table PROD_PLAN_TASK_OPERATIONAL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+            <not>
+                <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn PROD_PLAN_TASK_OPERATIONAL.COMMENTS</comment>
+        <addColumn tableName="PROD_PLAN_TASK_OPERATIONAL">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+        <rollback/>
+    </changeSet>
+    
+    <changeSet id="ed55ac24-09d0-4717-b89c-a6f53a2d7b85" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for COMMENTS to table V2_PROD_PLAN_JOB as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_JOB"/>
+            <not>
+                <columnExists tableName="V2_PROD_PLAN_JOB" columnName="COMMENTS"/>
+            </not>
+        </preConditions>
+        <comment>MO-4189: AddColumn V2_PROD_PLAN_JOB.COMMENTS</comment>
+        <addColumn tableName="V2_PROD_PLAN_JOB">
+            <column name="COMMENTS" type="CLOB"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="d561283c-1d00-4532-a118-6fa9716f3273" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_DUMP_BLEND as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_DUMP_BLEND"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_DUMP_BLEND</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_DUMP_BLEND SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_DUMP_BLEND CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_DUMP_BLEND.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_DUMP_BLEND"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="bbb8985c-0bf4-4a57-8ce7-8c035aa42d9b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_DUMP_CRUSHER as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_DUMP_CRUSHER"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_DUMP_CRUSHER</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_DUMP_CRUSHER SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_DUMP_CRUSHER CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_DUMP_CRUSHER.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_DUMP_CRUSHER"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="27d0a04f-214d-4d10-bbb7-31e63a7f5387" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_DUMP_STOCKPILE as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_DUMP_STOCKPILE"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_DUMP_STOCKPILE</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_DUMP_STOCKPILE SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_DUMP_STOCKPILE CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_DUMP_STOCKPILE.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_DUMP_STOCKPILE"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0b7b6e14-163d-45a2-afca-56bafd130d28" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_JOB as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_JOB"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_JOB</comment>
+        <sql dbms="mssql">
+            UPDATE V2_PROD_PLAN_JOB SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_JOB CMT
+            WHERE CMT.REFERENCE_OID = V2_PROD_PLAN_JOB.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_JOB"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="6c79dc3c-c72e-4082-a718-083fb5e290b1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_JOB_ALT_DUMP as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_JOB_ALT_DUMP"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_JOB_ALT_DUMP</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_JOB_ALTERNATE_DUMP SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_JOB_ALT_DUMP CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_JOB_ALTERNATE_DUMP.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_JOB_ALT_DUMP"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="1abc09f7-578b-4846-b538-242924b53d3f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_JOB_ALT_SRC as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_JOB_ALT_SRC"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_JOB_ALT_SRC</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_JOB_ALTERNATE_SOURCE SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_JOB_ALT_SRC CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_JOB_ALTERNATE_SOURCE.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_JOB_ALT_SRC"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0d31dac9-f338-4284-8aed-2eb0aca40db2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_JOB_PRI_DUMP as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_JOB_PRI_DUMP"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_JOB_PRI_DUMP</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_JOB_PRIMARY_DUMP SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_JOB_PRI_DUMP CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_JOB_PRIMARY_DUMP.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_JOB_PRI_DUMP"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="4b03609e-49b4-4070-9577-b651e3eb3157" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_JOB_PRI_SRC as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_JOB_PRI_SRC"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_JOB_PRI_SRC</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_JOB_PRIMARY_SOURCE SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_JOB_PRI_SRC CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_JOB_PRIMARY_SOURCE.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_JOB_PRI_SRC"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="39b03312-0e0c-487f-9f53-1e9f7a48d0b0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_NON_PROD_TASK as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_NON_PROD_TASK"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_NON_PROD_TASK</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_TASK_NON_PRODUCTION SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_NON_PROD_TASK CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_TASK_NON_PRODUCTION.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_NON_PROD_TASK"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2d4630b1-4238-48e3-9b0e-9d1faf647629" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_OPERATIONAL_TASK as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_OPERATIONAL_TASK"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_OPERATIONAL_TASK</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_TASK_OPERATIONAL SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_OPERATIONAL_TASK CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_TASK_OPERATIONAL.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_OPERATIONAL_TASK"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="0d575d9a-92bd-4355-a285-1dea14894a15" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_SOURCE_BLOCK as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_SOURCE_BLOCK"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_SOURCE_BLOCK</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_SOURCE_BLOCK SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_SOURCE_BLOCK CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_SOURCE_BLOCK.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_SOURCE_BLOCK"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="f67d43ea-8f70-41fa-b488-6fa29173bebf" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_CMT_SOURCE_STOCKPILE as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_CMT_SOURCE_STOCKPILE"/>
+        </preConditions>
+        <comment>MO-4189: DropTable PROD_PLAN_CMT_SOURCE_STOCKPILE</comment>
+        <sql dbms="mssql">
+            UPDATE PROD_PLAN_SOURCE_STOCKPILE SET COMMENTS =
+            (SELECT CMT.PLAN_COMMENT + CHAR(10) AS [text()]
+            FROM PROD_PLAN_CMT_SOURCE_STOCKPILE CMT
+            WHERE CMT.REFERENCE_OID = PROD_PLAN_SOURCE_STOCKPILE.OID
+            ORDER BY DISPLAY_ORDER
+            FOR XML PATH (''))</sql>
+        <dropTable tableName="PROD_PLAN_CMT_SOURCE_STOCKPILE"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

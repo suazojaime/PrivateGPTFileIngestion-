@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="d952c75a-66e2-4602-b941-ba9243c3851f" author="MineStar" context="Production/Production_Management"
+               failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for HIST_GB_LEVEL as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="HIST_GB_LEVEL"/>
+            </not>
+        </preConditions>
+        <comment>MO-5500: CreateTable HIST_GB_LEVEL</comment>
+        <createTable tablespace="MW_ENT"
+                     remarks="A historical record of what the levels of a chute was at the end of a shift."
+                     tableName="HIST_GB_LEVEL">
+            <column name="CHUTE_DATA_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRADE_BLOCK_REF" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SHIFT" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GB_LEVEL" type="DOUBLE"
+                    remarks="The amount of ore that the grade block contained at the end of the shift."/>
+        </createTable>
+        <addPrimaryKey columnNames="CHUTE_DATA_OID" constraintName="HIST_GB_LEVEL_PK" tablespace="MW_IDXENT"
+                       tableName="HIST_GB_LEVEL"/>
+        <addUniqueConstraint columnNames="GRADE_BLOCK_REF,SHIFT" constraintName="UK_4EVW1WSTGG1O9GKNCVLCTCOAB"
+                             tableName="HIST_GB_LEVEL"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

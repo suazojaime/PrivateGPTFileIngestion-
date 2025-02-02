@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="856b0c0a-5be1-11e7-907b-a6006ad3dba0" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="HLT-1295 Create columns in Production_Event table to store the segments / machine states" onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="DIG_DURATION"/>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="IDLE_DURATION"/>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="PARTIAL_DUMP_DURATION"/>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="BACKDRAG_DURATION"/>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="MISC_DURATION"/>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="KEY_OFF_ENGINE_OFF_DURATION"/>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="KEY_OFF_ENGINE_ON_DURATION"/>
+                <columnExists tableName="PRODUCTION_EVENT" columnName="KEY_ON_ENGINE_OFF_DURATION"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1295: Create columns in Production_Event table to store the segments / machine states</comment>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="DIG_DURATION" type="DOUBLE" remarks="The dig duration"/>
+        </addColumn>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="IDLE_DURATION" type="DOUBLE" remarks="The ideal duration"/>
+        </addColumn>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="PARTIAL_DUMP_DURATION" type="DOUBLE" remarks="The partial dump duration"/>
+        </addColumn>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="BACKDRAG_DURATION" type="DOUBLE" remarks="The backdrag duration"/>
+        </addColumn>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="MISC_DURATION" type="DOUBLE" remarks="The misc duration"/>
+        </addColumn>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="KEY_OFF_ENGINE_OFF_DURATION" type="DOUBLE" remarks="The key off engine off duration"/>
+        </addColumn>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="KEY_OFF_ENGINE_ON_DURATION" type="DOUBLE" remarks="The key off engine on duration"/>
+        </addColumn>
+        <addColumn tableName="PRODUCTION_EVENT">
+            <column name="KEY_ON_ENGINE_OFF_DURATION" type="DOUBLE" remarks="The key on engine off duration"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="856b12ae-5be1-11e7-907b-a6006ad3dba1" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="HLT-1295 Create columns in Production_Event table to store the segments / machine states" onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="SEG_PRODUCTION_EVENT_DETAILS"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1295: Create columns in Production_Event table to store the segments / machine states</comment>
+        <createTable tablespace="MW_ENT" remarks="Attributes of a DXF map file stored on the server." tableName="SEG_PRODUCTION_EVENT_DETAILS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="SEG_TYPE" type="VARCHAR(50)" remarks="The SEG_TYPE"/>
+            <column name="SEG_ID" type="INT" remarks="The SEG_ID"/>
+            <column name="SEG_START_TIME" type="DATETIME2" remarks="The SEG_START_TIME"/>
+            <column name="SEG_END_TIME" type="DATETIME2" remarks="The SEG_END_TIME"/>
+            <column name="SEG_DURATION" type="DOUBLE" remarks="The SEG_DURATION"/>
+            <column name="FUEL_CONS" type="DOUBLE" remarks="Cycle fuel consumption rate."/>
+            <column name="DIST_TRAVELLED" type="DOUBLE" remarks="The DIST_TRAVELKED"/>
+            <column name="PAYLOAD_WEIGHT" type="DOUBLE" remarks="The PAYLOAD_WEIGHT"/>
+            <column name="PAYLOAD_CAL_METHOD" type="VARCHAR(50)" remarks="The PAYLOAD_CAL_METHOD"/>
+            <column name="TRUCK_DISC" type="VARCHAR(50)" remarks="The TRUCK_DISC"/>
+            <column name="MATERIAL_ID" type="VARCHAR(50)" remarks="The MATERIAL_ID"/>
+            <column name="MATERIAL_DENSITY" type="DOUBLE" remarks="The MATERIAL_DENSITY"/>
+            <column name="TRUCK_PAYLOAD_ID" type="VARCHAR(50)" remarks="The TRUCK_PAYLOAD_ID"/>
+            <column name="SEG_PROCESS_STATUS" type="BOOLEAN" remarks="SEG Processing status records.">
+                    <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="SEG_PRODUCTION_EVENT_DETAIL_PK" tablespace="MW_IDXOBJ" tableName="SEG_PRODUCTION_EVENT_DETAILS"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

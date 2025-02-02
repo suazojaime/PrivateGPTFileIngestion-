@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.health.api.frame.TrendSamples" table="HEALTH_TREND_SAMPLE">
+
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <meta attribute="index">
+            name=TREND_SAMPLES_R
+            columns=SAMPLETIME_UTC DESC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=TREND_SAMPLES_MEASURE_OID
+            columns=MEASURE_OID
+            tablespace=MW_IDXENT
+        </meta>
+
+        <composite-id>
+            <key-many-to-one name="healthLog" class="minestar.health.api.frame.HealthLog" column="HEALTH_LOG_OID" />
+            <key-property name="sampleTime" type="TimestampType" column="SAMPLETIME_UTC">
+                <meta attribute="timestamp">true</meta>
+                <meta attribute="utc-description">The time at which the sample(s) in the set were captured.</meta>
+                <meta attribute="description">The time at which the sample(s) in the set were captured.</meta>
+                <meta attribute="view-localtime">true</meta>
+            </key-property>
+            <key-many-to-one name="measure" class="minestar.health.api.definition.Measure" column="MEASURE_OID" lazy="false"/>
+        </composite-id>
+
+
+        <property name="sampleValue" column="SAMPLE_VALUE">
+            <meta attribute="description">The value of the sample taken.</meta>
+            <type name="quantity">
+                <param name="unitType">unitless</param>
+            </type>
+        </property>
+
+        <property name="fmiValue" column="FMI_VALUE" />
+
+        <property name="sampleSMH" column="SAMPLESMH">
+            <meta attribute="description">The service hours at which the samples(s) were captured.</meta>
+        	<type name="quantity">
+                <param name="unitType">service meter hours</param>
+            </type>
+        </property>
+
+        <property
+                name="samplePosition"
+                type="XYZCoordinate"
+                >
+            <meta attribute="description">The position of the machine when the samples of the set were captured.</meta>
+            <column name="SAMPLE_POSITION_X"/>
+            <column name="SAMPLE_POSITION_Y"/>
+            <column name="SAMPLE_POSITION_Z"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

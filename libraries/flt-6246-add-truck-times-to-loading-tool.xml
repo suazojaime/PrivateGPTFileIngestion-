@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="58e968cd-c824-4387-bce0-6265b64c595d" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for USECLASSTRUCKTIMES to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="USECLASSTRUCKTIMES"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: AddColumn MACHINE.USECLASSTRUCKTIMES</comment>
+        <addColumn tableName="MACHINE">
+            <column name="USECLASSTRUCKTIMES" type="BOOLEAN" remarks="Specifies whether to use the machine class values for truck loading and spotting times."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2b5818a3-5014-4fe2-8046-20970dce03a9" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_LOADABLE_TRUCK_CLASS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_LOADABLE_TRUCK_CLASS"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: CreateTable MACHINE_LOADABLE_TRUCK_CLASS</comment>
+        <createTable tablespace="MW_ENT" remarks="A list of all loadable truck classes for a specific loading tool." tableName="MACHINE_LOADABLE_TRUCK_CLASS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRUCK_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,TRUCK_CLASS_OID" constraintName="MACHINE_LOADABLE_TRUCK_CLAS_PK" tablespace="MW_IDXENT" tableName="MACHINE_LOADABLE_TRUCK_CLASS"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="1df131ea-f858-40fe-ab44-07b6d52889c6" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_LOAD_TIME as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_LOAD_TIME"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: CreateTable MACHINE_LOAD_TIME</comment>
+        <createTable tablespace="MW_ENT" remarks="An association of the time taken to load each truck class for a specific loading tool." tableName="MACHINE_LOAD_TIME">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRUCK_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LOADING_TIME" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,TRUCK_CLASS_OID" constraintName="MACHINE_LOAD_TIME_PK" tablespace="MW_IDXENT" tableName="MACHINE_LOAD_TIME"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="ccab39c2-2745-4b8c-9f63-3823622bf44f" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_SPOT_TIME as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_SPOT_TIME"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: CreateTable MACHINE_SPOT_TIME</comment>
+        <createTable tablespace="MW_ENT" remarks="An association of the time taken to spot for each truck class for a specific loading tool." tableName="MACHINE_SPOT_TIME">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TRUCK_CLASS_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPOTTING_TIME" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,TRUCK_CLASS_OID" constraintName="MACHINE_SPOT_TIME_PK" tablespace="MW_IDXENT" tableName="MACHINE_SPOT_TIME"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="04ff7a94-2a06-4d1a-8ae3-41602219e556" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_LOADABLE_TRUCK_CLA_FK1 to table MACHINE_LOADABLE_TRUCK_CLASS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_LOADABLE_TRUCK_CLASS" columnName="TRUCK_CLASS_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_LOADABLE_TRUCK_CLASS" foreignKeyName="MACHINE_LOADABLE_TRUCK_CLA_FK1"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: AddForeignKeyConstraint MACHINE_LOADABLE_TRUCK_CLA_FK1 to MACHINE_LOADABLE_TRUCK_CLASS (TRUCK_CLASS_OID)</comment>
+        <sql>DELETE FROM MACHINE_LOADABLE_TRUCK_CLASS WHERE TRUCK_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = MACHINE_LOADABLE_TRUCK_CLASS.TRUCK_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_LOADABLE_TRUCK_CLASS" baseColumnNames="TRUCK_CLASS_OID" constraintName="MACHINE_LOADABLE_TRUCK_CLA_FK1" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_LOADABLE_TRUCK_CLASS" constraintName="MACHINE_LOADABLE_TRUCK_CLA_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="68ef7f0c-e4f5-4304-8029-7d7f5afb8e0b" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_LOADABLE_TRUCK_CLA_FK2 to table MACHINE_LOADABLE_TRUCK_CLASS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_LOADABLE_TRUCK_CLASS" columnName="OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_LOADABLE_TRUCK_CLASS" foreignKeyName="MACHINE_LOADABLE_TRUCK_CLA_FK2"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: AddForeignKeyConstraint MACHINE_LOADABLE_TRUCK_CLA_FK2 to MACHINE_LOADABLE_TRUCK_CLASS (OID)</comment>
+        <sql>DELETE FROM MACHINE_LOADABLE_TRUCK_CLASS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = MACHINE_LOADABLE_TRUCK_CLASS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_LOADABLE_TRUCK_CLASS" baseColumnNames="OID" constraintName="MACHINE_LOADABLE_TRUCK_CLA_FK2" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_LOADABLE_TRUCK_CLASS" constraintName="MACHINE_LOADABLE_TRUCK_CLA_FK2"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="7fc42240-d759-4542-a582-0b24ab64e034" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_LOAD_TIME_OID_FK to table MACHINE_LOAD_TIME as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_LOAD_TIME" columnName="OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_LOAD_TIME" foreignKeyName="MACHINE_LOAD_TIME_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: AddForeignKeyConstraint MACHINE_LOAD_TIME_OID_FK to MACHINE_LOAD_TIME (OID)</comment>
+        <sql>DELETE FROM MACHINE_LOAD_TIME WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = MACHINE_LOAD_TIME.OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_LOAD_TIME" baseColumnNames="OID" constraintName="MACHINE_LOAD_TIME_OID_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_LOAD_TIME" constraintName="MACHINE_LOAD_TIME_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="e5de9f0c-7b0a-4669-af5c-9a3dd0ba8d40" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_LOAD_TIME_TRUCK_CLA_FK to table MACHINE_LOAD_TIME as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_LOAD_TIME" columnName="TRUCK_CLASS_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_LOAD_TIME" foreignKeyName="MACHINE_LOAD_TIME_TRUCK_CLA_FK"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: AddForeignKeyConstraint MACHINE_LOAD_TIME_TRUCK_CLA_FK to MACHINE_LOAD_TIME (TRUCK_CLASS_OID)</comment>
+        <sql>DELETE FROM MACHINE_LOAD_TIME WHERE TRUCK_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = MACHINE_LOAD_TIME.TRUCK_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_LOAD_TIME" baseColumnNames="TRUCK_CLASS_OID" constraintName="MACHINE_LOAD_TIME_TRUCK_CLA_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_LOAD_TIME" constraintName="MACHINE_LOAD_TIME_TRUCK_CLA_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="67660de4-8ebc-49ff-b6be-beb32eba4e0a" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_SPOT_TIME_OID_FK to table MACHINE_SPOT_TIME as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_SPOT_TIME" columnName="OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_SPOT_TIME" foreignKeyName="MACHINE_SPOT_TIME_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: AddForeignKeyConstraint MACHINE_SPOT_TIME_OID_FK to MACHINE_SPOT_TIME (OID)</comment>
+        <sql>DELETE FROM MACHINE_SPOT_TIME WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = MACHINE_SPOT_TIME.OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_SPOT_TIME" baseColumnNames="OID" constraintName="MACHINE_SPOT_TIME_OID_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_SPOT_TIME" constraintName="MACHINE_SPOT_TIME_OID_FK"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="957c9102-4d3b-4818-92e3-e82d57e4a843" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for MACHINE_SPOT_TIME_TRUCK_CLA_FK to table MACHINE_SPOT_TIME as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_SPOT_TIME" columnName="TRUCK_CLASS_OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="MACHINE_SPOT_TIME" foreignKeyName="MACHINE_SPOT_TIME_TRUCK_CLA_FK"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6246: AddForeignKeyConstraint MACHINE_SPOT_TIME_TRUCK_CLA_FK to MACHINE_SPOT_TIME (TRUCK_CLASS_OID)</comment>
+        <sql>DELETE FROM MACHINE_SPOT_TIME WHERE TRUCK_CLASS_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = MACHINE_SPOT_TIME.TRUCK_CLASS_OID)</sql>
+        <addForeignKeyConstraint baseTableName="MACHINE_SPOT_TIME" baseColumnNames="TRUCK_CLASS_OID" constraintName="MACHINE_SPOT_TIME_TRUCK_CLA_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="MACHINE_SPOT_TIME" constraintName="MACHINE_SPOT_TIME_TRUCK_CLA_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

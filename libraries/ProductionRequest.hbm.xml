@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical" default-access="field" default-lazy="false">
+
+    <class name="minestar.assignment.domain.planning.ProductionRequestImpl"
+           table="PROD_REQUEST">
+
+        <meta attribute="alias" inherit="false">ProdRqst</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A production request</meta>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="PROD_REQUEST_OID"
+        >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property
+                name="startTime"
+                type="TimestampType"
+                column="START_TIME_UTC"
+        >
+            <meta attribute="utc-description">The utc start time value of the the production request.</meta>
+            <meta attribute="description">The start time value of the the production request.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        <property
+                name="finishTime"
+                type="TimestampType"
+                column="FINISH_TIME_UTC"
+        >
+            <meta attribute="utc-description">The utc finish time value of the production request.</meta>
+            <meta attribute="description">The finish time value of the production request.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        <property
+                name="currentState"
+                type="minestar.domain.model.persistence.ProductionRequestStatusUserType"
+                column="CURRENT_STATE"
+        >
+            <meta attribute="description">
+                The status value of the production request.
+                0 - Inactive.
+                1 - Active.
+                2 - Finished.
+            </meta>
+            <meta attribute="choices" inherit="false">choice:productionRequestState</meta>
+        </property>
+
+        <!-- associations -->
+        <list name="goals" table="PROD_REQUEST_GOAL" cascade="all-delete-orphan">
+            <meta attribute="description">The goals details associated with the production request.</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="PROD_REQUEST_OID"/>
+            <list-index column="LIST_INDEX"/>
+            <composite-element class="minestar.assignment.domain.planning.ProductionRequestGoal">
+                <property
+                        name="minRate"
+                        column="MIN_RATE"
+                >
+                    <meta attribute="description">What is the minimum rate for this goal.</meta>
+                    <meta attribute="unitType">rate</meta>
+                    <type name="quantity">
+                        <param name="unitType">rate</param>
+                    </type>
+                </property>
+
+                <property
+                        name="maxRate"
+                        column="MAX_RATE"
+                >
+                    <meta attribute="description">What is the maximum rate for this goal.</meta>
+                    <meta attribute="unitType">rate</meta>
+                    <type name="quantity">
+                        <param name="unitType">rate</param>
+                    </type>
+                </property>
+
+                <many-to-one
+                        name="fromServer"
+                        class="minestar.pitlink.domain.machine.MachineReference"
+                        column="FROM_SERVER"
+                        not-found="ignore"
+                >
+                    <meta attribute="description">The Loading Tool to obtain material from for the production request
+                        goal.
+                    </meta>
+                </many-to-one>
+
+                <many-to-one
+                        name="toServer"
+                        class="minestar.pitlink.domain.machine.MachineReference"
+                        column="TO_SERVER"
+                        not-found="ignore"
+                >
+                    <meta attribute="description">The Processor to dump material at for the production request goal.
+                    </meta>
+                </many-to-one>
+
+                <many-to-one
+                        name="material"
+                        class="minestar.machinetracking.domain.MaterialReference"
+                        column="MATERIAL"
+                        not-found="ignore"
+                >
+                    <meta attribute="description">The material for the production request goal.</meta>
+                </many-to-one>
+
+                <many-to-one
+                        name="blend"
+                        class="minestar.mine.domain.material.BlendReference"
+                        column="BLEND_OID"
+                        not-found="ignore"
+                >
+                    <meta attribute="description">The blend for the production request goal.</meta>
+                </many-to-one>
+            </composite-element>
+        </list>
+
+        <set name="priorityMaterials" table="PROD_RQST_PRIORITY_MATERIAL">
+            <meta attribute="description">The materials to be considered a priority for this production request.</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID"/>
+            <many-to-many class="minestar.machinetracking.domain.MaterialReference" column="MATERIAL_OID"/>
+        </set>
+
+        <map name="serverPriorities"
+             table="PROD_RQST_SVR_PRIORITY">
+            <meta attribute="description">The priority associated with each server in this production request.</meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index" inherit="false">
+                name=PROD_RQST_SVR_PRIORITY_12U
+                columns=OID
+                tablespace=MW_IDXENT
+            </meta>
+
+            <key column="OID"/>
+            <map-key-many-to-many class="minestar.pitlink.domain.machine.MachineReference" column="MACHINE_OID"/>
+            <element type="minestar.domain.model.persistence.ServerPriorityUserType" column="PRIORITY"/>
+        </map>
+
+    </class>
+</hibernate-mapping>

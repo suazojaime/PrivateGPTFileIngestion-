@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE importdef SYSTEM "BlockImportDefinition.dtd">
+<!--
+    DO NOT MODIFY the 'gradeblockattribute' names, they match the attributes in the system.
+
+    Each 'attribute' must match (case insensitive) the attribute names in the input file.
+-->
+<importdef>
+        <!-- What is the name of this block -->
+        <gradeblockattribute name="name">
+                <attribute name="oreblock"/>
+        </gradeblockattribute>
+        <!-- What is the height of this block -->
+        <gradeblockattribute name="height">
+                <default value="0">
+                        <unit name="metre" type="length"/>
+                </default>
+        </gradeblockattribute>
+        <!-- What is the shape of this block -->
+        <gradeblockattribute name="polygon">
+                <attribute name="polygonid" start="-2" length="2" type="integer">
+                        <unit name="metre" type="length" />
+                        <mapping type="substitution">
+                                <entity name="Polygons" attribute="id" value="polygonid"/>
+                        </mapping>
+                </attribute>
+        </gradeblockattribute>
+        <!-- What is the location of this block -->
+        <gradeblockattribute name="location">
+                <default value=""/>
+        </gradeblockattribute>
+        <!-- What is the volume of this block -->
+        <gradeblockattribute name="originalVol">
+                <attribute name="volume">
+                        <unit name="cubic metres" type="volume"/>
+                </attribute>
+        </gradeblockattribute>
+        <!-- What is the mass in this block -->
+        <gradeblockattribute name="originalMass">
+                <attribute name="tonnes">
+                        <unit name="tonne" type="mass"/>
+                </attribute>
+        </gradeblockattribute>
+        <!-- Determine the material in this block -->
+        <gradeblockattribute name="material">
+                <attribute name="oreblock" start="0" length="2">
+                        <mapping value="OO">
+                                <entity name="Material" attribute="name" value="10_HGO"/>
+                        </mapping>
+                        <mapping value="OB">
+                                <entity name="Material" attribute="name" value="01_OBW"/>
+                        </mapping>
+                        <mapping value="IB">
+                                <entity name="Material" attribute="name" value="02_IBW"/>
+                        </mapping>
+                        <mapping value="YO">
+                                <entity name="Material" attribute="name" value="09_LGO"/>
+                        </mapping>
+                        <mapping value="OS" condition="estprf .gt. 50">
+                                <entity name="Material" attribute="name" value="04_HIGHP"/>
+                        </mapping>
+                        <mapping value="OS" condition="estprf .le. 50">
+                                <entity name="Material" attribute="name" value="03_LOWP"/>
+                        </mapping>
+                        <mapping value="HW" condition="estprf .gt. 50">
+                                <entity name="Material" attribute="name" value="04_HIGHP"/>
+                        </mapping>
+                        <mapping value="HW" condition="estprf .le. 50">
+                                <entity name="Material" attribute="name" value="03_LOWP"/>
+                        </mapping>
+                        <mapping value="FW" condition="estprf .gt. 50">
+                                <entity name="Material" attribute="name" value="04_HIGHP"/>
+                        </mapping>
+                        <mapping value="FW" condition="estprf .le. 50">
+                                <entity name="Material" attribute="name" value="03_LOWP"/>
+                        </mapping>
+                        <mapping value="MS" condition="estprf .gt. 50">
+                                <entity name="Material" attribute="name" value="04_HIGHP"/>
+                        </mapping>
+                        <mapping value="MS" condition="estprf .le. 50">
+                                <entity name="Material" attribute="name" value="03_LOWP"/>
+                        </mapping>
+                        <mapping value="OW" condition="estprf .gt. 50">
+                                <entity name="Material" attribute="name" value="04_HIGHP"/>
+                        </mapping>
+                        <mapping value="OW" condition="estprf .le. 50">
+                                <entity name="Material" attribute="name" value="03_LOWP"/>
+                        </mapping>
+                        <mapping value="GS">
+                                <entity name="Material" attribute="name" value="07_GS"/>
+                        </mapping>
+                        <mapping value="YS">
+                                <entity name="Material" attribute="name" value="05_YS"/>
+                        </mapping>
+                </attribute>
+        </gradeblockattribute>
+        <!-- This is not a stockpile -->
+        <gradeblockattribute name="stockpile">
+                <default value="false"/>
+        </gradeblockattribute>
+        <!-- This is not active -->
+        <gradeblockattribute name="inuse">
+                <default value="false"/>
+        </gradeblockattribute>
+        <!-- Make all automatically created blocks read only -->
+        <gradeblockattribute name="readOnly">
+                <default value="true"/>
+        </gradeblockattribute>
+        <!-- Use the default grade engine -->
+        <gradeblockattribute name="gradeEngine">
+                <default value="minestar"/>
+        </gradeblockattribute>
+        <!-- Normal grade values -->
+        <gradeblockattribute name="gradevalues">
+                <attribute name="grade">
+                        <unit name="grams per tonne" type="ratio"/>
+                        <mapping type="pair">
+                                <entity name="Grade" attribute="name" value="AU Grade 1"/>
+                        </mapping>
+                </attribute>
+                <attribute name="aumod">
+                        <unit name="grams per tonne" type="ratio"/>
+                        <mapping type="pair">
+                                <entity name="Grade" attribute="name" value="AU Grade 2"/>
+                        </mapping>
+                </attribute>
+                <attribute name="bhgrade">
+                        <unit name="grams per tonne" type="ratio"/>
+                        <mapping type="pair">
+                                <entity name="Grade" attribute="name" value="AU Grade BH"/>
+                        </mapping>
+                </attribute>
+                <attribute name="s%">
+                        <unit name="percent" type="ratio"/>
+                        <mapping type="pair">
+                                <entity name="Grade" attribute="name" value="Sulphur Percentage"/>
+                        </mapping>
+                </attribute>
+        </gradeblockattribute>
+        <!-- Discrete grade values -->
+        <gradeblockattribute name="disgradevalues">
+                <attribute name="royl">
+                        <mapping type="pair">
+                                <entity name="Grade" attribute="name" value="Royalty"/>
+                        </mapping>
+                </attribute>
+                <attribute name="struct">
+                        <mapping type="pair">
+                                <entity name="Grade" attribute="name" value="Structure"/>
+                        </mapping>
+                </attribute>
+        </gradeblockattribute>
+</importdef>

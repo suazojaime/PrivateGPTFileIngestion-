@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="d21c5aad-8c91-4c82-9eeb-ad7b6e4b07b0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CHUTE_DUMPED_AMOUNT to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="CHUTE_DUMPED_AMOUNT"/>
+            </not>
+        </preConditions>
+        <comment>FUG-382: AddColumn MACHINE_IN_PIT.CHUTE_DUMPED_AMOUNT</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="CHUTE_DUMPED_AMOUNT" type="DOUBLE" remarks="The amount of ore that was dumped into the chute since the start of the current shift"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE_IN_PIT" columnName="CHUTE_DUMPED_AMOUNT"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="540a4204-26a8-4f39-9093-02b5ef884efd" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CHUTE_TAKEN_AMOUNT to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="CHUTE_TAKEN_AMOUNT"/>
+            </not>
+        </preConditions>
+        <comment>FUG-382: AddColumn MACHINE_IN_PIT.CHUTE_TAKEN_AMOUNT</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="CHUTE_TAKEN_AMOUNT" type="DOUBLE" remarks="The amount of ore that has been taken from the chute since the start of the current shift"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE_IN_PIT" columnName="CHUTE_TAKEN_AMOUNT"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="3a6fda6c-f40b-4c49-8a4e-693c88687baf" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for SERVICEMETERREADING_1 of table SERVICEMETERREADING as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="SERVICEMETERREADING_1" tableName="SERVICEMETERREADING"/>
+        </preConditions>
+        <comment>AHS-7316: DropIndex SERVICEMETERREADING_1 from SERVICEMETERREADING (ECF_CLASS_ID,SERVICEMETERREADING_OID)</comment>
+        <dropIndex tableName="SERVICEMETERREADING" indexName="SERVICEMETERREADING_1"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" tableName="SERVICEMETERREADING" indexName="SERVICEMETERREADING_1">
+                <column name="ECF_CLASS_ID"/>
+                <column name="SERVICEMETERREADING_OID"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+    <changeSet id="42a723b4-642c-4e25-8007-6a1510651afa" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for SERVICEMETERREADING_1R of table SERVICEMETERREADING as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="SERVICEMETERREADING_1R" tableName="SERVICEMETERREADING"/>
+        </preConditions>
+        <comment>AHS-7316: DropIndex SERVICEMETERREADING_1R from SERVICEMETERREADING (ECF_CLASS_ID,MACHINE,READINGDATE_UTC)</comment>
+        <dropIndex tableName="SERVICEMETERREADING" indexName="SERVICEMETERREADING_1R"/>
+        <rollback>
+            <createIndex unique="false" tablespace="MW_IDXENT" tableName="SERVICEMETERREADING" indexName="SERVICEMETERREADING_1R">
+                <column name="ECF_CLASS_ID"/>
+                <column name="MACHINE"/>
+                <column name="READINGDATE_UTC"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="53409b6b-7574-4681-89e7-a23cbf1ad69e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for ECF_CLASS_ID of table SERVICEMETERREADING as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="SERVICEMETERREADING" columnName="ECF_CLASS_ID"/>
+        </preConditions>
+        <comment>AHS-7316: DropColumn SERVICEMETERREADING.ECF_CLASS_ID</comment>
+        <dropColumn columnName="ECF_CLASS_ID" tableName="SERVICEMETERREADING"/>
+        <rollback>
+            <addColumn tableName="SERVICEMETERREADING">
+                <column name="ECF_CLASS_ID" type="VARCHAR(255)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="57eba777-f4ce-4761-9c82-29322dc4ae16" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored ChangeDataType for SERVICEMETERREADING.SMU as column does not exist" onFail="MARK_RAN">
+            <columnExists tableName="SERVICEMETERREADING" columnName="SMU"/>
+        </preConditions>
+        <comment>AHS-7316: ChangeDataType of SERVICEMETERREADING.SMU from FLOAT to DOUBLE</comment>
+        <modifyDataType columnName="SMU" newDataType="DOUBLE" tableName="SERVICEMETERREADING"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="286a7ad0-745c-4d38-a27a-93b7ee5991b0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for SERVICEMETERREADING.SMU as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="SERVICEMETERREADING" columnName="SMU"/>
+        </preConditions>
+        <comment>AHS-7316: AddNotNullConstraint to SERVICEMETERREADING.SMU</comment>
+        <sql>UPDATE SERVICEMETERREADING SET SMU = 0 WHERE SMU IS NULL</sql>
+        <addNotNullConstraint columnName="SMU" columnDataType="DOUBLE" tableName="SERVICEMETERREADING"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SERVICEMETERREADING" columnName="SMU" columnDataType="DOUBLE"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="894bd4e9-d1bc-46e3-a0fd-019ae2f9beed" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for SERVICEMETERREADING.READINGDATE_UTC as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="SERVICEMETERREADING" columnName="READINGDATE_UTC"/>
+        </preConditions>
+        <comment>AHS-7316: AddNotNullConstraint to SERVICEMETERREADING.READINGDATE_UTC</comment>
+        <sql>UPDATE SERVICEMETERREADING SET READINGDATE_UTC = '01-JAN-1970' WHERE READINGDATE_UTC IS NULL</sql>
+        <addNotNullConstraint columnName="READINGDATE_UTC" columnDataType="DATETIME2" tableName="SERVICEMETERREADING"/>
+        <rollback>
+            <dropNotNullConstraint tableName="SERVICEMETERREADING" columnName="READINGDATE_UTC" columnDataType="DATETIME2"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a062abb8-f54c-4a5f-a13a-dee3a7549e00" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SERVICEMETERREADING_UX1 to table SERVICEMETERREADING as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="SERVICEMETERREADING"/>
+            <not>
+                <indexExists indexName="SERVICEMETERREADING_UX1" tableName="SERVICEMETERREADING"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7316: CreateIndex SERVICEMETERREADING_UX1 on SERVICEMETERREADING (MACHINE,READINGDATE_UTC)</comment>
+        <sql dbms="oracle">DELETE FROM SERVICEMETERREADING WHERE ROWID IN (SELECT RID FROM (SELECT ROWID RID, ROW_NUMBER() OVER (PARTITION BY MACHINE, READINGDATE_UTC ORDER BY ROWID) RN FROM SERVICEMETERREADING) WHERE RN &lt;&gt; 1)</sql>
+        <sql dbms="mssql">WITH CTE AS (SELECT ROW_NUMBER() OVER (PARTITION BY MACHINE, READINGDATE_UTC ORDER BY %%physloc%%) AS ROW_NUM FROM SERVICEMETERREADING) DELETE FROM CTE WHERE ROW_NUM &gt; 1</sql>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="SERVICEMETERREADING" indexName="SERVICEMETERREADING_UX1">
+            <column name="MACHINE"/>
+            <column name="READINGDATE_UTC"/>
+        </createIndex>
+        <rollback>
+            <dropIndex tableName="SERVICEMETERREADING" indexName="SERVICEMETERREADING_UX1"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

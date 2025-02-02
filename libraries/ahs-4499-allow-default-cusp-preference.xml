@@ -1,0 +1,26 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+<changeSet id="b8277b8c-fdc2-4a03-877f-ef28f41ce37e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CUSP_PREFERENCE to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="CUSP_PREFERENCE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-4499 :  AddColumn PLAN_MODEL.CUSP_PREFERENCE</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="CUSP_PREFERENCE" type="INT" defaultValueNumeric="0"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2807d71e-f0a0-4389-b2b6-c19b6b2dfca3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ENFORCE_CUSP_PREFERENCE to table PLAN_MODEL as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <columnExists tableName="PLAN_MODEL" columnName="ENFORCE_CUSP_PREFERENCE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-4499 : AddColumn PLAN_MODEL.ENFORCE_CUSP_PREFERENCE</comment>
+        <addColumn tableName="PLAN_MODEL">
+            <column name="ENFORCE_CUSP_PREFERENCE" type="BOOLEAN" defaultValueBoolean="false"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

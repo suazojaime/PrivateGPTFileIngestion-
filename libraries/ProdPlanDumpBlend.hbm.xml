@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <!-- ****************************************************************************** -->
+    <!-- PlanDumpBlend -->
+    <!-- ****************************************************************************** -->
+    <class name="minestar.planmanagement.domain.v2.ProdPlanDumpBlend" table="PROD_PLAN_DUMP_BLEND" schema="model">
+        <meta attribute="index">
+            name=PLAN_OID
+            unique=false
+            columns=PLAN_OID
+        </meta>
+        <meta attribute="description">Store Plan Dump Blend details</meta>
+
+        <id name="OID" type="java.lang.Long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        
+        <property name="referenceId" type="java.lang.String" column="BLEND_REFERENCE_ID" not-null="true"/>
+
+        <many-to-one name="ref" 
+                     column="BLEND_OID"
+                     not-found="ignore"
+                     class="minestar.mine.domain.material.BlendReference">
+            <meta attribute="alias">blend</meta>
+        </many-to-one>
+        <property name="blendComputationMethod" column="MATERIAL_CONTROL_TYPE">
+            <meta attribute="description">Mass or Time control type</meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.domain.model.BlendComputationMethod</param>
+                <param name="type">12</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        <property name="controlMass" column="MATERIAL_CONTROL_MASS">
+            <meta attribute="unitType">mass</meta>
+            <meta attribute="description">Mass</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+        <property name="controlTime" column="MATERIAL_CONTROL_TIME">
+            <meta attribute="alias">time</meta>
+            <meta attribute="description">Time</meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <set name="materialBlends" table="PROD_PLAN_DUMP_BLEND_MATERIAL" cascade="all" fetch="select" sort="natural">
+            <meta attribute="collection-primary-key">
+                columns=DUMP_BLEND_OID,REFERENCE_ID
+            </meta>
+            <key column="DUMP_BLEND_OID" not-null="true" on-delete="cascade"/>
+            <composite-element class="minestar.planmanagement.domain.v2.ProdPlanDumpMaterialSpecification">
+                <property name="referenceId" type="java.lang.String" column="REFERENCE_ID" not-null="true"/>
+                <many-to-one name="ref" 
+                             column="MATERIAL_OID"
+                             not-found="ignore"
+                             class="minestar.machinetracking.domain.MaterialReference">
+                    <meta attribute="alias">material</meta>
+                </many-to-one>        
+                <property name="minPercentage"
+                           column="MIN_PERCENTAGE">
+                     <meta attribute="description">MIN Percentage</meta>
+                     <meta attribute="unitType">ratio</meta>
+                     <type name="quantity">
+                         <param name="unitType">ratio</param>
+                         <param name="nullable">true</param>
+                     </type>
+                 </property>      
+                <property name="maxPercentage"
+                           column="MAX_PERCENTAGE">
+                     <meta attribute="description">MAX Percentage</meta>
+                     <meta attribute="unitType">ratio</meta>
+                     <type name="quantity">
+                         <param name="unitType">ratio</param>
+                         <param name="nullable">true</param>
+                     </type>
+                 </property>      
+            </composite-element>
+        </set>
+
+        <property name="comments" column="COMMENTS" length="65536"/>
+
+    </class>
+
+</hibernate-mapping>

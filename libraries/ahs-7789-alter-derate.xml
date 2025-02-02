@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="fc52c693-172d-4d35-8649-d70c5f0c3049" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for DERATE.DISCRIMINATOR as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="DERATE" columnName="DISCRIMINATOR"/>
+        </preConditions>
+        <comment>AHS-7789: AddNotNullConstraint to DERATE.DISCRIMINATOR</comment>
+        <sql>UPDATE DERATE SET DISCRIMINATOR = 'DerateImpl' WHERE DISCRIMINATOR IS NULL</sql>
+        <addNotNullConstraint columnName="DISCRIMINATOR" columnDataType="VARCHAR(255)" tableName="DERATE"/>
+        <rollback>
+            <dropNotNullConstraint tableName="DERATE" columnName="DISCRIMINATOR" columnDataType="VARCHAR(255)"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

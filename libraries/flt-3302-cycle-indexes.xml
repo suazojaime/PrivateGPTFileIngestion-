@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="8cbc0fcb-f113-4926-a95d-365bf13209ff" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for ECF_CLASS_ID_IDX to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="ECF_CLASS_ID_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="ECF_CLASS_ID_IDX" tableName="CYCLE">
+            <column name="ECF_CLASS_ID"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="8c470263-21f4-4272-b73b-12f4bd003067" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for STARTTIME_UTC to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="CYCLE_STARTTIME_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="CYCLE_STARTTIME_IDX" tableName="CYCLE">
+            <column name="STARTTIME_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="cf1d204e-85fd-49e9-bf61-5471d05cd34c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for ENDTIME_UTC to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="CYCLE_ENDTIME" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="CYCLE_ENDTIME" tableName="CYCLE">
+            <column name="ENDTIME_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="f60d6c46-3f40-48f7-8e49-15270a918214" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PRIMARYMACHINE to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="PRIMARYMACHINE_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing</comment>
+        <createIndex tablespace="MW_IDXENT" indexName="PRIMARYMACHINE_IDX" tableName="CYCLE">
+            <column name="PRIMARYMACHINE"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="d2b9c087-ea76-49b2-9dae-70bbebcb806d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SECONDARYMACHINE to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="SECONDARYMACHINE_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="SECONDARYMACHINE_IDX" tableName="CYCLE">
+            <column name="SECONDARYMACHINE"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="0d4744b5-f174-4dd1-9cc9-dff9434629b7" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SOURCELOCATION to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="SOURCELOCATION_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="SOURCELOCATION_IDX" tableName="CYCLE">
+            <column name="SOURCELOCATION"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="ff726dee-ef74-48ea-840b-8c727a03b3a8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for SOURCEBLOCK to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="SOURCEBLOCK_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="SOURCEBLOCK_IDX" tableName="CYCLE">
+            <column name="SOURCEBLOCK"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+
+    <changeSet id="a8ebebf6-9341-45ca-932b-e35eeefc53af" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for ENDSINKBLOCK to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="ENDSINKBLOCK_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="ENDSINKBLOCK_IDX" tableName="CYCLE">
+            <column name="ENDSINKBLOCK"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="85cf4084-daa4-4c80-a21a-e861ae20e109" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for ENDSINKLOCATION to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="ENDSINKLOCATION_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="ENDSINKLOCATION_IDX" tableName="CYCLE">
+            <column name="ENDSINKLOCATION"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="f479ea6d-843f-4d2b-90c7-2063758a86a0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for ENDPROCESSOR to table CYCLE as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="ENDPROCESSOR_IDX" tableName="CYCLE"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="ENDPROCESSOR_IDX" tableName="CYCLE">
+            <column name="ENDPROCESSOR"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="f118f793-e405-4b76-9ecc-2664202dd9b0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for NAME to table CYCLEACTIVITYCOMPONENT as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="CYCLE_CMP_NAME_IDX" tableName="CYCLEACTIVITYCOMPONENT"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="CYCLE_CMP_NAME_IDX" tableName="CYCLEACTIVITYCOMPONENT">
+            <column name="NAME"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <!-- Remove badly named indexes if they exist -->
+    <changeSet id="fdac9b91-e12a-49bf-a92a-75f511a6a34f" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored drop index for CYCLE_CMP_STARTTIME_IDX." onFail="MARK_RAN">
+            <indexExists tableName="CYCLE" indexName="CYCLE_CMP_STARTTIME_IDX"/>
+        </preConditions>
+        <dropIndex tableName="CYCLE" indexName="CYCLE_CMP_STARTTIME_IDX" />
+        <rollback />
+    </changeSet>
+    <changeSet id="ea5430cc-bd39-4e88-8850-b7f5c1800aab" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored drop index for CYCLE_CMP_STARTTIME_IDX." onFail="MARK_RAN">
+            <indexExists tableName="CYCLE" indexName="CYCLE_CMP_ENDTIME_IDX"/>
+        </preConditions>
+        <dropIndex tableName="CYCLE" indexName="CYCLE_CMP_ENDTIME_IDX" />
+        <rollback />
+    </changeSet>
+
+    <changeSet id="4bad9e24-f58f-46d1-829c-9a604c55316e" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for STARTTIME_UTC to table CYCLEACTIVITYCOMPONENT as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="CYCLE_CMP_STARTTIME_IDX" tableName="CYCLEACTIVITYCOMPONENT"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="CYCLE_CMP_STARTTIME_IDX" tableName="CYCLEACTIVITYCOMPONENT">
+            <column name="START_TIME_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="7684839f-2761-40c8-b531-4cff305661c9" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for ENDTIME_UTC to table CYCLEACTIVITYCOMPONENT as index already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="CYCLE_CMP_ENDTIME_IDX" tableName="CYCLEACTIVITYCOMPONENT"/>
+            </not>
+        </preConditions>
+        <comment>FLT-3302 Improve cycle indexing </comment>
+        <createIndex tablespace="MW_IDXENT" indexName="CYCLE_CMP_ENDTIME_IDX" tableName="CYCLEACTIVITYCOMPONENT">
+            <column name="END_TIME_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

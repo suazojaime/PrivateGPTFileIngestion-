@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="6b19eb76-2969-46ef-9b00-431e218d93ae" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for IS_INTERMITTENT to table WATERING_CIRCUIT_LEG as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="WATERING_CIRCUIT_LEG"/>
+            <not>
+                <columnExists tableName="WATERING_CIRCUIT_LEG" columnName="IS_INTERMITTENT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3915: AddColumn WATERING_CIRCUIT_LEG.IS_INTERMITTENT</comment>
+        <addColumn tableName="WATERING_CIRCUIT_LEG">
+            <column name="IS_INTERMITTENT" type="BOOLEAN" remarks="Is intermittent watering to be performed on this circuit leg?"/>
+        </addColumn>
+        <sql>UPDATE WATERING_CIRCUIT_LEG SET IS_INTERMITTENT = 0</sql>
+        <addNotNullConstraint tableName="WATERING_CIRCUIT_LEG" columnName="IS_INTERMITTENT" columnDataType="BOOLEAN"/>
+        <rollback>
+            <dropColumn tableName="WATERING_CIRCUIT_LEG" columnName="IS_INTERMITTENT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="260fe2c5-792a-4459-943a-5277ba2c846b" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for DESIRED_SATURATION_ADJUSTMENT to table WATERING_CIRCUIT_LEG as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="WATERING_CIRCUIT_LEG"/>
+            <not>
+                <columnExists tableName="WATERING_CIRCUIT_LEG" columnName="DESIRED_SATURATION_ADJUSTMENT"/>
+            </not>
+        </preConditions>
+        <comment>MO-3915: AddColumn WATERING_CIRCUIT_LEG.DESIRED_SATURATION_ADJUSTMENT</comment>
+        <addColumn tableName="WATERING_CIRCUIT_LEG">
+            <column name="DESIRED_SATURATION_ADJUSTMENT" type="DOUBLE" remarks="A percentage adjustment to apply to the desired saturation level for this leg."/>
+        </addColumn>
+        <sql>UPDATE WATERING_CIRCUIT_LEG SET DESIRED_SATURATION_ADJUSTMENT = 0</sql>
+        <addNotNullConstraint tableName="WATERING_CIRCUIT_LEG" columnName="DESIRED_SATURATION_ADJUSTMENT" columnDataType="DOUBLE"/>
+        <rollback>
+            <dropColumn tableName="WATERING_CIRCUIT_LEG" columnName="DESIRED_SATURATION_ADJUSTMENT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="267039fc-6b6b-4802-919a-d2c9389bf0b1" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for SPRAY_HEAD_GROUPS to table WATERING_CIRCUIT_LEG as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="WATERING_CIRCUIT_LEG"/>
+            <not>
+                <columnExists tableName="WATERING_CIRCUIT_LEG" columnName="SPRAY_HEAD_GROUPS"/>
+            </not>
+        </preConditions>
+        <comment>MO-3915: AddColumn WATERING_CIRCUIT_LEG.SPRAY_HEAD_GROUPS</comment>
+        <addColumn tableName="WATERING_CIRCUIT_LEG">
+            <column name="SPRAY_HEAD_GROUPS" type="VARCHAR(255)" remarks="Comma-separated list of spray head group names"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

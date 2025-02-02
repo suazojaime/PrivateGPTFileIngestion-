@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">    <changeSet id="52fd55b0-4ab4-46cf-8f14-d7773d7de94c" author="MineStar" failOnError="false">
+    <preConditions onFailMessage="Ignored DropNotNullConstraint for SPOIL_PILE.MACHINE_OID as column does not exist or is already nullable" onFail="MARK_RAN">
+        <ext:columnIsNotNullable tableName="SPOIL_PILE" columnName="MACHINE_OID"/>
+    </preConditions>
+    <comment>AHS-10755 : DropNotNullConstraint from SPOIL_PILE.MACHINE_OID</comment>
+    <dropNotNullConstraint tableName="SPOIL_PILE" columnName="MACHINE_OID" columnDataType="BIGINT"/>
+</changeSet>
+</databaseChangeLog>

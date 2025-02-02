@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="e375824b-49b1-44b5-b865-bfdaaa629ac6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for TPS_EVENT as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="TPS_EVENT"/>
+        </preConditions>
+        <comment>AHS-11058: DropTable TPS_EVENT</comment>
+        <dropTable tableName="TPS_EVENT"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="cd95a3e9-57f2-4a8c-8d7f-62b451c17107" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for TPS_EVENT as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="TPS_EVENT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-11058: CreateTable TPS_EVENT</comment>
+        <createTable tablespace="MW_ENT" remarks="An event received from a truth positioning receiver." tableName="TPS_EVENT">
+            <column name="EVENT_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MACHINE_OID" type="BIGINT" remarks="The entity the event came from.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ARRIVAL_TIME_UTC" type="DATETIME2" remarks="The time the event arrived in the office."/>
+            <column name="TIMESTAMP_UTC" type="DATETIME2" remarks="The time the event was created.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SOURCE_TIMESTAMP_UTC" type="DATETIME2" remarks="The time the original source of the event says the event was created.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CODE" type="INT" remarks="Code to identify what happened">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OUTCOME" type="INT" remarks="Outcome of what happened"/>
+            <column name="ORIGINAL" type="VARCHAR(254)" remarks="The original text received from the TPS receiver."/>
+        </createTable>
+        <addPrimaryKey columnNames="EVENT_OID" constraintName="TPS_EVENT_PK" tablespace="MW_IDXENT" tableName="TPS_EVENT"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

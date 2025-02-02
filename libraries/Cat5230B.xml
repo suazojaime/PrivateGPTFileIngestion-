@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Shovel Classes">
+
+    <machineClass xsi:type="shovelClassImpl">
+        <name>Cat5230B</name>
+        <manufacturer>Caterpillar</manufacturer>
+        <description>Caterpillar 5230 B Series Shovel</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="5.33" unit="cubic metres"/>
+        <minimumRefuelAmount magnitude="0.00" unit="cubic metres"/>
+        <refuelLevel magnitude="0.533" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.2665" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="24.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000004" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.000062" unit="cubic metres per second"/>
+        <maximumSpeed magnitude="0.694444" unit="metres per second"/>
+        <dipperCapacity magnitude="0.00" unit="cubic metres"/>
+        <dipperLoadCapacity magnitude="17.00" unit="cubic metres"/>
+        <reachRadius magnitude="14.90" unit="metre"/>
+    </machineClass>
+
+</machineClassExport>

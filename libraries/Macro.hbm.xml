@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2018, Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.underground.macro.MacroImpl"
+           proxy="minestar.mine.domain.minemodel.underground.macro.Macro"
+           table="MACRO"
+           dynamic-update="true">
+
+        <meta attribute="alias" inherit="false">Macro</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">
+            A macro to store for Command for Underground.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=MACRO_GOAL_REF
+            unique=false
+            columns=GOAL_REF
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+                  type="java.lang.Long"
+                  column="OID">
+            <meta attribute="description">The unique, system-assigned identifier for this macro.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </id>
+
+        <property name="modelUpdateVersion"
+                  type="java.lang.Long"
+                  column="MODEL_UPDATE_VERSION">
+            <meta attribute="description">The is a copy of the system wide version number.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <property name="active"
+                  type="java.lang.Boolean"
+                  column="IS_ACTIVE"
+                  not-null="true">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">
+                Whether this macro is active or archived.
+                (This flag is '1' if it is active and '0' if archived.)
+            </meta>
+        </property>
+
+        <property name="name" type="string" column="NAME" length="254" not-null="true">
+            <meta attribute="description">The name of the macro.</meta>
+        </property>
+
+        <many-to-one name="machineClassRef" class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS" not-null="false">
+            <meta attribute="alias">machineClass</meta>
+        </many-to-one>
+
+        <property name="goalType"
+                  column="GOAL_TYPE">
+            <meta attribute="description">The type of goal being references DUMP, LOAD or INVERSION.</meta>
+
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.mine.domain.minemodel.underground.goal.GoalType</param>
+            </type>
+        </property>
+
+        <property name="goalRef"
+                  type="java.lang.Long"
+                  column="GOAL_REF">
+            <meta attribute="description">This is a reference to the associated goal.</meta>
+        </property>
+
+        <property name="macro" type="string" column="MACRO" length="4000" not-null="false">
+            <meta attribute="description">The macro code.</meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

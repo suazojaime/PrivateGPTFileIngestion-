@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="MineStar" id="ec22ecac-f59f-422c-82c4-37dbf7551519" context="Autonomy/Autonomy_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for gis_unobserved_cells as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="gis_unobserved_cells"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7390: Store information for unobserved cells in narrow area for use by ASP</comment>
+        <createTable tableName="gis_unobserved_cells">
+            <column autoIncrement="true" name="fid" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="gis_unobserved_cells_pkey"/>
+            </column>
+            <column name="MACHINE_ID" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFERENCE" type="INT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CELL_SIZE" type="FLOAT8"/>
+            <column name="GEOM" type="GEOMETRY(MultiPointZ, 0)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>
+            CREATE INDEX spatial_gis_unobserved_cells_geom
+            ON gis_unobserved_cells
+            USING gist
+            ("GEOM");
+        </sql>
+        <sql>ALTER TABLE gis_unobserved_cells SET (autovacuum_enabled = false, toast.autovacuum_enabled = false);</sql>
+        <sql>ALTER TABLE gis_unobserved_cells SET WITHOUT OIDS;</sql>
+        <rollback>
+            <dropTable tableName="gis_unobserved_cells"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="MineStar" id="ac0ff4dc-551f-430e-92c0-5272cb5bbda5" context="Autonomy/Autonomy_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for gis_region as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="gis_region"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7362: Store information for regions</comment>
+        <createTable tableName="gis_region">
+            <column autoIncrement="true" name="fid" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="gis_region_pkey"/>
+            </column>
+            <column name="OID_REF" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GEOM" type="GEOMETRY(PolygonZ, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_NARROW" type="BOOL">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>
+            CREATE INDEX spatial_gis_region_geom
+            ON gis_region
+            USING gist
+            ("GEOM");
+        </sql>
+        <rollback>
+            <dropTable tableName="gis_region"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="05d4820b-cb1a-4fc5-a7b0-ef0a7a028b0d" context="Autonomy/Autonomy_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_DRIVE_BEHAVIOR_REGION to table gis_region as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_region"/>
+            <not>
+                <columnExists tableName="gis_region" columnName="IS_DRIVE_BEHAVIOR_REGION"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7429 AddColumn IS_DRIVE_BEHAVIOR_REGION to table gis_region</comment>
+        <addColumn tableName="gis_region">
+            <column name="IS_DRIVE_BEHAVIOR_REGION" type="BOOL" defaultValueBoolean="false"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="413fdefa-a707-48a2-8139-81687c7bf537" context="Autonomy/Autonomy_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for GEAR_LIMIT to table gis_region as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_region"/>
+            <not>
+                <columnExists tableName="gis_region" columnName="GEAR_LIMIT"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7429 AddColumn GEAR_LIMIT to table gis_region</comment>
+        <addColumn tableName="gis_region">
+            <column name="GEAR_LIMIT" type="INT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="37cf563f-475d-47f9-b728-5fa44bdbe74d" context="Autonomy/Autonomy_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_HIGH_RIMPULL_MODE to table gis_region as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_region"/>
+            <not>
+                <columnExists tableName="gis_region" columnName="IS_HIGH_RIMPULL_MODE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7429 AddColumn IS_HIGH_RIMPULL_MODE to table gis_region</comment>
+        <addColumn tableName="gis_region">
+            <column name="IS_HIGH_RIMPULL_MODE" type="BOOL"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="061e9a4e-6af4-44e1-8a62-f167d23c22dc" context="Autonomy/Autonomy_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_PERCEPTION_DETUNED to table gis_region as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_region"/>
+            <not>
+                <columnExists tableName="gis_region" columnName="IS_PERCEPTION_DETUNED"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7429 AddColumn IS_PERCEPTION_DETUNED to table gis_region</comment>
+        <addColumn tableName="gis_region">
+            <column name="IS_PERCEPTION_DETUNED" type="BOOL"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="9b4456bb-90ba-4afa-9766-bec902a9be14" context="Autonomy/Autonomy_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_AREA_DNETS to table gis_region as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_region"/>
+            <not>
+                <columnExists tableName="gis_region" columnName="IS_AREA_DNETS"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7429 AddColumn IS_AREA_DNETS to table gis_region</comment>
+        <addColumn tableName="gis_region">
+            <column name="IS_AREA_DNETS" type="BOOL"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="50800fcf-9fa0-4ca5-a1c4-cb6428aed28f" context="Autonomy/Autonomy_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_PATH_INDEXING_ALLOWED to table gis_region as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_region"/>
+            <not>
+                <columnExists tableName="gis_region" columnName="IS_PATH_INDEXING_ALLOWED"/>
+            </not>
+        </preConditions>
+        <comment>AHS-7429 AddColumn IS_PATH_INDEXING_ALLOWED to table gis_region</comment>
+        <addColumn tableName="gis_region">
+            <column name="IS_PATH_INDEXING_ALLOWED" type="BOOL"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="b285e90c-6b78-494a-977f-7e3d0d45eef3" context="Autonomy/Autonomy_Management" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for IS_SPEED_CONTROL_MODE to table gis_region as column already exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_region"/>
+            <not>
+                <columnExists tableName="gis_region" columnName="IS_SPEED_CONTROL_MODE"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10853 AddColumn IS_SPEED_CONTROL_MODE to table gis_region</comment>
+        <addColumn tableName="gis_region">
+            <column name="IS_SPEED_CONTROL_MODE" type="BOOL"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="f43f967f-fdef-460f-aa21-c688bfc629c8" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for WDS_DETAILS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="WDS_DETAILS"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12745: CreateTable WDS_DETAILS</comment>
+        <createTable tableName="WDS_DETAILS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TANK_CAPACITY" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TANK_FULL_THRESHOLD" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TANK_EMPTY_THRESHOLD" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="WDS_DETAILS_PK" tableName="WDS_DETAILS"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="cdcfb35a-3eb8-4413-b9cd-d3aa9aa571f5" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for WDS_DETAILS_OID_FK to table WDS_DETAILS as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="WDS_DETAILS" columnName="OID"/>
+            <columnExists tableName="MACHINECLASS" columnName="MACHINECLASS_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="WDS_DETAILS" foreignKeyName="WDS_DETAILS_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12745: AddForeignKeyConstraint WDS_DETAILS_OID_FK to WDS_DETAILS (OID)</comment>
+        <sql>DELETE FROM WDS_DETAILS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINECLASS WHERE MACHINECLASS.MACHINECLASS_OID = WDS_DETAILS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="WDS_DETAILS" baseColumnNames="OID" constraintName="WDS_DETAILS_OID_FK" referencedTableName="MACHINECLASS" referencedColumnNames="MACHINECLASS_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="WDS_DETAILS" constraintName="WDS_DETAILS_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

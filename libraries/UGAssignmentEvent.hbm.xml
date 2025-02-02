@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <subclass name="minestar.mine.domain.minemodel.underground.event.UGAssignmentEvent"
+              extends="minestar.assignment.domain.event.AssignmentEvent"
+              discriminator-value="UGAssignment">
+        <meta attribute="description">An event from the underground draw card-based underground assignment engine</meta>
+
+        <property name="missionID"
+                  type="java.lang.Long"
+                  column="MISSION_ID"
+                  access="field">
+            <meta attribute="description">Unique identifier of mission</meta>
+        </property>
+
+        <property name="assignmentType"
+                  type="minestar.assignment.service.underground.AssignmentEnumUserType"
+                  column="ASSIGNMENT_TYPE"
+                  length="254"
+                  access="field">
+            <meta attribute="description">Type of assignment it related to, e.g. loading/dumping</meta>
+        </property>
+
+        <property name="missionStatus"
+                  type="minestar.assignment.service.underground.MissionStatusEnumUserType"
+                  column="MISSION_STATUS"
+                  access="field">
+            <meta attribute="description">Mission status, e.g. NotStart/ArrivedAtFinal/Commenced/Completed/Error</meta>
+        </property>
+
+        <property name="finalGoalName"
+                  type="java.lang.String"
+                  column="FINAL_GOAL_NAME"
+                  access="field">
+            <meta attribute="description">The name of the final load/dump goal.</meta>
+        </property>
+
+        <property name="reason"
+                  type="java.lang.String"
+                  column="REASON"
+                  length="254"
+                  access="field">
+            <meta attribute="description">The reason for event.</meta>
+        </property>
+
+        <property name="ugAssignmentContext"
+                  type="text"
+                  column="UG_ASSIGNMENT_CONTEXT"
+                  access="field">
+            <meta attribute="description">Underground underground assignment context</meta>
+        </property>
+    </subclass>
+
+</hibernate-mapping>

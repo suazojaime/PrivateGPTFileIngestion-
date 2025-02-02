@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+    <!-- must have this -->
+    <bean id="personUCCImpl" class="minestar.mine.uifacade.person.impl.PersonUCCImpl"
+          lazy-init="true">
+        <property name="notification" ref="notification"/>
+        <property name="personnelService" ref="personnelServiceImpl"/>
+        <property name="publisher" ref="updatePublisher"/>
+        <property name="userContext" ref="userContextImpl"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerPersonUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Person UCC"/>
+        <constructor-arg value="minestar.mine.uifacade.person.PersonUCCFacade"/>
+        <constructor-arg ref="personUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="personUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="personUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="personUCC"/>
+        <property name="service" ref="personUCCProxy"/>
+        <property name="serviceInterface" value="minestar.mine.uifacade.person.PersonUCCFacade"/>
+    </bean>
+
+</beans>

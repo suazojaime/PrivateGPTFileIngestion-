@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="CommandProxyClassNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Command Proxy Class Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open Class" value="Command Proxy Class Editor"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Command Proxy Class Editor"/>
+    </bean>
+
+    <bean id="CommandProxyNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Command Proxy Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Command Proxy Editor"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Command Proxy Editor"/>
+    </bean>
+
+    <bean id="UndergroundShiftChangeNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Underground Shift Change Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Underground Shift Change Editor"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="UndergroundShiftChangeSummaryNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Underground Shift Change Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Underground Shift Change Editor"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="AreaMapNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Area Map Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Area Map Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Area Map Editor"/>
+    </bean>
+
+    <bean id="AreaMapEditNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Area Map Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Area Map Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Area Map Editor"/>
+    </bean>
+
+    <bean id="ChuteHazardStatusNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Chute Status Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Chute Status Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Chute Status Editor"/>
+    </bean>
+
+    <bean id="DrawPointNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Draw Point Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Draw Point Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Edit Mining Block" value="Mining Block Editor"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Draw Point Editor"/>
+    </bean>
+
+    <bean id="DrawPointEditNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Draw Point Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Draw Point Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Edit Mining Block" value="Mining Block Editor"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Draw Point Editor"/>
+    </bean>
+
+    <bean id="DisplayableDrawPointNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Draw Point Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Draw Point Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Edit Mining Block" value="Mining Block Editor"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Draw Point Editor"/>
+    </bean>
+
+    <bean id="DrawPointStatusNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Draw Point Status Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Draw Point Status Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Draw Point Status Editor"/>
+    </bean>
+
+    <bean id="DrawPointOperatingStatusNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Draw Point Operating Status Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Draw Point Operating Status Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Draw Point Operating Status Editor"/>
+    </bean>
+
+    <bean id="DumpGoalEditNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Dump Goal Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Dump Goal Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Dump Goal Editor"/>
+    </bean>
+
+    <alias name="DisplayableDumpGoalNavigation" alias="DumpGoalNavigation"></alias>
+
+    <bean id="DisplayableDumpGoalNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Dump Goal Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Dump Goal Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Dump Goal Editor"/>
+    </bean>
+
+    <alias name="DisplayableInversionGoalNavigation" alias="InversionGoalNavigation"></alias>
+
+    <bean id="DisplayableInversionGoalNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Inversion Goal Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Inversion Goal Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Inversion Goal Editor"/>
+    </bean>
+
+    <bean id="InversionGoalEditNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Inversion Goal Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Inversion Goal Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Inversion Goal Editor"/>
+    </bean>
+
+    <bean id="OrePassNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Ore Pass Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Ore Pass Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Ore Pass Editor"/>
+    </bean>
+
+    <bean id="OrePassEditNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Ore Pass Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Ore Pass Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Ore Pass Editor"/>
+    </bean>
+
+    <bean id="OrePassOperatingStatusNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Ore Pass Operating Status Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Ore Pass Operating Status Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Ore Pass Operating Status Editor"/>
+    </bean>
+
+    <bean id="PinNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Pin Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Pin Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Pin Editor"/>
+    </bean>
+
+
+    <bean id="SignNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Sign Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Sign Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Sign Editor"/>
+    </bean>
+
+    <bean id="ConfigStoreNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Config Store Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Config Store Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Sign Editor"/>
+    </bean>
+    <bean id="UndergroundAreaNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Underground Area Editor"/>
+        <property name="defaultEditor" value="Underground Area Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Underground Area Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="DisplayableUndergroundAreaNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Underground Area Editor"/>
+        <property name="defaultEditor" value="Underground Area Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Underground Area Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="UndergroundAreaOperatingStatusNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Underground Area Operating Status Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Underground Area Operating Status Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Underground Area Operating Status Editor"/>
+    </bean>
+
+    <bean id="DrawCardEntryListNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Quick View"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Assign Truck" value="LHD Draw Card Assignment"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="PositionOfInterestNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Position of Interest Editor"/>
+        <property name="defaultEditor" value="Position of Interest Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Position of Interest Editor"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="RouteNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Route Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Route Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Route Editor"/>
+    </bean>
+
+    <bean id="AIMSAreaNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="AIMS Area Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="AIMS Area Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="AIMS Area Editor"/>
+    </bean>
+
+    <bean id="UndergroundAIMSEntryEditNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="AIMS Entry Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="AIMS Entry Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="AIMS Entry Editor"/>
+    </bean>
+
+    <bean id="UndergroundAIMSEntryNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="AIMS Entry Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="AIMS Entry Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="AIMS Entry Editor"/>
+    </bean>
+
+    <bean id="WallNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Wall Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Wall Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Wall Editor"/>
+    </bean>
+
+    <bean id="UGZoneNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Zone Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="Zone Editor"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="UGAssignmentEventNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="LHD Assignment Context"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="LHD Assignment Context" value="LHD Assignment Context"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="ExternalSystemTokenNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="External System Token Editor"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open" value="External System Token Editor"/>
+                <entry key="--" value="-"/>
+                <entry key="Archive" value="Archive Assistant"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="listmenus">
+            <map>
+                <entry key="Archive" value="Archive Assistant"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="External System Token Editor"/>
+    </bean>
+
+    <bean id="RockBreakerNavigation" class="com.mincom.jive.menu.popup.JiveObjectNavigation">
+        <property name="defaultViewer" value="Rock Breaker Assistant"/>
+        <property name="objectmenus">
+            <map>
+                <entry key="Open Assistant" value="Rock Breaker Assistant"/>
+                <entry key="Open" value="Rock Breaker Editor"/>
+                <entry key="Open Class" value="Rock Breaker Class Editor"/>
+                <entry key="-" value="-"/>
+                <entry key="Quick View" value="Quick View"/>
+            </map>
+        </property>
+        <property name="defaultEditor" value="Rock Breaker Editor"/>
+    </bean>
+
+</beans>

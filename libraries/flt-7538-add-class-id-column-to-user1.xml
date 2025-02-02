@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="c3b00c40-f246-4bcc-afa5-0979001e3526" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for CLASS_ID to table USER1 as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="USER1"/>
+            <not>
+                <columnExists tableName="USER1" columnName="CLASS_ID"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7538: AddColumn USER1.CLASS_ID</comment>
+        <addColumn tableName="USER1">
+            <column name="CLASS_ID" type="VARCHAR(254)" value="MineStarUser"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="a93d527e-549b-4ce5-9a9c-5e3789f718f2" author="MineStar" failOnError="false">
+        <!-- This changeset was modified after creation - trust the new checksum -->
+        <validCheckSum>8:b512437747dc341426bb133572dba563</validCheckSum>
+        <preConditions
+                onFailMessage="Ignored DropIndex for USER1_USERID_CLASS_ID to table USER1 as (1) table does not exist, or (2) index already exists."
+                onFail="MARK_RAN">
+                <indexExists indexName="USER1_USERID_CLASS_ID" tableName="USER1"/>
+        </preConditions>
+        <comment>FLT-7538: Drop UniqueFilteredIndex USER1_USERID_CLASS_ID on USER1 (USERID,CLASS_ID)</comment>
+        <dropIndex indexName="USER1_USERID_CLASS_ID" tableName="USER1"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+        <modifySql applyToRollback="true" dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="311a5688-a3d4-4fc2-aa10-ba9c71e88551" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for RESETPWD of table LOGIN as column does not exist."
+                       onFail="MARK_RAN">
+            <columnExists tableName="LOGIN" columnName="RESETPWD"/>
+        </preConditions>
+        <comment>FLT-7538: DropColumn LOGIN.RESETPWD</comment>
+        <dropColumn columnName="RESETPWD" tableName="LOGIN"/>
+        <rollback>
+            <addColumn tableName="LOGIN">
+                <column name="RESETPWD" type="BOOLEAN" defaultValueBoolean="false">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="4a0ef7b7-9093-49b1-8385-49420c5dd83d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddDefaultValue for USER1.PASSWORDRESET as column does not exist"
+                       onFail="MARK_RAN">
+            <columnExists tableName="USER1" columnName="PASSWORDRESET"/>
+        </preConditions>
+        <comment>FLT-7538: AddDefaultValue '0' to USER1.PASSWORDRESET</comment>
+        <addDefaultValue columnName="PASSWORDRESET" columnDataType="BOOLEAN" defaultValueBoolean="false"
+                         tableName="USER1"/>
+    </changeSet>
+    <changeSet id="02ac6ec8-a66e-4c77-843d-7fef16f02a0a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for USER1_USERID of table USER1 as index does not exist."
+                       onFail="MARK_RAN">
+            <indexExists indexName="USER1_USERID" tableName="USER1"/>
+        </preConditions>
+        <comment>FLT-7538: DropIndex USER1_USERID from USER1 (USERID)</comment>
+        <dropIndex tableName="USER1" indexName="USER1_USERID"/>
+        <rollback>
+            <createIndex unique="true" tablespace="MW_IDXENT" indexName="USER1_USERID" tableName="USER1">
+                <column name="USERID"/>
+            </createIndex>
+        </rollback>
+        <modifySql applyToRollback="true" dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="47aa3cfa-570a-4a5f-af98-86f20f9d8548" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored CreateUniqueFilteredIndex for USER1_USERID_CLASS_ID to table USER1 as (1) table does not exist, or (2) index already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="USER1"/>
+            <not>
+                <indexExists indexName="USER1_USERID_CLASS_ID" tableName="USER1"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7538: CreateUniqueFilteredIndex USER1_USERID_CLASS_ID on USER1 (USERID,CLASS_ID)</comment>
+        <ext:createFilteredIndex filter="CLASS_ID IS NOT NULL" unique="true" tablespace="MW_IDXENT"
+                                 indexName="USER1_USERID_CLASS_ID" tableName="USER1">
+            <column name="USERID"/>
+            <column name="CLASS_ID"/>
+        </ext:createFilteredIndex>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

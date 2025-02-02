@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="9246040d-7389-411b-bd84-05bda1be3c6a" author="MineStar" failOnError="true">
+        <comment>AHS-1263 Remove intensity options for the HeadLight script element</comment>
+	    <sql>update accessory_controls set headlight_mode = 'ON' where headlight_mode in ('LOW','HIGH_BEAM')</sql>
+        <rollback>
+            <sql>update accessory_controls set headlight_mode = 'LOW' where headlight_mode = 'ON'</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

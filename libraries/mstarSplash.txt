@@ -1,0 +1,36 @@
+# MineStar splashscreen creation/modification notes 
+
+The original images used to create the splashscreen are:
+a) MineStarLogo-WhiteOnBlack.jpg - the MineStar logo, and
+b) TECHSCAN.jpg - an artistic depiction of a MineStar managed 
+	mine (the original image is in tif format)
+
+# Repository location
+
+- All files are stored in:
+	\java\res\com\mincom\gallery\splashscreen\...
+
+# Editing instructions
+
+- mstarSplash.psp is the splashscreen source image file; 
+	created using PaintShop Pro v5.03
+- Editing of text is performed by actually replacing the text 
+	frames with new ones
+- Graphics are in a single layer 
+- Version text is BinnerD, regular, 22 pt, RGB = 255,175,0 
+	(ie CAT yellow)
+- CopyRight text is Abadi MT Condensed, regular, 10 pt
+
+# Splashscreen generation instructions
+
+- 'Save Copy As' CompuServer GIF; name: minestar_8bit.gif
+- This is for Windows colour palette setting = 256
+- This is the only image used currently by MineStar Explorer
+
+- 'Save Copy As' JPEG; name: minestar_24bit.jpg
+- This is for Windows colour palette setting > 256 
+- This is not currently supported by MineStar Explorer
+
+# Update the repository
+
+- Replace the old versions in the repository 

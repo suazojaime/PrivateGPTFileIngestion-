@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="336897bf-9e05-4f80-80cf-bde5bcd43c0c" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored table update as values already exist" onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">select count(*) from gradeblock where createtime_utc is not null</sqlCheck>
+        </preConditions>
+        <comment>4.5 Updating createtime_utc values</comment>
+        <sql>update GRADEBLOCK set createtime_utc = miningstart_utc where miningstart_utc is not null and createtime_utc is null</sql>
+        <sql>update GRADEBLOCK set createtime_utc = CURRENT_TIMESTAMP where miningstart_utc is null and createtime_utc is null</sql>
+        <rollback/>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="08cbeb10-bf8b-4cf6-92da-5f1dd153284e" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored adding table default for column CREATETIME_UTC" onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK"/>
+        </preConditions>
+        <addDefaultValue tableName="GRADEBLOCK" columnName="CREATETIME_UTC" defaultValueComputed="CURRENT_TIMESTAMP"/>
+    </changeSet>
+
+    <changeSet id="9b4faf00-6746-499a-9aec-349f87dc8ef1" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <dropDefaultValue tableName="GRADEBLOCK" columnName="CREATETIME_UTC"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="fc418a3b-f555-4790-aae3-35afe843ab07" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored adding index GRADEBLOCK_IS_ACTIVE_IDX for column IS_ACTIVE" onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK"/>
+            <not>
+                <indexExists tableName="GRADEBLOCK" indexName="GRADEBLOCK_IS_ACTIVE_IDX"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="GRADEBLOCK" unique="false" tablespace="MW_IDXENT" indexName="GRADEBLOCK_IS_ACTIVE_IDX">
+            <column name="IS_ACTIVE"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="e09160eb-e96a-4677-93b9-8176d935bcae" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored adding index GRADEBLOCK_CREATETIME_UTC_IDX for column CREATETIME_UTC" onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK"/>
+            <not>
+                <indexExists tableName="GRADEBLOCK" indexName="GRADEBLOCK_CREATETIME_UTC_IDX"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="GRADEBLOCK" unique="false" tablespace="MW_IDXENT" indexName="GRADEBLOCK_CREATETIME_UTC_IDX">
+            <column name="CREATETIME_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="0a46fdcb-ebb7-48fd-b564-29aa519806aa" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for MACHINECLASS.CATEGORY as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="MACHINECLASS" columnName="CATEGORY"/>
+        </preConditions>
+        <comment>AHS-3863: AddNotNullConstraint to MACHINECLASS.CATEGORY</comment>
+        <addNotNullConstraint columnName="CATEGORY" columnDataType="BIGINT" tableName="MACHINECLASS"/>
+    </changeSet>
+</databaseChangeLog>

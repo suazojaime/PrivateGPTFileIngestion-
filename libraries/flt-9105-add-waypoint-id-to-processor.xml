@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+                   objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+
+    <changeSet id="5170aa19-b66b-4fe5-b267-bd7b4a36dee5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored Add column waypoint_id to table gis_processor as table does not exist or column exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_processor"/>
+            <not>
+                <columnExists tableName="gis_processor" columnName="waypoint_id"/>
+            </not>
+        </preConditions>
+        <comment>FLT-9105: Add column waypoint_id to gis_processor</comment>
+        <addColumn tableName="gis_processor">
+            <column name="waypoint_id" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="11c977e7-bbbc-4ac5-adc0-13005a309ae3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored Add column waypoint_oid to table gis_processor as table does not exist or column exists." onFail="MARK_RAN">
+            <tableExists tableName="gis_processor"/>
+            <not>
+                <columnExists tableName="gis_processor" columnName="waypoint_oid"/>
+            </not>
+        </preConditions>
+        <comment>FLT-9105: Add column waypoint_oid to gis_processor</comment>
+        <addColumn tableName="gis_processor">
+            <column name="waypoint_oid" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

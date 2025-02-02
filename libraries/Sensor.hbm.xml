@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.machinetracking.domain.sensor.SensorImpl"
+           proxy="minestar.machinetracking.domain.sensor.Sensor"
+           table="SENSOR">
+
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">The details of a sensor hardware component.</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="SENSOR_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="SENSOR_TYPE" type="java.lang.String"/>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="NAME">
+            <meta attribute="description">The unique, user-entered identifier of this sensor.</meta>
+        </property>
+
+        <property name="active"
+                  type="java.lang.Boolean"
+                  column="IS_ACTIVE">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">
+                Whether this sensor is archived or active.
+                (This flag is '1' if it is active and '0' if archived.)
+            </meta>
+        </property>
+
+        <property name="model"
+                  type="java.lang.String"
+                  column="MODEL">
+            <meta attribute="description">The manufacturer's model identifier of this sensor.</meta>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  type="java.lang.Long"
+                  column="MODEL_UPDATE_VERSION">
+            <meta attribute="description">The is a copy of the system wide version number.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <component name="offboardDetails" class="minestar.machinetracking.domain.sensor.OffboardSensorDetails">
+
+            <property name="position"
+                      type="XYZCoordinate">
+                <meta attribute="description">The position that the sensor is placed in the mine.</meta>
+
+                <column name="POSITION_X"/>
+                <column name="POSITION_Y"/>
+                <column name="POSITION_Z"/>
+            </property>
+
+        </component>
+
+        <component name="onboardDetails" class="minestar.machinetracking.domain.sensor.OnboardSensorDetails">
+
+            <many-to-one name="machine"
+                         class="minestar.pitlink.domain.machine.MachineReference"
+                         column="MACHINE">
+                <meta attribute="description">A reference to the machine that this sensor is attached to.</meta>
+            </many-to-one>
+
+            <property name="relativePosition"
+                      type="minestar.machinetracking.domain.sensor.OnboardSensorPositionEnumUserType"
+                      column="RELATIVE_POSITION">
+                <meta attribute="description">
+                    The relative position of the sensor on the machine. Used to distinguish multiple sensors of the same
+                    type that are attached to a machine.
+                </meta>
+            </property>
+
+            <property name="address"
+                      type="java.lang.String"
+                      column="COMMS_URL">
+                <meta attribute="description">
+                    The IP address that the onboard software can use to communicate with this sensor.
+                </meta>
+            </property>
+
+        </component>
+
+        <subclass name="minestar.machinetracking.domain.sensor.LightCurtainImpl"
+                  proxy="minestar.machinetracking.domain.sensor.LightCurtain"
+                  discriminator-value="LightCurtain">
+        </subclass>
+
+        <subclass name="minestar.machinetracking.domain.sensor.OnboardSensorImpl"
+                  proxy="minestar.machinetracking.domain.sensor.OnboardSensor"
+                  discriminator-value="OnboardSensor">
+            <meta attribute="description">A sensor that is attached to a machine.</meta>
+
+            <subclass name="minestar.machinetracking.domain.sensor.ArticulationSensorImpl"
+                      proxy="minestar.machinetracking.domain.sensor.ArticulationSensor"
+                      discriminator-value="ArticulationSensor">
+                <meta attribute="description">
+                    A sensor on an articulated truck that can determine the angle of the front half of the truck in
+                    relation to the second half.
+                </meta>
+            </subclass>
+
+            <subclass name="minestar.machinetracking.domain.sensor.GroundSpeedSensorImpl"
+                      proxy="minestar.machinetracking.domain.sensor.GroundSpeedSensor"
+                      discriminator-value="GroundSpeedSensor">
+                <meta attribute="description">
+                    A sensor that can determine the speed at which a machine is moving relative to the ground.
+                </meta>
+            </subclass>
+
+            <subclass name="minestar.machinetracking.domain.sensor.LIDARImpl"
+                      proxy="minestar.machinetracking.domain.sensor.LIDAR"
+                      discriminator-value="LIDAR">
+                <meta attribute="description">
+                    A sensor that can measure distance to a target by illuminating it with a laser beam and analysing
+                    the reflected light.
+                </meta>
+            </subclass>
+        </subclass>
+
+        <subclass name="minestar.machinetracking.domain.sensor.SwitcheableSensorImpl"
+                  proxy="minestar.machinetracking.domain.sensor.SwitcheableSensor"
+                  discriminator-value="SwitcheableSensor">
+            <meta attribute="description">A sensor that can be attached to a machine or a mine wall.</meta>
+
+            <subclass name="minestar.machinetracking.domain.sensor.RFRNodeImpl"
+                      proxy="minestar.machinetracking.domain.sensor.RFRNode"
+                      discriminator-value="RFRNode">
+                <meta attribute="description">
+                    A RFR (Radio Frequency Ranging) node - a sensor that can measure distance to other nodes through
+                    the exchange of radio signals.
+                </meta>
+
+                <property name="nodeID"
+                          type="java.lang.Long"
+                          column="NODE_ID">
+                    <meta attribute="description">The MAC address of the RFR node.</meta>
+                </property>
+
+                <property name="antennaModel"
+                          type="java.lang.String"
+                          column="ANTENNA_MODEL">
+                    <meta attribute="description">The manufacturer's model identifier of the antenna on this
+                        RFR node.</meta>
+                </property>
+            </subclass>
+        </subclass>
+    </class>
+
+
+    <!-- ****************************************************************************** -->
+    <!-- SensorReference, used by ReferenceMonitorService to reload hibernate cache -->
+    <!-- ****************************************************************************** -->
+    <class name="minestar.machinetracking.domain.sensor.SensorReference"
+           table="SENSOR"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">SENSOR_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a sensor.</meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="SENSOR_OID"/>
+        <property name="name" type="string" column="NAME" length="254" not-null="true"/>
+    </class>
+
+</hibernate-mapping>

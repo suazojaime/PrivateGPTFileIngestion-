@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="minestar.pitlink.domain.machine.Capacity" table="ALU_CAPACITY_PROPERTIES"  discriminator-value="XAEntity.Capacity">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">A grouping of capacity properties.</meta>
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <meta attribute="index">
+            name=ALU_CAPACITY_UNQ
+            columns=MACHINE_OID
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="foreign-key">
+            on-delete=CASCADE
+        </meta>
+
+
+        <id name="OID" type="java.lang.Long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one name="machineRef" column="MACHINE_OID" class="minestar.pitlink.domain.machine.MachineReference">
+            <meta attribute="alias">machine</meta>
+        </many-to-one>
+
+
+        <property name="bay" type="java.lang.Integer" column="BAY" >
+            <meta attribute="description">Number of the Bay</meta>
+        </property>
+        <property name="bayId" type="java.lang.Integer" column="BAYID" >
+            <meta attribute="description">Id of the Bay</meta>
+        </property>
+
+        <property name="maximumMass" type="java.lang.Integer" column="MAXIMUMMASS">
+            <meta attribute="description">Maximum mass of the Bay</meta>
+        </property>
+
+        <property name="criticalLevel" type="java.lang.Integer" column="CRITICALLEVEL">
+            <meta attribute="description">Critical Level Percentage of the Bay</meta>
+        </property>
+
+        <property name="warningLevel" type="java.lang.Integer" column="WARNINGLEVEL">
+            <meta attribute="description">Warning Level Percentage of the Bay</meta>
+        </property>
+        <property name="active" type="boolean" column="IS_ACTIVE" not-null="true">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Is this Cable Bridge active</meta>
+        </property>
+    </class>
+</hibernate-mapping>

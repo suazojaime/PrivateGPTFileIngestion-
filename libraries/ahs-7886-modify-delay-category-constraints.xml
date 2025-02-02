@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="6bee02a3-3544-47b2-9502-06da9edfa4ee" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropDefaultValue for DELAYCATEGORY.NAME as column does not exist or column does not have a default value" onFail="MARK_RAN">
+            <ext:columnHasDefaultValue tableName="DELAYCATEGORY" columnName="NAME"/>
+        </preConditions>
+        <comment>AHS-7886: DropDefaultValue 'UNKNOWN' from DELAYCATEGORY.NAME</comment>
+        <dropDefaultValue columnName="NAME" columnDataType="VARCHAR(255)" tableName="DELAYCATEGORY"/>
+        <rollback>
+            <addDefaultValue columnName="NAME" columnDataType="VARCHAR(255)" defaultValue="UNKNOWN" tableName="DELAYCATEGORY"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

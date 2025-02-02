@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="2f0b7579-a377-481b-849b-5cbf69b21219" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for COLOUR of table DELAYCATEGORY as column does not exist or column is already not nullable" onFail="MARK_RAN">
+            <columnExists tableName="DELAYCATEGORY" columnName="COLOUR"/>
+            <ext:columnIsNullable tableName="DELAYCATEGORY" columnName="COLOUR"/>
+        </preConditions>
+        <comment>AHS-2230: AlterColumn DELAYCATEGORY.COLOUR - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="COLOUR" defaultNullValue="0" columnDataType="INT" tableName="DELAYCATEGORY"/>
+    </changeSet>
+
+    <changeSet id="b1843273-d056-4635-badd-89781c1cc096" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for BOLD of table DELAYCATEGORY as column does not exist or column is already not nullable" onFail="MARK_RAN">
+            <columnExists tableName="DELAYCATEGORY" columnName="BOLD"/>
+            <ext:columnIsNullable tableName="DELAYCATEGORY" columnName="BOLD"/>
+        </preConditions>
+        <comment>AHS-2230: AlterColumn DELAYCATEGORY.BOLD - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="BOLD" defaultNullValue="0" columnDataType="BOOLEAN" tableName="DELAYCATEGORY"/>
+    </changeSet>
+
+    <changeSet id="a2f194ea-8d7e-4e92-a785-849749839433" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for ITALIC of table DELAYCATEGORY as column does not exist or column is already not nullable" onFail="MARK_RAN">
+            <columnExists tableName="DELAYCATEGORY" columnName="ITALIC"/>
+            <ext:columnIsNullable tableName="DELAYCATEGORY" columnName="ITALIC"/>
+        </preConditions>
+        <comment>AHS-2230: AlterColumn DELAYCATEGORY.ITALIC - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="ITALIC" defaultNullValue="0" columnDataType="BOOLEAN" tableName="DELAYCATEGORY"/>
+    </changeSet>
+
+</databaseChangeLog>

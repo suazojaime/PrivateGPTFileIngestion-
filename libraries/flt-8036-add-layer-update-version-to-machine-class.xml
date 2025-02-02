@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="d753b220-08f2-44ac-924a-7ad241ac68db" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table MACHINECLASS as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <columnExists tableName="MACHINECLASS" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8036: AddColumn MACHINECLASS.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="MACHINECLASS">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0" remarks="The layer update version when the fuel or lube type was created/modified.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="a3c9b961-64a8-41d8-9235-e1d51f006818" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table MACHINECLASS as table or column does not exist." onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS"/>
+            <columnExists tableName="MACHINECLASS" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>FLT-8036: Initialize MACHINECLASS.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="MachineClass"/>
+            <param name="table" value="MACHINECLASS"/>
+            <param name="oidColumn" value="MACHINECLASS_OID"/>
+            <param name="activeColumn" value="IS_ACTIVE"/>
+            <param name="supportsArchiving" value="true"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE MACHINECLASS SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

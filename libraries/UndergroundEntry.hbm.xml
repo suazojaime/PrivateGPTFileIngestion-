@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" schema="model">
+
+    <class name="minestar.pitlink.domain.machine.UndergroundAIMSEntryImpl"
+           proxy="minestar.pitlink.domain.machine.UndergroundAIMSEntry"
+           table="UG_AIS_BARRIER">
+
+        <meta attribute="alias" inherit="false">UNDERGROUNDBARRIER</meta>
+        <meta attribute="view-master">true</meta>
+        <meta attribute="description">
+            A entry within the automated isolation system urrsed for underground path-planning.
+        </meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="BARRIER_OID">
+            <meta attribute="description">
+                A reference to the entry (MSMODEL.MACHINE) that the underground-specific details apply to.
+            </meta>
+
+            <generator class="foreign">
+                <param name="property">entryRef</param>
+            </generator>
+        </id>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="NAME"
+                  access="field"/>
+
+        <property name="modelUpdateVersion"
+                  type="java.lang.Long"
+                  column="MODEL_UPDATE_VERSION">
+            <meta attribute="description">The is a copy of the system wide version number.</meta>
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <one-to-one name="entryRef"
+                    class="minestar.pitlink.domain.machine.MachineReference"
+                    constrained="true"
+                    lazy="false" />
+
+        <property name="bcpState"
+                  column="BCP_STATE"
+                  not-null="true">
+            <meta attribute="description">BCP activated/deactived state</meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.mine.domain.minemodel.underground.aims.BCPState</param>
+            </type>
+        </property>
+
+        <property name="bcpEntryState"
+                  column="BCP_BARRIER_STATE"
+                  not-null="true">
+            <meta attribute="description">Barrier open/closed</meta>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.mine.domain.minemodel.underground.aims.BCPEntryState</param>
+            </type>
+        </property>
+
+        <property name="bcpEntryRequest">
+            <meta attribute="description">Barrier open/close request</meta>
+            <column name="BCP_BARRIER_REQUEST" not-null="true" default="0"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">minestar.mine.domain.minemodel.underground.aims.BCPEntryRequest</param>
+            </type>
+        </property>
+
+        <list name="position" table="AIS_BARRIER_POINTS" fetch="subselect" lazy="false">
+            <meta attribute="index-alias">pointNr</meta>
+            <meta attribute="description">
+                The coordinates that form the absolute polygon of an area map's boundary.
+            </meta>
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <cache usage="read-write" region="model"/>
+
+            <key column="OID" not-null="true"/>
+            <index type="java.lang.Integer" column="POINT_NR"/>
+            <element type="XYZCoordinate">
+                <column name="X_MAGNITUDE"/>
+                <column name="Y_MAGNITUDE"/>
+                <column name="Z_MAGNITUDE"/>
+            </element>
+        </list>
+
+        <many-to-one name="infrastructureExclusionZone"
+                     class="minestar.mine.domain.minemodel.ZoneReference"
+                     column="INFRASTRUCTURE_EXCLUSION_ZONE"
+                     lazy="false"
+                     not-null="false">
+            <meta attribute="description">Reference to infrastructure exclusion zone (MSMODEL.ZONE).</meta>
+        </many-to-one>
+    </class>
+
+    <!-- A lightweight reference to a entry -->
+    <class name="minestar.pitlink.domain.machine.UndergroundEntryReference"
+           table="UG_AIS_BARRIER"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">BarrierReference</meta>
+        <meta attribute="description">A minimal reference to a entry.</meta>
+        <meta attribute="lookupExpr" inherit="false">name</meta>
+        <meta attribute="viewproperty-name" inherit="false">
+            type=string
+            description=The name for the entry
+            expression=lookupResource.aimsBarrier.name.query
+        </meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID"
+            type="long"
+            column="BARRIER_OID"
+            access="field"/>
+
+        <property name="name"
+                  type="java.lang.String"
+                  column="NAME"
+                  access="field"/>
+
+    </class>
+</hibernate-mapping>

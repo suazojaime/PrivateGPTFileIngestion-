@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="ed9dc292-eee4-4392-8dd4-57a4c63e19d9" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ENDEDBY_PERSON to table DELAY as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DELAY"/>
+            <not>
+                <columnExists tableName="DELAY" columnName="ENDEDBY_PERSON"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7908:  AddColumn DELAY.ENDEDBY_PERSON</comment>
+        <addColumn tableName="DELAY">
+            <column name="ENDEDBY_PERSON" type="BIGINT" remarks="The machine operator who ended this delay."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="5ffa96b3-6a46-4f10-850a-a703c6e0ab14" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ENDEDBY_USER to table DELAY as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DELAY"/>
+            <not>
+                <columnExists tableName="DELAY" columnName="ENDEDBY_USER"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7908: AddColumn DELAY.ENDEDBY_USER</comment>
+        <addColumn tableName="DELAY">
+            <column name="ENDEDBY_USER" type="BIGINT" remarks="The office user who ended this delay."/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<circuit>
+
+    <jobexecutors>
+        <jobexecutor name="standardExecutor" class="com.mincom.util.job.StandardJobExecutor"/>
+    </jobexecutors>
+
+    <nodes>
+        <node name="startNode" class="com.mincom.env.integ.circuit.node.NullJobExecutionNode">
+            <var name="isDefaultStartNode">true</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <!-- Exports the data set to XML file in file system. -->
+        <node name="exportData" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="executor">standardExecutor</var>
+            <var name="jobClass">minestar.platform.persistence.service.importexport.xml.ExportData</var>
+            <var name="defaultJobUrl">minestar.platform.persistence.service.importexport.xml.ExportData</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <!-- Looks up relevant underground machines and fans out subsequent jobs. -->
+        <node name="uploadAllMachines"
+              class="minestar.pitlink.application.underground.UploadAllCommandUndergroundMachines">
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <!-- Uploads files to an underground machine. -->
+        <node name="uploadFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="executor">standardExecutor</var>
+            <var name="defaultJobUrl">minestar.pitlink.application.underground.UploadUndergroundFiles</var>
+            <var name="jobClass">minestar.pitlink.application.underground.UploadUndergroundFiles</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <!-- Notifies an underground machine of uploaded files. -->
+        <node name="activateFiles" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="executor">standardExecutor</var>
+            <var name="defaultJobUrl">minestar.pitlink.application.underground.ActivateUndergroundFiles</var>
+            <var name="jobClass">minestar.pitlink.application.underground.ActivateUndergroundFiles</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <!-- Determines whether to re-attempt file transfer based on activation response. -->
+        <node name="processActivationResponse" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="executor">standardExecutor</var>
+            <var name="defaultJobUrl">minestar.pitlink.application.underground.ProcessActivationResponse</var>
+            <var name="jobClass">minestar.pitlink.application.underground.ProcessActivationResponse</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <!-- Carries out second attempt to upload files to an underground machine. -->
+        <node name="uploadFilesAttempt2" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="executor">standardExecutor</var>
+            <var name="defaultJobUrl">minestar.pitlink.application.underground.UploadUndergroundFiles</var>
+            <var name="jobClass">minestar.pitlink.application.underground.UploadUndergroundFiles</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <!-- Notifies an underground machine of the second attempt to upload files. -->
+        <node name="activateFilesAttempt2" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="executor">standardExecutor</var>
+            <var name="defaultJobUrl">minestar.pitlink.application.underground.ActivateUndergroundFiles</var>
+            <var name="jobClass">minestar.pitlink.application.underground.ActivateUndergroundFiles</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <!-- Displays messages based on second attempt's activation response. -->
+        <node name="processActivationFinalResponse" class="com.mincom.env.integ.circuit.node.JobExecutionNode">
+            <var name="executor">standardExecutor</var>
+            <var name="defaultJobUrl">minestar.pitlink.application.underground.ProcessActivationFinalResponse</var>
+            <var name="jobClass">minestar.pitlink.application.underground.ProcessActivationFinalResponse</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+
+        <node name="endNode" class="com.mincom.env.integ.circuit.node.NullJobExecutionNode">
+            <var name="isEndNode">true</var>
+            <inputvar name="listener" input="listener"/>
+        </node>
+    </nodes>
+
+    <connections>
+        <connect source="startNode" sink="exportData"/>
+        <connect source="exportData" sink="uploadAllMachines"/>
+        <connect source="uploadAllMachines" sink="uploadFiles"/>
+        <connect source="uploadFiles" sink="activateFiles"/>
+        <connect source="activateFiles" sink="processActivationResponse"/>
+        <connect source="processActivationResponse" sink="uploadFilesAttempt2"/>
+        <connect source="uploadFilesAttempt2" sink="activateFilesAttempt2"/>
+        <connect source="activateFilesAttempt2" sink="processActivationFinalResponse"/>
+        <connect source="processActivationFinalResponse" sink="endNode"/>
+    </connections>
+
+</circuit>

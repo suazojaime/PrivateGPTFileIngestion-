@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Truck Classes">
+
+    <machineClass xsi:type="truckClassImpl">
+        <name>Cat777D</name>
+        <manufacturer>Caterpillar</manufacturer>
+        <description>Cat 777 D Series Dump Truck</description>
+        <allowAllMaterials>false</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <useFuel>true</useFuel>
+        <fuelType>Diesel</fuelType>
+        <fuelCapacity magnitude="1.1370" unit="cubic metres"/>
+        <refuelLevel magnitude="0.1137" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.05658" unit="cubic metres"/>
+        <idleFuelBurnRate magnitude="0.0000026056" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.00001825" unit="cubic metres per second"/>
+        <maximumSpeed magnitude="12.2222237" unit="metres per second"/>
+        <bodyLength magnitude="7.28" unit="metre"/>
+        <bodyWeight magnitude="15780.0" unit="kilogram"/>
+        <chassisWeight magnitude="51330.0" unit="kilogram"/>
+        <dumpHeight magnitude="10.05" unit="metre"/>
+        <frontDistributionEmpty magnitude="47.0" unit="percent"/>
+        <frontDistributionLoaded magnitude="33.0" unit="percent"/>
+        <frontTyreTread magnitude="4.85" unit="metre"/>
+        <grossVehicleWeight magnitude="163300.0" unit="kilogram"/>
+        <heapedCapacity magnitude="60.1" unit="cubic metres"/>
+        <heightToRockGuardRail magnitude="4.91" unit="metre"/>
+        <loadingHeight magnitude="4.39" unit="metre"/>
+        <maxPayload magnitude="108000.0" unit="kilogram"/>
+        <maxSpeedLoaded magnitude="6.6666666672" unit="metres per second"/>
+        <nominalPayload magnitude="90725.0" unit="kilogram"/>
+        <overLoad magnitude="99000.0" unit="kilogram"/>
+        <overallLength magnitude="10.3" unit="metre"/>
+        <rearDistributionEmpty magnitude="53.0" unit="percent"/>
+        <rearDistributionLoaded magnitude="67.0" unit="percent"/>
+        <struckCapacity magnitude="42.1" unit="cubic metres"/>
+        <turningCircle magnitude="28.4" unit="metre"/>
+        <underLoad magnitude="81000.0" unit="kilogram"/>
+        <wheelBase magnitude="4.6" unit="metre"/>
+        <width magnitude="6.1" unit="metre"/>
+        <avgSpeedLoaded magnitude="12.0000000008" unit="metres per second"/>
+        <avgSpeedEmpty magnitude="21.0000000008" unit="metres per second"/>
+        <efhSpec>
+            <entry>
+                <key>0</key>
+                <value>
+                    <loadedEfh magnitude="1.0" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>1</key>
+                <value>
+                    <loadedEfh magnitude="1.03" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>2</key>
+                <value>
+                    <loadedEfh magnitude="1.04" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>3</key>
+                <value>
+                    <loadedEfh magnitude="1.36" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>4</key>
+                <value>
+                    <loadedEfh magnitude="1.96" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>5</key>
+                <value>
+                    <loadedEfh magnitude="2.09" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>6</key>
+                <value>
+                    <loadedEfh magnitude="2.88" unit="count"/>
+                    <emptyEfh magnitude="1.47" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>7</key>
+                <value>
+                    <loadedEfh magnitude="3.61" unit="count"/>
+                    <emptyEfh magnitude="1.47" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>8</key>
+                <value>
+                    <loadedEfh magnitude="4.06" unit="count"/>
+                    <emptyEfh magnitude="1.96" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>9</key>
+                <value>
+                    <loadedEfh magnitude="4.33" unit="count"/>
+                    <emptyEfh magnitude="1.96" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>10</key>
+                <value>
+                    <loadedEfh magnitude="5.0" unit="count"/>
+                    <emptyEfh magnitude="2.16" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>11</key>
+                <value>
+                    <loadedEfh magnitude="5.2" unit="count"/>
+                    <emptyEfh magnitude="2.41" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>12</key>
+                <value>
+                    <loadedEfh magnitude="5.91" unit="count"/>
+                    <emptyEfh magnitude="2.5" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>13</key>
+                <value>
+                    <loadedEfh magnitude="6.16" unit="count"/>
+                    <emptyEfh magnitude="2.71" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>14</key>
+                <value>
+                    <loadedEfh magnitude="7.22" unit="count"/>
+                    <emptyEfh magnitude="2.71" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>15</key>
+                <value>
+                    <loadedEfh magnitude="7.64" unit="count"/>
+                    <emptyEfh magnitude="2.88" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-14</key>
+                <value>
+                    <loadedEfh magnitude="4.64" unit="count"/>
+                    <emptyEfh magnitude="1.88" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-13</key>
+                <value>
+                    <loadedEfh magnitude="4.64" unit="count"/>
+                    <emptyEfh magnitude="1.88" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-12</key>
+                <value>
+                    <loadedEfh magnitude="3.51" unit="count"/>
+                    <emptyEfh magnitude="1.38" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-11</key>
+                <value>
+                    <loadedEfh magnitude="3.51" unit="count"/>
+                    <emptyEfh magnitude="1.38" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-10</key>
+                <value>
+                    <loadedEfh magnitude="3.51" unit="count"/>
+                    <emptyEfh magnitude="1.38" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-9</key>
+                <value>
+                    <loadedEfh magnitude="2.45" unit="count"/>
+                    <emptyEfh magnitude="1.38" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-8</key>
+                <value>
+                    <loadedEfh magnitude="2.45" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-7</key>
+                <value>
+                    <loadedEfh magnitude="2.45" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-6</key>
+                <value>
+                    <loadedEfh magnitude="1.88" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-5</key>
+                <value>
+                    <loadedEfh magnitude="1.38" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-4</key>
+                <value>
+                    <loadedEfh magnitude="1.21" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-3</key>
+                <value>
+                    <loadedEfh magnitude="1.0" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-2</key>
+                <value>
+                    <loadedEfh magnitude="1.0" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+            <entry>
+                <key>-1</key>
+                <value>
+                    <loadedEfh magnitude="1.0" unit="count"/>
+                    <emptyEfh magnitude="1.0" unit="count"/>
+                </value>
+            </entry>
+        </efhSpec>
+    </machineClass>
+
+    <machineType>
+        <categoryId>13</categoryId>
+        <machineLength magnitude="10.3" unit="metre"/>
+        <machineWidth magnitude="6.1" unit="metre"/>
+        <turningRadius magnitude="28.4" unit="metre"/>
+        <bodyWidth magnitude="6.1" unit="metre"/>
+        <bodyLength magnitude="7.28" unit="metre"/>
+    </machineType>
+
+</machineClassExport>

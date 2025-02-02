@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="1bb2243a-1fa6-4c9b-a88b-b7be7dc898f3" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for HISTORICAL_CHUTE_OVERRIDE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="HISTORICAL_CHUTE_OVERRIDE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2764: CreateTable HISTORICAL_CHUTE_OVERRIDE</comment>
+        <createTable tablespace="MW_ENT" remarks="A historical record of chute level overrides." tableName="HISTORICAL_CHUTE_OVERRIDE">
+            <column name="CHUTE_DATA_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CHUTE" type="BIGINT" remarks="A reference to the chute (MSMODEL.MACHINE) that this historical record applies to.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CHUTE_LEVEL" type="DOUBLE" remarks="The amount of ore that the chute is set."/>
+            <column name="USER1" type="BIGINT" remarks="A reference to the user (MSMODEL.USER) who applied the override.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of when this override became active.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EXPIRY_TIMESTAMP_UTC" type="DATETIME2" remarks="The timestamp of when this override will expire.">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="CHUTE_DATA_OID" constraintName="HISTORICAL_CHUTE_OVERRIDE_PK" tablespace="MW_IDXENT" tableName="HISTORICAL_CHUTE_OVERRIDE"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

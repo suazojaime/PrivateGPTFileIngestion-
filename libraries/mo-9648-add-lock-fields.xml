@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="90ce8ca8-fa39-42c0-8836-91d24d774d40" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ENTITY_REVISION to table LOCKING as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOCKING"/>
+            <not>
+                <columnExists tableName="LOCKING" columnName="ENTITY_REVISION"/>
+            </not>
+        </preConditions>
+        <comment>MO-9648: AddColumn LOCKING.ENTITY_REVISION</comment>
+        <addColumn tableName="LOCKING">
+            <column name="ENTITY_REVISION" type="BIGINT" defaultValueNumeric="0" remarks="The revision of the entity when it was locked.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="ea142abf-3b81-49b3-8b39-415246911af6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table LOCKING as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOCKING"/>
+            <not>
+                <columnExists tableName="LOCKING" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>MO-9648: AddColumn LOCKING.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="LOCKING">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0" remarks="The LayerUpdateVersion of the MS_LOCKS layer when the lock was last modified.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="185ef818-c40c-43f9-8742-b414efd1a8ca" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateUniqueFilteredIndex for LOCKING_ZONE to table LOCKING as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOCKING"/>
+            <not>
+                <indexExists indexName="LOCKING_ZONE" tableName="LOCKING"/>
+            </not>
+        </preConditions>
+        <comment>MO-9648: CreateUniqueFilteredIndex LOCKING_ZONE on LOCKING (ZONE)</comment>
+        <ext:createFilteredIndex filter="ZONE IS NOT NULL" unique="true" tableName="LOCKING" indexName="LOCKING_ZONE">
+            <column name="ZONE"/>
+        </ext:createFilteredIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="f05dde55-3ed1-49b5-986a-0716696e24dc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateUniqueFilteredIndex for LOCKING_LANE to table LOCKING as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOCKING"/>
+            <not>
+                <indexExists indexName="LOCKING_LANE" tableName="LOCKING"/>
+            </not>
+        </preConditions>
+        <comment>MO-9648: CreateUniqueFilteredIndex LOCKING_LANE on LOCKING (LANE)</comment>
+        <ext:createFilteredIndex filter="LANE IS NOT NULL" unique="true" tableName="LOCKING" indexName="LOCKING_LANE">
+            <column name="LANE"/>
+        </ext:createFilteredIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="6b12f42b-fb88-4b1f-baa1-a80cb92b861f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateUniqueFilteredIndex for LOCKING_MACHINE to table LOCKING as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOCKING"/>
+            <not>
+                <indexExists indexName="LOCKING_MACHINE" tableName="LOCKING"/>
+            </not>
+        </preConditions>
+        <comment>MO-9648: CreateUniqueFilteredIndex LOCKING_MACHINE on LOCKING (MACHINE)</comment>
+        <ext:createFilteredIndex filter="MACHINE IS NOT NULL" unique="true" tableName="LOCKING" indexName="LOCKING_MACHINE">
+            <column name="MACHINE"/>
+        </ext:createFilteredIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+</databaseChangeLog>

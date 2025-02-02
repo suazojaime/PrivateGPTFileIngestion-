@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2018, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false" default-access="field" schema="model">
+
+    <class name="minestar.mine.domain.minemodel.RoadSegmentImpl"
+           table="ROADSEGMENT">
+
+        <!-- use description for now otherwise we need 3 passes instead of 2 because of the targetRoad property on delays-->
+        <!--meta attribute="lookupExpr" inherit="false">startWaypoint_N || '-' || endWaypoint_N</meta-->
+        <meta attribute="lookupExpr" inherit="false">description</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="viewproperty-name" inherit="false">
+            type=string
+            description=The name for the road segment.
+            expression=lookupResource.roadsegment.name.query
+        </meta>
+
+        <meta attribute="description">A road segment in the mine model</meta>
+
+        <meta attribute="businessKeys">startWaypoint,endWaypoint</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="ROADSEGMENT_OID">
+            <generator class="assigned"/>
+        </id>
+
+        <property name="active" type="boolean">
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Is this road active</meta>
+            <column name="IS_ACTIVE" not-null="true" default="1"/>
+        </property>
+
+        <property name="layerUpdateVersion" type="long">
+            <meta attribute="description">The layer update version when the road was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property name="useDynamicTravelTimes" type="boolean" column="USE_DYNAMIC_TRAVEL_TIMES" not-null="true">
+            <meta attribute="description">Should travel times be updated dynamically.</meta>
+        </property>
+
+        <property name="condition" type="java.lang.String" column="CONDITION" length="254">
+            <meta attribute="description">The condition value for the road segment.</meta>
+        </property>
+
+        <property name="description" type="java.lang.String" column="DESCRIPTION" length="254">
+            <meta attribute="description">The description value for the road segment.</meta>
+        </property>
+
+        <many-to-one name="startWaypointRef" class="minestar.mine.domain.minemodel.WaypointReference" column="START1" lazy="false" index="ROADSEGMENT_STARTWAYPOINT">
+            <meta attribute="alias">startWaypoint</meta>
+            <meta attribute="description">The OID of the start waypoint for the road segment.</meta>
+        </many-to-one>
+
+        <many-to-one name="endWaypointRef" class="minestar.mine.domain.minemodel.WaypointReference" column="ENDWAYPOINT" lazy="false" index="ROADSEGMENT_ENDWAYPOINT">
+            <meta attribute="alias">endWaypoint</meta>
+            <meta attribute="description">The OID of the end waypoint for the road segment.</meta>
+        </many-to-one>
+
+        <property name="planLength" column="PLANDISTANCE">
+            <meta attribute="description">The length of the road as seen on a plan view.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="slopeLength" column="SLOPEDISTANCE">
+            <meta attribute="description">The slope length of this road segment.</meta>
+            <meta attribute="unitType">length</meta>
+            <type name="quantity">
+                <param name="unitType">length</param>
+            </type>
+        </property>
+
+        <property name="riseHeight" column="RISEDISTANCE">
+            <meta attribute="description">The total of all rises in this road segment, as experienced when travelling in the forward direction.</meta>
+            <meta attribute="unitType">depth</meta>
+            <type name="quantity">
+                <param name="unitType">depth</param>
+            </type>
+        </property>
+
+        <property name="fallHeight" column="FALLDISTANCE">
+            <meta attribute="description">The total of all falls in this road segment, as experienced when travelling in the forward direction.</meta>
+            <meta attribute="unitType">depth</meta>
+            <type name="quantity">
+                <param name="unitType">depth</param>
+            </type>
+        </property>
+
+        <property name="passingAllowed" type="boolean">
+            <meta attribute="description">The passing allowed value for the road segment.</meta>
+            <column name="PASSINGALLOWED" not-null="true" default="0"/>
+        </property>
+
+        <property name="roadType" type="java.lang.String" column="ROADTYPE" length="254">
+            <meta attribute="description">The road type value for the road segment.</meta>
+        </property>
+
+        <property name="rollingResist" type="java.lang.String" column="ROLLINGRESIST" length="254">
+            <meta attribute="universe-type-measure">true</meta>
+            <meta attribute="description">The rolling resist value for the road segment.</meta>
+        </property>
+
+        <property name="speedLimit" column="SPEEDLIMIT">
+            <meta attribute="description">The speed limit value for the road segment.</meta>
+            <meta attribute="unitType">speed</meta>
+            <type name="quantity">
+                <param name="unitType">speed</param>
+            </type>
+        </property>
+
+        <property name="taxClass" type="java.lang.String" column="TAXCLASS" length="254">
+            <meta attribute="description">The tax class value for the road segment.</meta>
+        </property>
+
+        <property name="markedForDeletion" type="boolean">
+            <meta attribute="description">This, usually FINAL, road segment is obsolete and will soon be deleted.</meta>
+            <column name="MARKEDFORDELETION" not-null="true" default="0"/>
+        </property>
+
+        <property name="timeMarkedForDeletion" type="TimestampType" column="TIMEMARKEDFORDELETION_UTC">
+            <meta attribute="utc-description">The utc time when this, usually FINAL, road segment was marked as obsolete.</meta>
+            <meta attribute="description">The time when this, usually FINAL, road segment was marked as obsolete.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="timeActiveStatusChange" type="TimestampType" column="TIMEACTIVESTATUSCHANGE_UTC" not-null="true">
+            <meta attribute="utc-description">The utc time when this road segment change its active status.</meta>
+            <meta attribute="description">The time when this road segment change its active status.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <list name="positionCoords" table="ROAD_POSITION_COORDS" fetch="select" batch-size="100">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+
+            <meta attribute="index-alias">pointNr</meta>
+            <meta attribute="description">The position coordinate information for the road segment.</meta>
+            <cache usage="read-write" region="model"/>
+
+            <key column="OID" not-null="true"/>
+            <index type="java.lang.Integer" column="POINT_NR"/>
+            <element type="XYZCoordinate">
+                <column name="X_MAGNITUDE"/>
+                <column name="Y_MAGNITUDE"/>
+                <column name="Z_MAGNITUDE"/>
+            </element>
+        </list>
+
+        <map name="travelInformation" table="ROAD_TRAVEL_INFORMATION" fetch="select" batch-size="100">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="index-alias"/>
+            <meta attribute="element-alias"/>
+            <meta attribute="export-nested">true</meta>
+            <meta attribute="description">Travel information (travel times, efh distance, efh) for each machine class.</meta>
+            <cache usage="read-write" region="model"/>
+
+            <key column="ROAD_SEGMENT_OID" not-null="true"/>
+            <composite-map-key class="minestar.mine.domain.minemodel.RoadTravelLookupKey">
+                <key-property name="machineClassOid" type="long" column="MACHINE_CLASS_OID">
+                    <meta attribute="alias">machineClass</meta>
+                    <meta attribute="manyToOne" inherit="false">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+                    <meta attribute="import-manyToOne-property">machineClass</meta>
+                </key-property>
+                <key-property name="forward" type="boolean" column="IS_FORWARD">
+                    <meta attribute="description">Is the travel forward.</meta>
+                </key-property>
+                <key-property name="empty" type="boolean" column="IS_EMPTY">
+                    <meta attribute="description">Is the travel empty.</meta>
+                </key-property>
+            </composite-map-key>
+            <composite-element class="minestar.mine.domain.minemodel.RoadTravelData">
+                <property name="allowed" type="boolean" column="IS_ALLOWED" not-null="true">
+                    <meta attribute="description">Is travel allowed on the segment.</meta>
+                </property>
+                <property name="targetTravelTime" column="TARGET_TRAVEL_TIME">
+                    <meta attribute="alias">targetTime</meta>
+                    <meta attribute="description">The target travel time.</meta>
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+                <property name="expectedTravelTime" column="EXPECTED_TRAVEL_TIME">
+                    <meta attribute="alias">expectedTime</meta>
+                    <meta attribute="unitType">duration</meta>
+                    <meta attribute="description">The expected travel time</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+                <property name="efh" column="EFH">
+                    <meta attribute="unitType">unitless</meta>
+                    <meta attribute="description">The effective flat haul code.</meta>
+                    <type name="quantity">
+                        <param name="unitType">unitless</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+                <property name="efhDistance" column="EFH_DISTANCE">
+                    <meta attribute="unitType">length</meta>
+                    <meta attribute="description">The effective flat haul distance.</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                        <param name="nullable">true</param>
+                    </type>
+                </property>
+            </composite-element>
+        </map>
+    </class>
+
+    <!-- A lightweight reference to a RoadSegment -->
+    <class name="minestar.mine.domain.minemodel.RoadSegmentReference" table="ROADSEGMENT" mutable="false" lazy="false">
+
+        <meta attribute="alias" inherit="false">ROADSEGMENT_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a Road Segment.</meta>
+
+        <!-- The ROADSEGMENT table does not have a NAME column - the NAME is derived from the NAMES
+             of the start and end waypoints.  Use DESCRIPTION here instead -->
+        <meta attribute="lookupExpr" inherit="false">description</meta>
+        <meta attribute="viewproperty-description" inherit="false">
+            type=string
+            description=The name for the Road Segment.
+            expression=lookupResource.roadSegment.description.query
+        </meta>
+        <meta attribute="view-create-order">1</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="ROADSEGMENT_OID"/>
+    </class>
+
+</hibernate-mapping>

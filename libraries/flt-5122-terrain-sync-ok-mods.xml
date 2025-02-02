@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+
+
+    <changeSet id="c3e3f106-7758-4240-9480-9e623a230812" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored remove default value of 1 on GRADEBLOCK_GROUP as column doesn't exist or column or default already dropped" onFail="MARK_RAN">
+            <and>
+                <columnExists tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK"/>
+                <ext:columnHasDefaultValue tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK"/>
+            </and>
+        </preConditions>
+        <comment>[FLT-5122] Remove default value on GRADEBLOCK_GROUP.TERRAIN_SYNC_OK - originally set to 1</comment>
+        <dropDefaultValue tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK"/>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="86f27151-6388-4e4a-9f27-0f7fb18f29a7" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored add default value of 0 on GRADEBLOCK_GROUP as column doesn't exist or column or default already set" onFail="MARK_RAN">
+            <columnExists tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK"/>
+        </preConditions>
+        <comment>[FLT-5122] Add new default value on GRADEBLOCK_GROUP.TERRAIN_SYNC_OK to 0</comment>
+        <addDefaultValue tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK" defaultValueNumeric="0"/>
+    </changeSet>
+
+    <changeSet id="2ce7eeeb-bbe5-439a-9282-0594f6fcb9ae" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored updating GRADEBLOCK_GROUP.TERRAIN_SYNC_OK to new default value of 1 on GRADEBLOCK_GROUP as column doesn't exist or column or default value doesn't exist" onFail="MARK_RAN">
+            <and>
+                <columnExists tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK"/>
+                <ext:columnHasDefaultValue tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_SYNC_OK"/>
+            </and>
+        </preConditions>
+        <comment>[FLT-5122] Update value on GRADEBLOCK_GROUP.TERRAIN_SYNC_OK to 1</comment>
+        <sql>UPDATE GRADEBLOCK_GROUP SET TERRAIN_SYNC_OK = 1</sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+
+</databaseChangeLog>

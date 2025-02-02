@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="02e33695-7d31-47bc-8ae9-cc088f649ad7" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for REGION as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="REGION"/>
+            </not>
+        </preConditions>
+        <comment>AHS-9372: CreateTable REGION</comment>
+        <createTable tablespace="MW_ENT" remarks="The definition of a mine model region" tableName="REGION">
+            <column name="REGION_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REGION_TYPE" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)" remarks="The regions name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GEOMETRY" type="VARCHAR(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_DO_NOT_ENTER_TO_STOP" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_PERCEPTION_DETUNED" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_HIGH_RIMPULL_MODE" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_PATH_INDEXING_ALLOWED" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GEAR_LIMIT" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ZONE_OID" type="BIGINT"/>
+            <column name="ZONE_COLOR" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ZONE_MESSAGE_ON_ENTRY" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="REGION_OID" constraintName="REGION_PK" tablespace="MW_IDXENT" tableName="REGION"/>
+        <createIndex unique="true" tablespace="MW_IDXENT" tableName="REGION" indexName="REGION_NAME">
+            <column name="NAME"/>
+        </createIndex>
+        <addForeignKeyConstraint baseTableName="REGION" baseColumnNames="ZONE_OID" constraintName="REGION_ZONE_FK" referencedTableName="ZONE" referencedColumnNames="ZONE_OID" onDelete="NO ACTION"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

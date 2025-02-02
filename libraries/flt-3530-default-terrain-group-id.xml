@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="0723f2cb-5af7-40f9-b6a3-fdb4560b4e3c" author="MineStar" failOnError="false">
+        <comment>FLT-3530: GradeBlockGroup set null terrain group id to 0</comment>
+        <rollback/>
+        <sql>update GRADEBLOCK_GROUP set TERRAIN_GROUP_ID = 0 where TERRAIN_GROUP_ID = null</sql>
+    </changeSet>
+
+    <changeSet id="b7728042-b036-4365-b446-599095736737" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddNotNullConstraint for GRADEBLOCK_GROUP.TERRAIN_GROUP_ID as column does not exist or is already not-nullable" onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="GRADEBLOCK_GROUP" columnName="TERRAIN_GROUP_ID"/>
+        </preConditions>
+        <comment>FLT-3530: GradeBlockGroup add not null to terrain group id</comment>
+        <addNotNullConstraint columnName="TERRAIN_GROUP_ID" defaultNullValue="0"  columnDataType="BIGINT" tableName="GRADEBLOCK_GROUP"/>
+    </changeSet>
+
+</databaseChangeLog>

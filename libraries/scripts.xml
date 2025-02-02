@@ -1,0 +1,254 @@
+<?xml version="1.0" standalone="no"?>
+<scripts>
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <create entity="delay">
+            <attribute name="random">
+                <pseudo value="false"/>
+            </attribute>
+            <attribute name="date">
+                <compute value="now"/>
+            </attribute>
+            <attribute name="duration">
+                <quantity value="2" unitType="duration" unit="minute" endTime=""/>
+            </attribute>
+            <attribute name="machine">
+                <siteMachine machineName="T03"/>
+            </attribute>
+        </create>
+    </action>
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <create entity="scheduleAssign">
+            <attribute name="date">
+                <compute value="now"/>
+            </attribute>
+            <attribute name="machine">
+                <siteMachine machineName="T00"/>
+            </attribute>
+            <attribute name="location">
+                <siteLocation station="FB001" parkupBay=""/>
+            </attribute>
+            <attribute name="loadstate">
+                <compute value="empty"/>
+            </attribute>
+        </create>
+    </action>
+    <action activationTime="12" type="fromStartOfSimulation" unit="hour">
+        <create entity="shiftChange">
+            <attribute name="date">
+                <compute value="now"/>
+            </attribute>
+            <attribute name="loadstate">
+                <compute value="full"/>
+            </attribute>
+        </create>
+    </action>
+    <!--
+    ****************************************************************************************************
+    Startup Scenarios for Randomization
+    ****************************************************************************************************
+    -->
+
+    <action activationTime="0" type="fromStartOfSimulation" unit="minute">
+        <create entity="machine">
+            <attribute name="percent">
+                <compute value="25"/>
+            </attribute>
+            <attribute name="loadState">
+                <compute value="Empty"/>
+            </attribute>
+            <attribute name="location">
+                <compute value="Int5"/>
+            </attribute>
+        </create>
+    </action>
+
+    <action activationTime="0" type="fromStartOfSimulation" unit="minute">
+        <create entity="machine">
+            <attribute name="absolute">
+                <compute value="4"/>
+            </attribute>
+            <attribute name="loadState">
+                <compute value="Full"/>
+            </attribute>
+            <attribute name="location">
+                <compute value="Int7"/>
+            </attribute>
+        </create>
+    </action>
+
+    <!--
+    ****************************************************************************************************
+    Delays  for Randomization
+    ****************************************************************************************************
+    -->
+
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <create entity="delay">
+            <attribute name="random">
+                <pseudo value="true"/>
+            </attribute>
+            <attribute name="percent">
+                <select value="15"/>
+            </attribute>
+            <attribute name="duration">
+                <quantity value="2" unitType="duration" unit="minute" endTime=""/>
+            </attribute>
+            <attribute name="entityType">
+                <siteMachine value="truck"/>
+            </attribute>
+            <attribute name="seed">
+                <randomSeed value="200"/>
+            </attribute>
+        </create>
+    </action>
+
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <create entity="delay">
+            <attribute name="random">
+                <pseudo value="true"/>
+            </attribute>
+            <attribute name="absolute">
+                <select value="1"/>
+            </attribute>
+            <attribute name="duration">
+                <quantity value="1" unitType="duration" unit="minute" endTime=""/>
+            </attribute>
+            <attribute name="entityType">
+                <siteMachine value="loadingTool"/>
+            </attribute>
+            <attribute name="seed">
+                <randomSeed value="200"/>
+            </attribute>
+        </create>
+    </action>
+
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <create entity="delay">
+            <attribute name="random">
+                <pseudo value="true"/>
+            </attribute>
+            <attribute name="percent">
+                <select value="50"/>
+            </attribute>
+            <attribute name="duration">
+                <quantity value="2" unitType="duration" unit="minute" endTime=""/>
+            </attribute>
+            <attribute name="entityType">
+                <siteMachine value="processor"/>
+            </attribute>
+            <attribute name="seed">
+                <randomSeed value="200"/>
+            </attribute>
+        </create>
+    </action>
+
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <create entity="delay">
+            <attribute name="random">
+                <pseudo value="true"/>
+            </attribute>
+            <attribute name="percent">
+                <select value="20"/>
+            </attribute>
+            <attribute name="duration">
+                <quantity value="2" unitType="duration" unit="minute" endTime=""/>
+            </attribute>
+            <attribute name="entityType">
+                <siteMachine value="road"/>
+            </attribute>
+            <attribute name="seed">
+                <randomSeed value="200"/>
+            </attribute>
+        </create>
+    </action>
+
+    <!--
+    ****************************************************************************************************
+    ScheduledAssignments  for Randomization
+    ****************************************************************************************************
+    -->
+
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <create entity="scheduleAssign">
+            <attribute name="random">
+                <pseudo value="true"/>
+            </attribute>
+            <attribute name="percent">
+                <select value="50"/>
+            </attribute>
+            <attribute name="location">
+                <siteLocation station="FB001" parkupBay=""/>
+            </attribute>
+            <attribute name="loadstate">
+                <compute value="empty"/>
+            </attribute>
+        </create>
+    </action>
+
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <create entity="scheduleAssign">
+            <attribute name="random">
+                <pseudo value="true"/>
+            </attribute>
+            <attribute name="absolute">
+                <select value="5"/>
+            </attribute>
+            <attribute name="location">
+                <siteLocation station="" parkupBay="FUELINT2"/>
+            </attribute>
+            <attribute name="loadstate">
+                <compute value="full"/>
+            </attribute>
+        </create>
+    </action>
+
+    <!--
+    ****************************************************************************************************
+    Offcourse Simulation
+    ****************************************************************************************************
+    -->
+
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <modify entity="deviate">
+            <attribute name="percent">
+                <select value="20"/>
+            </attribute>
+            <attribute name="destination">
+                <compute value="alternate"/>
+            </attribute>
+            <attribute name="waypoints">
+                <compute value="skip" toSkip="3"/>
+            </attribute>
+        </modify>
+    </action>
+
+    <action activationTime="1" type="fromStartOfSimulation" unit="minute">
+        <modify entity="deviate">
+            <attribute name="absolute">
+                <select value="2"/>
+            </attribute>
+            <attribute name="destination">
+                <compute value="same"/>
+            </attribute>
+            <attribute name="waypoints">
+                <compute value="skip" toSkip="2"/>
+            </attribute>
+        </modify>
+    </action>
+
+    <!--
+    ****************************************************************************************************
+    ChangeMaterials
+    ****************************************************************************************************
+    -->
+   <action activationTime="">
+        <modify entity="changeMaterial">
+            <attribute name="loadingTool">
+                <siteMachine name="LDR2"/>
+            </attribute>
+            <attribute name="stableMaterials">
+                <duration value="1"/>
+            </attribute>
+        </modify>
+    </action>
+</scripts>

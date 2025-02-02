@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!-- Copyright (c) 2018, Caterpillar -->
+
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+
+<classdefs>
+
+    <classdef name="minestar.machinetracking.domain.PersonImpl" keyproperty="name">
+        <implclass name="minestar.machinetracking.domain.PersonBuilder"/>
+        <beanclass name="minestar.machinetracking.domain.PersonBuilder"/>
+
+        <propertydef name="OID" access="readonly">
+            <uidef visiblewhen="false"/>
+        </propertydef>
+
+        <propertygroup name="grouping" label="Identification">
+            <uigroupdef mode="box"/>
+            <propertygroup name="nameGroup">
+                <uigroupdef mode="plain" layout="horizontal"/>
+                <propertydef name="name" label="Name*">
+                    <validationdef name="required" type="shared"/>
+                    <description>The preferred name for this person.</description>
+                </propertydef>
+
+                <propertydef name="personnelId" label="Personnel ID*">
+                    <validationdef type="group">
+                        <validationdef name="required" type="shared"/>
+                        <validationdef type="expression">
+                            <pattern>^(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)$</pattern>
+                            <error>Value must be 1 or greater</error>
+                            <message>Enter a value of 1 or greater</message>
+                        </validationdef>
+                    </validationdef>
+                    <description>The personnel ID of this person.</description>
+                </propertydef>
+
+                <propertydef name="userRef" label="User">
+                     <uidef widget="undergroundPersonWidget"
+                           visiblewhen="form.isUndergroundEnabled()==true" />
+                    <description>
+                        The user associated with this person.
+                    </description>
+                </propertydef>
+            </propertygroup>
+            <propertydef name="active">
+                <uidef updateable="false" visiblewhen="false"/>
+                <description>Is this person active</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="licencesGroup" label="Licenses">
+            <uigroupdef mode="tab" visiblewhen="form.getApplicationName()!='CIODS'"/>
+            <propertydef name="personMachineLicenceBuilders" label="Licenses">
+                <typedef>
+                    <javaclass name="java.util.Set" elementName="minestar.machinetracking.domain.PersonMachineLicenceBuilder"/>
+                </typedef>
+                <uidef widget="machineLicenceWidget"/>
+                <description>
+                    The contents of the various machine licenses.
+                </description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="contactDetails" label="Contact Details">
+            <uigroupdef mode="tab" visiblewhen="form.getApplicationName()!='CIODS'"/>
+            <propertydef name="contactDetailsBuilder" label="">
+                <typedef>
+                    <javaclass name="minestar.machinetracking.domain.ContactDetailsBuilder"/>
+                </typedef>
+                <description>
+                    The contact information associated with this person.
+                </description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="employee" label="Employee Details">
+            <uigroupdef mode="tab" visiblewhen="form.getApplicationName()!='CIODS'"/>
+            <propertydef name="techLevel" label="Tech Level">
+                <uidef visiblewhen="form.getApplicationName()!='CIODS'"/>
+                <description>The customer specific Technical Level of the Person.</description>
+            </propertydef>
+            <propertydef name="department" label="Department">
+                <uidef visiblewhen="form.getApplicationName()!='CIODS'"/>
+                <description>The customer specific Department of the Person.</description>
+            </propertydef>
+            <propertydef name="position" label="Position Description">
+                <uidef widget="textArea" custom='{rows=5,columns=30,linewrap=true}' visiblewhen="form.getApplicationName()!='CIODS'"/>
+                <description>The customer specific Position of the Person.</description>
+            </propertydef>
+            <propertydef name="primarySupervisor" label="Primary Supervisor">
+                <uidef visiblewhen="form.getApplicationName()!='CIODS'"/>
+                <description>The customer specific Supervisor of the Person.</description>
+            </propertydef>
+            <propertydef name="hireDate" label="Hire Date">
+                <uidef widget="date" visiblewhen="form.getApplicationName()!='CIODS'"/>
+                <description>The hire data, or seniority date used for Shift Change.</description>
+            </propertydef>
+
+            <propertydef name="crew" label="Crew">
+                <typedef>
+                    <javaclass name="java.util.Set" choices="service(minestar.platform.application.roster.CrewCollectionProvider):crews" />
+                </typedef>
+                <uidef widget="sortedcombo"
+                       visiblewhen="form.getApplicationName()!='CIODS' and not testConfigOption('com.mincom.works.cc.personnel.Config', 'multiple.crews')"/>
+                <description>
+                    The crew associated with this person.
+                </description>
+            </propertydef>
+
+            <propertydef name="crews" label="Crews">
+                <typedef>
+                    <javaclass name="java.util.Set" choices="service(minestar.platform.application.roster.CrewCollectionProvider):crews" />
+                </typedef>
+                <uidef widget="ordered"
+                       visiblewhen="form.getApplicationName()!='CIODS' and testConfigOption('com.mincom.works.cc.personnel.Config', 'multiple.crews')"
+                       custom="{setOrderArrows=Boolean(false), setVisibleRowCount=7}"/>
+                <description>
+                    The crews associated with this person.
+                </description>
+            </propertydef>
+
+            <propertydef name="workGroup" label="Work Group" category="transient">
+                <typedef>
+                    <javaclass name="minestar.machinetracking.domain.WorkGroupImpl"
+                               choices="service(com.mincom.works.uifpage.personnel.WorkGroupCollectionProvider):workGroups"/>
+                </typedef>
+                <uidef widget="sortedcombo" enabledwhen="true" visiblewhen="true"/>
+                <description>
+                    The work group this person belongs to.
+                </description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="security" label="Security">
+            <uigroupdef mode="tab" visiblewhen="form.getApplicationName()!='CIODS'"/>
+            <propertydef name="macPassword" label="Machine Password">
+                <uidef visiblewhen="not testConfigOption('com.mincom.integ.cat.equip.Config', 'usePersonnelIdAsPassword')"/>
+                <description>
+                    This person's machine logon password.
+                </description>
+            </propertydef>
+
+            <propertydef name="maintenanceUser">
+                <defaultvalue>false</defaultvalue>
+                <description>
+                    Can this person log on to an onboard system without office validation occurring.
+                </description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="shiftChange" label="Shift Change">
+            <uigroupdef mode="tab" visiblewhen="form.getApplicationName()!='CIODS'"/>
+            <propertygroup name="shiftChangeGroup">
+                <uigroupdef mode="plain" layout="vertical"/>
+
+                <propertydef name="excludeFromMachineAllocation" label="Exclude From Equipment Allocation">
+                    <defaultvalue>false</defaultvalue>
+                    <description>
+                        Select this option to exclude this person when creating a shift change.</description>
+                </propertydef>
+
+                <propertydef name="allocationDate">
+                    <uidef widget="date"/>
+                    <description>
+                        An allocation date can be a hire date or seniority date used to define the allocation order for a group of personnel.
+                    </description>
+                </propertydef>
+
+                <propertydef name="allocationPriority">
+                    <uidef widget="spinner"/>
+                    <defaultvalue>0</defaultvalue>
+                    <description>
+                        The equipment allocation priority.
+                    </description>
+                </propertydef>
+
+                <propertydef name="shiftChangeGroup">
+                    <typedef>
+                        <javaclass name="minestar.assignment.domain.AssGroup"
+                                   choices="service(minestar.mine.application.AssGroupCollectionProvider):shiftChangeGroups"/>
+                    </typedef>
+                    <uidef widget="sortedcombo"
+                           visiblewhen="testConfigOption('com.mincom.works.shiftchange.Config', 'useShiftChangeGroups')"/>
+                    <description>
+                        The Shift Change group that this person belongs to.
+                    </description>
+                </propertydef>
+
+            </propertygroup>
+            <propertydef name="preferredMachines" label="Preferred Equipment">
+                <typedef>
+                    <javaclass name="java.util.List" choices="service(minestar.pitlink.application.MachineCollectionProvider):Machine" />
+                </typedef>
+                <uidef widget="ordered"/>
+                <description>An ordered list of the preferred equipment for the Person for shift change.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="plannedAbsences" label="Leave/Absences">
+            <uigroupdef mode="tab" visiblewhen="form.getApplicationName()!='CIODS'"/>
+            <propertydef name="plannedAbsenceBuilders" label="">
+                <typedef>
+                    <javaclass name="java.util.SortedSet" elementName="minestar.platform.domain.calendar.PlannedAbsenceBuilder"/>
+                </typedef>
+                <uidef widget="collection"
+                    custom='{groupFormat="none", itemFormat="table", itemLabel="Leave/Absences",
+                        navigationPaneSize="40", infoPosition="right", infoButtonSet="manage", itemButtonSet="edit",
+                        itemProperties="startDate, endDate, reasonForAbsence",
+                        itemColWidths="startDate:170,endDate:170,reasonForAbsence:350",
+                        itemColClasses="startDate:java.util.Date, endDate:java.util.Date",
+                        hideSearch="true"}'/>
+                <description>The planned absences of the person. This is considered for Shift Change.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="rosteredOvertime" label="Overtime">
+            <uigroupdef mode="tab" visiblewhen="form.getApplicationName()!='CIODS'"/>
+            <propertydef name="rosteredOvertimeBuilders" label="">
+                <typedef>
+                    <javaclass name="java.util.SortedSet" elementName="minestar.platform.domain.calendar.OvertimeBuilder"/>
+                </typedef>
+                <uidef widget="collection"
+                    custom='{groupFormat="none", itemFormat="table", itemLabel="Overtime",
+                        navigationPaneSize="30", infoPosition="right", infoButtonSet="manage", itemButtonSet="edit",
+                        itemProperties="startDate, endDate, shiftType",
+                        itemColWidths="startDate:100,endDate:100,shiftType:100",
+                        itemColClasses="startDate:java.util.Date, endDate:java.util.Date",
+                        hideSearch="true"}'/>
+                <description>The rostered overtime of the person. This is considered for Shift Change.</description>
+            </propertydef>
+        </propertygroup>
+
+        <propertygroup name="externalReference" label="External Reference">
+            <uigroupdef mode="tab" visiblewhen="form.getApplicationName()!='CIODS'"/>
+            <propertydef name="externalRef" label="Reference">
+                 <typedef>
+                     <javaclass name="java.lang.String"/>
+                 </typedef>
+                <uidef widget="externalRefWidget"/>
+            </propertydef>
+            <propertydef name="externalDesc" label="Description">
+                 <typedef>
+                     <javaclass name="java.lang.String"/>
+                 </typedef>
+                <uidef widget="externalDescWidget"/>
+            </propertydef>
+        </propertygroup>
+
+        <validationgroup name="Personnel Id Check">
+            <propertyref name="OID"/>
+            <propertyref name="personnelId"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">personnelId</param>
+            </validationdef>
+        </validationgroup>
+        <validationgroup name="Personnel Name Check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+        <validationgroup name="Mac Password Check">
+            <propertyref name="OID"/>
+            <propertyref name="personnelId"/>
+            <propertyref name="macPassword"/>
+            <validationdef type="class" classname="com.mincom.works.uifpage.personnel.MacPasswordValidator"/>
+        </validationgroup>
+    </classdef>
+
+    <classdef name="minestar.machinetracking.domain.WorkGroupImpl">
+        <propertydef name="subdirs"/>
+        <propertydef name="elements"/>
+        <propertydef name="name">
+            <description>The name for the work group.</description>
+        </propertydef>
+    </classdef>
+
+    <classdef name="minestar.platform.domain.calendar.AbsenceType" keyproperty="name">
+        <propertydef name="OID" access="readonly">
+            <uidef visiblewhen="false"/>
+        </propertydef>
+        <propertydef name="name">
+            <validationdef name="required" type="shared"/>
+            <description>An allowed reason for an absence.</description>
+        </propertydef>
+        <validationgroup name="Name uniqueness check">
+            <propertyref name="OID"/>
+            <propertyref name="name"/>
+            <validationdef name="keyProperty" type="shared">
+                <param name="propName">name</param>
+            </validationdef>
+        </validationgroup>
+    </classdef>
+
+    <classdef name="minestar.platform.domain.calendar.PlannedAbsenceBuilder">
+        <propertydef name="startDate">
+            <typedef>
+                <type code="date"/>
+            </typedef>
+            <uidef widget="date"/>
+            <validationdef name="required" type="shared"/>
+            <description>The first day this person will be absent</description>
+        </propertydef>
+        <propertydef name="endDate">
+            <typedef>
+                <type code="date"/>
+            </typedef>
+            <uidef widget="date"/>
+            <validationdef name="required" type="shared"/>
+            <description>The last day this person will be absent</description>
+        </propertydef>
+        <propertydef name="reasonForAbsence">
+            <typedef>
+                <javaclass name="minestar.platform.domain.calendar.AbsenceType"
+                           choices="service(minestar.platform.application.calendar.AbsenceTypeCollectionProvider):absenceTypes"/>
+            </typedef>
+            <validationdef name="required" type="shared"/>
+            <description>The explanation or justification for this absence</description>
+        </propertydef>
+        <validationgroup name="Positive duration check">
+            <propertyref name="startDate"/>
+            <propertyref name="endDate"/>
+            <validationdef type="script">
+                <script>DateRangeCheck.py</script>
+                <error>End date must not precede start date.</error>
+            </validationdef>
+        </validationgroup>
+    </classdef>
+
+    <classdef name="minestar.platform.domain.calendar.OvertimeBuilder">
+        <propertydef name="startDate">
+            <typedef>
+                <type code="date"/>
+            </typedef>
+            <uidef widget="date"/>
+            <defaultvalue>now</defaultvalue>
+            <validationdef name="required" type="shared"/>
+            <description>The first day this person will be working overtime</description>
+        </propertydef>
+        <propertydef name="endDate">
+            <typedef>
+                <type code="date"/>
+            </typedef>
+            <uidef widget="date"/>
+            <validationdef name="required" type="shared"/>
+            <description>The last day this person will be working overtime</description>
+        </propertydef>
+        <propertydef name="shiftType">
+            <uidef widget="shifts"/>
+            <defaultvalue type="python">time()*1000</defaultvalue>
+            <validationdef name="required" type="shared"/>
+            <description>The shift being worked</description>
+        </propertydef>
+        <propertydef name="shiftChangeGroup">
+            <typedef>
+                <javaclass name="minestar.assignment.domain.AssGroup"
+                           choices="service(minestar.mine.application.AssGroupCollectionProvider):shiftChangeGroups"/>
+            </typedef>
+            <uidef visiblewhen="testConfigOption('com.mincom.works.shiftchange.Config', 'useShiftChangeGroups')"/>
+            <defaultvalue type="python">getattr(firstSelectedItem(), "shiftChangeGroup", None)</defaultvalue>
+            <description>
+                The Shift Change group assigned for this Overtime.
+            </description>
+        </propertydef>
+        <validationgroup name="Positive duration check">
+            <propertyref name="startDate"/>
+            <propertyref name="endDate"/>
+            <validationdef type="script">
+                <script>DateRangeCheck.py</script>
+                <error>End date must not precede start date.</error>
+            </validationdef>
+        </validationgroup>
+    </classdef>
+
+    <classdef name="minestar.machinetracking.domain.ContactDetailsBuilder">
+
+        <propertygroup name="details" label="Details">
+            <uigroupdef mode="region"/>
+            <propertygroup name="detailsGroup">
+                <uigroupdef mode="plain" layout="custom"
+                            layoutInfo='{columnSpec="right:35dlu, 5dlu, 100dlu, 10dlu, right:30dlu, 5dlu, 70dlu, 10dlu, right:d, 5dlu, 30dlu, 50dlu",
+                    rowSpec="p,3dlu,p,3dlu,p,3dlu,p,3dlu,p"}'/>
+                <propertydef name="address1" label="Address 1">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"1,1,2,1", fieldConstraint:"3,1, 6, 1"}'/>
+                </propertydef>
+                <propertydef name="address2" label="Address 2">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"1,3,2,1", fieldConstraint:"3,3, 6, 1"}'/>
+                </propertydef>
+                <propertydef name="city" label="City">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"1,5", fieldConstraint:"3,5, 1, 1"}'/>
+                </propertydef>
+                <propertydef name="region" label="State">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"5,5", fieldConstraint:"7,5, 1, 1"}'/>
+                </propertydef>
+                <propertydef name="zip" label="Zip Code">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"9,5", fieldConstraint:"11,5, 1, 1"}'/>
+                </propertydef>
+                <propertydef name="phone" label="Phone (h)">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"1,7,2,1", fieldConstraint:"3,7, 2, 1"}'/>
+                </propertydef>
+                <propertydef name="mobile" label="Phone (m)">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"1,9,2,1", fieldConstraint:"3,9, 2, 1"}'/>
+                </propertydef>
+            </propertygroup>
+        </propertygroup>
+        <propertygroup name="emergencyGroup" label = "Emergency Contact Details">
+            <uigroupdef mode="region"/>
+            <propertygroup name="emergDetailsGroup">
+                <uigroupdef mode="plain" layout="custom"
+                            layoutInfo='{columnSpec="right:30dlu, 5dlu, 100dlu, 10dlu, right:30dlu, 5dlu, 70dlu, 10dlu, right:d, 5dlu, 30dlu, 50dlu",
+                    rowSpec="p,3dlu,p"}'/>
+                <propertydef name="emergName" label="Name">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"1,1,2,1", fieldConstraint:"3,1, 2, 1"}'/>
+                </propertydef>
+                <propertydef name="emergPhone" label="Phone">
+                    <typedef>
+                        <javaclass name="java.lang.String"/>
+                    </typedef>
+                    <uidef layoutInfo='{labelConstraint:"1,3,2,1", fieldConstraint:"3,3, 2, 1"}'/>
+                </propertydef>
+            </propertygroup>
+        </propertygroup>
+    </classdef>
+
+</classdefs>

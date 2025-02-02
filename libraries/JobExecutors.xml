@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<jobexecutors>
+    <jobexecutor name="onboardConfigService" class="JobExecutionService">
+        <var name="instanceName"><![CDATA["Onboard Config Service"]]></var>
+    </jobexecutor>		
+    <jobexecutor name="standardExecutor" class="com.mincom.util.job.StandardJobExecutor">
+    </jobexecutor>
+    <jobexecutor name="fieldFtpExecutor" class="com.mincom.util.job.QueueJobExecutor">
+        <var name="maxQueueSize">configOption:com.mincom.integ.cat.equip.Config, ftp.maxSimultaneousTransfers</var>
+    </jobexecutor>
+    <jobexecutor name="healthFtpExecutor" class="com.mincom.util.job.QueueJobExecutor">
+        <var name="maxQueueSize">1</var>
+    </jobexecutor>
+    <jobexecutor name="vims3GFtpExecutor" class="com.mincom.util.job.QueueJobExecutor">
+        <var name="maxQueueSize">1</var>
+    </jobexecutor>
+</jobexecutors>

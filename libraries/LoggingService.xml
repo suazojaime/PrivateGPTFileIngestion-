@@ -1,0 +1,16 @@
+<!--
+    Beans for the server-side of the logging service.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="loggingServiceImpl" class="com.mincom.env.service.logging.LoggingServiceImpl" lazy-init="true"
+         />
+
+    <bean id="registerLoggingService" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Logging Service"/>
+        <constructor-arg value="com.mincom.env.service.logging.LoggingService"/>
+        <constructor-arg ref="loggingServiceImpl"/>
+    </bean>
+</beans>

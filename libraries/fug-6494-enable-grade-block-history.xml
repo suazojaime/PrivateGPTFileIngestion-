@@ -1,0 +1,63 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="73fed979-434f-45f3-b580-ce633fd2c24a" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored rename column for EVENT_LOG_ENTRY.EVENT_CONTENT as table or column does not exist."
+                onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="EVENT_LOG_ENTRY" columnName="EVENT_CONTENT_TRANSITORY"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6494: Rename EVENT_LOG_ENTRY.EVENT_CONTENT in order to remake it as clob. Data is not important
+        </comment>
+        <renameColumn tableName="EVENT_LOG_ENTRY" oldColumnName="EVENT_CONTENT"
+                      newColumnName="EVENT_CONTENT_TRANSITORY"/>
+    </changeSet>
+
+    <changeSet id="248fcf85-61b8-482f-93bd-9379902947f5" author="MineStar" failOnError="false" onValidationFail="HALT">
+        <preConditions onFailMessage="Ignored create column for EVENT_LOG_ENTRY.EVENT_CONTENT as column exists"
+                       onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="EVENT_LOG_ENTRY" columnName="EVENT_CONTENT"/>
+            </not>
+        </preConditions>
+        <comment>FUG-6494: Create column EVENT_LOG_ENTRY.EVENT_CONTENT as CLOB</comment>
+        <addColumn tableName="EVENT_LOG_ENTRY">
+            <column name="EVENT_CONTENT" type="CLOB" remarks="Event Content field to clob"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="64600e60-d7a9-469d-861c-220ef25c2b29" author="MineStar" failOnError="false" onValidationFail="HALT">
+        <preConditions
+                onFailMessage="Ignored copy of data from for EVENT_CONTENT_TRANSITORY to EVENT_CONTENT as both need to exist"
+                onFail="MARK_RAN">
+
+            <columnExists tableName="EVENT_LOG_ENTRY" columnName="EVENT_CONTENT"/>
+            <columnExists tableName="EVENT_LOG_ENTRY" columnName="EVENT_CONTENT_TRANSITORY"/>
+        </preConditions>
+        <comment>FUG-6494: Copy EVENT_LOG_ENTRY.EVENT_CONTENT_TRANSITORY back to the new EVENT_CONTENT</comment>
+        <sql>update EVENT_LOG_ENTRY set EVENT_CONTENT = EVENT_CONTENT_TRANSITORY</sql>
+        <rollback>
+            <sql>update EVENT_LOG_ENTRY set EVENT_CONTENT_TRANSITORY = EVENT_CONTENT</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="e537c911-af6b-4358-98bc-414542021f36" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropColumn for EVENT_LOG_ENTRY.EVENT_CONTENT_TRANSITORY as table or column does not exist."
+                onFail="MARK_RAN">
+            <columnExists tableName="EVENT_LOG_ENTRY" columnName="EVENT_CONTENT_TRANSITORY"/>
+        </preConditions>
+        <comment>FUG-6494: Drop EVENT_LOG_ENTRY.EVENT_CONTENT in order to remake it as clob. Data is not important
+        </comment>
+        <dropColumn tableName="EVENT_LOG_ENTRY" columnName="EVENT_CONTENT_TRANSITORY"/>
+        <rollback>
+            <addColumn tableName="EVENT_LOG_ENTRY">
+                <column name="EVENT_CONTENT_TRANSITORY" type="CLOB" remarks="Event Content field to clob"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

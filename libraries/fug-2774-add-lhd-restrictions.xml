@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="e8a28355-d337-4c46-888f-467b4dd9e24c" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for LHD_RESTRICTION as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LHD_RESTRICTION"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2774: CreateTable LHD_RESTRICTION</comment>
+        <createTable tablespace="MW_ENT" remarks="A restriction between a machine and a goal (load / dump / inversion)" tableName="LHD_RESTRICTION">
+            <column name="MACHINE_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GOAL_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GOAL_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GOAL_TYPE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_PROVISIONAL" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_BARR" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_SOURCE" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_SINK" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="MACHINE_OID,GOAL_OID,GOAL_NAME,GOAL_TYPE" constraintName="LHD_RESTRICTION_PK" tablespace="MW_IDXENT" tableName="LHD_RESTRICTION"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="fdf9ff61-22af-4a10-a6d8-05dfa5bea38d" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for LHD_RESTRICTION_MACHINE_OID_FK to table LHD_RESTRICTION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="LHD_RESTRICTION" columnName="MACHINE_OID"/>
+            <columnExists tableName="MACHINE" columnName="MACHINE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="LHD_RESTRICTION" foreignKeyName="LHD_RESTRICTION_MACHINE_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-2774: AddForeignKeyConstraint LHD_RESTRICTION_MACHINE_OID_FK to LHD_RESTRICTION (MACHINE_OID)</comment>
+        <sql>DELETE FROM LHD_RESTRICTION WHERE MACHINE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM MACHINE WHERE MACHINE.MACHINE_OID = LHD_RESTRICTION.MACHINE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="LHD_RESTRICTION" baseColumnNames="MACHINE_OID" constraintName="LHD_RESTRICTION_MACHINE_OID_FK" referencedTableName="MACHINE" referencedColumnNames="MACHINE_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="LHD_RESTRICTION" constraintName="LHD_RESTRICTION_MACHINE_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

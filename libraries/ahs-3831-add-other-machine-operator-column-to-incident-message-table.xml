@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="77035db4-63e1-4948-a617-34394cc229f4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for P_OTHER_MACHINE_OPERATOR to table INCIDENT_MESSAGE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="INCIDENT_MESSAGE"/>
+            <not>
+                <columnExists tableName="INCIDENT_MESSAGE" columnName="P_OTHER_MACHINE_OPERATOR"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: Add P_OTHER_MACHINE_OPERATOR column to INCIDENT_MESSAGE table</comment>
+        <addColumn tableName="INCIDENT_MESSAGE">
+            <column name="P_OTHER_MACHINE_OPERATOR" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

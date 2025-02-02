@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="36ac1b37-3011-4777-bc63-c7e389d75358" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for CYCLEREPORT_OID_FK of table CYCLEREPORT as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="CYCLEREPORT" foreignKeyName="CYCLEREPORT_OID_FK"/>
+        </preConditions>
+        <comment>AHS-9055: DropForeignKeyConstraint CYCLEREPORT_OID_FK from CYCLEREPORT (OID)</comment>
+        <dropForeignKeyConstraint baseTableName="CYCLEREPORT" constraintName="CYCLEREPORT_OID_FK"/>
+        <rollback>
+            <addForeignKeyConstraint baseTableName="CYCLEREPORT" baseColumnNames="OID" constraintName="CYCLEREPORT_OID_FK" referencedTableName="CYCLE" referencedColumnNames="CYCLE_OID" onDelete="NO ACTION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="7b5c1f6e-1b2c-4bb0-ab7b-9f289b45e95c" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for CYCLEREPORT_OID_FK to table CYCLEREPORT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="CYCLEREPORT" columnName="OID"/>
+            <columnExists tableName="CYCLE" columnName="CYCLE_OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="CYCLEREPORT" foreignKeyName="CYCLEREPORT_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-9055: AddForeignKeyConstraint CYCLEREPORT_OID_FK to CYCLEREPORT (OID)</comment>
+        <sql>DELETE FROM CYCLEREPORT WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM CYCLE WHERE CYCLE.CYCLE_OID = CYCLEREPORT.OID)</sql>
+        <addForeignKeyConstraint baseTableName="CYCLEREPORT" baseColumnNames="OID" constraintName="CYCLEREPORT_OID_FK" referencedTableName="CYCLE" referencedColumnNames="CYCLE_OID" onDelete="CASCADE"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="CYCLEREPORT" constraintName="CYCLEREPORT_OID_FK"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

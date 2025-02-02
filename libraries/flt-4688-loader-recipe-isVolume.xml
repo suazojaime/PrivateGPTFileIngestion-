@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="0d82a5a4-be07-42a1-a18d-4ad80cc739ba" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ISVOLUME to table LOADER_RECIPE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="LOADER_RECIPE"/>
+            <not>
+                <columnExists tableName="LOADER_RECIPE" columnName="ISVOLUME"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4688: AddColumn LOADER_RECIPE.ISVOLUME</comment>
+        <addColumn tableName="LOADER_RECIPE">
+            <column name="ISVOLUME" type="BOOLEAN" defaultValueBoolean="true" remarks="This loader recipe is based on volumes not mass.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

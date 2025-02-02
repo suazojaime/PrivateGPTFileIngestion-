@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!-- This is a special root only context -->
+<extension xmlns="http://www.minestar.au.cat.com/namespace/extension"
+           id="minestar-web-root" name="MineStar Web Root" compulsory="true"
+           invisible="true" root="Web/MineStar Web Root" privilege=""
+           webdirectory="web-root" webcontext=""/>

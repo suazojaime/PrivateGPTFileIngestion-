@@ -1,0 +1,71 @@
+<?xml version="1.0" standalone="yes"?>
+<!-- Thu Jun 10 15:06:56 EDT 2004 -->
+<configuration>
+<options>
+<group name="Simulation">
+<group name="ShiftTimeBounds">
+<parameter name="Start">
+<currentvalue>ms{946728000000}</currentvalue>
+</parameter>
+<parameter name="End">
+<currentvalue>ms{946771200000}</currentvalue>
+</parameter>
+</group>
+<group name="AutoFleetDecrement">
+<parameter name="MaxFleetSize">
+<currentvalue>0</currentvalue>
+</parameter>
+<parameter name="MinFleetSize">
+<currentvalue>1</currentvalue>
+</parameter>
+<parameter name="TruckDecrement">
+<currentvalue>1</currentvalue>
+</parameter>
+<parameter name="Enable">
+<currentvalue>yes</currentvalue>
+</parameter>
+<parameter name="TruckDroppingOrder">
+<currentvalue>listed</currentvalue>
+</parameter>
+</group>
+<group name="Database">
+<parameter name="URL">
+<currentvalue>Sim</currentvalue>
+</parameter>
+<parameter name="SimulationName">
+<currentvalue>Sim</currentvalue>
+</parameter>
+</group>
+</group>
+<group name="SimulationLogs">
+<group name="ScreenLog">
+<group name="Details">
+<parameter name="PrintTravels">
+<currentvalue>yes</currentvalue>
+</parameter>
+<parameter name="PrintAssignments">
+<currentvalue>yes</currentvalue>
+</parameter>
+<parameter name="PrintServices">
+<currentvalue>yes</currentvalue>
+</parameter>
+</group>
+<parameter name="Enable">
+<currentvalue>yes</currentvalue>
+</parameter>
+</group>
+<group name="TrucksLog">
+<parameter name="Enable">
+<currentvalue>no</currentvalue>
+</parameter>
+</group>
+</group>
+<group name="SimulationAdvanced">
+<group name="InitialAssigmentValidation">
+<parameter name="UseDummyLocation">
+<currentvalue>yes</currentvalue>
+</parameter>
+</group>
+</group>
+</options>
+</configuration>

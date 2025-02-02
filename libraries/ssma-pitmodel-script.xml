@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ssma-script-file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\Schemas\O2SSConsoleScriptSchema.xsd">
+
+  <config>
+    <output-providers>
+      <output-window suppress-messages="false"
+                     destination="stdout"/>
+      <upgrade-project action="yes"/>
+      <data-migration-connection source-use-last-used="true"
+                                 target-server="target_pitmodeldb"/>
+
+      <progress-reporting enable="false"
+                          report-messages="false"
+                          report-progress="every-20%"/>
+
+     <object-overwrite action="skip" />
+
+     <log-verbosity level="debug"/>
+
+      </output-providers>
+  </config>
+  
+  <script-commands>
+  
+  <create-new-project project-folder="$project_folder$"
+                        project-name="$project_name$"
+                        overwrite-if-exists="true" />
+						
+    <connect-source-database server="source_pitmodeldb" />
+
+    <connect-target-database server="target_pitmodeldb" />
+  
+	<map-schema source-schema="$OraclePitModelUserName$"
+                sql-server-schema="$SQLServerPitModelUserName$.dbo" />
+   
+   <synchronize-target object-name="$SQLServerPitModelUserName$.dbo"
+                        on-error="fail-script"
+                        report-errors-to="$SynchronizationReports$" />
+   
+    <migrate-data object-name="$OraclePitModelUserName$.Tables"
+                  object-type="category"
+                  write-summary-report-to="$SummaryReports$"
+                  report-errors="true"
+                  verbose="true" />
+    
+    <save-project />
+
+    <close-project />
+
+  </script-commands>
+  
+</ssma-script-file>

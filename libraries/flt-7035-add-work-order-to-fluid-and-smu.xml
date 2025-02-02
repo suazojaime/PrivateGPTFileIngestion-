@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="f80ff805-401a-4dc4-aab7-0892d0b1f5ef" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for WORKORDER_REF to table FLUID_SMU_RECORD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="FLUID_SMU_RECORD"/>
+            <not>
+                <columnExists tableName="FLUID_SMU_RECORD" columnName="WORKORDER_REF"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7035: AddColumn FLUID_SMU_RECORD.WORKORDER_REF</comment>
+        <addColumn tableName="FLUID_SMU_RECORD">
+            <column name="WORKORDER_REF" type="VARCHAR(254)" remarks="The work order reference to be attached to this fluid and SMU record"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="ee86814e-17d6-4815-927b-520ba5bad0bc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ALLOW_SMU_RESET to table FLUID_SMU_RECORD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="FLUID_SMU_RECORD"/>
+            <not>
+                <columnExists tableName="FLUID_SMU_RECORD" columnName="ALLOW_SMU_RESET"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7035: AddColumn FLUID_SMU_RECORD.ALLOW_SMU_RESET</comment>
+
+        <addColumn tableName="FLUID_SMU_RECORD">
+            <column name="ALLOW_SMU_RESET" type="BOOLEAN" remarks="True if this record contains an authorised SMU hours reset"/>
+        </addColumn>
+        <sql>UPDATE FLUID_SMU_RECORD SET ALLOW_SMU_RESET = 0</sql>
+        <addNotNullConstraint tableName="FLUID_SMU_RECORD" columnName="ALLOW_SMU_RESET" columnDataType="BOOLEAN"/>
+        <rollback>
+            <dropColumn tableName="FLUID_SMU_RECORD" columnName="ALLOW_SMU_RESET"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

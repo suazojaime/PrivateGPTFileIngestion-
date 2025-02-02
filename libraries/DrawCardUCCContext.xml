@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:condbean="http://www.minestar.au.cat.com/springbeans/condbean"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.minestar.au.cat.com/springbeans/condbean http://www.minestar.au.cat.com/springbeans/condbean/condbeans.xsd
+       ">
+
+
+    <!-- internal cache beans, not available for remoting or serviceFactory -->
+    <condbean:cond privilege="Underground">
+        <bean id="activeDrawCardEntryCacheImpl" class="minestar.production.uifacade.drawcard.collection.ActiveDrawCardEntryCache"
+              lazy-init="true" parent="cacheParent">
+            <property name="notification" ref="notification"/>
+            <property name="drawCardManagementService" ref="drawCardManagementServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="drawCardAssignmentCacheImpl" class="minestar.production.uifacade.drawcard.collection.DrawCardAssignmentCache"
+              lazy-init="true" parent="cacheParent">
+            <property name="notification" ref="notification"/>
+            <property name="drawCardAssignmentService" ref="drawCardAssignmentServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="undergroundAreaCacheImpl" class="minestar.production.uifacade.drawcard.collection.UndergroundAreaCache"
+              lazy-init="true" parent="cacheParent">
+            <property name="notification" ref="notification"/>
+            <property name="undergroundLayoutService" ref="undergroundLayoutServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="joinedUndergroundAreaCacheImpl" class="minestar.production.uifacade.drawcard.collection.JoinedUndergroundAreaCache"
+              lazy-init="true" parent="cacheParent">
+            <property name="notification" ref="notification"/>
+            <property name="undergroundLayoutService" ref="undergroundLayoutServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="drawPointCacheImpl" class="minestar.production.uifacade.drawcard.collection.DrawPointCache"
+              lazy-init="true" parent="cacheParent">
+            <property name="notification" ref="notification"/>
+            <property name="undergroundLayoutService" ref="undergroundLayoutServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="drawCardPanelCacheImpl" class="minestar.production.uifacade.drawcard.collection.DrawCardAreaCache"
+              lazy-init="true">
+            <property name="notification" ref="notification"/>
+            <property name="drawCardManagementService" ref="drawCardManagementServiceImpl"/>
+            <property name="undergroundAreaCache" ref="undergroundAreaCacheImpl" />
+            <property name="joinedUndergroundAreaCache" ref="joinedUndergroundAreaCacheImpl" />
+            <property name="undergroundLayoutService" ref="undergroundLayoutServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="drawPointOperatingStatusCacheImpl" class="minestar.production.uifacade.drawcard.collection.DrawPointOperatingStatusCache"
+              lazy-init="true" parent="cacheParent">
+            <property name="undergroundLayoutService" ref="undergroundLayoutServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="orePassCacheImpl" class="minestar.production.uifacade.drawcard.collection.OrePassCache"
+              lazy-init="true" parent="cacheParent">
+            <property name="notification" ref="notification"/>
+            <property name="drawCardAreaCache" ref="drawCardPanelCacheImpl"/>
+            <property name="undergroundLayoutService" ref="undergroundLayoutServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="orePassOperatingStatusCacheImpl" class="minestar.production.uifacade.drawcard.collection.OrePassOperatingStatusCache"
+              lazy-init="true" parent="cacheParent">
+            <property name="undergroundLayoutService" ref="undergroundLayoutServiceImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <!-- must have this -->
+    <condbean:cond privilege="Underground">
+        <bean id="drawCardUCCImpl" class="minestar.production.uifacade.drawcard.impl.DrawCardUCCImpl"
+              lazy-init="true">
+            <property name="drawCardAssignmentService" ref="drawCardAssignmentServiceImpl"/>
+            <property name="materialManagementService" ref="materialManagementServiceImpl"/>
+            <property name="mineFleetService" ref="mineFleetServiceImpl"/>
+            <property name="undergroundLayoutService" ref="undergroundLayoutServiceImpl"/>
+            <property name="drawPointConditionBuilder" ref="drawPointConditionBuilder"/>
+            <property name="activeDrawCardEntryCache" ref="activeDrawCardEntryCacheImpl"/>
+            <property name="drawCardAssignmentCache" ref="drawCardAssignmentCacheImpl"/>
+            <property name="drawCardAreaCache" ref="drawCardPanelCacheImpl" />
+            <property name="drawPointCache" ref="drawPointCacheImpl"/>
+            <property name="drawPointOperatingStatusCache" ref="drawPointOperatingStatusCacheImpl"/>
+            <property name="orePassCache" ref="orePassCacheImpl"/>
+            <property name="orePassOperatingStatusCache" ref="orePassOperatingStatusCacheImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean id="registerDrawCardUCC" parent="registrationInstance" lazy-init="true">
+            <constructor-arg value="Draw Card UCC"/>
+            <constructor-arg value="minestar.production.uifacade.drawcard.DrawCardUCCFacade"/>
+            <constructor-arg ref="drawCardUCCImpl"/>
+        </bean>
+    </condbean:cond>
+
+    <!-- support for serviceFactory -->
+    <condbean:cond privilege="Underground">
+        <bean id="registerDrawCardUCCImpl" parent="registrationInstance" lazy-init="true">
+            <constructor-arg value="Draw Card UCC"/>
+            <constructor-arg value="minestar.production.uifacade.drawcard.DrawCardUCCFacade"/>
+            <constructor-arg ref="drawCardUCCImpl"/>
+        </bean>
+    </condbean:cond>
+
+
+    <!-- support for remoting -->
+    <condbean:cond privilege="Underground">
+        <bean id="drawCardUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+            <property name="targetSource">
+                <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                    <property name="targetBeanName" value="drawCardUCCImpl"/>
+                </bean>
+            </property>
+        </bean>
+    </condbean:cond>
+
+    <condbean:cond privilege="Underground">
+        <bean parent="rmiServiceExporter">
+            <property name="serviceName" value="drawCardUCC"/>
+            <property name="service" ref="drawCardUCCProxy"/>
+            <property name="serviceInterface" value="minestar.production.uifacade.drawcard.DrawCardUCCFacade"/>
+        </bean>
+    </condbean:cond>
+
+</beans>

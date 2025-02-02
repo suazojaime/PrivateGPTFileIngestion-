@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="MineStar" id="310615e9-3c20-4ad7-a41d-f075aa483266"
+               context="Production/Production_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>AHS-8356: CreateView gis_gradeblock_tfgl_10</comment>
+        <createView viewName="gis_gradeblock_tfgl_10" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                gradeblock_id,
+                model_update_version,
+                gradeblock_display_name,
+                gradeblock_default_material_id,
+                gradeblock_alternate_material_id,
+                gradeblock_pit_name,
+                gradeblock_bench_name,
+                gradeblock_cut_name,
+                gradeblock_region_name,
+                gradeblock_group_id,
+                gradeblock_terrain_group_id,
+                gradeblock_in_use,
+                is_active
+            FROM
+                gis_gradeblocks;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="89b1dd58-fa24-496e-88b3-8db5e3d47d6b"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>FLT-8920: CreateView gis_gradeblock_tfgl_11</comment>
+        <createView viewName="gis_gradeblock_tfgl_11" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                gradeblock_id,
+                model_update_version,
+                layer_update_version,
+                gradeblock_display_name,
+                gradeblock_default_material_id,
+                gradeblock_alternate_material_id,
+                gradeblock_pit_name,
+                gradeblock_bench_name,
+                gradeblock_cut_name,
+                gradeblock_region_name,
+                gradeblock_group_id,
+                gradeblock_terrain_group_id,
+                gradeblock_in_use,
+                hierarchy
+            FROM
+                gis_gradeblocks
+            WHERE
+                is_active = true;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="9a6722c4-1a57-46da-9653-ef3a6ab8f402"
+               context="Production/Production_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>AHS-8356: CreateView gis_gradeblocks_actives</comment>
+        <createView viewName="gis_gradeblocks_actives" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                oid_ref,
+                gradeblock_id,
+                model_update_version,
+                layer_update_version,
+                gradeblock_display_name,
+                gradeblock_name,
+                gradeblock_colour,
+                gradeblock_default_material_id,
+                gradeblock_alternate_material_id,
+                gradeblock_pit_name,
+                gradeblock_bench_name,
+                gradeblock_cut_name,
+                gradeblock_region_name,
+                gradeblock_group_id,
+                gradeblock_terrain_group_id,
+                gradeblock_in_use,
+                is_active
+            FROM
+                gis_gradeblocks
+            WHERE
+                gradeblock_in_use = true
+                and is_active = true;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="cadca76c-0079-4edd-b948-240d2265b2ca"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>AHS-8356: CreateView gis_lanes_office</comment>
+        <createView viewName="gis_lanes_office" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                "OID_REF",
+                "SPEEDLIMIT",
+                "LANENAME",
+                "LANECOLOUR"
+            FROM
+                gis_lanes;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="6b443c08-bf64-4f83-bebe-e0920cd26c73"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>AHS-8356: CreateView gis_lanes_onboard</comment>
+        <createView viewName="gis_lanes_onboard" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                "LANE_ID",
+                "REVISION",
+                "LEFT_EDGE",
+                "RIGHT_EDGE",
+                "PREFERRED_PATH",
+                "SPEEDLIMIT",
+                "SPEEDLIMIT2",
+                "AUTONOMOUS",
+                "MANNED",
+                "MODEL_UPDATE_VERSION",
+                "HAS_EVER_BEEN_MANNED",
+                "IS_ONBOARD_DISPLAY",
+                "IS_DYNAMIC",
+                "IS_UNCERTAIN_SURFACE_START",
+                "IS_UNCERTAIN_SURFACE_END",
+                "USE_MAX_CURVATURE",
+                "LAYER_UPDATE_VERSION"
+            FROM
+                gis_lanes;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="a891d945-70f4-47a6-9b08-1c2621542815"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>AHS-8356: CreateView gis_material_tfgl_10</comment>
+        <createView viewName="gis_material_tfgl_10" replaceIfExists="true">
+            SELECT
+                material_id,
+                model_update_version,
+                material_name,
+                material_colour,
+                material_caescode_id,
+                is_active
+            FROM
+                gis_material;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="0234837f-8926-4e37-b033-d004802260f2"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>FLT-8920: CreateView gis_material_tfgl_11</comment>
+        <createView viewName="gis_material_tfgl_11" replaceIfExists="true">
+            SELECT
+                material_id,
+                model_update_version,
+                layer_update_version,
+                material_name,
+                material_colour,
+                material_caescode_id
+            FROM
+                gis_material
+            WHERE
+                is_active = true;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="9b4f004a-c929-41b5-a8de-bbb739fb81db"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>AHS-8356: CreateView gis_processor_tfgl_10</comment>
+        <createView viewName="gis_processor_tfgl_10" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                processorid,
+                model_update_version,
+                processorname,
+                processorcolor,
+                is_active
+            FROM
+                gis_processor
+            WHERE
+                direct_tip_processor;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="36ce8225-abde-4097-9f87-6e4c0f26705d"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>FLT-8920: CreateView gis_processor_tfgl_11</comment>
+        <createView viewName="gis_processor_tfgl_11" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                processorid,
+                model_update_version,
+                layer_update_version,
+                processorname,
+                processorcolor,
+                direct_tip_processor,
+                waypoint_id,
+                waypoint_oid
+            FROM
+                gis_processor
+            WHERE
+                is_active = true;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="c928d8e2-fba5-4a4e-b3d7-900e6360021b"
+               context="Production/Production_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>AHS-8356: CreateView gis_stockpile_actives</comment>
+        <createView viewName="gis_stockpile_actives" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                oid_ref,
+                stockpile_id,
+                stockpile_display_name,
+                stockpile_name,
+                stockpile_colour,
+                model_update_version,
+                layer_update_version,
+                stockpile_default_material_id,
+                stockpile_alternate_material_id,
+                rompad_id,
+                stockpile_terrain_group_id,
+                stockpile_in_use,
+                is_active
+            FROM
+                gis_stockpile
+            WHERE
+                stockpile_in_use = true
+                and is_active = true;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="6aad7591-4021-4f78-a568-6bf6030507d0"
+               context="Production/Production_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>AHS-8356: CreateView gis_stockpile_tfgl_10</comment>
+        <createView viewName="gis_stockpile_tfgl_10" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                stockpile_id,
+                stockpile_display_name,
+                model_update_version,
+                stockpile_default_material_id,
+                stockpile_alternate_material_id,
+                rompad_id,
+                stockpile_terrain_group_id,
+                is_active
+            FROM
+                gis_stockpile;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="35611d64-19b0-46f9-b175-ccb36ea5cf2b"
+               context="Machine_Tracking/Machine_Tracking_Management"
+               runOnChange="true" runAlways="true" failOnError="true">
+        <comment>FLT-8920: CreateView gis_stockpile_tfgl_11</comment>
+        <createView viewName="gis_stockpile_tfgl_11" replaceIfExists="true">
+            SELECT
+                "GEOM",
+                stockpile_id,
+                stockpile_display_name,
+                model_update_version,
+                layer_update_version,
+                stockpile_default_material_id,
+                stockpile_alternate_material_id,
+                rompad_id,
+                stockpile_terrain_group_id
+            FROM
+                gis_stockpile
+            WHERE
+                is_active = true;
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="da4f4808-bfa5-4b6b-9078-b13b5f22581d"
+               context="Machine_Tracking/Machine_Tracking_Management" runAlways="true" runOnChange="true">
+        <comment>AHS-8356: CreateView GIS_PLANS_ACTIVE_V</comment>
+        <createView viewName="GIS_PLANS_ACTIVE_V" replaceIfExists="true">
+            SELECT
+                PLAN_OID AS "PLAN_OID",
+                PLANNAME AS "PLANNAME",
+                PLANTYPE AS "PLANTYPE",
+                GEOM AS "GEOM",
+                IS_ACTIVE AS "IS_ACTIVE",
+                LAYER_UPDATE_VERSION AS "LAYER_UPDATE_VERSION"
+            FROM
+                GIS_PLANS
+            WHERE
+                IS_ACTIVE = true
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="6ed69b95-61fb-448d-b4db-534d4815deee"
+               context="Machine_Tracking/Machine_Tracking_Management" runAlways="true" runOnChange="true">
+        <comment>AHS-8356: CreateView GIS_PLANS_ARCHIVED_V</comment>
+        <createView viewName="GIS_PLANS_ARCHIVED_V" replaceIfExists="true">
+            SELECT
+                PLAN_OID AS "PLAN_OID",
+                PLANNAME AS "PLANNAME",
+                PLANTYPE AS "PLANTYPE",
+                GEOM AS "GEOM",
+                IS_ACTIVE AS "IS_ACTIVE",
+                LAYER_UPDATE_VERSION AS "LAYER_UPDATE_VERSION"
+            FROM
+                GIS_PLANS
+            WHERE
+                IS_ACTIVE = false
+        </createView>
+    </changeSet>
+
+    <changeSet author="MineStar" id="fa5495c2-1ea7-4626-82a5-68201308c5bf"
+               context="Machine_Tracking/Machine_Tracking_Management" runAlways="true" runOnChange="true">
+        <comment>AHS-8356: CreateView GIS_REGIONS_OF_INTEREST_V</comment>
+        <createView viewName="GIS_REGIONS_OF_INTEREST_V" replaceIfExists="true">
+            SELECT
+                PLAN_OID AS "PLAN_OID",
+                PLANNAME AS "PLANNAME",
+                PLANTYPE AS "PLANTYPE",
+                GEOM AS "GEOM",
+                IS_ACTIVE AS "IS_ACTIVE",
+                LAYER_UPDATE_VERSION AS "LAYER_UPDATE_VERSION"
+            FROM
+                GIS_PLANS
+            WHERE
+                IS_ACTIVE = true
+        </createView>
+    </changeSet>
+
+</databaseChangeLog>

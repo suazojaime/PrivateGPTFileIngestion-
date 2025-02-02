@@ -1,0 +1,506 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2023 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical" default-lazy="false" default-access="field">
+
+    <class
+            name="minestar.mine.service.incident.impl.AbstractIncidentMessage"
+            table="INCIDENT_MESSAGE">
+
+        <meta attribute="index" inherit="false">
+            name=INCIDENT_MESSAGE_EVENT_TIME
+            columns=EVENT_TIMESTAMP_UTC
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=INCIDENT_MESSAGE_ZONE
+            columns=Z_ZONE
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=INCIDENT_MESSAGE_UNIQUE
+            columns=EVENT_HANDLE, EVENT_TIMESTAMP_UTC, EVENT_ACTIVITY, MACHINE, INCIDENT_TYPE
+            unique=true
+        </meta>
+
+        <meta attribute="description">Records all incident messages received from machines.</meta>
+
+        <meta attribute="view-master">true</meta>
+        <meta attribute="view-include">true</meta>
+        <meta attribute="viewproperty-machineClass_N" inherit="true">
+            type=string
+            description=The name of the machine class of the machine that generated the incident message.
+            expression=lookupResource.incidentMessage.machineClass_N.query
+        </meta>
+
+        <meta attribute="viewproperty-machineClassOID" inherit="true">
+            type=string
+            description=The OID of the machine class of the machine that generated the incident message.
+            expression=lookupResource.incidentMessage.machineClassOID.query
+        </meta>
+
+        <meta attribute="viewproperty-crew_N" inherit="true">
+            type=string
+            description=The name of the crew of the operator logged on to the machine at time of incident
+            expression=lookupResource.incidentMessage.crew_N.query
+        </meta>
+
+        <meta attribute="viewproperty-crewOID" inherit="true">
+            type=string
+            description=The OID of the crew of the operator logged on to the machine at time of incident
+            expression=lookupResource.incidentMessage.crewOID.query
+        </meta>
+
+        <meta attribute="viewproperty-shift_N" inherit="true">
+            type=string
+            description=The name of the current shift at the time of the incident
+            expression=lookupResource.incidentMessage.shift_N.query
+        </meta>
+
+        <meta attribute="viewproperty-shiftOID" inherit="true">
+            type=string
+            description=The OID of the current shift at the time of the incident
+            expression=lookupResource.incidentMessage.shiftOID.query
+        </meta>
+
+        <cache usage="read-write" region="historical"/>
+
+        <id name="OID"
+            type="java.lang.Long"
+            column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        <discriminator column="INCIDENT_TYPE" type="string"/>
+
+        <property name="alarmLevel" type="java.lang.Integer" column="ALARM_LEVEL" not-null="true"/>
+
+        <property name="eventHandle" type="java.lang.Long" column="EVENT_HANDLE" not-null="true"/>
+
+        <property name="eventTimestamp" type="TimestampType" column="EVENT_TIMESTAMP_UTC" not-null="true">
+            <meta attribute="view-localtime">true</meta>
+            <meta attribute="utc-description">The utc timestamp of the event.</meta>
+            <meta attribute="description">The timestamp of the event.</meta>
+        </property>
+
+        <property name="eventActivity"
+                  type="minestar.mine.service.incident.impl.IncidentActivityEnumUserType"
+                  column="EVENT_ACTIVITY"
+                  not-null="true">
+            <meta attribute="defaultValue">'OCCURRED'</meta>
+            <meta attribute="description">The status of this incident.</meta>
+        </property>
+
+        <many-to-one name="machine" column="MACHINE" class="minestar.pitlink.domain.machine.MachineReference"
+                     not-null="true" not-found="ignore"/>
+
+        <component name="machinePosition">
+            <property name="location" type="XYZCoordinate">
+                <meta attribute="alias">SRC_LOCATION</meta>
+                <column name="MACHINE_POSITION_X"/>
+                <column name="MACHINE_POSITION_Y"/>
+                <column name="MACHINE_POSITION_Z"/>
+            </property>
+            <property name="accuracy"
+                      column="MACHINE_ACCURACY"
+                      not-null="false">
+                <meta attribute="unitType">length</meta>
+                <type name="quantity">
+                    <param name="unitType">length</param>
+                </type>
+            </property>
+            <property name="heading"
+                      column="MACHINE_HEADING"
+                      not-null="false">
+                <meta attribute="unitType">plane angle</meta>
+                <type name="quantity">
+                    <param name="unitType">plane angle</param>
+                </type>
+            </property>
+            <property name="speed"
+                      column="MACHINE_SPEED"
+                      not-null="false">
+                <meta attribute="unitType">speed</meta>
+                <type name="quantity">
+                    <param name="unitType">speed</param>
+                </type>
+            </property>
+            <property name="positionTimestamp" type="TimestampType">
+                <meta attribute="view-localtime">true</meta>
+                <meta attribute="utc-description">The utc time of the machine position</meta>
+                <meta attribute="description">The time of the machine position</meta>
+                <column name="MACHINE_POSITION_TIME_UTC"/>
+            </property>
+        </component>
+
+        <many-to-one name="operator" class="minestar.machinetracking.domain.PersonReference" not-found="ignore"/>
+
+        <subclass name="minestar.mine.service.incident.impl.LaneIncidentMessage" discriminator-value="LANE_INCIDENT">
+            <many-to-one name="lane" column="L_LANE" class="minestar.mine.domain.minemodel.LaneReference" not-found="ignore">
+                <meta attribute="description">The lane of this Incident.</meta>
+            </many-to-one>
+        </subclass>
+
+        <subclass name="minestar.mine.service.incident.impl.ZoneIncidentMessage" discriminator-value="ZONE_INCIDENT">
+            <many-to-one name="zone" column="Z_ZONE" class="minestar.mine.domain.minemodel.ZoneReference" not-found="ignore">
+                <meta attribute="description">The zone of this Incident.</meta>
+            </many-to-one>
+        </subclass>
+
+        <subclass name="minestar.mine.service.incident.impl.ProximityIncidentMessage"
+                  discriminator-value="PROXIMITY_INCIDENT">
+            <many-to-one name="otherMachine" column="P_OTHER_MACHINE"
+                         class="minestar.pitlink.domain.machine.MachineReference"
+                         not-found="ignore"/>
+            <many-to-one name="otherMachineOperator" column="P_OTHER_MACHINE_OPERATOR"
+                         class="minestar.machinetracking.domain.PersonReference"
+                         not-found="ignore"/>
+            <component name="otherMachinePosition">
+                <property name="location" type="XYZCoordinate">
+                    <meta attribute="alias">OTHER_LOCATION</meta>
+                    <column name="P_OTHER_MACHINE_POSITION_X"/>
+                    <column name="P_OTHER_MACHINE_POSITION_Y"/>
+                    <column name="P_OTHER_MACHINE_POSITION_Z"/>
+                </property>
+                <property name="accuracy"
+                          column="P_OTHER_MACHINE_ACCURACY"
+                          not-null="false">
+                    <meta attribute="unitType">length</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+                <property name="heading"
+                          column="P_OTHER_MACHINE_HEADING"
+                          not-null="false">
+                    <meta attribute="unitType">plane angle</meta>
+                    <type name="quantity">
+                        <param name="unitType">plane angle</param>
+                    </type>
+                </property>
+                <property name="speed"
+                          column="P_OTHER_MACHINE_SPEED"
+                          not-null="false">
+                    <meta attribute="unitType">speed</meta>
+                    <type name="quantity">
+                        <param name="unitType">speed</param>
+                    </type>
+                </property>
+                <property name="positionTimestamp" type="TimestampType">
+                    <meta attribute="view-localtime">true</meta>
+                    <meta attribute="utc-description">The utc time of the machine position</meta>
+                    <meta attribute="description">The time of the machine position</meta>
+                    <column name="P_OTHER_MACHINE_POS_TIME_UTC"/>
+                </property>
+            </component>
+            <property name="violationType"
+                      type="minestar.mine.service.incident.impl.ViolationTypeEnumUserType"
+                      column="P_VIOLATION_TYPE">
+                <meta attribute="defaultValue">'UNDEFINED'</meta>
+                <meta attribute="description">The violation type of this incident.</meta>
+            </property>
+
+            <property name="alarmMuted" type="boolean">
+                <meta attribute="description">This flag will be set if the onboard audible alarm was muted at the time
+                    an incident event was raised
+                </meta>
+                <column name="ALARM_MUTED" not-null="true" default="0"/>
+            </property>
+
+            <property name="alarmSilenced" type="boolean">
+                <meta attribute="description">This flag will be set if a zone was silenced when an incident event was
+                    raised
+                </meta>
+                <column name="ALARM_SILENCED" not-null="true" default="0"/>
+            </property>
+        </subclass>
+
+        <subclass name="minestar.mine.service.incident.impl.RadarIncidentMessage" discriminator-value="RADAR_INCIDENT">
+            <component name="radar_0_status">
+                <property name="proximityLevel"
+                          type="java.lang.Integer"
+                          column="R0_LEVEL">
+                </property>
+                <property name="activity"
+                          type="minestar.mine.service.incident.impl.RadarActivityEnumUserType"
+                          column="R0_ACTIVITY">
+                    <meta attribute="defaultValue">'UNCHANGED'</meta>
+                    <meta attribute="description">The radar activity for the front radar in this incident.</meta>
+                </property>
+            </component>
+            <component name="radar_1_status">
+                <property name="proximityLevel"
+                          type="java.lang.Integer"
+                          column="R1_LEVEL">
+                </property>
+                <property name="activity"
+                          type="minestar.mine.service.incident.impl.RadarActivityEnumUserType"
+                          column="R1_ACTIVITY">
+                    <meta attribute="defaultValue">'UNCHANGED'</meta>
+                    <meta attribute="description">The radar activity for the right radar in this incident.</meta>
+                </property>
+            </component>
+            <component name="radar_2_status">
+                <property name="proximityLevel"
+                          type="java.lang.Integer"
+                          column="R2_LEVEL">
+                </property>
+                <property name="activity"
+                          type="minestar.mine.service.incident.impl.RadarActivityEnumUserType"
+                          column="R2_ACTIVITY">
+                    <meta attribute="defaultValue">'UNCHANGED'</meta>
+                    <meta attribute="description">The radar activity for the rear radar in this incident.</meta>
+                </property>
+            </component>
+            <component name="radar_3_status">
+                <property name="proximityLevel"
+                          type="java.lang.Integer"
+                          column="R3_LEVEL">
+                </property>
+                <property name="activity"
+                          type="minestar.mine.service.incident.impl.RadarActivityEnumUserType"
+                          column="R3_ACTIVITY">
+                    <meta attribute="defaultValue">'UNCHANGED'</meta>
+                    <meta attribute="description">The radar activity for the left radar in this incident.</meta>
+                </property>
+            </component>
+
+            <property name="endReason"
+                      type="minestar.mine.service.incident.impl.RadarEndReasonEnumUserType"
+                      column="END_REASON">
+                <meta attribute="defaultValue">'UNDEFINED'</meta>
+                <meta attribute="description">The reason the radar incident ended.</meta>
+            </property>
+        </subclass>
+
+        <subclass name="minestar.mine.service.incident.impl.SpeedIncidentMessage" discriminator-value="SPEED_INCIDENT">
+            <property name="maximumSpeed" column="S_MAXIMUM_SPEED">
+                <meta attribute="unitType">speed</meta>
+                <type name="quantity">
+                    <param name="unitType">speed</param>
+                </type>
+            </property>
+            <property name="speedLimit" column="S_SPEED_LIMIT">
+                <meta attribute="unitType">speed</meta>
+                <type name="quantity">
+                    <param name="unitType">speed</param>
+                </type>
+            </property>
+            <property name="finalMaximumSpeed" column="S_F_MAXIMUM_SPEED">
+                <meta attribute="unitType">speed</meta>
+                <type name="quantity">
+                    <param name="unitType">speed</param>
+                </type>
+            </property>
+            <property name="finalSpeedLimit" column="S_F_SPEED_LIMIT">
+                <meta attribute="unitType">speed</meta>
+                <type name="quantity">
+                    <param name="unitType">speed</param>
+                </type>
+            </property>
+            <component name="finalMachinePosition">
+                <property name="location" type="XYZCoordinate">
+                    <meta attribute="alias">S_FINAL_LOCATION</meta>
+                    <column name="S_F_MACHINE_POSITION_X"/>
+                    <column name="S_F_MACHINE_POSITION_Y"/>
+                    <column name="S_F_MACHINE_POSITION_Z"/>
+                </property>
+                <property name="accuracy"
+                          column="S_F_MACHINE_ACCURACY"
+                          not-null="false">
+                    <meta attribute="unitType">length</meta>
+                    <type name="quantity">
+                        <param name="unitType">length</param>
+                    </type>
+                </property>
+                <property name="heading"
+                          column="S_F_MACHINE_HEADING"
+                          not-null="false">
+                    <meta attribute="unitType">plane angle</meta>
+                    <type name="quantity">
+                        <param name="unitType">plane angle</param>
+                    </type>
+                </property>
+                <property name="speed"
+                          column="S_F_MACHINE_SPEED"
+                          not-null="false">
+                    <meta attribute="unitType">speed</meta>
+                    <type name="quantity">
+                        <param name="unitType">speed</param>
+                    </type>
+                </property>
+                <property name="positionTimestamp" type="TimestampType">
+                    <meta attribute="view-localtime">true</meta>
+                    <meta attribute="utc-description">The utc time of the machine position</meta>
+                    <meta attribute="description">The time of the machine position</meta>
+                    <column name="S_F_MACHINE_POSITION_TIME_UTC"/>
+                </property>
+            </component>
+        </subclass>
+    </class>
+
+    <class name="minestar.mine.service.incident.report.IncidentReport" table="INCIDENT_REPORT" schema="historical">
+
+        <meta attribute="description">Groups all related incidents into a single consumable form.</meta>
+
+        <id name="OID" type="java.lang.Long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="id" type="int" column="ID" not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="description">An automatically generated unique ID value for this report.</meta>
+        </property>
+
+        <property name="incidentName" type="java.lang.String" column="I_NAME" not-null="false" length="500">
+            <meta attribute="description">The name or summary of the incident</meta>
+        </property>
+
+        <many-to-one name="operator" column="I_OPERATOR" class="minestar.machinetracking.domain.PersonReference"
+                     not-found="ignore">
+            <meta attribute="description">The operator for this incident.</meta>
+        </many-to-one>
+
+        <property name="incidentStatus" type="minestar.mine.service.incident.report.IncidentStatusEnumUserType"
+                  column="I_STATUS">
+            <meta attribute="description">The status of this incident.</meta>
+        </property>
+        <many-to-one
+                name="incidentCategory"
+                class="minestar.mine.service.incident.impl.IncidentCategory"
+                column="INCIDENT_CATEGORY"
+                not-null="false"
+                not-found="ignore"
+        >
+            <meta attribute="ignoreManyToOneLookupExpr">true</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="incidentCause"
+                class="minestar.mine.service.incident.impl.IncidentCause"
+                column="INCIDENT_CAUSE"
+                not-null="false"
+                not-found="ignore"
+        >
+            <meta attribute="ignoreManyToOneLookupExpr">true</meta>
+        </many-to-one>
+
+        <list name="incidentEvents" table="INCIDENT_REPORT_EVENTS">
+            <meta attribute="index-alias">elementNr</meta>
+            <meta attribute="description">List of incident events</meta>
+            <meta attribute="foreign-key">on-delete=CASCADE</meta>
+            <key column="OID"/>
+            <list-index column="ELEMENT_NR"/>
+            <many-to-many class="minestar.mine.service.incident.impl.AbstractIncidentMessage"/>
+        </list>
+
+        <list name="userComments" table="INCIDENT_REPORT_COMMENTS" cascade="all-delete-orphan">
+            <meta attribute="description">List of optional comments.</meta>
+            <key column="OID"/>
+            <list-index column="SORT_ORDER"/>
+            <composite-element class="minestar.mine.service.incident.report.IncidentComment">
+
+                <property name="timeStamp" type="TimestampType">
+                    <meta attribute="view-localtime">true</meta>
+                    <meta attribute="utc-description">The utc time of the comment.</meta>
+                    <meta attribute="description">The time of the comment.</meta>
+                    <column name="C_TIME_STAMP_UTC"/>
+                </property>
+
+                <property name="commentType" column="C_TYPE"
+                          type="minestar.mine.service.incident.report.IncidentCommentEnumUserType">
+                    <meta attribute="description">The type of the comment.</meta>
+                </property>
+
+                <many-to-one name="commentingUser" column="C_USER" class="minestar.platform.domain.user.UserReference"
+                             not-found="ignore">
+                    <meta attribute="description">The user that added the comment in MineStar.</meta>
+                </many-to-one>
+
+                <property name="comment" column="C_COMMENT" type="java.lang.String" length="1000">
+                    <meta attribute="description">The text of the comment.</meta>
+                </property>
+            </composite-element>
+        </list>
+
+    </class>
+
+    <class
+            name="minestar.mine.service.incident.impl.IncidentCause"
+            table="INCIDENT_CAUSE"
+            lazy="false" schema="model"
+    >
+
+        <meta attribute="import-order">0</meta>
+        <meta attribute="description">Cause of Incident</meta>
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="OID"
+        >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property
+                name="incidentCause"
+                type="java.lang.String"
+                column="CAUSE"
+                unique="true"
+                length="60"
+                not-null="true"
+        >
+            <meta attribute="description">The cause of the incident</meta>
+        </property>
+
+        <property
+                name="active"
+                type="java.lang.Boolean"
+                column="IS_ACTIVE"
+                not-null="true"
+        >
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Is the incident active</meta>
+        </property>
+    </class>
+
+    <class
+            name="minestar.mine.service.incident.impl.IncidentCategory"
+            table="INCIDENT_CATEGORY"
+            lazy="false" schema="model"
+    >
+
+        <meta attribute="import-order">0</meta>
+        <meta attribute="description">Cause of Incident</meta>
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="OID"
+        >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property
+                name="incidentCategory"
+                type="java.lang.String"
+                column="CATEGORY"
+                unique="true"
+                length="60"
+                not-null="true"
+        >
+            <meta attribute="description">The category of the incident</meta>
+        </property>
+        <property
+                name="active"
+                type="java.lang.Boolean"
+                column="IS_ACTIVE"
+                not-null="true"
+        >
+            <meta attribute="defaultValue">true</meta>
+            <meta attribute="description">Is the category active</meta>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

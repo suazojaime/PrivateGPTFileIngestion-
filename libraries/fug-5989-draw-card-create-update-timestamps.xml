@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="sys_extract_utc(systimestamp)" dbms="oracle"/>
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="now" value="now()" dbms="postgresql"/>
+    <property name="now" value="getutcdate()" dbms="mssql"/>
+
+    <changeSet id="2897eefe-6059-496c-a8ad-8b0c28c36bff" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CREATED_DATE_UTC to table ACTIVE_DRAW_CARD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVE_DRAW_CARD"/>
+            <not>
+                <columnExists tableName="ACTIVE_DRAW_CARD" columnName="CREATED_DATE_UTC"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5989: AddColumn ACTIVE_DRAW_CARD.CREATED_DATE_UTC and LAST_MODIFIED_UTC</comment>
+        <addColumn tableName="ACTIVE_DRAW_CARD">
+            <column name="CREATED_DATE_UTC" type="DATETIME2" remarks="The utc time the active draw card was created." valueDate="${now}"/>
+            <column name="LAST_MODIFIED_UTC" type="DATETIME2" remarks="The utc time the active draw card was last updated." valueDate="${now}"/>
+        </addColumn>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="ACTIVE_DRAW_CARD" indexName="IDX_ADC_CREATED_DATE">
+            <column name="CREATED_DATE_UTC"/>
+        </createIndex>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="ACTIVE_DRAW_CARD" indexName="IDX_ADC_LAST_MODIFIED">
+            <column name="LAST_MODIFIED_UTC"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="4a49bd2d-259d-49b5-b343-a08b9a853fe9" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CREATED_DATE_UTC to table FUTURE_DRAW_CARD as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="FUTURE_DRAW_CARD"/>
+            <not>
+                <columnExists tableName="FUTURE_DRAW_CARD" columnName="CREATED_DATE_UTC"/>
+            </not>
+        </preConditions>
+        <comment>FUG-5989: AddColumn FUTURE_DRAW_CARD.CREATED_DATE_UTC and LAST_MODIFIED_UTC</comment>
+        <addColumn tableName="FUTURE_DRAW_CARD">
+            <column name="CREATED_DATE_UTC" type="DATETIME2" remarks="The utc time the future draw card was created." valueDate="${now}"/>
+            <column name="LAST_MODIFIED_UTC" type="DATETIME2" remarks="The utc time the future draw card was last updated." valueDate="${now}"/>
+        </addColumn>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="FUTURE_DRAW_CARD" indexName="IDX_FDC_CREATED_DATE">
+            <column name="CREATED_DATE_UTC" />
+        </createIndex>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="FUTURE_DRAW_CARD" indexName="IDX_FDC_LAST_MODIFIED">
+            <column name="LAST_MODIFIED_UTC" />
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

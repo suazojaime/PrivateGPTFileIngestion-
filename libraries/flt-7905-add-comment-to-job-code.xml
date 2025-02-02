@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="311a5688-a3d4-4fc2-aa10-ba9c71e88552" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for COMMENT of table JOBCODE as column does not exist."
+                       onFail="MARK_RAN">
+            <columnExists tableName="JOBCODE" columnName="COMMENT"/>
+        </preConditions>
+        <comment>FLT-7905: DropColumn JOBCODE.COMMENT</comment>
+        <dropColumn columnName="COMMENT" tableName="JOBCODE"/>
+        <rollback>
+            <addColumn tableName="JOBCODE">
+                <column name="COMMENT" type="VARCHAR(4000)" remarks="An optional job code comment."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="a52adbd6-ac4c-4663-81ed-0994aca1ae80" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for JOBCODE_COMMENT to table JOBCODE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="JOBCODE"/>
+            <not>
+                <columnExists tableName="JOBCODE" columnName="JOBCODE_COMMENT"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7905: AddColumn JOBCODE.JOBCODE_COMMENT</comment>
+        <addColumn tableName="JOBCODE">
+            <column name="JOBCODE_COMMENT" type="VARCHAR(4000)" remarks="An optional job code comment."/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="d5e8fa9c-db0f-4e4b-8424-7db36763a213" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for IS_CRUSHER to table MACHINE as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="IS_CRUSHER"/>
+            </not>
+        </preConditions>
+        <comment>MO-5919: AddColumn MACHINE.IS_CRUSHER</comment>
+        <addColumn tableName="MACHINE">
+            <column name="IS_CRUSHER" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="addae724-0579-4f33-8862-c1c73218cac4" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for HAS_ROCK_BREAKER to table MACHINE as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="HAS_ROCK_BREAKER"/>
+            </not>
+        </preConditions>
+        <comment>MO-5919: AddColumn MACHINE.HAS_ROCK_BREAKER</comment>
+        <addColumn tableName="MACHINE">
+            <column name="HAS_ROCK_BREAKER" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="b45196eb-ddff-476c-ac23-7179e86ae720" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for IS_CRUSHER to table MACHINECLASS as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <columnExists tableName="MACHINECLASS" columnName="IS_CRUSHER"/>
+            </not>
+        </preConditions>
+        <comment>MO-5919: AddColumn MACHINECLASS.IS_CRUSHER</comment>
+        <addColumn tableName="MACHINECLASS">
+            <column name="IS_CRUSHER" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="ae2e4347-4dc1-4324-b31b-5b260b535ded" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for HAS_ROCK_BREAKER to table MACHINECLASS as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS"/>
+            <not>
+                <columnExists tableName="MACHINECLASS" columnName="HAS_ROCK_BREAKER"/>
+            </not>
+        </preConditions>
+        <comment>MO-5919: AddColumn MACHINECLASS.HAS_ROCK_BREAKER</comment>
+        <addColumn tableName="MACHINECLASS">
+            <column name="HAS_ROCK_BREAKER" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

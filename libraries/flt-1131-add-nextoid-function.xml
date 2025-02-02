@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="cf184e2d-12da-4cf6-901f-edd701d4f11c" author="MineStar" dbms="oracle" runOnChange="true">
+        <comment>FLT-1131: CreateFunction nextOID</comment>
+        <sqlFile path="db/changelog/functions/oracle/nextOID.sql" endDelimiter="/" stripComments="true"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="e5b614c1-45d7-4f02-8381-e977cee7357f" author="MineStar" dbms="mssql" runOnChange="true">
+        <comment>FLT-1131: CreateFunction nextOID</comment>
+        <sqlFile path="db/changelog/functions/sqlserver/nextOID.sql" endDelimiter="Go" stripComments="true"/>
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>

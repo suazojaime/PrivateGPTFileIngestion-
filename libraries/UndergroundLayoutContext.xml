@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="undergroundLayoutRetrievalService" class="minestar.mine.service.minemodel.UndergroundLayoutRetrievalService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="undergroundLayoutService" class="minestar.mine.service.minemodel.UndergroundLayoutService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="undergroundStatusTimelineService" class="minestar.mine.service.minemodel.UndergroundStatusTimelineService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="undergroundMachineService" class="minestar.production.service.underground.machine.UndergroundMachineService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="drawCardAssignmentRetrievalService" class="minestar.production.service.drawcard.DrawCardAssignmentRetrievalService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="drawCardAssignmentService" class="minestar.production.service.drawcard.DrawCardAssignmentService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="drawCardRetrievalService" class="minestar.production.service.drawcard.DrawCardRetrievalService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="drawCardManagementService" class="minestar.production.service.drawcard.DrawCardManagementService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="drawCardEventProcessorService" class="minestar.production.service.drawcard.DrawCardEventProcessorService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="undergroundAlarmRecordService" class="minestar.mine.service.minemodel.UndergroundAlarmRecordService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="undergroundReportingService" class="minestar.production.service.underground.reporting.UndergroundReportingService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="undergroundShiftChangeService" class="minestar.production.service.underground.shiftchange.UndergroundShiftChangeService" factory-method="getInstance" lazy-init="true"/>
+
+    <bean id="undergroundAutomaticDelayTypeCache" class="minestar.production.application.underground.UndergroundAutomaticDelayTypeCache" factory-method="getInstance" lazy-init="true"/>
+
+</beans>

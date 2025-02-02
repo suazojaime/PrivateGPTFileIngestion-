@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="ebd7a590-abfe-4ffe-bc8e-9453576565d8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored Create Index for table GRADEBLOCK, column HIERARCHY as it already exists." onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="GRADEBLOCK_HIER" columnNames="HIERARCHY"/>
+            </not>
+        </preConditions>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="GRADEBLOCK" indexName="GRADEBLOCK_HIER">
+            <column name="HIERARCHY"/>
+        </createIndex>
+        <rollback>
+            <dropIndex tableName="GRADEBLOCK" indexName="GRADEBLOCK_HIER"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

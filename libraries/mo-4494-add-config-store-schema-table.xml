@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="4f45c901-8602-4010-8f05-3167212d6568" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for UG_CONFIG_STORE as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="UG_CONFIG_STORE"/>
+            </not>
+        </preConditions>
+        <comment>MO-4494: add table UG_CONFIG_STORE</comment>
+        <createTable tablespace="MW_ENT" remarks="An historical record of time time for missions." tableName="UG_CONFIG_STORE">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SCHEMA_VERSION" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DATA_VERSION" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONTENT" type="CLOB" remarks="Content field"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID,DATA_VERSION" constraintName="UG_CONFIG_STORE_PK" tablespace="MW_IDXENT" tableName="UG_CONFIG_STORE"/>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>
+

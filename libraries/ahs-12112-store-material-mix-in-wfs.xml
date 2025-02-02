@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="ac056b70-65f4-4f31-b6e1-603caa92ebd5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ID to table MATERIALMIX as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MATERIALMIX"/>
+            <not>
+                <columnExists tableName="MATERIALMIX" columnName="ID"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12112: AddColumn MATERIALMIX.ID</comment>
+        <addColumn tableName="MATERIALMIX">
+            <column name="ID" type="BIGINT"/>
+        </addColumn>
+        <sql>UPDATE MATERIALMIX SET ID = 0</sql>
+        <addNotNullConstraint tableName="MATERIALMIX" columnName="ID" columnDataType="BIGINT"/>
+        <rollback>
+            <dropColumn tableName="MATERIALMIX" columnName="ID"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="76b9e863-7b36-4012-92ab-ed26b5d857ad" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table MATERIALMIX as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MATERIALMIX"/>
+            <not>
+                <columnExists tableName="MATERIALMIX" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12112: AddColumn MATERIALMIX.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="MATERIALMIX">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT" remarks="The layer update version when the material mix was created/modified."/>
+        </addColumn>
+        <sql>UPDATE MATERIALMIX SET LAYER_UPDATE_VERSION = 0</sql>
+        <addNotNullConstraint tableName="MATERIALMIX" columnName="LAYER_UPDATE_VERSION" columnDataType="BIGINT"/>
+        <rollback>
+            <dropColumn tableName="MATERIALMIX" columnName="LAYER_UPDATE_VERSION"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="b16a158c-2e17-4db2-a33a-7bc741bc7d56" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MODEL_UPDATE_VERSION to table MATERIALMIX as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MATERIALMIX"/>
+            <not>
+                <columnExists tableName="MATERIALMIX" columnName="MODEL_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>AHS-12112: AddColumn MATERIALMIX.MODEL_UPDATE_VERSION</comment>
+        <addColumn tableName="MATERIALMIX">
+            <column name="MODEL_UPDATE_VERSION" type="BIGINT" remarks="The mine model update version when the material mix was created/modified."/>
+        </addColumn>
+        <sql>UPDATE MATERIALMIX SET MODEL_UPDATE_VERSION = 0</sql>
+        <addNotNullConstraint tableName="MATERIALMIX" columnName="MODEL_UPDATE_VERSION" columnDataType="BIGINT"/>
+        <rollback>
+            <dropColumn tableName="MATERIALMIX" columnName="MODEL_UPDATE_VERSION"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="424d5c73-9011-429e-a631-68c38cf37411" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CHUTE_DUMPED_RATE to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="CHUTE_DUMPED_RATE"/>
+            </not>
+        </preConditions>
+        <comment>FUG-474: AddColumn MACHINE_IN_PIT.CHUTE_DUMPED_RATE</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="CHUTE_DUMPED_RATE" type="DOUBLE" remarks="The rate in which ore is being dumped into the chute"/>
+        </addColumn>
+        <rollback>
+            <dropColumn tableName="MACHINE_IN_PIT" columnName="CHUTE_DUMPED_RATE"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- internal cache beans, not available for remoting or serviceFactory -->
+
+    <!-- must have this -->
+    <bean id="cycleUCCImpl" class="minestar.production.uifacade.cycle.impl.CycleUCCImpl"
+          lazy-init="true" init-method="springInit">
+        <property name="delayManagementService" ref="delayManagementServiceImpl"/>
+        <property name="machineUCC" ref="machineUCCImpl"/>
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerCycleUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Cycle UCC"/>
+        <constructor-arg value="minestar.production.uifacade.cycle.CycleUCCFacade"/>
+        <constructor-arg ref="cycleUCCImpl"/>
+    </bean>
+
+
+    <!-- support for remoting -->
+    <bean id="cycleUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="cycleUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="cycleUCC"/>
+        <property name="service" ref="cycleUCCProxy"/>
+        <property name="serviceInterface" value="minestar.production.uifacade.cycle.CycleUCCFacade"/>
+    </bean>
+
+</beans>

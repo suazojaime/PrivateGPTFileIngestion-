@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="860baed2-7a48-441a-8d16-6aca960e1d8a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropIndex for PROD_PLAN_TASK_UUID of table PROD_PLAN_TASK as index does not exist." onFail="MARK_RAN">
+            <indexExists indexName="PROD_PLAN_TASK_UUID" tableName="PROD_PLAN_TASK"/>
+        </preConditions>
+        <comment>MO-7617: DropIndex PROD_PLAN_TASK_UUID from PROD_PLAN_TASK (TASK_UUID)</comment>
+        <dropIndex indexName="PROD_PLAN_TASK_UUID" tableName="PROD_PLAN_TASK"/>
+        <rollback>
+            <createIndex unique="true" indexName="PROD_PLAN_TASK_UUID" tableName="PROD_PLAN_TASK">
+                <column name="TASK_UUID"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="model" default-access="field" default-lazy="false">
+
+    <class name="minestar.assignment.service.reassignment.LaneReassignmentInformation"
+           table="LANE_REASSIGNMENT_INFO">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">Re-assignment lane information.</meta>
+
+        <cache usage="read-write" region="model"/>
+
+        <id name="OID" type="long" column="LANE_REASSIGNMENT_OID">
+            <!-- LaneReassignmentInformation is one-to-one with Lane -->
+            <!-- Use the Lane.OID as the primary key -->
+            <generator class="assigned"/>
+        </id>
+
+        <!-- This is actually one-to-one but Hibernate doesn't like that -->
+        <many-to-one name="laneRef"
+                     class="minestar.mine.domain.minemodel.LaneReference"
+                     column="LANE"
+                     not-null="true">
+            <meta attribute="alias">lane</meta>
+            <meta attribute="description">The lane that is to trigger automatic re-assignments.</meta>
+            <meta attribute="foreign-key">
+                on-delete=CASCADE
+            </meta>
+        </many-to-one>
+
+        <property name="whenEmpty"
+                  type="boolean"
+                  column="WHEN_EMPTY"
+                  not-null="true">
+            <meta attribute="description">
+                When true specifies that the lane is to trigger an automatic re-assignment if the truck is empty.
+            </meta>
+        </property>
+
+        <property name="whenFull"
+                  type="boolean"
+                  column="WHEN_FULL"
+                  not-null="true">
+            <meta attribute="description">
+                When true specifies that the lane is to trigger an automatic re-assignment if the truck is full.
+            </meta>
+        </property>
+
+        <set name="machineClasses" table="LANE_REASSIGNMENT_CLASSES" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="foreign-key">
+                on-delete=CASCADE
+            </meta>
+
+            <meta attribute="description" inherit="false">The machine classes to automatically re-assign on the lane.</meta>
+            <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+            <key column="OID" not-null="true"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference" column="MACHINE_CLASS_OID"/>
+        </set>
+
+    </class>
+
+</hibernate-mapping>

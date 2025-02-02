@@ -1,0 +1,56 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="8d111415-f15a-4a75-8ca7-eced80c9adc6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LATEST_WATERED_TS_UTC to table SURFACE_SATURATION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SURFACE_SATURATION"/>
+            <not>
+                <columnExists tableName="SURFACE_SATURATION" columnName="LATEST_WATERED_TS_UTC"/>
+            </not>
+        </preConditions>
+        <comment>MO-1237: AddColumn SURFACE_SATURATION.LATEST_WATERED_TS_UTC</comment>
+        <addColumn tableName="SURFACE_SATURATION">
+            <column name="LATEST_WATERED_TS_UTC" type="DATETIME2" remarks="The time when the latest watering event occurred."/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="96299c11-1ceb-4569-8eb6-8030a93944e2" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SATURATION_REASON to table SURFACE_SATURATION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SURFACE_SATURATION"/>
+            <not>
+                <columnExists tableName="SURFACE_SATURATION" columnName="SATURATION_REASON"/>
+            </not>
+        </preConditions>
+        <comment>MO-1237: AddColumn SURFACE_SATURATION.SATURATION_REASON</comment>
+        <addColumn tableName="SURFACE_SATURATION">
+            <column name="SATURATION_REASON" type="TINYINT" remarks="A numerical representation of the state.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="cad91c97-761c-4146-8cc7-488f636a34fe" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SATURATION_SOURCE to table SURFACE_SATURATION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SURFACE_SATURATION"/>
+            <not>
+                <columnExists tableName="SURFACE_SATURATION" columnName="SATURATION_SOURCE"/>
+            </not>
+        </preConditions>
+        <comment>MO-1237: AddColumn SURFACE_SATURATION.SATURATION_SOURCE</comment>
+        <addColumn tableName="SURFACE_SATURATION">
+            <column name="SATURATION_SOURCE" type="TINYINT" remarks="The type of the source of the saturation update.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="7ee8c130-6818-4f45-9a2a-84e1949d17dc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for SOURCE_OID to table SURFACE_SATURATION as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SURFACE_SATURATION"/>
+            <not>
+                <columnExists tableName="SURFACE_SATURATION" columnName="SOURCE_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-1237: AddColumn SURFACE_SATURATION.SOURCE_OID</comment>
+        <addColumn tableName="SURFACE_SATURATION">
+            <column name="SOURCE_OID" type="BIGINT" remarks="The oid of the source of the saturation update.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

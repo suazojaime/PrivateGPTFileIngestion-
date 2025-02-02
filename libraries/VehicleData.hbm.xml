@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2020 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="pitmodel">
+
+    <class name="minestar.pitlink.domain.pitmodel.VehicleData"
+           table="VEHICLE_DATA"
+           discriminator-value="VehicleData">
+
+        <meta attribute="view-include">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">The vehicle provided location specific data.</meta>
+
+        <cache usage="read-write" region="model" />
+
+        <id name="OID" type="long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="position" not-null="true">
+            <meta attribute="description">The bottom-left coordinate of the cell at which the truck reported the vehicle data.</meta>
+            <column name="X"/>
+            <column name="Y"/>
+            <type name="minestar.platform.persistence.HibernateXYZCoordinateType">
+                <!-- Only store X and Y -->
+                <param name="noSurface">true</param>
+            </type>
+        </property>
+
+        <property name="gridSize" type="short" column="GRID_SIZE" not-null="true">
+            <meta attribute="description">The grid cell size in metres.</meta>
+        </property>
+
+        <property name="traction" type="float" column="TRACTION" not-null="true">
+            <meta attribute="description">The traction value measured by the truck.</meta>
+        </property>
+
+        <property name="tractionTimestamp" type="minestar.platform.persistence.HibernateLongTimestamp" column="TRACTION_TS_UTC">
+            <meta attribute="utc-description">The utc time when the traction event occurred.</meta>
+            <meta attribute="description">The time when the traction event occurred.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="roughness" type="float" column="ROUGHNESS" not-null="true">
+            <meta attribute="description">The roughness value measured by the truck.</meta>
+        </property>
+
+        <property name="roughnessTimestamp" type="minestar.platform.persistence.HibernateLongTimestamp" column="ROUGHNESS_TS_UTC">
+            <meta attribute="utc-description">The utc time when the roughness event occurred.</meta>
+            <meta attribute="description">The time when the roughness event occurred.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="rollingResistance" type="float" column="ROLLING_RESISTANCE" not-null="true">
+            <meta attribute="description">The rolling resistance value measured by the truck.</meta>
+        </property>
+
+        <property name="rollingResistanceTimestamp" type="minestar.platform.persistence.HibernateLongTimestamp" column="ROLLING_RESISTANCE_TS_UTC">
+            <meta attribute="utc-description">The utc time when the rolling resistance event occurred.</meta>
+            <meta attribute="description">The time when the rolling resistance event occurred.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+    </class>
+
+</hibernate-mapping>

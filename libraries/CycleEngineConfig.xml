@@ -1,0 +1,32 @@
+<!--************************************************************************-->
+<!-- CYCLE ENGINES-->
+<!--************************************************************************-->
+<CycleEngineConfiguration>
+    <CycleEngine
+            name="WaterTruck.Auxiliary.Cycle.Engine"
+            class="com.mincom.works.cc.cycle.engine.WaterTruckAuxiliaryCycleEngine"
+            cycleType="WaterTruckCycle"
+            cacheTimeoutMins="5"
+            updateTimeoutMins="3"
+            updateOnCacheExpiry="true"
+            minCycleDurationSecs="5"
+            requireLoad="false"
+            refillingActivityName="Refilling"
+            activityPostprocessor="com.mincom.works.cc.cycle.engine.AuxiliaryActivityGenerator">
+
+        <eventSource name="Auxiliary.Boundaries"/>
+        <eventSource name="Road.Segment.Beacons"/>
+
+        <EngineComponent
+                name="Delay.Information"
+                class="com.mincom.works.cc.cycle.engine.CycleDelayComponent"/>
+
+        <EngineComponent
+                name="Auxiliary.State"
+                class="com.mincom.works.cc.cycle.engine.AuxiliaryCycleComponent"/>
+
+        <EngineComponent
+                name="Road.Segment.Information"
+                class="com.mincom.works.cc.cycle.engine.CycleRoadSegmentComponent"/>
+    </CycleEngine>
+</CycleEngineConfiguration>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="e878ffc2-2c30-41d4-bb57-fba9c6d19a28" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PLAN_OID to table PLAN_GROUP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP"/>
+            <not>
+                <columnExists tableName="PLAN_GROUP" columnName="PLAN_OID"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2221: AddColumn PLAN_GROUP.PLAN_OID</comment>
+        <addColumn tableName="PLAN_GROUP">
+            <column name="PLAN_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="75ccd7a5-72c0-406e-bdef-0661489345a3" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for GROUP_NR to table PLAN_GROUP as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP"/>
+            <not>
+                <columnExists tableName="PLAN_GROUP" columnName="GROUP_NR"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2221: AddColumn PLAN_GROUP.GROUP_NR</comment>
+        <addColumn tableName="PLAN_GROUP">
+            <column name="GROUP_NR" type="INT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="e878ffc2-2c30-41d4-bb57-fba9c6d19a29" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored MigrateData for PLAN_OID to table PLAN_GROUP as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP"/>
+            <columnExists tableName="PLAN_GROUP" columnName="PLAN_OID"/>
+            <columnExists tableName="PLAN_GROUP" columnName="GROUP_NR"/>
+            <tableExists tableName="PLAN_DUMP_GROUPS"/>
+        </preConditions>
+        <comment>AHS-2221: MigrateData PLAN_GROUP.PLAN_OID</comment>
+
+        <!-- Migrate the PLAN_OID and GROUP_NR from the old PLAN_DUMP_GROUPS table -->
+        <sql>UPDATE PLAN_GROUP SET PLAN_OID = (SELECT PLAN_OID FROM PLAN_DUMP_GROUPS WHERE PLAN_DUMP_GROUPS.PLAN_GROUP_OID = PLAN_GROUP.PLAN_GROUP_OID)</sql>
+
+        <!-- Migrate the GROUP_NR from the old PLAN_DUMP_GROUPS table -->
+        <sql>UPDATE PLAN_GROUP SET GROUP_NR = (SELECT GROUP_NR FROM PLAN_DUMP_GROUPS WHERE PLAN_DUMP_GROUPS.PLAN_GROUP_OID = PLAN_GROUP.PLAN_GROUP_OID)</sql>
+
+        <!-- Delete orphaned PLAN_GROUPs -->
+        <sql>DELETE FROM PLAN_GROUP_ENTRY_LANE_ERRORS WHERE PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IS NULL)</sql>
+        <sql>DELETE FROM PLAN_GROUP_ENTRY_LANES WHERE PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IS NULL)</sql>
+        <sql>DELETE FROM PLAN_GROUP_EXIT_LANE_ERRORS WHERE PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IS NULL)</sql>
+        <sql>DELETE FROM PLAN_GROUP_EXIT_LANES WHERE PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IS NULL)</sql>
+        <sql>DELETE FROM PLAN_GROUP_PLAN_AREA WHERE PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IS NULL)</sql>
+        <sql>DELETE FROM PLAN_GROUP_LANE_INFO WHERE PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IS NULL)</sql>
+        <sql>DELETE FROM PLAN_GROUP_LANE_INFO WHERE PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IS NULL)</sql>
+        <sql>UPDATE SPOT_POINT SET PLAN_GROUP_OID = NULL WHERE PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IS NULL)</sql>
+        <sql>DELETE FROM PLAN_GROUP WHERE PLAN_OID IS NULL</sql>
+
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="e878ffc2-2c30-41d4-bb57-fba9c6d19a30" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for PLAN_OID of table PLAN_GROUP as column does not exist or already has a NOT NULL constraint." onFail="MARK_RAN">
+            <columnExists tableName="PLAN_GROUP" columnName="PLAN_OID"/>
+            <ext:columnIsNullable tableName="PLAN_GROUP" columnName="PLAN_OID"/>
+        </preConditions>
+        <comment>AHS-2221: AlterColumn PLAN_GROUP.PLAN_OID - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="PLAN_OID" columnDataType="BIGINT" tableName="PLAN_GROUP"/>
+    </changeSet>
+
+    <changeSet id="9b4bb58f-e8d0-4fe5-a486-deebe241dc9c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for GROUP_NR of table PLAN_GROUP as column does not exist or column is already not nullable" onFail="MARK_RAN">
+            <columnExists tableName="PLAN_GROUP" columnName="GROUP_NR"/>
+            <ext:columnIsNullable tableName="PLAN_GROUP" columnName="GROUP_NR"/>
+        </preConditions>
+        <comment>AHS-2221: AlterColumn PLAN_GROUP.GROUP_NR - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="GROUP_NR" defaultNullValue="0" columnDataType="INT" tableName="PLAN_GROUP"/>
+    </changeSet>
+
+    <changeSet id="e42635fd-f11f-4a5b-93dc-ca7820524ebe" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PLAN_DUMP_GROUPS as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_DUMP_GROUPS"/>
+        </preConditions>
+        <comment>AHS-2221: DropTable PLAN_DUMP_GROUPS</comment>
+        <dropTable tableName="PLAN_DUMP_GROUPS"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="A list of all dump groups for this dump plan." tableName="PLAN_DUMP_GROUPS">
+                <column name="PLAN_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="PLAN_GROUP_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="GROUP_NR" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <sql>INSERT INTO PLAN_DUMP_GROUPS (PLAN_OID, PLAN_GROUP_OID, GROUP_NR) SELECT PLAN_OID, PLAN_GROUP_OID, GROUP_NR FROM PLAN_GROUP WHERE DISCRIMINATOR_ID = 'DumpGroupImpl'</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="b1aeffe9-452a-498d-8115-a268b264f867" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PLAN_GROUP_PLAN_OID_FK to table PLAN_GROUP as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_GROUP"/>
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PLAN_GROUP" foreignKeyName="PLAN_GROUP_PLAN_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2221: AddForeignKeyConstraint PLAN_GROUP_PLAN_OID_FK to PLAN_GROUP (PLAN_OID)</comment>
+        <addForeignKeyConstraint baseTableName="PLAN_GROUP" baseColumnNames="PLAN_OID" constraintName="PLAN_GROUP_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+    </changeSet>
+
+    <changeSet id="30e345c6-fab3-4c0d-b547-0edd96a5a373" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PLAN_OID to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <not>
+                <columnExists tableName="SPOT_POINT" columnName="PLAN_OID"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2221: AddColumn SPOT_POINT.PLAN_OID</comment>
+
+        <addColumn tableName="SPOT_POINT">
+            <column name="PLAN_OID" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="6be71136-5434-446e-b97d-47c1551a3e89" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AlterColumn for POINT_NR of table SPOT_POINT as column does not exist or column is already not nullable" onFail="MARK_RAN">
+            <columnExists tableName="SPOT_POINT" columnName="POINT_NR"/>
+            <ext:columnIsNullable tableName="SPOT_POINT" columnName="POINT_NR"/>
+        </preConditions>
+        <comment>AHS-2221: AlterColumn SPOT_POINT.POINT_NR - nullability changed from true to false</comment>
+        <addNotNullConstraint columnName="POINT_NR" defaultNullValue="0" columnDataType="INT" tableName="SPOT_POINT"/>
+    </changeSet>
+
+    <changeSet id="30e345c6-fab3-4c0d-b547-0edd96a5a375" author="MineStar" failOnError="true">
+        <preConditions onFailMessage="Ignored MigrateData for PLAN_OID and POINT_NR to table SPOT_POINT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <columnExists tableName="SPOT_POINT" columnName="PLAN_OID"/>
+            <tableExists tableName="PLAN_LOAD_SPOT_POINTS"/>
+            <tableExists tableName="PLAN_STATION_POINTS"/>
+        </preConditions>
+        <comment>AHS-2221: MigrateData SPOT_POINT.PLAN_OID and SPOT_POINT.POINT_NR</comment>
+
+        <!-- Migrate the PLAN_OID and POINT_NR from the old PLAN_LOAD_SPOT_POINTS table -->
+        <sql>UPDATE SPOT_POINT SET PLAN_OID = (SELECT PLAN_OID FROM PLAN_LOAD_SPOT_POINTS WHERE PLAN_LOAD_SPOT_POINTS.SPOT_POINT_OID = SPOT_POINT.SPOT_POINT_OID) WHERE DISCRIMINATOR_ID = 'LoadSpotPointImpl'</sql>
+        <sql>UPDATE SPOT_POINT SET POINT_NR = (SELECT SPOT_POINT_NR FROM PLAN_LOAD_SPOT_POINTS WHERE PLAN_LOAD_SPOT_POINTS.SPOT_POINT_OID = SPOT_POINT.SPOT_POINT_OID) WHERE PLAN_OID IS NOT NULL AND DISCRIMINATOR_ID = 'LoadSpotPointImpl'</sql>
+
+        <!-- Migrate the PLAN_OID and POINT_NR from the old PLAN_STATION_POINTS table -->
+        <sql>UPDATE SPOT_POINT SET PLAN_OID = (SELECT PLAN_OID FROM PLAN_STATION_POINTS WHERE PLAN_STATION_POINTS.STATION_POINT_OID = SPOT_POINT.SPOT_POINT_OID) WHERE DISCRIMINATOR_ID = 'StationPointImpl'</sql>
+        <sql>UPDATE SPOT_POINT SET POINT_NR = (SELECT STATION_POINT_NR FROM PLAN_STATION_POINTS WHERE PLAN_STATION_POINTS.STATION_POINT_OID = SPOT_POINT.SPOT_POINT_OID) WHERE PLAN_OID IS NOT NULL AND DISCRIMINATOR_ID = 'StationPointImpl'</sql>
+
+        <!-- Delete orphaned SPOT_POINTs -->
+        <sql>DELETE FROM SPOT_POINT_ENTRY_LANE_ERRORS WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_ENTRY_LANES WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_ENTRY_POINT_ERRORS WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_ENTRY_POINTS WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_EXIT_LANE_ERRORS WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_EXIT_LANES WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_EXIT_POINT_ERRORS WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_EXIT_POINTS WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_LANE_DATA WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT_LANE_INFO WHERE SPOT_POINT_OID IN (SELECT SPOT_POINT_OID FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL)</sql>
+        <sql>DELETE FROM SPOT_POINT WHERE PLAN_OID IS NULL AND PLAN_GROUP_OID IS NULL</sql>
+
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="8b81f5a6-ad22-41e4-a025-baa9b849298f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PLAN_LOAD_SPOT_POINTS as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_LOAD_SPOT_POINTS"/>
+        </preConditions>
+        <comment>AHS-2221: DropTable PLAN_LOAD_SPOT_POINTS</comment>
+        <dropTable tableName="PLAN_LOAD_SPOT_POINTS"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="List of load spotting points." tableName="PLAN_LOAD_SPOT_POINTS">
+                <column name="PLAN_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="SPOT_POINT_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="SPOT_POINT_NR" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="PLAN_OID,SPOT_POINT_NR" constraintName="PLAN_LOAD_SPOT_POINTS_PK" tablespace="MW_IDXENT" tableName="PLAN_LOAD_SPOT_POINTS"/>
+            <sql>INSERT INTO PLAN_LOAD_SPOT_POINTS (PLAN_OID, SPOT_POINT_OID, SPOT_POINT_NR) SELECT PLAN_OID, SPOT_POINT_OID, POINT_NR FROM SPOT_POINT WHERE DISCRIMINATOR_ID = 'LoadSpotPointImpl'</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="99c120de-68e6-4345-bb67-bb3a2e67d61a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PLAN_STATION_POINTS as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_STATION_POINTS"/>
+        </preConditions>
+        <comment>AHS-2221: DropTable PLAN_STATION_POINTS</comment>
+        <dropTable tableName="PLAN_STATION_POINTS"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" remarks="List of station points." tableName="PLAN_STATION_POINTS">
+                <column name="PLAN_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="STATION_POINT_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="STATION_POINT_NR" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="PLAN_OID,STATION_POINT_NR" constraintName="PLAN_STATION_POINTS_PK" tablespace="MW_IDXENT" tableName="PLAN_STATION_POINTS"/>
+            <sql>INSERT INTO PLAN_STATION_POINTS (PLAN_OID, STATION_POINT_OID, STATION_POINT_NR) SELECT PLAN_OID, SPOT_POINT_OID, POINT_NR FROM SPOT_POINT WHERE DISCRIMINATOR_ID = 'StationPointImpl'</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="7a63b9e9-1131-402a-990a-bf9009a8c18c" author="MineStar" context="Machine_Tracking/Machine_Tracking_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for SPOT_POINT_PLAN_OID_FK to table SPOT_POINT as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <tableExists tableName="PLAN_MODEL"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="SPOT_POINT" foreignKeyName="SPOT_POINT_PLAN_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>AHS-2221: AddForeignKeyConstraint SPOT_POINT_PLAN_OID_FK to SPOT_POINT (PLAN_OID)</comment>
+        <addForeignKeyConstraint baseTableName="SPOT_POINT" baseColumnNames="PLAN_OID" constraintName="SPOT_POINT_PLAN_OID_FK" referencedTableName="PLAN_MODEL" referencedColumnNames="PLAN_OID" onDelete="NO ACTION"/>
+    </changeSet>
+    
+</databaseChangeLog>

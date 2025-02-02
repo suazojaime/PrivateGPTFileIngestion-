@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE classdefs SYSTEM "metadata.dtd">
+<classdefs>
+    <classdef name="HistoricalDataInspectorCommon">
+        <!--<propertygroup name="splitContainer" >-->
+        <!--<uigroupdef mode="split" layout="horizontal" /> --><!--custom="{dividerLocation:Integer(300), preferredSize:800}"/-->
+
+            <propertygroup name="options" label="Standard Options" >
+                <uigroupdef mode="plain"/>
+                <propertygroup name="recordFiltering" label="Record Filtering">
+                    <uigroupdef mode="box"/>
+                    <propertygroup name="filterModeGrp">
+                        <uigroupdef mode="plain" visiblewhen="false"/>
+                        <propertydef name="filterMode" label="Filter Mode">
+                            <typedef>
+                                <type code="string" choices='{0:"Filter By Fields", 1:"Filter From File"}'/>
+                            </typedef>
+                            <uidef widget="radio" processOnChange="true"/>
+                            <description>Use Filter From File when a list of record ids has been previously saved to a file.</description>
+                        </propertydef>
+                    </propertygroup>
+                    <propertygroup name="filterByFields">
+                        <uigroupdef mode="plain" visiblewhen="field('filterMode')==0"/>
+                        <propertygroup name="periodSelector">
+                            <uigroupdef mode="region"/>
+                            <propertydef name="PeriodDesc" label="Period">
+                                <typedef>
+                                    <type code="string"/>
+                                </typedef>
+                                <uidef widget="period" option="startDate,endDate" updateable="false" />
+                            </propertydef>
+                            <propertydef name="startDate" label="Start Date">
+                                <typedef>
+                                    <javaclass name="java.util.Date"/>
+                                </typedef>
+                                <validationdef type="shared" name="required"/>
+                            </propertydef>
+                            <propertydef name="endDate" label="End Date">
+                                <typedef>
+                                    <javaclass name="java.util.Date"/>
+                                </typedef>
+                                <validationdef type="shared" name="required"/>
+                            </propertydef>
+                        </propertygroup>
+                        <propertygroup name="propertyFilter" label="Matching Criteria">
+                            <uigroupdef mode="region" visiblewhen="false"/>
+                            <propertydef name="primaryMachineName" label="Machine Name(s)">
+                                <typedef>
+                                    <type code="string" choices="service(minestar.pitlink.application.MachineCollectionProvider):MobileMachine"/>
+                                </typedef>
+                                <uidef widget="ordered" mode="popup"/>
+                            </propertydef>
+                        </propertygroup>
+                    </propertygroup>
+                    <propertygroup name="filterFromFile">
+                        <uigroupdef mode="plain" visiblewhen="field('filterMode')==1"/>
+                        <propertydef name="filterFile" label="Filter File">
+                            <typedef>
+                                <type code="string"/>
+                            </typedef>
+                            <defaultvalue>{MSTAR_DATA}/hist_data_filter.txt</defaultvalue>
+                            <description>A file which contains one record id per line.</description>
+                        </propertydef>
+                    </propertygroup>
+                </propertygroup>
+                <propertygroup name="writeToFileGrp" label="Write To File Options">
+                    <uigroupdef mode="box"/>
+                    <propertydef name="writeToOidFile" label="Write To File">
+                        <typedef><type code="boolean" /></typedef>
+                        <uidef processOnChange="true"/>
+                        <description>Select this option to write (where applicable) cycle oids to a file.</description>
+                    </propertydef>
+                    <propertydef name="appendToOidFile" label="Append">
+                        <typedef><type code="boolean" /></typedef>
+                        <uidef enabledwhen="field('writeToOidFile')==1"/>
+                        <description>Select this option to append to the file instead of overwriting it.</description>
+                    </propertydef>
+                    <propertydef name="cycleOidFileName" label="Cycle Oid File">
+                        <typedef>
+                            <type code="string"/>
+                        </typedef>
+                        <uidef enabledwhen="field('writeToOidFile')==1"/>
+                        <defaultvalue>{MSTAR_DATA}/cyclefilter.txt</defaultvalue>
+                        <description>A file which contains one cycle oid per line.</description>
+                    </propertydef>
+                </propertygroup>
+                <propertygroup name="runParameters" label="Advanced Parameters">
+                    <uigroupdef mode="collapsed"/>
+                    <propertydef name="chunkSizeHours" label="Chunk Size (Hours)">
+                        <typedef>
+                            <type code="short"/>
+                        </typedef>
+                        <uidef widget="spinner" custom='{setMinimum:0, setMaximum:168}'/>
+                        <defaultvalue>72</defaultvalue>
+                        <description>The size of query chunk in hours.</description>
+                    </propertydef>
+                    <propertydef name="waitTime" label="Wait Time (s)">
+                        <typedef>
+                            <type code="short"/>
+                        </typedef>
+                        <uidef widget="spinner" custom='{setMinimum:0, setMaximum:60}'/>
+                        <defaultvalue>0</defaultvalue>
+                        <description>The time to wait between each update (in seconds).</description>
+                    </propertydef>
+                </propertygroup>
+            </propertygroup>
+            <propertygroup name="inspectionParams" label="Inspection Parameters">
+                <uigroupdef mode="region" custom="preferredSize:600"/>
+                <propertygroup name="delayDurationInspection" label="Delay duration is too long Inspection">
+                    <uigroupdef mode="box"/>
+                    <propertydef name="maxDelayLength" label="Maximum Delay Length (Days)">
+                        <typedef>
+                            <type code="short"/>
+                        </typedef>
+                        <uidef widget="spinner" custom='{setMinimum:200, setMaximum:400}'/>
+                        <defaultvalue>300</defaultvalue>
+                        <description>The maximum delay length in days.</description>
+                    </propertydef>
+                    <propertydef name="newDelayLength" label="New Delay Length (Days)">
+                        <typedef>
+                            <type code="short"/>
+                        </typedef>
+                        <uidef widget="spinner" custom='{setMinimum:1, setMaximum:5}'/>
+                        <defaultvalue>1</defaultvalue>
+                        <description>The new delay length in days.</description>
+                    </propertydef>
+                </propertygroup>
+                <propertygroup name="hangTimeNameInspection" label="Old hang time name Inspection">
+                    <uigroupdef mode="box"/>
+                    <propertydef name="oldHangTimeName" label="Old Name">
+                        <typedef>
+                            <type code="string"/>
+                        </typedef>
+                        <defaultvalue>Waiting For Truck</defaultvalue>
+                        <description>The old hang time activity name</description>
+                    </propertydef>
+                </propertygroup>
+            </propertygroup>
+
+        <!--</propertygroup>-->
+        <validationgroup name="Date Range Check">
+            <propertyref name="startDate"/>
+            <propertyref name="endDate"/>
+            <validationdef type="script">
+                <script>DateRangeCheck.py</script>
+                <error lang="en">Start date must be &lt; end date.</error>
+            </validationdef>
+        </validationgroup>
+
+        <description>Perform bulk historical data inspections.</description>
+    </classdef>
+</classdefs>

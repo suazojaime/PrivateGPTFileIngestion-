@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="ba8d32a9-8e22-4f55-b8c1-a1f54cc2f704" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for MEASURE_SOURCE to table MEASURE_DEF as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MEASURE_DEF"/>
+            <not>
+                <columnExists tableName="MEASURE_DEF" columnName="MEASURE_SOURCE"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddColumn MEASURE_DEF.MEASURE_SOURCE</comment>
+        <addColumn tableName="MEASURE_DEF">
+            <column name="MEASURE_SOURCE" type="VARCHAR(255)" defaultValue="SYSTEM" remarks="The source of this measure definition"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="017514c7-7eb8-448a-9326-5796832c61d0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PROTOCOL_OFFSET to table MEASURE_DEF as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MEASURE_DEF"/>
+            <not>
+                <columnExists tableName="MEASURE_DEF" columnName="PROTOCOL_OFFSET"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddColumn MEASURE_DEF.PROTOCOL_OFFSET</comment>
+        <addColumn tableName="MEASURE_DEF">
+            <column name="PROTOCOL_OFFSET" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="58c6884c-9751-4b83-a584-3cbc74ae5679" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PROTOCOL_MIN_VALID to table MEASURE_DEF as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MEASURE_DEF"/>
+            <not>
+                <columnExists tableName="MEASURE_DEF" columnName="PROTOCOL_MIN_VALID"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddColumn MEASURE_DEF.PROTOCOL_MIN_VALID</comment>
+        <addColumn tableName="MEASURE_DEF">
+            <column name="PROTOCOL_MIN_VALID" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="b19b7926-7698-4f5c-8c47-b3401356aa2c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for PROTOCOL_MAX_VALID to table MEASURE_DEF as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MEASURE_DEF"/>
+            <not>
+                <columnExists tableName="MEASURE_DEF" columnName="PROTOCOL_MAX_VALID"/>
+            </not>
+        </preConditions>
+        <comment>{JIRA}: AddColumn MEASURE_DEF.PROTOCOL_MAX_VALID</comment>
+        <addColumn tableName="MEASURE_DEF">
+            <column name="PROTOCOL_MAX_VALID" type="DOUBLE"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

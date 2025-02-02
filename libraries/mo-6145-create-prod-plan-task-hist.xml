@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="5804f76d-e009-44c6-951f-72f32504d300" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_TASK_HIST as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_TASK_HIST"/>
+            </not>
+        </preConditions>
+        <comment>MO-6145: CreateTable PROD_PLAN_TASK_HIST</comment>
+        <createTable remarks="Stores historical production planning task details" tableName="PROD_PLAN_TASK_HIST">
+            <column name="TASK_HIST_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_OID" type="BIGINT" remarks="Internal OID that uniquely identifies a task">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_UUID" type="UUID" remarks="UUID that uniquely identifies a task">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(32)" remarks="The system or user that created this task">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_TIME_UTC" type="DATETIME2" remarks="Task creation timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_TIME_UTC" type="DATETIME2" remarks="Task updated timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TARGET_START_TIME_UTC" type="DATETIME2" remarks="The target start time of the task"/>
+            <column name="TARGET_END_TIME_UTC" type="DATETIME2" remarks="The target end time of the task"/>
+            <column name="ACTUAL_START_TIME_UTC" type="DATETIME2" remarks="The actual start time of the task when status changed to AVAILABLE"/>
+            <column name="ACTUAL_END_TIME_UTC" type="DATETIME2" remarks="The actual end time of the task when status changed to CLOSED"/>
+            <column name="TASK_TYPE" type="VARCHAR(32)" remarks="The type of task">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_STATUS" type="VARCHAR(32)" remarks="The status of task">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_CONTENT" type="CLOB" remarks="The JSON encoding of the task">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="TASK_HIST_OID" constraintName="PROD_PLAN_TASK_HIST_PK" tableName="PROD_PLAN_TASK_HIST"/>
+        <createIndex unique="true" indexName="PROD_PLAN_TASK_HIST_OID" tableName="PROD_PLAN_TASK_HIST">
+            <column name="TASK_OID"/>
+            <column name="UPDATED_TIME_UTC"/>
+        </createIndex>
+        <createIndex unique="true" indexName="PROD_PLAN_TASK_HIST_UUID" tableName="PROD_PLAN_TASK_HIST">
+            <column name="TASK_UUID"/>
+            <column name="UPDATED_TIME_UTC"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2017, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false">
+    
+    <class name="minestar.pitlink.domain.safety.SafetyCheckAction"
+           schema="model"
+           table="SAFETY_CHECK_ACTION">
+        
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=SAFETYCHECK_ACTION_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A safety check action</meta>
+        <cache usage="read-write" region="model-versioned"/>
+        
+        <id name="OID" type="long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="name" type="string" column="NAME" not-null="true"/>
+    </class>
+
+    <class name="minestar.pitlink.domain.safety.SafetyCheckItem"
+           schema="model"
+           table="SAFETY_CHECK_ITEM">
+        
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="index">
+            name=SAFETYCHECKITEM_NAME
+            unique=true
+            columns=NAME
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="index">
+            name=SAFETYCHECKITEM_ID
+            unique=true
+            columns=ID
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A safety check item</meta>
+
+        <cache usage="read-write" region="model-versioned"/>
+
+        <id name="OID" type="long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="name" type="string" column="NAME" not-null="true"/>
+                
+        <property name="onboardId" type="int" column="ID" not-null="true">
+            <meta attribute="universe-type-measure">false</meta>
+            <meta attribute="export-marshall" inherit="false">false</meta>
+        </property>
+
+        <property name="categoryId" type="int" column="CATEGORY_ID" not-null="true">
+            <meta attribute="choices" inherit="false">choice:safetyCheckCategory</meta>
+        </property>
+
+        <property name="displayOrder" type="int" column="DISPLAY_ORDER" not-null="true"/>
+
+        <property name="loadStatusId" type="int" column="LOAD_STATUS_ID" not-null="true">
+            <meta attribute="choices" inherit="false">choice:safetyCheckLoadStatus</meta>
+        </property>
+
+        <property name="modelUpdateVersion"
+                  type="long">
+            <meta attribute="description">The mine model update version when the safety check list item was created/modified.</meta>
+            <column name="MODEL_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <property name="layerUpdateVersion"
+                  type="long">
+            <meta attribute="description">The layer update version when the safety check list item was created/modified.</meta>
+            <column name="LAYER_UPDATE_VERSION" not-null="true" default="0"/>
+        </property>
+
+        <many-to-one
+                name="action"
+                class="minestar.pitlink.domain.safety.SafetyCheckAction"
+                fetch="join">
+            <meta attribute="choices">
+                service(minestar.pitlink.application.safety.SafetyCheckActionCollectionProvider):safetyCheckActions
+            </meta>
+            <meta attribute="export-nested" inherit="false">false</meta>
+            <column name="ACTION_OID"/>
+        </many-to-one>
+        
+        <set name="machineClasses" table="SAFETY_CHECK_MACHINE_CLASS">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">
+                The machine classes for the safety check item
+            </meta>
+
+            <meta attribute="choices" inherit="false">
+                service(minestar.pitlink.application.MachineClassCollectionProvider):machineClasses
+            </meta>
+            <meta attribute="view-reference">minestar.pitlink.domain.machine.MachineClassImpl</meta>
+
+            <key column="SAFETY_CHECK_ITEM_OID"/>
+            <many-to-many class="minestar.pitlink.domain.machine.MachineClassReference"
+                          column="MACHINE_CLASS_OID"/>
+        </set>
+        
+    </class>
+    
+    <class name="minestar.pitlink.domain.safety.SafetyCheckResult"
+           schema="historical"
+           table="SAFETY_CHECK_RESULT">
+        
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">The result of the safety check</meta>
+
+        <id name="OID" type="long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <many-to-one
+                name="parentEvent"
+                class="minestar.administration.domain.event.SendChecklistEvent"
+                column="EVENT_OID">
+            <meta attribute="description">The event which delivered this safety check result.</meta>
+            <meta attribute="alias" inherit="false">parent</meta>
+        </many-to-one>
+
+        <property name="itemStatus" type="byte" column="ITEM_STATUS" not-null="true">
+            <meta attribute="description">The status of the item.</meta>
+            <meta attribute="choices" inherit="false">choice:safetyCheckStatus</meta>
+        </property>
+        
+        <many-to-one
+                name="item"
+                column="ITEM_OID"
+                not-null="true"
+                lazy="false"
+                class="minestar.pitlink.domain.safety.SafetyCheckItem"
+                not-found="ignore">
+            <meta attribute="description">The item which was checked.</meta>
+        </many-to-one>
+    </class>
+    
+    <class name="minestar.pitlink.domain.safety.SafetyCheckRecord"
+           schema="historical"
+           table="SAFETY_CHECK_RECORD">
+        
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="description">Safety check record</meta>
+
+        <id name="OID" column="OID" type="long">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="machineOID" type="long" column="MACHINE_OID" not-null="true">
+            <meta attribute="description">The machine which delivered this safety check result.</meta>
+            <meta attribute="manyToOne">minestar.pitlink.domain.machine.MachineImpl</meta>
+        </property>
+
+        <property name="machineName" column="MACHINE_NAME" type="string" length="254">
+            <meta attribute="description">The name of the machine when the record was created.</meta>
+        </property>
+
+        <property name="operatorOID" column="OPERATOR_OID" type="long">
+            <meta attribute="description">The equipment operator associated with the event.</meta>
+            <meta attribute="manyToOne">minestar.machinetracking.domain.PersonImpl</meta>
+        </property>
+
+        <property name="operatorName" column="OPERATOR_NAME" type="string" length="254">
+            <meta attribute="description">The name of the operator when the record was created.</meta>
+        </property>
+
+        <property name="timestamp" type="TimestampType">
+            <meta attribute="utc-description">The utc time when the check occurred.</meta>
+            <meta attribute="description">The time when the check occurred.</meta>
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="TIMESTAMP_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+        
+        <property name="itemStatus" type="byte" column="ITEM_STATUS" not-null="true">
+            <meta attribute="description">The status of the item.</meta>
+            <meta attribute="choices" inherit="false">choice:safetyCheckStatus</meta>
+        </property>
+        
+        <property name="itemOID" type="long" column="ITEM_OID" not-null="true">
+            <meta attribute="description">The OID of the safety check list item when the record was created.</meta>
+            <meta attribute="manyToOne">minestar.pitlink.domain.safety.SafetyCheckItem</meta>
+        </property>
+
+        <property name="itemName" column="ITEM_NAME" type="string" length="254">
+            <meta attribute="description">The name of the safety check list item when the record was created.</meta>
+        </property>
+        
+        <property name="itemActioned" type="boolean" column="IS_ITEM_ACTIONED" not-null="true">
+            <meta attribute="description">Has this item been actioned.</meta>
+        </property>
+
+        <property name="dateActioned" type="TimestampType" column="DATE_ACTIONED_UTC">
+            <meta attribute="utc-description">The utc date when the item was actioned.</meta>
+            <meta attribute="description">The date when the item was actioned.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="notes" type="string" length="2000" column="NOTES"/>
+
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.mine.domain.material" schema="historical">
+
+    <class name="BlendInformationRecord" table="BLEND_INFORMATION_RECORD">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=BLEND_INFO_REC_RECORD_TIME
+            columns=RECORD_TIME
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">A blend information record</meta>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="OID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        <property
+                name="recordTime"
+                type="java.util.Date"
+                column="RECORD_TIME"
+                not-null="true"
+                >
+            <meta attribute="description">The date time row inserted</meta>
+        </property>
+        <property
+                name="controlWindowStart"
+                type="java.util.Date"
+                column="CONTROL_WINDOW_START"
+                not-null="false"
+                >
+            <meta attribute="description">The control window start date time</meta>
+        </property>
+        <property
+                name="controlWindowEnd"
+                type="java.util.Date"
+                column="CONTROL_WINDOW_END"
+                not-null="false"
+        >
+            <meta attribute="description">The control window end date time</meta>
+        </property>
+        <property
+                name="controlMassMoved"
+                column="CONTROL_MASS_MOVED"
+                >
+            <meta attribute="unitType">mass</meta>
+            <meta attribute="description">The control mass moved</meta>
+            <type name="quantity">
+                <param name="unitType">mass</param>
+            </type>
+        </property>
+        <property
+                name="controlRate"
+        >
+            <meta attribute="unitType">rate</meta>
+            <meta attribute="description">The control rate</meta>
+            <column name="CONTROL_RATE" not-null="true" />
+            <type name="quantity">
+                <param name="unitType">rate</param>
+            </type>
+        </property>
+        <property
+                name="processorName"
+                type="java.lang.String"
+                column="PROCESSOR_NAME"
+                length="1016"
+                not-null="false"
+                >
+            <meta attribute="description">The destination blend description</meta>
+        </property>
+        <property
+                name="processorOID"
+                type="java.lang.Long"
+                column="PROCESSOR_OID"
+                not-null="false"
+                >
+        </property>
+        <property
+                name="cycleOID"
+                type="java.lang.Long"
+                column="CYCLE_OID"
+                not-null="false"
+        >
+        </property>
+        <many-to-one
+                class="minestar.mine.domain.material.DestinationBlendDetail"
+                name="destinationBlendDetail"
+                column="DESTINATION_BLEND_DETAIL_OID"
+                not-null="true"/>
+        <set name="currentValues" table="CURRENT_VALUE" cascade="save-update" where="CURRENT_VALUE_TYPE='CONTROL'" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The set of current values for the processor </meta>
+            <key column="BLEND_INFORMATION_RECORD_OID" not-null="false" />
+            <one-to-many class="minestar.mine.domain.material.AbstractCurrentValue" not-found="ignore"/>
+        </set>
+        <set name="instantCurrentValues" table="CURRENT_VALUE" cascade="save-update" where="CURRENT_VALUE_TYPE='INSTANT'" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The set of current values for the processor </meta>
+            <key column="BLEND_INFORMATION_RECORD_OID" not-null="false" />
+            <one-to-many class="minestar.mine.domain.material.AbstractCurrentValue" not-found="ignore"/>
+        </set>
+        <set name="shiftValues" table="CURRENT_VALUE" cascade="save-update" where="CURRENT_VALUE_TYPE='SHIFT'" fetch="subselect">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">The set of current values for the processor </meta>
+            <key column="BLEND_INFORMATION_RECORD_OID" not-null="false" />
+            <one-to-many class="minestar.mine.domain.material.AbstractCurrentValue" not-found="ignore"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="historical">
+
+    <class
+            name="minestar.production.domain.DelayImpl"
+            proxy="minestar.production.domain.Delay"
+            table="DELAY"
+            discriminator-value="XAEntity.Delay">
+
+        <meta attribute="lookupExpr" inherit="false">lookupResource.delay.startTime.expr</meta>
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=DELAY_1R
+            columns=STATUS, START1_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=DELAY_TARGET_MACHINE
+            columns=TARGET_MACHINE, STATUS, START1_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=DELAY_TARGET_ROAD
+            columns=TARGET_ROAD, STATUS, START1_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index">
+            name=DELAY_TARGET_LOCATION
+            columns=TARGET_LOCATION, STATUS, START1_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=DELAY_CREATED_DATE
+            columns=CREATED_DATE_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="index" inherit="false">
+            name=DELAY_LAST_MODIFIED
+            columns=LAST_MODIFIED_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="view-master">true</meta>
+        <meta attribute="viewproperty-startSMU" inherit="false">
+            type=float
+            description=the start service meter reading
+            unitType=service meter hours
+            expression=lookupResource.delay.startSMU.query
+        </meta>
+        <meta attribute="viewproperty-finishSMU" inherit="false">
+            type=float
+            description=The finish service meter reading
+            unitType=service meter hours
+            expression=lookupResource.delay.finishSMU.query
+        </meta>
+        <meta attribute="viewproperty-machineclassname" inherit="false">
+            type=string
+            description=The class name of the machine
+            expression=lookupResource.delay.machineclassname.query
+        </meta>
+        <meta attribute="viewproperty-machinecategoryname" inherit="false">
+            type=string
+            description=The name of the category of the machine
+            expression=lookupResource.delay.machinecategoryname.query
+        </meta>
+        <meta attribute="viewproperty-durationCalculated" inherit="false">
+            type=float
+            description=The associated duration calculated
+            unitType=duration
+            expression=lookupResource.delay.durationCalculated.query
+        </meta>
+        <meta attribute="viewproperty-delaycategoryname" inherit="false">
+            type=string
+            description=The name of the category of the delay
+            expression=lookupResource.delay.delaycategoryname.query
+        </meta>
+
+        <meta attribute="description">A delay on a machine or road that specifies that the target was not performing normal operations.</meta>
+
+        <cache usage="read-write" region="historical"/>
+
+        <id name="OID" type="long" column="DELAY_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <discriminator column="ECF_CLASS_ID"/>
+
+        <property name="acknowledgementRequired" type="boolean" column="ACKNOWLEDGE" not-null="true">
+            <meta attribute="description">Indication of whether or not this delay requires acknowledgement after becoming active. A null value indicates that the default for the delay type should be used.</meta>
+        </property>
+
+        <property name="acknowledged" type="boolean" column="ACKNOWLEDGED" not-null="true">
+            <meta attribute="description">Indication of whether or not the delay has been acknowledged by the Mine Controller.  This value is only relevant if this delay requires and acknowledgement.  See 'acknowledge'.</meta>
+            <meta attribute="defaultValue">false</meta>
+        </property>
+
+        <property name="confirmationRequired" type="boolean" column="OFFICECONFIRM" not-null="true">
+            <meta attribute="description">Indication of whether or not this delay requires confirmation before becoming active.</meta>
+            <meta attribute="defaultValue">false</meta>
+        </property>
+
+        <property name="confirmed" type="boolean" column="CONFIRMED" not-null="true">
+            <meta attribute="description">Indication of whether or not the delay has been confirmed by the Mine Controller.  This value is only relevant if this delay requires confirmation.  See 'officeConfirm'.</meta>
+            <meta attribute="defaultValue">false</meta>
+        </property>
+
+        <property name="frequency" type="minestar.production.domain.DelayFrequency$UserType" column="FREQUENCY_TYPE" not-null="true">
+            <meta attribute="description">The frequency that this delay will repeat. Single/Daily/Weekly/Each Shift</meta>
+        </property>
+
+        <property name="frequencyShiftType" type="minestar.platform.persistence.calendar.ShiftType$StringUserType" column="SHIFT_TYPE">
+            <meta attribute="description">If repeating for a Shift, then this is the shift type that this delay will repeat for. Day/Night/Morning/Afternoon/Evening</meta>
+        </property>
+
+        <many-to-one name="delayClassRef" column="DELAYCLASS" class= "minestar.production.domain.DelayClassReference" not-null="true" not-found="ignore">
+            <meta attribute="alias" inherit="false">delayType</meta>
+            <meta attribute="description">The class, type, or categorisation of this delay.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="targetMachine"
+                column="TARGET_MACHINE"
+                class="minestar.pitlink.domain.machine.MachineReference"
+                not-found="ignore"
+                >
+            <meta attribute="description">The machine affected by this delay.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="targetRoad"
+                column="TARGET_ROAD"
+                class="minestar.mine.domain.minemodel.RoadSegmentReference"
+                not-found="ignore"
+                >
+            <meta attribute="description">The road affected by this delay.</meta>
+        </many-to-one>
+
+        <many-to-one
+                name="targetLocation"
+                column="TARGET_LOCATION"
+                class="minestar.mine.domain.minemodel.LocationReference"
+                not-found="ignore"
+                >
+            <meta attribute="description">The location affected by this delay.</meta>
+        </many-to-one>
+
+        <property name="description" type="string" column="DESCRIPTION" length="254">
+            <meta attribute="description">A free form description of the delay.</meta>
+        </property>
+
+        <many-to-one
+                name="reportedByPerson"
+                class="minestar.machinetracking.domain.PersonReference"
+                column="REPORTEDBY_PERSON"
+                not-found="ignore"
+                >
+            <meta attribute="description">The machine operator who created this delay.</meta>
+        </many-to-one>
+        <many-to-one
+                name="reportedByUser"
+                class="minestar.platform.domain.user.UserReference"
+                column="REPORTEDBY_USER"
+                not-found="ignore"
+                >
+            <meta attribute="description">The office user who created this delay.</meta>
+        </many-to-one>
+
+        <property name="start" type="TimestampType" column="START1_UTC" not-null="true">
+            <meta attribute="alias" inherit="false">startTime</meta>
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the delay started, or is scheduled to start.</meta>
+            <meta attribute="description">The time the delay started, or is scheduled to start.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="finish" type="TimestampType" column="FINISH_UTC">
+            <meta attribute="alias" inherit="false">finishTime</meta>
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the delay finished, or the expected finishing utc time if the delay has not yet finished.</meta>
+            <meta attribute="description">The time the delay finished, or the expected finishing time if the delay has not yet finished.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        <property
+                name="status"
+                type="minestar.domain.model.persistence.DelayStatusUserType"
+                column="STATUS"
+                not-null="true">
+            <meta attribute="description">
+                The current state of the delay.  Valid values are:
+                0 - Unknown.
+                1 - Inactive, meaning not yet started.
+                2 - Inactive, and requiring confirmation.
+                3 - Active.
+                7 - Historical, meaning the delay is over.
+            </meta>
+            <meta attribute="choices" inherit="false">choice:eqmtDelayStatus</meta>
+            <meta attribute="defaultValue">0</meta>
+        </property>
+
+        <property name="productionReportingOnly" type="boolean" column="PRODUCTIONREPORTINGONLY" not-null="true">
+            <meta attribute="description">Indicates whether or not this delay is a 'true' delay, or simply a convenience for production reporting. Machines on a production reporting delay will continue to be assigned.</meta>
+            <meta attribute="defaultValue">false</meta>
+        </property>
+
+        <property name="fieldNotificationRequired" type="boolean" column="FIELDNOTIFICATIONREQUIRED" not-null="true">
+            <meta attribute="description">Indicates the state of field communications with regard to this delay.</meta>
+            <meta attribute="defaultValue">false</meta>
+        </property>
+
+        <property name="engineStopped" type="boolean" column="ENGINESTOPPED" not-null="true">
+            <meta attribute="description">Indicates whether or not the target's engine will be switched off during this delay. A null value indicates that the default from the delay type should be used.</meta>
+        </property>
+
+        <property name="workOrderRef" type="string" column="WORKORDER_REF" length="254">
+            <meta attribute="description">The work order reference to be attached to this delay</meta>
+        </property>
+
+        <property name="sourceSystem" type="string" column="SOURCE_SYSTEM" length="254">
+            <meta attribute="description">Name of the source system.</meta>
+            <meta attribute="defaultValue">Minestar</meta>
+        </property>
+
+        <property name="createdDate" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the cycle was last updated.</meta>
+            <meta attribute="description">The utc time the cycle was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="CREATED_DATE_UTC"/>
+        </property>
+
+        <property name="lastModified" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time the cycle was last updated.</meta>
+            <meta attribute="description">The utc time the cycle was last updated.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="LAST_MODIFIED_UTC"/>
+        </property>
+
+        <many-to-one
+                name="endedByPerson"
+                class="minestar.machinetracking.domain.PersonReference"
+                column="ENDEDBY_PERSON"
+                not-found="ignore"
+        >
+            <meta attribute="description">The machine operator who ended this delay.</meta>
+        </many-to-one>
+        <many-to-one
+                name="endedByUser"
+                class="minestar.platform.domain.user.UserReference"
+                column="ENDEDBY_USER"
+                not-found="ignore"
+        >
+            <meta attribute="description">The office user who ended this delay.</meta>
+        </many-to-one>
+
+        <set name="delayActivities" table="DELAY_ACTIVITY" fetch="select">
+
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                name=DELAY_ACTIVITY_PK
+                columns=DELAY_OID, DELAYACTIVITYTYPE
+                tablespace=MW_IDXENT
+            </meta>
+
+            <cache usage="read-write" region="historical"/>
+
+            <key column="DELAY_OID" not-null="true"/>
+            <composite-element class="minestar.production.domain.DelayActivity">
+                <many-to-one
+                        name="delayActivityType"
+                        column="DELAYACTIVITYTYPE"
+                        class= "minestar.production.domain.DelayActivityTypeReference"
+                        not-found="ignore"
+                        not-null="true"
+                       >
+                    <meta attribute="description">The type of this delay activity</meta>
+                </many-to-one>
+
+                <property name="duration" column="DURATION" not-null="true">
+                    <meta attribute="description">The duration of this delay activity</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                    </type>
+                </property>
+
+                <property name="workOrderRef" type="string" column="WORKORDER_REF" length="254">
+                    <meta attribute="description">The work order reference to be attached to this delay activity</meta>
+                </property>
+
+                <property name="description" type="string" column="DESCRIPTION" length="254">
+                    <meta attribute="description">A description for this delay activity</meta>
+                </property>
+            </composite-element>
+        </set>
+    </class>
+
+    <!-- A lightweight reference to a Delay -->
+    <class name="minestar.production.domain.DelayReference"
+           table="DELAY"
+           mutable="false"
+           lazy="false">
+
+        <meta attribute="alias" inherit="false">DELAY_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a delay.</meta>
+        <meta attribute="lookupExpr" inherit="false">name</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="DELAY_OID"/>
+    </class>
+</hibernate-mapping>
+ 

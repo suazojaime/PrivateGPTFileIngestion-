@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="OracleEntityStatsSubRep"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="2"
+		 rightMargin="5"
+		 topMargin="2"
+		 bottomMargin="2"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<parameter name="SERVICENAME" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="MONITORSEQUENCE" isForPrompting="true" class="java.lang.Integer"/>
+	<parameter name="MONITORTYPE" isForPrompting="true" class="java.lang.String"/>
+	<parameter name="OWNER" isForPrompting="true" class="java.lang.String"/>
+	<queryString><![CDATA[Select * from V_OracleEntityStatistics 
+ Where ServiceName = $P{SERVICENAME}
+    And MonitorSequence = $P{MONITORSEQUENCE}
+   And MonitorType = $P{MONITORTYPE}
+   And Owner = $P{OWNER}
+ Order By EntityCount Desc]]></queryString>
+	<field name="SERVICENAME" class="java.lang.String"/>
+	<field name="MONITORSEQUENCE" class="java.lang.Integer"/>
+	<field name="OWNER" class="java.lang.String"/>
+	<field name="ECFCLASSID" class="java.lang.String"/>
+	<field name="ENTITYCOUNT" class="java.lang.Integer"/>
+	<field name="MONITORTYPE" class="java.lang.String"/>
+		<background>
+			<band height="0">
+			</band>
+		</background>
+		<title>
+			<band height="0">
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0">
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="36">
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="27"
+						y="2"
+						width="149"
+						height="15"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-BoldOblique" size="11" isBold="true" isItalic="true" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[Schema Entity Counts > 10]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="7"
+						y="20"
+						width="31"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>Count</text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="45"
+						y="20"
+						width="49"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="true" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<text>ECF Class</text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="11">
+				<rectangle>
+					<reportElement
+						mode="Opaque"
+						x="1"
+						y="0"
+						width="231"
+						height="11"
+						forecolor="#000000"
+						backcolor="#FFAF00"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false">
+							<printWhenExpression><![CDATA[new Boolean(($V{REPORT_COUNT}.longValue() % 2 != 0))]]></printWhenExpression>
+						</reportElement>
+					<graphicElement stretchType="RelativeToBandHeight" pen="None" fill="Solid" />
+				</rectangle>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="4"
+						y="1"
+						width="35"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer">$F{ENTITYCOUNT}</textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None" >					<reportElement
+						mode="Transparent"
+						x="45"
+						y="1"
+						width="186"
+						height="9"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						positionType="FixRelativeToTop"
+						isPrintRepeatedValues="true"
+						isRemoveLineWhenBlank="false"
+						isPrintInFirstWholeBand="false"
+						isPrintWhenDetailOverflows="false"/>
+					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
+						<font fontName="sansserif" pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String">$F{ECFCLASSID}</textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0">
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0">
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0">
+			</band>
+		</summary>
+</jasperReport>

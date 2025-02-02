@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="fc2969db-b7f1-41f1-8cfa-c35bba404f91" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PROD_PLAN_CMT_NON_PROD_TAS_FK1 of table PROD_PLAN_CMT_NON_PROD_TASK as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_NON_PROD_TASK" foreignKeyName="PROD_PLAN_CMT_NON_PROD_TAS_FK1"/>
+        </preConditions>
+        <comment>MO-2780: DropForeignKeyConstraint PROD_PLAN_CMT_NON_PROD_TAS_FK1 from PROD_PLAN_CMT_NON_PROD_TASK (REFERENCE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PROD_PLAN_CMT_NON_PROD_TASK" constraintName="PROD_PLAN_CMT_NON_PROD_TAS_FK1"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="5b88a0c3-24e3-4ff4-85c5-626305d3d647" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropForeignKeyConstraint for PROD_PLAN_CMT_OPERATIONAL_FK1 of table PROD_PLAN_CMT_OPERATIONAL_TASK as foreignKey does not exist." onFail="MARK_RAN">
+            <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_OPERATIONAL_TASK" foreignKeyName="PROD_PLAN_CMT_OPERATIONAL_FK1"/>
+        </preConditions>
+        <comment>MO-2780: DropForeignKeyConstraint PROD_PLAN_CMT_OPERATIONAL_FK1 from PROD_PLAN_CMT_OPERATIONAL_TASK (REFERENCE_OID)</comment>
+        <dropForeignKeyConstraint baseTableName="PROD_PLAN_CMT_OPERATIONAL_TASK" constraintName="PROD_PLAN_CMT_OPERATIONAL_FK1"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="2711862c-87a6-4ed6-9f2f-e306c941d2cf" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_NON_PRODUCTION_TASK as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_NON_PRODUCTION_TASK"/>
+        </preConditions>
+        <comment>MO-2780: DropTable PROD_PLAN_NON_PRODUCTION_TASK</comment>
+        <dropTable tableName="PROD_PLAN_NON_PRODUCTION_TASK"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="a3c0528c-0081-4d3c-9621-4bd7dc050cf5" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for V2_PROD_PLAN_OPERATIONAL_TASK as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_OPERATIONAL_TASK"/>
+        </preConditions>
+        <comment>MO-2780: DropTable V2_PROD_PLAN_OPERATIONAL_TASK</comment>
+        <dropTable tableName="V2_PROD_PLAN_OPERATIONAL_TASK"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="68264c55-31d2-45da-bf15-7882e1aad4ce" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for V2_PROD_PLAN_TASK as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="V2_PROD_PLAN_TASK"/>
+        </preConditions>
+        <comment>MO-2780: DropTable V2_PROD_PLAN_TASK</comment>
+        <dropTable tableName="V2_PROD_PLAN_TASK"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="9dc21ab8-620e-48d1-a8b5-937ee9bf00a7" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_TASK as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_TASK"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateTable PROD_PLAN_TASK</comment>
+        <createTable tablespace="MW_ENT" remarks="Store task details" tableName="PROD_PLAN_TASK">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_OID" type="BIGINT"/>
+            <column name="JOB_OID" type="BIGINT"/>
+            <column name="CREATED_DATE_UTC" type="DATETIME2" remarks="Task creation timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_DATE_UTC" type="DATETIME2" remarks="Task updated timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_TASK_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK"/>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="04fd6e05-0875-4044-98e3-c11fab63b991" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_TASK_NON_PRODUCTION as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateTable PROD_PLAN_TASK_NON_PRODUCTION</comment>
+        <createTable remarks="Store Plan Non Production Task details" tableName="PROD_PLAN_TASK_NON_PRODUCTION">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_OID" type="BIGINT"/>
+            <column name="JOB_OID" type="BIGINT"/>
+            <column name="CREATED_DATE_UTC" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_DATE_UTC" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLANNING_SYSTEM_ID" type="VARCHAR(254)"/>
+            <column name="PLANNING_SYSTEM_NAME" type="VARCHAR(254)"/>
+            <column name="TARGET_START_UTC" type="DATETIME2" remarks="Non production task start time"/>
+            <column name="TARGET_END_UTC" type="DATETIME2" remarks="Non production task end time"/>
+            <column name="EQUIPMENT_REFERENCE_ID" type="VARCHAR(254)"/>
+            <column name="EQUIPMENT_OID" type="BIGINT"/>
+            <column name="LOCATION_REFERENCE_ID" type="VARCHAR(254)"/>
+            <column name="LOCATION_OID" type="BIGINT"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_TASK_NON_PRODUCTI_PK" tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="e334f79d-0e73-42d5-857e-1ea402088614" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_TASK_OPERATIONAL as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateTable PROD_PLAN_TASK_OPERATIONAL</comment>
+        <createTable remarks="Store operational task details" tableName="PROD_PLAN_TASK_OPERATIONAL">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_OID" type="BIGINT"/>
+            <column name="JOB_OID" type="BIGINT"/>
+            <column name="CREATED_DATE_UTC" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_DATE_UTC" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLANNING_SYSTEM_ID" type="VARCHAR(255)"/>
+            <column name="PLANNING_SYSTEM_NAME" type="VARCHAR(255)"/>
+            <column name="TARGET_START_UTC" type="DATETIME2" remarks="Target task start time"/>
+            <column name="TARGET_END_UTC" type="DATETIME2" remarks="Target task end time"/>
+            <column name="EQUIPMENT_REFERENCE" type="VARCHAR(255)"/>
+            <column name="EQUIPMENT_OID" type="BIGINT"/>
+            <column name="DELAY_REFERENCE" type="VARCHAR(255)"/>
+            <column name="DELAY_OID" type="BIGINT"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_TASK_OPERATIONAL_PK" tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="75f7eadc-ad2d-45a3-a1b7-b6279a14fc66" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_TASK_PRODUCTION as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PROD_PLAN_TASK_PRODUCTION"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateTable PROD_PLAN_TASK_PRODUCTION</comment>
+        <createTable remarks="Store production task details" tableName="PROD_PLAN_TASK_PRODUCTION">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_OID" type="BIGINT"/>
+            <column name="JOB_OID" type="BIGINT"/>
+            <column name="CREATED_DATE_UTC" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_DATE_UTC" type="DATETIME2">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EQUIPMENT_OID" type="BIGINT"/>
+            <column name="SOURCE_OID" type="BIGINT"/>
+            <column name="MATERIAL_OID" type="BIGINT"/>
+            <column name="DUMP_OID" type="BIGINT"/>
+            <column name="TARGET_TOTAL_MASS" type="DOUBLE" remarks="Target Mass"/>
+            <column name="TARGET_TOTAL_VOLUME" type="DOUBLE" remarks="Target Volume"/>
+            <column name="ACTUAL_MASS" type="DOUBLE" remarks="Actual Mass"/>
+            <column name="ACTUAL_VOLUME" type="DOUBLE" remarks="Actual Volume"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_TASK_PRODUCTION_PK" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+    </changeSet>
+    <changeSet id="c1c0b24d-4968-485f-a0e7-29bf0c380529" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_TASK_NON_PRODUCT_FK1 to table PROD_PLAN_TASK_NON_PRODUCTION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_TASK_NON_PRODUCTION" foreignKeyName="PROD_PLAN_TASK_NON_PRODUCT_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: AddForeignKeyConstraint PROD_PLAN_TASK_NON_PRODUCT_FK1 to PROD_PLAN_TASK_NON_PRODUCTION (PLAN_OID)</comment>
+        <sql>UPDATE PROD_PLAN_TASK_NON_PRODUCTION SET PLAN_OID = NULL WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_TASK_NON_PRODUCTION.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_TASK_NON_PRODUCTION" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_TASK_NON_PRODUCT_FK1" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="98904ad5-a617-4e78-9e5b-a95c8267a4eb" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_TASK_OPERATIONAL_FK1 to table PROD_PLAN_TASK_OPERATIONAL as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_TASK_OPERATIONAL" foreignKeyName="PROD_PLAN_TASK_OPERATIONAL_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: AddForeignKeyConstraint PROD_PLAN_TASK_OPERATIONAL_FK1 to PROD_PLAN_TASK_OPERATIONAL (PLAN_OID)</comment>
+        <sql>UPDATE PROD_PLAN_TASK_OPERATIONAL SET PLAN_OID = NULL WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_TASK_OPERATIONAL.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_TASK_OPERATIONAL" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_TASK_OPERATIONAL_FK1" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="cfd0f465-4672-4dc9-b287-8fbdf5c53e00" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_TASK_PRODUCTION_FK1 to table PROD_PLAN_TASK_PRODUCTION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_TASK_PRODUCTION" columnName="PLAN_OID"/>
+            <columnExists tableName="V2_PROD_PLAN" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_TASK_PRODUCTION" foreignKeyName="PROD_PLAN_TASK_PRODUCTION_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: AddForeignKeyConstraint PROD_PLAN_TASK_PRODUCTION_FK1 to PROD_PLAN_TASK_PRODUCTION (PLAN_OID)</comment>
+        <sql>UPDATE PROD_PLAN_TASK_PRODUCTION SET PLAN_OID = NULL WHERE PLAN_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM V2_PROD_PLAN WHERE V2_PROD_PLAN.OID = PROD_PLAN_TASK_PRODUCTION.PLAN_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_TASK_PRODUCTION" baseColumnNames="PLAN_OID" constraintName="PROD_PLAN_TASK_PRODUCTION_FK1" referencedTableName="V2_PROD_PLAN" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="PROD_PLAN_TASK_PRODUCTION" constraintName="PROD_PLAN_TASK_PRODUCTION_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="b8097e36-cbcd-4ae2-ae4b-ec3f6464a986" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_NON_PROD_TAS_FK1 to table PROD_PLAN_CMT_NON_PROD_TASK as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_NON_PROD_TASK" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_NON_PROD_TASK" foreignKeyName="PROD_PLAN_CMT_NON_PROD_TAS_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: AddForeignKeyConstraint PROD_PLAN_CMT_NON_PROD_TAS_FK1 to PROD_PLAN_CMT_NON_PROD_TASK (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_NON_PROD_TASK WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_TASK_NON_PRODUCTION WHERE PROD_PLAN_TASK_NON_PRODUCTION.OID = PROD_PLAN_CMT_NON_PROD_TASK.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_NON_PROD_TASK" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_NON_PROD_TAS_FK1" referencedTableName="PROD_PLAN_TASK_NON_PRODUCTION" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    <changeSet id="f2d157d9-0f6c-4c12-ae0b-e5456c0ba79d" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_CMT_OPERATIONAL_FK1 to table PROD_PLAN_CMT_OPERATIONAL_TASK as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="PROD_PLAN_CMT_OPERATIONAL_TASK" columnName="REFERENCE_OID"/>
+            <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_CMT_OPERATIONAL_TASK" foreignKeyName="PROD_PLAN_CMT_OPERATIONAL_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: AddForeignKeyConstraint PROD_PLAN_CMT_OPERATIONAL_FK1 to PROD_PLAN_CMT_OPERATIONAL_TASK (REFERENCE_OID)</comment>
+        <sql>DELETE FROM PROD_PLAN_CMT_OPERATIONAL_TASK WHERE REFERENCE_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_TASK_OPERATIONAL WHERE PROD_PLAN_TASK_OPERATIONAL.OID = PROD_PLAN_CMT_OPERATIONAL_TASK.REFERENCE_OID)</sql>
+        <addForeignKeyConstraint baseTableName="PROD_PLAN_CMT_OPERATIONAL_TASK" baseColumnNames="REFERENCE_OID" constraintName="PROD_PLAN_CMT_OPERATIONAL_FK1" referencedTableName="PROD_PLAN_TASK_OPERATIONAL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback/>
+    </changeSet>
+    
+    <!--add index-->
+
+    <changeSet id="a14c550d-203b-4ce3-b2d8-2012dbb1b81d" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID_3 to table PROD_PLAN_TASK_NON_PRODUCTION as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+            <not>
+                <indexExists indexName="PLAN_OID_3" tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateIndex PLAN_OID_3 on PROD_PLAN_TASK_NON_PRODUCTION (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK_NON_PRODUCTION" indexName="PLAN_OID_3">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="3b590e99-818b-4850-b53d-df60306c9604" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for JOB_OID_3 to table PROD_PLAN_TASK_NON_PRODUCTION as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+            <not>
+                <indexExists indexName="JOB_OID_3" tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateIndex JOB_OID_3 on PROD_PLAN_TASK_NON_PRODUCTION (JOB_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK_NON_PRODUCTION" indexName="JOB_OID_3">
+            <column name="JOB_OID"/>
+        </createIndex>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="e7935b8d-62c4-41d6-8ef3-79637897c48b" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID_2 to table PROD_PLAN_TASK_OPERATIONAL as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+            <not>
+                <indexExists indexName="PLAN_OID_2" tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateIndex PLAN_OID_2 on PROD_PLAN_TASK_OPERATIONAL (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK_OPERATIONAL" indexName="PLAN_OID_2">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="382a1941-65f4-4c0c-a65f-0c8542702fc8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for JOB_OID_2 to table PROD_PLAN_TASK_OPERATIONAL as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+            <not>
+                <indexExists indexName="JOB_OID_2" tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateIndex JOB_OID_2 on PROD_PLAN_TASK_OPERATIONAL (JOB_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK_OPERATIONAL" indexName="JOB_OID_2">
+            <column name="JOB_OID"/>
+        </createIndex>
+        <rollback/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="8c9b3f41-055d-4fbd-8fb0-afacc96eb3c6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for PLAN_OID_1 to table PROD_PLAN_TASK_PRODUCTION as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_PRODUCTION"/>
+            <not>
+                <indexExists indexName="PLAN_OID_1" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateIndex PLAN_OID_1 on PROD_PLAN_TASK_PRODUCTION (PLAN_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK_PRODUCTION" indexName="PLAN_OID_1">
+            <column name="PLAN_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="e4ba5489-2714-46e9-9e3c-7ed6559b6ce1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateIndex for JOB_OID_1 to table PROD_PLAN_TASK_PRODUCTION as (1) table does not exist, or (2) index already exists." onFail="MARK_RAN">
+            <tableExists tableName="PROD_PLAN_TASK_PRODUCTION"/>
+            <not>
+                <indexExists indexName="JOB_OID_1" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+            </not>
+        </preConditions>
+        <comment>MO-2780: CreateIndex JOB_OID_1 on PROD_PLAN_TASK_PRODUCTION (JOB_OID)</comment>
+        <createIndex unique="false" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK_PRODUCTION" indexName="JOB_OID_1">
+            <column name="JOB_OID"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    
+    <!--remove version-->
+    
+    <changeSet id="1f8047de-0bdc-488d-a205-2f277e403bbc" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored DropColumn for VERSION of table PROD_PLAN_TASK_NON_PRODUCTION as column does not exist." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="VERSION"/>
+         </preConditions>
+         <comment>MO-2780: DropColumn PROD_PLAN_TASK_NON_PRODUCTION.VERSION</comment>
+         <dropColumn columnName="VERSION" tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+         <rollback/>
+     </changeSet>
+     <changeSet id="7ed7cc7e-f561-437d-a20c-c8075bf75676" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored DropColumn for VERSION of table PROD_PLAN_TASK_OPERATIONAL as column does not exist." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="VERSION"/>
+         </preConditions>
+         <comment>MO-2780: DropColumn PROD_PLAN_TASK_OPERATIONAL.VERSION</comment>
+         <dropColumn columnName="VERSION" tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+         <rollback/>
+     </changeSet>
+     <changeSet id="a96c46fb-73cc-4f7e-8927-634e6c8c0a89" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored DropColumn for VERSION of table PROD_PLAN_TASK_PRODUCTION as column does not exist." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_PRODUCTION" columnName="VERSION"/>
+         </preConditions>
+         <comment>MO-2780: DropColumn PROD_PLAN_TASK_PRODUCTION.VERSION</comment>
+         <dropColumn columnName="VERSION" tableName="PROD_PLAN_TASK_PRODUCTION"/>
+         <rollback>
+             <addColumn tableName="PROD_PLAN_TASK_PRODUCTION">
+                 <column name="VERSION" type="INT">
+                     <constraints nullable="true"/>
+                 </column>
+             </addColumn>
+         </rollback>
+     </changeSet>
+     <changeSet id="3a2869b2-fa1e-4bd2-800e-f3be6d7b94d1" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored DropTable for PROD_PLAN_TASK as table does not exist." onFail="MARK_RAN">
+             <tableExists tableName="PROD_PLAN_TASK"/>
+         </preConditions>
+         <comment>MO-2780: DropTable PROD_PLAN_TASK</comment>
+         <dropTable tableName="PROD_PLAN_TASK"/>
+         <rollback/>
+     </changeSet>
+   
+     <!--additional requirements-->
+    
+    <changeSet id="7851b84a-f0f1-4446-aa4a-d5ae912c7395" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored DropColumn for LOCATION_REFERENCE_ID of table PROD_PLAN_TASK_NON_PRODUCTION as column does not exist." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="LOCATION_REFERENCE_ID"/>
+         </preConditions>
+         <comment>MO-2780: DropColumn PROD_PLAN_TASK_NON_PRODUCTION.LOCATION_REFERENCE_ID</comment>
+         <dropColumn columnName="LOCATION_REFERENCE_ID" tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+         <rollback/>
+     </changeSet>
+     <changeSet id="38f08bb5-7979-46ab-8a01-546a872b5e4a" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored DropColumn for LOCATION_OID of table PROD_PLAN_TASK_NON_PRODUCTION as column does not exist." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="LOCATION_OID"/>
+         </preConditions>
+         <comment>MO-2780: DropColumn PROD_PLAN_TASK_NON_PRODUCTION.LOCATION_OID</comment>
+         <dropColumn columnName="LOCATION_OID" tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+         <rollback/>
+     </changeSet>
+     <changeSet id="cb4f836b-bb45-4272-b4e4-bc851dddac57" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored AddColumn for USER_ADDED to table PROD_PLAN_TASK_NON_PRODUCTION as table does not exist or column already exists." onFail="MARK_RAN">
+             <tableExists tableName="PROD_PLAN_TASK_NON_PRODUCTION"/>
+             <not>
+                 <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="USER_ADDED"/>
+             </not>
+         </preConditions>
+         <comment>MO-2780: AddColumn PROD_PLAN_TASK_NON_PRODUCTION.USER_ADDED</comment>
+         <addColumn tableName="PROD_PLAN_TASK_NON_PRODUCTION">
+             <column name="USER_ADDED" type="BOOLEAN" defaultValueBoolean="false" remarks="If task is added by user or import">
+                 <constraints nullable="false"/>
+             </column>
+         </addColumn>
+         <rollback/>
+     </changeSet>
+     <changeSet id="393ff947-7359-4e07-81a3-8e932db77cb0" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored DropColumn for EQUIPMENT_REFERENCE of table PROD_PLAN_TASK_OPERATIONAL as column does not exist." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="EQUIPMENT_REFERENCE"/>
+         </preConditions>
+         <comment>MO-2780: DropColumn PROD_PLAN_TASK_OPERATIONAL.EQUIPMENT_REFERENCE</comment>
+         <dropColumn columnName="EQUIPMENT_REFERENCE" tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+         <rollback/>
+     </changeSet>
+     <changeSet id="8d7cec2e-1b78-43a4-995c-ece6d3b6d910" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored DropColumn for EQUIPMENT_OID of table PROD_PLAN_TASK_OPERATIONAL as column does not exist." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="EQUIPMENT_OID"/>
+         </preConditions>
+         <comment>MO-2780: DropColumn PROD_PLAN_TASK_OPERATIONAL.EQUIPMENT_OID</comment>
+         <dropColumn columnName="EQUIPMENT_OID" tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+         <rollback/>
+     </changeSet>
+     <changeSet id="e5216763-6b45-41a2-bf20-ec564b6b7681" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored AddColumn for USER_ADDED to table PROD_PLAN_TASK_OPERATIONAL as table does not exist or column already exists." onFail="MARK_RAN">
+             <tableExists tableName="PROD_PLAN_TASK_OPERATIONAL"/>
+             <not>
+                 <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="USER_ADDED"/>
+             </not>
+         </preConditions>
+         <comment>MO-2780: AddColumn PROD_PLAN_TASK_OPERATIONAL.USER_ADDED</comment>
+         <addColumn tableName="PROD_PLAN_TASK_OPERATIONAL">
+             <column name="USER_ADDED" type="BOOLEAN" defaultValueBoolean="false" remarks="If task is added by user or import">
+                 <constraints nullable="false"/>
+             </column>
+         </addColumn>
+         <rollback/>
+     </changeSet>
+     <changeSet id="787d05d2-f277-4b8e-98f5-615ce2b37baa" author="MineStar" failOnError="false">
+         <preConditions onFailMessage="Ignored AddColumn for USER_ADDED to table PROD_PLAN_TASK_PRODUCTION as table does not exist or column already exists." onFail="MARK_RAN">
+             <tableExists tableName="PROD_PLAN_TASK_PRODUCTION"/>
+             <not>
+                 <columnExists tableName="PROD_PLAN_TASK_PRODUCTION" columnName="USER_ADDED"/>
+             </not>
+         </preConditions>
+         <comment>MO-2780: AddColumn PROD_PLAN_TASK_PRODUCTION.USER_ADDED</comment>
+         <addColumn tableName="PROD_PLAN_TASK_PRODUCTION">
+             <column name="USER_ADDED" type="BOOLEAN" defaultValueBoolean="false" remarks="If task is added by user or import">
+                 <constraints nullable="false"/>
+             </column>
+         </addColumn>
+     </changeSet>
+     <changeSet id="d967c354-fc45-40bc-a6a6-6446417e12ae" author="MineStar" context="Production/Production_Management" failOnError="false">
+         <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_TASK_NON_PROD_LOCATION as table already exists." onFail="MARK_RAN">
+             <not>
+                 <tableExists tableName="PROD_PLAN_TASK_NON_PROD_LOCATION"/>
+             </not>
+         </preConditions>
+         <comment>MO-2780: CreateTable PROD_PLAN_TASK_NON_PROD_LOCATION</comment>
+         <createTable tablespace="MW_ENT" tableName="PROD_PLAN_TASK_NON_PROD_LOCATION">
+             <column name="TASK_OID" type="BIGINT">
+                 <constraints nullable="false"/>
+             </column>
+             <column name="OID" type="BIGINT">
+                 <constraints nullable="false"/>
+             </column>
+             <column name="REFERENCE_ID" type="VARCHAR(255)">
+                 <constraints nullable="false"/>
+             </column>
+             <column name="LOCATION_OID" type="BIGINT"/>
+         </createTable>
+         <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_TASK_NON_PROD_LOC_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK_NON_PROD_LOCATION"/>
+         <rollback/>
+         <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+             <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+         </modifySql>
+     </changeSet>
+     <changeSet id="505e3c2d-860d-4c88-91f5-f9c474710e8a" author="MineStar" context="Production/Production_Management" failOnError="false">
+         <preConditions onFailMessage="Ignored CreateTable for PROD_PLAN_TASK_OPER_EQUIPMENT as table already exists." onFail="MARK_RAN">
+             <not>
+                 <tableExists tableName="PROD_PLAN_TASK_OPER_EQUIPMENT"/>
+             </not>
+         </preConditions>
+         <comment>MO-2780: CreateTable PROD_PLAN_TASK_OPER_EQUIPMENT</comment>
+         <createTable tablespace="MW_ENT" tableName="PROD_PLAN_TASK_OPER_EQUIPMENT">
+             <column name="TASK_OID" type="BIGINT">
+                 <constraints nullable="false"/>
+             </column>
+             <column name="OID" type="BIGINT">
+                 <constraints nullable="false"/>
+             </column>
+             <column name="REFERENCE_ID" type="VARCHAR(255)">
+                 <constraints nullable="false"/>
+             </column>
+             <column name="EQUIPMENT_OID" type="BIGINT"/>
+         </createTable>
+         <addPrimaryKey columnNames="OID" constraintName="PROD_PLAN_TASK_OPER_EQUIPME_PK" tablespace="MW_IDXENT" tableName="PROD_PLAN_TASK_OPER_EQUIPMENT"/>
+         <rollback/>
+         <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+             <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+         </modifySql>
+     </changeSet>
+     <changeSet id="73984643-f754-4d21-ba2d-6dbd66fc9286" author="MineStar" context="Production/Production_Management" failOnError="false">
+         <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_TASK_NON_PROD_LO_FK1 to table PROD_PLAN_TASK_NON_PROD_LOCATION as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_NON_PROD_LOCATION" columnName="TASK_OID"/>
+             <columnExists tableName="PROD_PLAN_TASK_NON_PRODUCTION" columnName="OID"/>
+             <not>
+                 <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_TASK_NON_PROD_LOCATION" foreignKeyName="PROD_PLAN_TASK_NON_PROD_LO_FK1"/>
+             </not>
+         </preConditions>
+         <comment>MO-2780: AddForeignKeyConstraint PROD_PLAN_TASK_NON_PROD_LO_FK1 to PROD_PLAN_TASK_NON_PROD_LOCATION (TASK_OID)</comment>
+         <sql>DELETE FROM PROD_PLAN_TASK_NON_PROD_LOCATION WHERE TASK_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_TASK_NON_PRODUCTION WHERE PROD_PLAN_TASK_NON_PRODUCTION.OID = PROD_PLAN_TASK_NON_PROD_LOCATION.TASK_OID)</sql>
+         <addForeignKeyConstraint baseTableName="PROD_PLAN_TASK_NON_PROD_LOCATION" baseColumnNames="TASK_OID" constraintName="PROD_PLAN_TASK_NON_PROD_LO_FK1" referencedTableName="PROD_PLAN_TASK_NON_PRODUCTION" referencedColumnNames="OID" onDelete="NO ACTION"/>
+         <rollback/>
+     </changeSet>
+     <changeSet id="fb4c3e41-8bd6-4533-9ecf-21d2f0c47d09" author="MineStar" context="Production/Production_Management" failOnError="false">
+         <preConditions onFailMessage="Ignored AddForeignKeyConstraint for PROD_PLAN_TASK_OPER_EQUIPM_FK1 to table PROD_PLAN_TASK_OPER_EQUIPMENT as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+             <columnExists tableName="PROD_PLAN_TASK_OPER_EQUIPMENT" columnName="TASK_OID"/>
+             <columnExists tableName="PROD_PLAN_TASK_OPERATIONAL" columnName="OID"/>
+             <not>
+                 <foreignKeyConstraintExists foreignKeyTableName="PROD_PLAN_TASK_OPER_EQUIPMENT" foreignKeyName="PROD_PLAN_TASK_OPER_EQUIPM_FK1"/>
+             </not>
+         </preConditions>
+         <comment>MO-2780: AddForeignKeyConstraint PROD_PLAN_TASK_OPER_EQUIPM_FK1 to PROD_PLAN_TASK_OPER_EQUIPMENT (TASK_OID)</comment>
+         <sql>DELETE FROM PROD_PLAN_TASK_OPER_EQUIPMENT WHERE TASK_OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM PROD_PLAN_TASK_OPERATIONAL WHERE PROD_PLAN_TASK_OPERATIONAL.OID = PROD_PLAN_TASK_OPER_EQUIPMENT.TASK_OID)</sql>
+         <addForeignKeyConstraint baseTableName="PROD_PLAN_TASK_OPER_EQUIPMENT" baseColumnNames="TASK_OID" constraintName="PROD_PLAN_TASK_OPER_EQUIPM_FK1" referencedTableName="PROD_PLAN_TASK_OPERATIONAL" referencedColumnNames="OID" onDelete="NO ACTION"/>
+         <rollback/>
+     </changeSet>
+    
+</databaseChangeLog>

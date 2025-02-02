@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Copyright (c) 2013, Caterpillar, Brisbane Australia. All rights reserved. -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        ">
+
+    <bean id="delegatingModeFieldListener"
+          class="minestar.autonomy.service.mode.field.DelegatingModeFieldListener"/>
+
+    <bean id="modeFieldCommunications" class="minestar.autonomy.service.mode.field.ModeFieldCommunications">
+        <property name="modeFieldListener" ref="delegatingModeFieldListener"/>
+        <property name="notification" ref="notification"/>
+    </bean>
+
+    <bean id="modeMessageServiceImpl"
+          class="minestar.autonomy.service.mode.field.DelegatingModeFieldSender"/>
+
+    <bean id="registerModeMessageService" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Mode Message Service"/>
+        <constructor-arg value="minestar.autonomy.service.mode.ModeMessageService"/>
+        <constructor-arg ref="modeMessageServiceImpl"/>
+    </bean>
+
+    <bean id="sharedModeFieldSender" class="minestar.mode.shared.SharedModeFieldSender">
+        <property name="sendModeStatusRequest" ref="sharedSendModeStatusRequest"/>
+        <property name="sendFailureAutoArmedResponse" ref="sharedSendFailureAutoArmedResponse"/>
+        <property name="sendSuccessAutoArmedResponse" ref="sharedSendSuccessAutoArmedResponse"/>
+        <property name="sendModeCommand" ref="sharedSendModeCommand"/>
+    </bean>
+
+    <bean id="sharedSendModeStatusRequest" class="minestar.mode.shared.field.SendModeStatusRequest">
+        <constructor-arg name="machineModeService" ref="machineModeServiceImpl"/>
+        <constructor-arg name="modeEventHandler" ref="modeEventHandler"/>
+        <constructor-arg name="modeFieldCommunications" ref="modeFieldCommunications"/>
+        <constructor-arg name="processModeStatus" ref="sharedProcessModeStatus"/>
+    </bean>
+
+    <bean id="sharedSendFailureAutoArmedResponse"
+          class="minestar.mode.shared.field.SendFailureAutoArmedResponse">
+        <property name="modeEventHandler" ref="modeEventHandler"/>
+        <property name="modeFieldCommunications" ref="modeFieldCommunications"/>
+    </bean>
+
+    <bean id="sharedSendSuccessAutoArmedResponse"
+          class="minestar.mode.shared.field.SendSuccessAutoArmedResponse">
+        <property name="modeEventHandler" ref="modeEventHandler"/>
+        <property name="modeFieldCommunications" ref="modeFieldCommunications"/>
+    </bean>
+
+    <bean id="sharedSendModeCommand"
+          class="minestar.mode.shared.field.SendModeCommand">
+        <constructor-arg name="machineModeService" ref="machineModeServiceImpl"/>
+        <constructor-arg name="mineFleetService" ref="mineFleetServiceImpl"/>
+        <constructor-arg name="modeEventHandler" ref="modeEventHandler"/>
+        <constructor-arg name="modeFieldCommunications" ref="modeFieldCommunications"/>
+        <constructor-arg name="processModeStatus" ref="sharedProcessModeStatus"/>
+        <constructor-arg name="userService" ref="userServiceImpl"/>
+    </bean>
+
+</beans>

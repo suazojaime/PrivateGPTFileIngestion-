@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="19f8e923-854e-4a0f-ba96-a5e5f1edc928" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for MACHINECLASS_COASTING_BURN as table does not exist."
+                       onFail="MARK_RAN">
+            <tableExists tableName="MACHINECLASS_COASTING_BURN"/>
+        </preConditions>
+        <comment>AHS-8030: DropTable MACHINECLASS_COASTING_BURN</comment>
+        <dropTable tableName="MACHINECLASS_COASTING_BURN"/>
+        <rollback>
+            <createTable tableName="MACHINECLASS_COASTING_BURN">
+                <column name="OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ALLOW_COASTING" type="BOOLEAN">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="COASTING_BURN_RATE" type="DOUBLE"/>
+                <column name="LOWER_GRADIENT_FULL" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="UPPER_GRADIENT_FULL" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="LOWER_GRADIENT_EMPTY" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="UPPER_GRADIENT_EMPTY" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="OID" constraintName="MACHINECLASS_COASTING_BURN_PK" tableName="MACHINECLASS_COASTING_BURN"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

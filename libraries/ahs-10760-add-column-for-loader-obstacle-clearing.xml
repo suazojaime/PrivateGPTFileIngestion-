@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="c63fed9d-1d73-440a-8777-42f2ae530157" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ASSIGNFOROBSTACLECLEARING to table MACHINE as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE"/>
+            <not>
+                <columnExists tableName="MACHINE" columnName="ASSIGNFOROBSTACLECLEARING"/>
+            </not>
+        </preConditions>
+        <comment>AHS-10760: AddColumn MACHINE.ASSIGNFOROBSTACLECLEARING</comment>
+        <addColumn tableName="MACHINE">
+            <column name="ASSIGNFOROBSTACLECLEARING" type="BOOLEAN"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

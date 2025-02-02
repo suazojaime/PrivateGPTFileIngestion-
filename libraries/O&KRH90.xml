@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Shovel Classes">
+
+    <machineClass xsi:type="shovelClassImpl">
+        <name>O&amp;KRH90</name>
+        <manufacturer>O&amp;K</manufacturer>
+        <description>O&amp;K RH90 Series Shovel</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="3.20" unit="cubic metres"/>
+        <refuelLevel magnitude="0.32" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.16" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="24.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000002" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.000037" unit="cubic metres per second"/>
+        <maximumSpeed magnitude="0.65" unit="metres per second"/>
+        <dipperLoadCapacity magnitude="10.00" unit="cubic metres"/>
+        <reachRadius magnitude="12.70" unit="metre"/>
+    </machineClass>
+
+</machineClassExport>
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="87066182-7d09-4ed5-9183-dc764aae2120" author="MineStar" failOnError="false">
+        <preConditions>
+            <ext:columnHasDefaultValue tableName="PLAN_MODEL" columnName="USE_OPT_PERMS_HANDLING_IN_DUMP"/>
+        </preConditions>
+        <comment>AHS-4506: DropDefaultValue PLAN_MODEL.USE_OPT_PERMS_HANDLING_IN_DUMP</comment>
+        <dropDefaultValue tableName="PLAN_MODEL" columnName="USE_OPT_PERMS_HANDLING_IN_DUMP"/>
+        <rollback>
+            <!-- Don't need to add Default value back... this will be done as part of the rollback in the
+                 changeset below where the column is added -->
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="87066182-7d09-4ed5-9183-dc764aae2128-0002" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for USE_OPT_PERMS_HANDLING_IN_DUMP of table PLAN_MODEL as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="PLAN_MODEL" columnName="USE_OPT_PERMS_HANDLING_IN_DUMP"/>
+        </preConditions>
+        <comment>AHS-4506: DropColumn PLAN_MODEL.USE_OPT_PERMS_HANDLING_IN_DUMP</comment>
+        <dropColumn columnName="USE_OPT_PERMS_HANDLING_IN_DUMP" tableName="PLAN_MODEL"/>
+        <!-- If default throughput has been overridden for a Dump and is set to Compatibility or Disabled, set to Recommended -->
+        <sql>UPDATE PLAN_MODEL SET THROUGHPUT = 0 WHERE OVERRIDE_DEFAULT_THROUGHPUT = 1 AND THROUGHPUT in (1,2) AND DUMP_PLAN_TYPE IS NOT NULL</sql>
+        <!-- If default throughput has been overridden for a Dump and is set to Custom, adjust to the new value for Custom -->
+        <sql>UPDATE PLAN_MODEL SET THROUGHPUT = 1 WHERE OVERRIDE_DEFAULT_THROUGHPUT = 1 AND THROUGHPUT = 3 AND DUMP_PLAN_TYPE IS NOT NULL</sql>
+        <!-- If default throughput has been overridden in a Highwall Dump with Custom throughput setting, set throughput_optimisation to Allocate By Score -->
+        <sql>UPDATE PLAN_MODEL SET THROUGHPUT_OPTIMISATION = 6 WHERE DUMP_PLAN_TYPE = 'HIGHWALL' AND OVERRIDE_DEFAULT_THROUGHPUT = 1 AND THROUGHPUT = 1</sql>
+        <rollback>
+            <addColumn tableName="PLAN_MODEL">
+                <column name="USE_OPT_PERMS_HANDLING_IN_DUMP" type="BOOLEAN" defaultValueBoolean="true"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="87066182-7d09-4ed5-9183-dc764aae2128-0003" author="MineStar" failOnError="false">
+        <comment>AHS-4506: Update all PLAN_MODEL.THROUGHPUT values for dumps</comment>
+        <!-- Update all THROUGHPUT values for dumps -->
+        <sql>UPDATE PLAN_MODEL SET THROUGHPUT = 1 WHERE THROUGHPUT = 3 AND DUMP_PLAN_TYPE IS NOT NULL</sql>
+        <rollback>
+            <comment>@EmptyRollback</comment>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

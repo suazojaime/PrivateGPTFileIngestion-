@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+
+    <changeSet id="db9010a9-72f9-4c4a-8c35-a84aba9b3195" author="MineStar" context="Material_Tracking/Material_Tracking_Management" failOnError="true">
+        <preConditions onFailMessage="Ignored add column for CONTROL_WINDOW_START and CONTROL_WINDOW_END as columns already exists or table BLEND_INFORMATION_RECORD does not exist." onFail="MARK_RAN">
+            <tableExists tableName="BLEND_INFORMATION_RECORD"/>
+            <not>
+                <columnExists tableName="BLEND_INFORMATION_RECORD" columnName="CONTROL_WINDOW_START"/>
+                <columnExists tableName="BLEND_INFORMATION_RECORD" columnName="CONTROL_WINDOW_END"/>
+            </not>
+        </preConditions>
+        <comment>FLT-4915 4.6 Add column BLEND_INFORMATION_RECORD.CONTROL_WINDOW_START</comment>
+        <addColumn tableName="BLEND_INFORMATION_RECORD">
+            <column name="CONTROL_WINDOW_START" type="DATETIME2" remarks="Start timestamp of control window">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <comment>FLT-4915 4.6 Add column BLEND_INFORMATION_RECORD.CONTROL_WINDOW_END</comment>
+        <addColumn tableName="BLEND_INFORMATION_RECORD">
+            <column name="CONTROL_WINDOW_END" type="DATETIME2" remarks="End timestamp of control window">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

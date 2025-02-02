@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) 2022 Caterpillar
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="8325e062-ef3d-4a98-86fa-a2dfefd8ee40" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CREATOR_OID to table DETOUR_REQUEST as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DETOUR_REQUEST"/>
+            <not>
+                <columnExists tableName="DETOUR_REQUEST" columnName="CREATOR_OID"/>
+            </not>
+        </preConditions>
+        <comment>MO-12031: AddColumn DETOUR_REQUEST.CREATOR_OID</comment>
+        <addColumn tableName="DETOUR_REQUEST">
+            <column name="CREATOR_OID" type="BIGINT" remarks="Reference to user that created this detour request, or null if created by Plan Management system"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="07a945ec-93ed-456e-b5cd-5c6fea5ce21c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LOAD_STATE of table DETOUR_REQUEST as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="DETOUR_REQUEST" columnName="LOAD_STATE"/>
+        </preConditions>
+        <comment>MO-12031: DropColumn DETOUR_REQUEST.LOAD_STATE</comment>
+        <dropColumn columnName="LOAD_STATE" tableName="DETOUR_REQUEST"/>
+        <rollback>
+            <addColumn tableName="DETOUR_REQUEST">
+                <column name="LOAD_STATE" type="TINYINT" defaultValueNumeric="0">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+    <changeSet id="a0be5d79-3c23-4f5b-91b3-5ed76ebf4504" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for CONDITION to table DETOUR_REQUEST as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="DETOUR_REQUEST"/>
+            <not>
+                <columnExists tableName="DETOUR_REQUEST" columnName="CONDITION"/>
+            </not>
+        </preConditions>
+        <comment>MO-12031: AddColumn DETOUR_REQUEST.CONDITION</comment>
+        <addColumn tableName="DETOUR_REQUEST">
+            <column name="CONDITION" type="TINYINT" defaultValueNumeric="0" remarks="When should the truck be routed via a detour destination">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

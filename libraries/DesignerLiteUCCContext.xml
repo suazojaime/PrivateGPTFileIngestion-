@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2022 Caterpillar -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- must have this -->
+    <bean id="designerLiteUCCImpl" class="minestar.machinetracking.uifacade.impl.DesignerLiteUCCImpl"
+          lazy-init="true">
+        <property name="notification" ref="notification"/>
+        <property name="uiCacheManager" ref="uiCacheManagerImpl" />
+    </bean>
+
+
+    <!-- support for serviceFactory -->
+    <bean id="registerDesignerLiteUCCImpl" parent="registrationInstance" lazy-init="true">
+        <constructor-arg value="Designer Lite UCC"/>
+        <constructor-arg value="minestar.machinetracking.uifacade.DesignerLiteUCCFacade"/>
+        <constructor-arg ref="designerLiteUCCImpl"/>
+    </bean>
+
+    <!-- support for remoting -->
+    <bean id="designerLiteUCCProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="targetSource">
+            <bean class="org.springframework.aop.target.LazyInitTargetSource">
+                <property name="targetBeanName" value="designerLiteUCCImpl"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean parent="rmiServiceExporter">
+        <property name="serviceName" value="designerLiteUCC"/>
+        <property name="service" ref="designerLiteUCCProxy"/>
+        <property name="serviceInterface" value="minestar.machinetracking.uifacade.DesignerLiteUCCFacade"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  ~ Copyright (c) 2018, Caterpillar, Inc.
+  -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="ab447e66-b437-414c-9c3f-ea69d4603a85" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for LAYER_UPDATE_VERSION to table ACTIVITY as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVITY"/>
+            <not>
+                <columnExists tableName="ACTIVITY" columnName="LAYER_UPDATE_VERSION"/>
+            </not>
+        </preConditions>
+        <comment>FLT-8307: AddColumn ACTIVITY.LAYER_UPDATE_VERSION</comment>
+        <addColumn tableName="ACTIVITY">
+            <column name="LAYER_UPDATE_VERSION" type="BIGINT" defaultValueNumeric="0" remarks="The layer update version when the activity was created/modified.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="cdfc9229-6828-46e2-b4c0-8e65a9e45aab" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table ACTIVITY as table or column does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ACTIVITY"/>
+            <columnExists tableName="ACTIVITY" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>FLT-8307: Initialize ACTIVITY.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Activity"/>
+            <param name="table" value="ACTIVITY"/>
+            <param name="oidColumn" value="ACTIVITY_OID"/>
+            <param name="supportsArchiving" value="false"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE ACTIVITY SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

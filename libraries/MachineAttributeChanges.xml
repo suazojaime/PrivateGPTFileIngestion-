@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="us-ascii" standalone="no"?>
+<!DOCTYPE circuit SYSTEM "circuit.dtd">
+
+<!-- MODIFICATION HISTORY
+     $Log: not supported by cvs2svn $
+     Revision 1.3  2005/08/18 00:07:31  markb
+     MAC-596 Record number of times a waypoint is missed.
+
+     Revision 1.2  2005/08/10 01:49:36  markb
+     MAC-525 Alarm if truck is loading at two loaders at the same time.
+
+     Revision 1.1  2005/05/09 05:25:35  markb
+     ASS-112 Refueling scheduled assignments.
+
+-->
+
+<circuit>
+    <sources>
+        <!--<source name="machineEvents" class="com.mincom.works.cc.machine.MachineNodeSource" />-->
+    </sources>
+    <nodes>
+        <node name="machineUsage" class="com.mincom.works.cc.personnel.node.MachineUsageNode" />
+        <node name="refuelingMonitor" class="com.mincom.works.refueling.node.RefuelingMonitorNode" />
+        <node name="loadingMonitor" class="com.mincom.works.cc.machine.node.LoadingMonitorNode" />
+        <node name="pathMonitor" class="com.mincom.works.cc.machine.node.PathMonitorNode" />
+    </nodes>
+    <sinks>
+    </sinks>
+    <connections>
+        <!--<connect source="machineEvents" sink="refuelingMonitor"/>-->
+        <!--<connect source="machineEvents" sink="machineUsage"/>-->
+        <!--<connect source="machineEvents" sink="loadingMonitor"/>-->
+        <!--<connect source="machineEvents" sink="pathMonitor"/>-->
+        <!--<connect source="machineEvents" sink="stoppedMachine"/>-->
+    </connections>
+</circuit>

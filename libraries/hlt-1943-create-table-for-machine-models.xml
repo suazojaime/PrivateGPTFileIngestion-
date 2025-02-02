@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="0513b837-5980-49b0-be6d-4ee329c7bc50" author="MineStar" context="Health/Health_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for MACHINE_MODEL as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="MACHINE_MODEL"/>
+            </not>
+        </preConditions>
+        <comment>HLT-1943: CreateTable MACHINE_MODEL</comment>
+        <createTable tableName="MACHINE_MODEL">
+            <column name="OID" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SERIAL_NUM_PREFIX" type="VARCHAR(20)"/>
+            <column name="MODEL_CODE" type="VARCHAR(20)"/>
+            <column name="FAMILY" type="VARCHAR(200)"/>
+            <column name="FAMILY_CODE" type="VARCHAR(2)"/>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="MACHINE_MODEL_PK" tableName="MACHINE_MODEL"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

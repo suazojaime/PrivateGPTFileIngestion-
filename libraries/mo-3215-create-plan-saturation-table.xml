@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="627c5a48-4682-4de9-a855-b3e28561713f" author="MineStar" context="Pit_Link/Pit_Link_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for PLAN_SATURATION as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="PLAN_SATURATION"/>
+            </not>
+        </preConditions>
+        <comment>MO-3215: CreateTable PLAN_SATURATION</comment>
+        <createTable tablespace="MW_ENT" remarks="The saturation for each dynamic plan." tableName="PLAN_SATURATION">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PLAN_OID" type="BIGINT" remarks="The plan OID for saturation value.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SATURATION_LEVEL" type="DOUBLE" remarks="The saturation value measured by the truck.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SATURATION_LEVEL_TS_UTC" type="DATETIME2" remarks="The time when the saturation event occurred."/>
+            <column name="LATEST_WATERED_TS_UTC" type="DATETIME2" remarks="The time when the latest watering event occurred."/>
+            <column name="SATURATION_REASON" type="TINYINT" remarks="A numerical representation of the state.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SATURATION_SOURCE" type="TINYINT" remarks="The type of the source of the saturation update.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SOURCE_OID" type="BIGINT" remarks="The oid of the source of the saturation update.">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID" constraintName="PLAN_SATURATION_PK" tablespace="MW_IDXENT" tableName="PLAN_SATURATION"/>
+        <addUniqueConstraint columnNames="PLAN_OID" constraintName="PLAN_SATURATION_PLAN_OID_UK" tableName="PLAN_SATURATION"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

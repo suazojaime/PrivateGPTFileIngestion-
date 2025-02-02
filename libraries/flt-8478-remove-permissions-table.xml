@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="28724ca8-01b2-4d8f-aa18-147a889db58c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for SYSTEM_OPERATION as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="SYSTEM_OPERATION"/>
+        </preConditions>
+        <comment>FLT-8478: DropTable SYSTEM_OPERATION</comment>
+        <dropTable tableName="SYSTEM_OPERATION"/>
+        <rollback>
+            <sql dbms="oracle">ALTER SESSION SET NLS_LENGTH_SEMANTICS = 'CHAR'</sql>
+            <createTable tablespace="MW_ENT" tableName="SYSTEM_OPERATION">
+                <column name="PERMISSION_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="OPERATIONID" type="VARCHAR(254)">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="PERMISSION_OID" constraintName="SYSTEM_OPERATION_PK" tablespace="MW_IDXENT" tableName="SYSTEM_OPERATION"/>
+            <createIndex unique="true" tablespace="MW_IDXENT" tableName="SYSTEM_OPERATION" indexName="SYSTEM_OPERATION_OPERATIONID">
+                <column name="OPERATIONID"/>
+            </createIndex>
+            <addForeignKeyConstraint baseTableName="SYSTEM_OPERATION" baseColumnNames="PERMISSION_OID" constraintName="SYSTEM_OPERATION_PERMISSION_FK" referencedTableName="PERMISSION" referencedColumnNames="PERMISSION_OID" onDelete="NO ACTION"/>
+        </rollback>
+        <modifySql applyToRollback="true" dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="19f7f516-1b01-4430-8a58-1b859a3e34a6" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for ROLE_PERMISSIONS as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="ROLE_PERMISSIONS"/>
+        </preConditions>
+        <comment>FLT-8478: DropTable ROLE_PERMISSIONS</comment>
+        <dropTable tableName="ROLE_PERMISSIONS"/>
+        <rollback>
+            <createTable tablespace="MW_ENT" tableName="ROLE_PERMISSIONS">
+                <column name="ROLE_PERMISSION_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="PERMISSION_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="ROLE_PERMISSION_OID,PERMISSION_OID" constraintName="ROLE_PERMISSIONS_PK" tablespace="MW_IDXENT" tableName="ROLE_PERMISSIONS"/>
+            <addForeignKeyConstraint baseTableName="ROLE_PERMISSIONS" baseColumnNames="PERMISSION_OID" constraintName="ROLE_PERMISSIONS_PERMISSION_FK" referencedTableName="PERMISSION" referencedColumnNames="PERMISSION_OID" onDelete="NO ACTION"/>
+            <addForeignKeyConstraint baseTableName="ROLE_PERMISSIONS" baseColumnNames="ROLE_PERMISSION_OID" constraintName="ROLE_PERMISSIONS_ROLE_PERMI_FK" referencedTableName="SYSTEM_ROLE" referencedColumnNames="PERMISSION_OID" onDelete="NO ACTION"/>
+        </rollback>
+        <modifySql applyToRollback="true" dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="df839ec5-19b9-4cae-8f92-4fbf5e9b65a4" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for SYSTEM_ROLE as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="SYSTEM_ROLE"/>
+        </preConditions>
+        <comment>FLT-8478: DropTable SYSTEM_ROLE</comment>
+        <dropTable tableName="SYSTEM_ROLE"/>
+        <rollback>
+            <sql dbms="oracle">ALTER SESSION SET NLS_LENGTH_SEMANTICS = 'CHAR'</sql>
+            <createTable tablespace="MW_ENT" tableName="SYSTEM_ROLE">
+                <column name="PERMISSION_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ROLEID" type="VARCHAR(254)">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="PERMISSION_OID" constraintName="SYSTEM_ROLE_PK" tablespace="MW_IDXENT" tableName="SYSTEM_ROLE"/>
+            <createIndex unique="true" tablespace="MW_IDXENT" tableName="SYSTEM_ROLE" indexName="SYSTEM_ROLE_ROLEID">
+                <column name="ROLEID"/>
+            </createIndex>
+            <addForeignKeyConstraint baseTableName="SYSTEM_ROLE" baseColumnNames="PERMISSION_OID" constraintName="SYSTEM_ROLE_PERMISSION_OID_FK" referencedTableName="PERMISSION" referencedColumnNames="PERMISSION_OID" onDelete="NO ACTION"/>
+        </rollback>
+        <modifySql applyToRollback="true" dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="3db44dbd-1499-4643-81c1-ada7fcb208dc" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored DropTable for PERMISSION as table does not exist." onFail="MARK_RAN">
+            <tableExists tableName="PERMISSION"/>
+        </preConditions>
+        <comment>FLT-8478: DropTable PERMISSION</comment>
+        <dropTable tableName="PERMISSION"/>
+        <rollback>
+            <createTable tableName="PERMISSION">
+                <column name="PERMISSION_OID" type="BIGINT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="IS_ACTIVE" type="BOOLEAN" remarks="Is this permission active">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addPrimaryKey columnNames="PERMISSION_OID" constraintName="PERMISSION_PK" tableName="PERMISSION"/>
+        </rollback>
+        <modifySql applyToRollback="true" dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)`? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+
+    <subclass name="minestar.mine.domain.minemodel.UGZoneImpl"
+              extends="minestar.mine.domain.minemodel.ZoneImpl">
+        <meta attribute="description">Zones for underground mines with additional fields</meta>
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+        <meta attribute="view-include">false</meta>
+        <meta attribute="view-ignore">true</meta>
+
+        <join table="ZONE_MACHINE_RELATION">
+            <key column="ZONE_OID" not-null="true" on-delete="cascade" />
+
+            <property name="zoneType" column="ZONE_TYPE" not-null="true" access="field">
+                <meta attribute="description">The type of zone defines how it should be interpreted by the Command systems</meta>
+                <type name="minestar.health.domain.data.HibernateIntegerEnumType">
+                    <param name="enumClass">minestar.mine.domain.minemodel.UGZoneType</param>
+                </type>
+            </property>
+
+            <property name="machineGear" type="java.lang.Integer" column="MACHINE_MAX_GEAR" access="field">
+                <meta attribute="description">Maximum gear that the machine can drive in this zone</meta>
+            </property>
+        </join>
+    </subclass>
+</hibernate-mapping>

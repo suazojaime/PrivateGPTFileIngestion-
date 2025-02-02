@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<machineClassExport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" categoryName="Shovel Classes">
+
+    <machineClass xsi:type="shovelClassImpl">
+        <name>HitachiEX3600</name>
+        <manufacturer>Hitachi</manufacturer>
+        <description>Hitachi EX3600 Series Shovel</description>
+        <allowAllMaterials>true</allowAllMaterials>
+        <useDynamicFuelBurnRate>false</useDynamicFuelBurnRate>
+        <fuelBurnAlgorithm>0</fuelBurnAlgorithm>
+        <fuelCapacity magnitude="7.45" unit="cubic metres"/>
+        <minimumRefuelAmount magnitude="0.00" unit="cubic metres"/>
+        <refuelLevel magnitude="0.745" unit="cubic metres"/>
+        <criticalFuelLevel magnitude="0.3725" unit="cubic metres"/>
+        <expectedDuratnBetweenRefuels magnitude="24.00" unit="hour"/>
+        <idleFuelBurnRate magnitude="0.000005" unit="cubic metres per second"/>
+        <workingFuelBurnRate magnitude="0.000086" unit="cubic metres per second"/>
+        <maximumSpeed magnitude="0.611111" unit="metres per second"/>
+        <dipperLoadCapacity magnitude="21.00" unit="cubic metres"/>
+        <reachRadius magnitude="17.60" unit="metre"/>
+    </machineClass>
+
+</machineClassExport>
+

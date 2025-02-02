@@ -1,0 +1,347 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2019 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="model">
+    
+    <class name="minestar.assignment.domain.ScheduledAssignment" table="SCHEDULEDASSIGNMENT">
+        <meta attribute="lookupExpr" inherit="false">lookupResource.scheduledAssignment.reason.expr</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A scheduled assignment</meta>
+
+        <!-- Ensure that V_DELAY is created first -->
+        <!--<meta attribute="view-master">false</meta>-->
+        <meta attribute="view-create-order">15</meta>
+
+        <id name="OID" type="long" column="SCHEDULEDASSIGNMENT_OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="loadState" type="minestar.domain.model.persistence.LoadStateUserType" column="LOAD_STATE">
+            <meta attribute="description">The required load state for this scheduled assignment.</meta>
+            <meta attribute="choices" inherit="false">choice:scheduledAssignmentLS</meta>
+        </property>
+        
+        <property name="reason" type="string" column="REASON" length="254">
+            <meta attribute="description">The reason for this scheduled assignment.</meta>
+        </property>
+
+        <property name="expectedArrivalTime" type="TimestampType" column="EXPECTEDARRIVALTIME_UTC">
+            <meta attribute="utc-description">
+                The utc time at which the truck is expected to arrive at the destination after activation.
+                NULL means that this has yet to be activated.
+            </meta>
+            <meta attribute="description">
+                The time at which the truck is expected to arrive at the destination after activation.
+                NULL means that this has yet to be activated.
+            </meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+        
+        <property name="arriveAfterTime" type="TimestampType" column="ARRIVEAFTERTIME_UTC">
+            <meta attribute="utc-description">
+                This is the utc time that the truck must be assigned to arrive after.
+                The truck must not be sent to arrive at the destination before this utc time.
+                NULL means that this is ignored.
+            </meta>
+            <meta attribute="description">
+                This is the time that the truck must be assigned to arrive after.
+                The truck must not be sent to arrive at the destination before this time.
+                NULL means that this is ignored.
+            </meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <many-to-one
+                name="nextScheduledAssignmentRef"
+                column="NEXTSCHEDULEDASSIGNMENT"
+                class="minestar.assignment.domain.ScheduledAssignmentReference"
+                >
+            <meta attribute="alias">nextScheduledAssignment</meta>
+            <meta attribute="description">
+                This points to the next scheduled assignment for stacked manual assignments.
+                This value is null when there is no next scheduled assignment.
+            </meta>
+        </many-to-one>
+
+        <property name="status" type="string" column="STATUS" length="254">
+            <meta attribute="description">
+                The status of this scheduled assignment.
+                "A" - Active.
+                "D" - At Destination.
+                "F" - Finished.
+                "I" - Inactive.
+                Scheduled assignments are created 'Inactive', become 'Active' on the assignment,
+                become 'At Destination' when they arrive, then are 'Finished' when the truck leaves
+                the selected destination or ends the on arrival delay.
+            </meta>
+            <meta attribute="choices" inherit="false">choice:schedAssignmentStatus</meta>
+        </property>
+        
+        <property name="asap" type="boolean" column="ASAP" not-null="true">
+            <meta attribute="description">
+                When true means that the truck must arrive as soon as possible
+                AFTER the notBefore time.  When this is false the truck must arrive
+                as late as possible BEFORE the requiredArrivalTime.
+            </meta>
+        </property>
+
+        <property name="reschedule" type="boolean" column="RESCHEDULE" not-null="true">
+            <meta attribute="description">
+                When this is true the scheduled manual assignment is not deleted when completed,
+                but is appended to the end of the current list of scheduled manual assignments for the truck.
+                When this is true the normal scheduled assignment is re-created to require the truck to arrive
+                reschedulePeriod time in the future.
+            </meta>
+        </property>
+
+        <property name="arriveBeforeTime" type="TimestampType" column="ARRIVEBEFORETIME_UTC">
+            <meta attribute="utc-description">
+                This is the utc time that the truck must be assigned to arrive before.
+                The truck must not be sent to arrive at the destination after this utc time.
+                The scheduled assignment is finished when it is no longer possible to assign the truck to
+                arrive at the destination before this utc time.
+                NULL means that this is ignored.
+            </meta>
+            <meta attribute="description">
+                This is the time that the truck must be assigned to arrive before.
+                The truck must not be sent to arrive at the destination after this time.
+                The scheduled assignment is finished when it is no longer possible to assign the truck to
+                arrive at the destination before this time.
+                NULL means that this is ignored.
+            </meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <many-to-one name="truck" column="TRUCK" class="minestar.pitlink.domain.machine.MachineReference">
+            <meta attribute="description">The target truck to be assigned.</meta>
+        </many-to-one>
+
+        <property name="reschedulePeriod" column="RESCHEDULEPERIOD">
+            <meta attribute="description">
+                This is only used when reschedule is set to true.
+                It is added to the requiredArrivalTime to create the new requiredArrivalTime.
+            </meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <many-to-one name="previousScheduledAssignmentRef" column="PREVIOUSSCHEDULEDASSIGNMENT"
+                     class="minestar.assignment.domain.ScheduledAssignmentReference">
+            <meta attribute="alias">previousScheduledAssignment</meta>
+            <meta attribute="description">
+                This points to the previous scheduled assignment for stacked manual assignments.
+                This value is null when there is no previous scheduled assignment.
+            </meta>
+        </many-to-one>
+
+        <property name="activationTime" type="TimestampType" column="ACTIVATIONTIME_UTC">
+            <meta attribute="utc-description">
+                The utc time when this scheduled assignment was activated.
+                NULL means that this has yet to be activated.
+            </meta>
+            <meta attribute="description">
+                The time when this scheduled assignment was activated.
+                NULL means that this has yet to be activated.
+            </meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="type" type="string" column="TYPE" length="254">
+            <meta attribute="description">This can be set by anyone creating the scheduled assignment for filtering purposes.</meta>
+        </property>
+
+        <property name="purpose" type="string" column="PURPOSE" length="254">
+            <meta attribute="description">This can be set by anyone creating the scheduled assignment for filtering purposes.</meta>
+        </property>
+
+        <many-to-one name="creator" column="CREATOR" class="minestar.platform.domain.user.UserReference">
+            <meta attribute="description">The person responsible for the creation of this scheduled assignment.</meta>
+        </many-to-one>
+
+        <property name="creationTime" type="TimestampType" column="CREATIONTIME_UTC" not-null="true">
+            <meta attribute="utc-description">The utc time when this scheduled assignment was created.</meta>
+            <meta attribute="description">The time when this scheduled assignment was created.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="manual" type="boolean" column="MANUAL" not-null="true">
+            <meta attribute="description">When true means that this is a manual scheduled assignment.</meta>
+        </property>
+
+        <property name="arriveRequiredTime" type="TimestampType" column="ARRIVEREQUIREDTIME_UTC">
+            <meta attribute="utc-description">
+                The utc time when the truck should be at the destination.  The truck will be assigned to arrive at or
+                before this utc time if possible.  The truck may be assigned to arrive after this utc time in exceptional
+                circumstances.
+                NULL means that this is a manual scheduled assignment.
+            </meta>
+            <meta attribute="description">
+                The time when the truck should be at the destination.  The truck will be assigned to arrive at or
+                before this time if possible.  The truck may be assigned to arrive after this time in exceptional
+                circumstances.
+                NULL means that this is a manual scheduled assignment.
+            </meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <many-to-one name="material" column="MATERIAL" class="minestar.machinetracking.domain.MaterialReference">
+            <meta attribute="description">
+                The material that is to be loaded at the destination.
+                When null it means that the truck should dump.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="onArrivalDelay" column="ONARRIVALDELAY"
+                     class="minestar.production.domain.DelayReference"
+                     not-found="ignore">
+            <meta attribute="description">
+                The delay that is associated with the trucks arrival at the destination.
+                This is null when there is no associated delay.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="onAssignmentDelay" column="ONASSIGNMENTDELAY"
+                     class="minestar.production.domain.DelayReference"
+                     not-found="ignore">
+            <meta attribute="description">
+                The delay that is associated with the assignment to the destination.
+                This is null when there is no associated delay.
+            </meta>
+        </many-to-one>
+
+        <many-to-one name="onArrivalDelayType" column="ONARRIVALDELAYTYPE"
+                     class="minestar.production.domain.DelayClassReference">
+            <meta attribute="description">
+                The type of delay that is associated with the trucks arrival at the destination.
+                This is null when there is no associated delay.
+            </meta>
+        </many-to-one>
+
+        <property name="onArrivalDelayTypeProd" type="boolean" column="ONARRIVALDELAYTYPEPROD" not-null="true">
+            <meta attribute="description">
+                When this is true the delay that is associated with the trucks arrival at the destination
+                is created as a production reporting delay only and is ignored by Assignment.
+            </meta>
+        </property>
+
+        <many-to-one name="onAssignmentDelayType" column="ONASSIGNMENTDELAYTYPE"
+                     class="minestar.production.domain.DelayClassReference">
+            <meta attribute="description">
+                The type of delay that is associated with the assignment to the destination.
+                This is null when there is no associated delay.
+            </meta>
+        </many-to-one>
+
+        <property name="onAssignmentDelayProd" type="boolean" column="ONASSIGNMENTDELAYPROD" not-null="true">
+            <meta attribute="description">
+                When this is true the delay that is associated with the assignment to the destination
+                is created as a production reporting delay only and is ignored by Assignment.
+            </meta>
+        </property>
+
+        <property name="duration" column="DURATION">
+            <meta attribute="description">
+                The time the truck is expected to spend at the destination after arrival.
+                ZERO means that this is not known.
+            </meta>
+            <meta attribute="unitType">duration</meta>
+            <type name="quantity">
+                <param name="unitType">duration</param>
+                <param name="nullable">true</param>
+            </type>
+        </property>
+
+        <!-- associations -->
+        <set name="destinationLocations" table="SCHED_ASSIGNMENT_LOCATION">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                name=SCHED_ASSIGNMENT_LOCATION_PK
+                columns=SCHEDULEDASSIGNMENT_OID, LOCATION_OID
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">A list of locations that are all of the possible destinations for this scheduled assignment.</meta>
+            <key column="SCHEDULEDASSIGNMENT_OID" not-null="true"/>
+
+            <composite-element class="minestar.assignment.domain.ScheduledAssignmentLocation">
+                <many-to-one name="location" column="LOCATION_OID" not-null="true"
+                             class="minestar.mine.domain.minemodel.LocationReference"/>
+
+                <property name="penaltyDuration" column="PENALTY" not-null="true">
+                    <meta attribute="unitType">duration</meta>
+                    <type name="quantity">
+                        <param name="unitType">duration</param>
+                    </type>
+                </property>
+            </composite-element>
+        </set>
+
+        <set name="destinationMachines" table="SCHED_ASSIGNMENT_MACHINE">
+            <meta attribute="collection-table">
+                tablespace=MW_ENT
+            </meta>
+            <meta attribute="collection-primary-key">
+                name=SCHED_ASSIGNMENT_MACHINE_PK
+                columns=SCHEDULEDASSIGNMENT_OID, MACHINE_OID
+                tablespace=MW_IDXENT
+            </meta>
+            <meta attribute="description">A list of servers that are all of the possible destinations for this scheduled assignment.</meta>
+            <key column="SCHEDULEDASSIGNMENT_OID" not-null="true"/>
+            <composite-element class="minestar.assignment.domain.ScheduledAssignmentDestMachine">
+                <many-to-one name="machine" column="MACHINE_OID" not-null="true"
+                             class="minestar.pitlink.domain.machine.MachineReference"/>
+
+                <nested-composite-element name="assignmentLocation" class="minestar.assignment.domain.ScheduledAssignmentLocation">
+                    <many-to-one name="location" column="LOCATION_OID"
+                                 class="minestar.mine.domain.minemodel.LocationReference"/>
+
+                    <property name="penaltyDuration" column="PENALTY">
+                        <meta attribute="unitType">duration</meta>
+                        <type name="quantity">
+                            <param name="unitType">duration</param>
+                            <param name="nullable">true</param>
+                        </type>
+                    </property>
+                </nested-composite-element>
+            </composite-element>
+        </set>
+
+        <many-to-one name="activationLocation" column="ACTIVATION_LOCATION"
+                     class="minestar.mine.domain.minemodel.LocationReference">
+            <meta attribute="description">The location where this scheduled assignment was made when it was activated.</meta>
+        </many-to-one>
+
+        <many-to-one name="activationMachine" column="ACTIVATION_MACHINE"
+                     class="minestar.pitlink.domain.machine.MachineReference">
+            <meta attribute="description">The machine where this scheduled assignment was made when it was activated.</meta>
+        </many-to-one>
+
+    </class>
+
+    <!-- A lightweight reference to a ScheduledAssignment -->
+    <class name="minestar.assignment.domain.ScheduledAssignmentReference" table="SCHEDULEDASSIGNMENT" mutable="false" lazy="false">
+
+        <meta attribute="alias" inherit="false">SCHEDULEDASSIGNMENT_REFERENCE</meta>
+        <meta attribute="description">A minimal reference to a Scheduled Assignment.</meta>
+        <meta attribute="view-create-order">1</meta>
+        <meta attribute="view-master">true</meta>
+
+        <cache usage="read-only" region="model"/>
+
+        <id name="OID" type="long" column="SCHEDULEDASSIGNMENT_OID"/>
+    </class>
+
+</hibernate-mapping>

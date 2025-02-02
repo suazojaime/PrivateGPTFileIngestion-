@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    
+    <changeSet id="9d42c7e6-5902-4d2a-a892-ea1a568f2458" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored DropIndex for CHOICELIST_UNIQ of table TBL_CHOICELIST as index does not exist."
+                onFail="MARK_RAN">
+            <indexExists indexName="CHOICELIST_UNIQ" tableName="TBL_CHOICELIST"/>
+        </preConditions>
+        <comment>FLT-7606: DropIndex CHOICELIST_UNIQ from TBL_CHOICELIST (CHOICE_LIST,CODE_STRING,CODE_NUMBER,INACTIVE_DATE)</comment>
+        <dropIndex indexName="CHOICELIST_UNIQ" tableName="TBL_CHOICELIST"/>
+        <rollback>
+            <createIndex unique="false" tableName="TBL_CHOICELIST" indexName="CHOICELIST_UNIQ">
+                <column name="CHOICE_LIST"/>
+                <column name="CODE_STRING"/>
+                <column name="CODE_NUMBER"/>
+                <column name="INACTIVE_DATE"/>
+            </createIndex>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="b3985ebb-3b00-4fd1-9d84-3579ebee4f9a" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for TBL_CHOICELIST.CODE_NUMBER as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="TBL_CHOICELIST" columnName="CODE_NUMBER"/>
+        </preConditions>
+        <comment>FLT-7606: AddNotNullConstraint to TBL_CHOICELIST.CODE_NUMBER</comment>
+        <sql>UPDATE TBL_CHOICELIST SET CODE_NUMBER = 0 WHERE CODE_NUMBER IS NULL</sql>
+        <addNotNullConstraint columnName="CODE_NUMBER" columnDataType="INT" tableName="TBL_CHOICELIST"/>
+        <rollback>
+            <dropNotNullConstraint tableName="TBL_CHOICELIST" columnName="CODE_NUMBER" columnDataType="INT"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="3aae53b3-17e6-41aa-9bee-a9458d6bbd84" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for TBL_CHOICELIST.DESCRIPTION as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="TBL_CHOICELIST" columnName="DESCRIPTION"/>
+        </preConditions>
+        <comment>FLT-7606: AddNotNullConstraint to TBL_CHOICELIST.DESCRIPTION</comment>
+        <sql>DELETE FROM TBL_CHOICELIST WHERE DESCRIPTION IS NULL</sql>
+        <addNotNullConstraint columnName="DESCRIPTION" columnDataType="VARCHAR(254)" tableName="TBL_CHOICELIST"/>
+        <rollback>
+            <dropNotNullConstraint tableName="TBL_CHOICELIST" columnName="DESCRIPTION" columnDataType="VARCHAR(254)"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="0409a09c-5510-4fba-b88d-04bc73fdacdc" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for TBL_CHOICELIST.DISPLAY_ORDER as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="TBL_CHOICELIST" columnName="DISPLAY_ORDER"/>
+        </preConditions>
+        <comment>FLT-7606: AddNotNullConstraint to TBL_CHOICELIST.DISPLAY_ORDER</comment>
+        <sql>UPDATE TBL_CHOICELIST SET DISPLAY_ORDER = 0 WHERE DISPLAY_ORDER IS NULL</sql>
+        <addNotNullConstraint columnName="DISPLAY_ORDER" columnDataType="INT" tableName="TBL_CHOICELIST"/>
+        <rollback>
+            <dropNotNullConstraint tableName="TBL_CHOICELIST" columnName="DISPLAY_ORDER" columnDataType="INT"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="51db542a-8335-4ac2-8d5b-62d8552593c8" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddNotNullConstraint for TBL_CHOICELIST.F_ACTIVE as column does not exist or is already not-nullable"
+                onFail="MARK_RAN">
+            <ext:columnIsNullable tableName="TBL_CHOICELIST" columnName="F_ACTIVE"/>
+        </preConditions>
+        <comment>FLT-7606: AddNotNullConstraint to TBL_CHOICELIST.F_ACTIVE</comment>
+        <sql>UPDATE TBL_CHOICELIST SET F_ACTIVE = 'N' WHERE F_ACTIVE IS NULL</sql>
+        <addNotNullConstraint columnName="F_ACTIVE" columnDataType="VARCHAR(1)" tableName="TBL_CHOICELIST"/>
+        <rollback>
+            <dropNotNullConstraint tableName="TBL_CHOICELIST" columnName="F_ACTIVE" columnDataType="VARCHAR(1)"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet id="fc336403-75c6-44d4-aaec-ea9b1917bfd0" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored CreateIndex for CHOICELIST_ACTIVE_NUMBER to table TBL_CHOICELIST as (1) table does not exist, or (2) index already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="TBL_CHOICELIST"/>
+            <not>
+                <indexExists indexName="CHOICELIST_ACTIVE_NUMBER" tableName="TBL_CHOICELIST"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7606: CreateIndex CHOICELIST_ACTIVE_NUMBER on TBL_CHOICELIST (CHOICE_LIST,F_ACTIVE,CODE_NUMBER)</comment>
+        <createIndex unique="false" tablespace="MW_IDXOBJ" tableName="TBL_CHOICELIST" indexName="CHOICELIST_ACTIVE_NUMBER">
+            <column name="CHOICE_LIST"/>
+            <column name="F_ACTIVE"/>
+            <column name="CODE_NUMBER"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+    <changeSet id="20d25e46-8183-4d95-a170-3ea0df114e44" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored CreateIndex for CHOICELIST_ACTIVE_STRING to table TBL_CHOICELIST as (1) table does not exist, or (2) index already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="TBL_CHOICELIST"/>
+            <not>
+                <indexExists indexName="CHOICELIST_ACTIVE_STRING" tableName="TBL_CHOICELIST"/>
+            </not>
+        </preConditions>
+        <comment>FLT-7606: CreateIndex CHOICELIST_ACTIVE_STRING on TBL_CHOICELIST (CHOICE_LIST,F_ACTIVE,CODE_STRING)</comment>
+        <createIndex unique="false" tablespace="MW_IDXOBJ" tableName="TBL_CHOICELIST" indexName="CHOICELIST_ACTIVE_STRING">
+            <column name="CHOICE_LIST"/>
+            <column name="F_ACTIVE"/>
+            <column name="CODE_STRING"/>
+        </createIndex>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+
+</databaseChangeLog>

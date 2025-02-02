@@ -1,0 +1,5 @@
+log=%_PATH%\direct_export.log
+file=%_PATH%\direct_export.dmp
+direct=y
+consistent=y
+

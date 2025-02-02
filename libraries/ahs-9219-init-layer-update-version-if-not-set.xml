@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="66b865de-4fa8-470e-904d-6457cc655aeb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table GRADEBLOCK as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK"/>
+            <columnExists tableName="GRADEBLOCK" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize GRADEBLOCK.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="GradeBlock"/>
+            <param name="table" value="GRADEBLOCK"/>
+            <param name="filter" value="STOCKPILE = 0"/>
+        </customChange>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Stockpile"/>
+            <param name="table" value="GRADEBLOCK"/>
+            <param name="filter" value="STOCKPILE = 1"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE GRADEBLOCK SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="2f4a9166-be3f-4b7f-98a9-7150b7c9b11c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table GRADEBLOCK_GROUP as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="GRADEBLOCK_GROUP"/>
+            <columnExists tableName="GRADEBLOCK_GROUP" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize GRADEBLOCK_GROUP.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="GradeBlock"/>
+            <param name="supportsArchiving" value="false"/>
+            <param name="table" value="GRADEBLOCK_GROUP"/>
+            <param name="filter" value="STOCKPILE = 0"/>
+        </customChange>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Stockpile"/>
+            <param name="supportsArchiving" value="false"/>
+            <param name="table" value="GRADEBLOCK_GROUP"/>
+            <param name="filter" value="STOCKPILE = 1"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE GRADEBLOCK_GROUP SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="18e34e70-fe74-483e-afcb-a50474d5cb61" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table HAZARD as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="HAZARD"/>
+            <columnExists tableName="HAZARD" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize HAZARD.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Hazard"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE HAZARD SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="7e7d5d61-a585-4da2-babb-dcc722fe2ad1" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table LANE as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="LANE"/>
+            <columnExists tableName="LANE" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize LANE.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Lane"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE LANE SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="2f61f931-3330-4771-a644-1ce3309e780a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table MATERIAL as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="MATERIAL"/>
+            <columnExists tableName="MATERIAL" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize MATERIAL.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Material"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE MATERIAL SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="764a7794-0888-4798-84b8-fad950d719eb" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table PLAN_MODEL as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="PLAN_MODEL"/>
+            <columnExists tableName="PLAN_MODEL" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize PLAN_MODEL.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Plan"/>
+            <param name="supportsArchiving" value="false"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+            <param name="table" value="PLAN_MODEL"/>
+            <param name="oidColumn" value="PLAN_OID"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE PLAN_MODEL SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="f5ca63c8-05c0-4545-9263-94302f32b02c" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table ROADSEGMENT as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="ROADSEGMENT"/>
+            <columnExists tableName="ROADSEGMENT" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize ROADSEGMENT.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="RoadSegment"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE ROADSEGMENT SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="776b8cf7-0080-482a-bf77-e6fd4429d5c0" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table SPOIL_PILE as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOIL_PILE"/>
+            <columnExists tableName="SPOIL_PILE" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize SPOIL_PILE.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="SpoilPile"/>
+            <param name="supportsArchiving" value="false"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+            <param name="table" value="SPOIL_PILE"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE SPOIL_PILE SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="66df7f5a-7d94-4b08-9461-b342ff3bb621" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table SPOT_POINT as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="SPOT_POINT"/>
+            <columnExists tableName="SPOT_POINT" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize SPOT_POINT.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="DumpingPoint"/>
+            <param name="supportsArchiving" value="false"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+            <param name="table" value="SPOT_POINT"/>
+            <!-- Only dozer-managed dumping points are in the layer -->
+            <param name="filter" value="PLAN_GROUP_OID IN (SELECT PLAN_GROUP_OID FROM PLAN_GROUP WHERE PLAN_OID IN (SELECT PLAN_OID FROM PLAN_MODEL WHERE DUMP_PLAN_TYPE = 'DOZER_MANAGED'))"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE SPOT_POINT SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="e6c3cdbd-5573-47f7-82c6-b2ae2b6306f8" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table VIRTUALBEACON as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="VIRTUALBEACON"/>
+            <columnExists tableName="VIRTUALBEACON" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize VIRTUALBEACON.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Waypoint"/>
+            <param name="table" value="VIRTUALBEACON"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE VIRTUALBEACON SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="356cc07c-f15f-4891-bb4f-8544038fdd6f" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored initialization of column LAYER_UPDATE_VERSION in table ZONE as table or column does not exists." onFail="MARK_RAN">
+            <tableExists tableName="ZONE"/>
+            <columnExists tableName="ZONE" columnName="LAYER_UPDATE_VERSION"/>
+        </preConditions>
+        <comment>AHS-9219: Initialize ZONE.LAYER_UPDATE_VERSION values</comment>
+        <customChange class="minestar.db.customchange.InitializeLayerUpdateVersion">
+            <param name="layer" value="Zone"/>
+            <param name="hasModelUpdateVersion" value="false"/>
+        </customChange>
+        <rollback>
+            <sql>UPDATE ZONE SET LAYER_UPDATE_VERSION = 0</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

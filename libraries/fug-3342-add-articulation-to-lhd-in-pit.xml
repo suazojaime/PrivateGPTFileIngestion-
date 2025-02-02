@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="29440e67-e92c-4e7e-b648-4ac8972c171a" author="MineStar" failOnError="false">
+        <preConditions onFailMessage="Ignored AddColumn for ARTICULATION to table MACHINE_IN_PIT as table does not exist or column already exists." onFail="MARK_RAN">
+            <tableExists tableName="MACHINE_IN_PIT"/>
+            <not>
+                <columnExists tableName="MACHINE_IN_PIT" columnName="ARTICULATION"/>
+            </not>
+        </preConditions>
+        <comment>FUG-3342: AddColumn MACHINE_IN_PIT.ARTICULATION</comment>
+        <addColumn tableName="MACHINE_IN_PIT">
+            <column name="ARTICULATION" type="DOUBLE" remarks="The angle that the front part of the machine is from the rear part. Positive numbers mean that the front is angled towards the right. Negative numbers mean that the front is angled towards the left."/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

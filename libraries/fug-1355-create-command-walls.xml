@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="
+                    http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                   ">
+    <changeSet id="aa5d1acb-dfa0-4c5c-945b-c04df5b5f711" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for WALL as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="WALL"/>
+            </not>
+        </preConditions>
+        <comment>FUG-1355: CreateTable WALL</comment>
+        <createTable tablespace="MW_ENT" remarks="A minimal reference to a wall" tableName="WALL">
+            <column name="WALL_OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(254)" remarks="User-assigned unique identifier of this wall">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TYPE" type="INT" remarks="Type of wall, which affects how the Command for Underground system interprets it">
+                <constraints nullable="false"/>
+            </column>
+            <column name="IS_ACTIVE" type="BOOLEAN" remarks="Whether this wall is active or archived. (This flag is '1' if it is active and '0' if archived.)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODEL_UPDATE_VERSION" type="BIGINT" remarks="Copy of the system wide version number"/>
+        </createTable>
+        <addPrimaryKey columnNames="WALL_OID" constraintName="WALL_PK" tablespace="MW_IDXENT" tableName="WALL"/>
+        <createIndex unique="true" tablespace="MW_IDXENT" indexName="WALL_NAME" tableName="WALL">
+            <column name="NAME"/>
+        </createIndex>
+        <rollback>
+            <dropTable tableName="WALL"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="33bb656e-8ba7-4562-a00a-8382d08344b6" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for WALL_POINTS as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="WALL_POINTS"/>
+            </not>
+        </preConditions>
+        <comment>FUG-1355: CreateTable WALL_POINTS</comment>
+        <createTable tablespace="MW_ENT" remarks="Coordinates that form the wall's position on the mine model map." tableName="WALL_POINTS">
+            <column name="OID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="X_MAGNITUDE" type="DOUBLE"/>
+            <column name="Y_MAGNITUDE" type="DOUBLE"/>
+            <column name="Z_MAGNITUDE" type="DOUBLE"/>
+            <column name="POINT_NR" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="OID,POINT_NR" constraintName="WALL_POINTS_PK" tablespace="MW_IDXENT" tableName="WALL_POINTS"/>
+        <rollback>
+            <dropTable tableName="WALL_POINTS"/>
+        </rollback>
+        <modifySql dbms="mssql,h2,postgresql">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="16074c17-1894-4f28-8448-e072c9cb8742" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for WALL_POINTS_OID_FK to table WALL_POINTS as (1) the table does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <tableExists tableName="WALL_POINTS"/>
+            <tableExists tableName="WALL"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="WALL_POINTS" foreignKeyName="WALL_POINTS_OID_FK"/>
+            </not>
+        </preConditions>
+        <comment>FUG-1355: AddForeignKeyConstraint WALL_POINTS_OID_FK to WALL_POINTS (OID)</comment>
+        <sql>DELETE FROM WALL_POINTS WHERE OID IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM WALL WHERE WALL.WALL_OID = WALL_POINTS.OID)</sql>
+        <addForeignKeyConstraint baseTableName="WALL_POINTS" baseColumnNames="OID" constraintName="WALL_POINTS_OID_FK" referencedTableName="WALL" referencedColumnNames="WALL_OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="WALL_POINTS" constraintName="WALL_POINTS_OID_FK"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

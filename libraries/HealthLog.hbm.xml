@@ -1,0 +1,300 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping schema="historical">
+
+    <class name="minestar.health.api.frame.HealthLog" table="HEALTH_LOG">
+
+        <meta attribute="noDatabaseMetadata" inherit="false">true</meta>
+
+        <!--
+            Alias exists so that the original reporting view is maintained.
+            Any change to the view generation must consider the impact on reporting.
+        -->
+
+        <meta attribute="table">
+            tablespace=MW_OBJ
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXOBJ
+        </meta>
+
+        <meta attribute="alias-where">
+            name=FILE_IMPORTS
+            where=1=1
+        </meta>
+
+        <meta attribute="alias-where">
+            name=DATASET
+            where=1=1
+        </meta>
+
+        <meta attribute="viewproperty-OBJECTTYPEID" inherit="false">
+            type=string
+            expression=lookupResource.healthlog.objecttypeid.query
+        </meta>
+
+        <meta attribute="viewproperty-machinecategoryname" inherit="false">
+            type=java.lang.String
+            description=The name of the category of the machine
+            expression=lookupResource.healthlog.machinecategoryname.query
+        </meta>
+
+        <meta attribute="viewproperty-modeloid" inherit="false">
+            type=java.lang.Long
+            description=The identifier of the model of the machine
+            expression=lookupResource.healthlog.modeloid.query
+        </meta>
+
+        <meta attribute="viewproperty-model_n" inherit="false">
+            type=java.lang.String
+            description=The name of the model of the machine
+            expression=lookupResource.healthlog.model_n.query
+        </meta>
+
+        <meta attribute="viewproperty-modelnumber" inherit="false">
+            type=java.lang.String
+            description=The name of the model of the machine
+            expression=lookupResource.healthlog.modelnumber.query
+        </meta>
+
+        <meta attribute="viewproperty-serialnumber" inherit="false">
+            type=java.lang.String
+            description=The serial number of the machine
+            expression=lookupResource.healthlog.serialnumber.query
+        </meta>
+
+        <meta attribute="viewproperty-machinename" inherit="false">
+            type=java.lang.String
+            description=The name of the machine
+            expression=lookupResource.healthlog.machinename.query
+        </meta>
+
+        <meta attribute="viewproperty-successes" inherit="false">
+            type=java.lang.String
+            description=The number of records from this log which successfully imported
+            expression=lookupResource.null.query
+        </meta>
+
+        <meta attribute="viewproperty-errors" inherit="false">
+            type=java.lang.String
+            description=The number of records from this log which caused an error while importing
+            expression=lookupResource.null.query
+        </meta>
+
+        <meta attribute="viewproperty-duplicates" inherit="false">
+            type=java.lang.String
+            description=The number of records in the log that are duplicates of already present records
+            expression=lookupResource.null.query
+        </meta>
+
+        <meta attribute="viewproperty-a" inherit="false">
+            type=java.lang.String
+            description=The number of rows of records in the log
+            expression=lookupResource.null.query
+        </meta>
+
+        <meta attribute="viewproperty-b" inherit="false">
+            type=java.lang.String
+            description=The number of columns of records in the log
+            expression=lookupResource.null.query
+        </meta>
+
+        <meta attribute="index">
+            name=HEALTH_LOG_MACHINE_STARTTIME
+            columns=MACHINE_OID, STARTTIME_UTC
+            tablespace=MW_IDXENT
+        </meta>
+
+        <cache usage="read-write" region="healthLog"/>
+
+        <id name="oid" type="long">
+            <meta attribute="alias">DATASETID</meta>
+            <column name="OID" />
+            <generator class="assigned" />
+        </id>
+
+        <many-to-one name="machineRef"
+                     class="minestar.pitlink.domain.machine.MachineReference"
+                     column="MACHINE_OID"
+                     not-null="true"
+                     lazy="false"
+                     index="machineIndex">
+            <meta attribute="alias">machine</meta>
+        </many-to-one>
+
+        <property name="family"
+                  type="minestar.health.impl.definition.MeasureFamilyUserType"
+                  column="FAMILY"
+                  not-null="true" />
+
+        <property name="category"
+                  type="minestar.health.impl.definition.HealthLogCategoryUserType"
+                  column="LOG_CATEGORY"
+                  not-null="true">
+        </property>
+
+        <property name="fileName" column="FILE_NAME" not-null="true" length="256">
+        	<meta attribute="description">Name of the file where this dataset came from</meta>
+        </property>
+
+        <property name="fileIndex" column="FILE_INDEX" type="java.lang.Integer">
+        	<meta attribute="description">The sequence number of this dataset inside the file</meta>
+        </property>
+
+        <property name="lastModified" type="TimestampType" column="LASTMODIFIED_UTC">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The last time health log was modified.</meta>
+            <meta attribute="description">The last time health log was modified.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="resetTime" type="TimestampType" column="RESETTIME_UTC">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The reset utc time.</meta>
+            <meta attribute="description">The reset time.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="lastDownloadTime" type="TimestampType" column="LASTDOWNLOADTIME_UTC">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The previous time a file was downloaded as reported by source system in the log file itself.</meta>
+            <meta attribute="description">The previous time a file was downloaded as reported by source system in the log file itself.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="downloadTime" type="TimestampType" >
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time at which this data was downloaded.</meta>
+            <meta attribute="description">The time at which this data was downloaded.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="DOWNLOADTIME_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+
+        <property name="startTime" type="TimestampType" index="startTimeIndex">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time at which this data starts.</meta>
+            <meta attribute="description">The time at which this data starts.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="STARTTIME_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+
+        <property name="endTime" type="TimestampType" index="endTimeIndex">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The utc time at which this data ends.</meta>
+            <meta attribute="description">The time at which this data ends.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="ENDTIME_UTC" not-null="true" default="01-JAN-1970"/>
+        </property>
+
+        <property name="triggerTime" type="TimestampType">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">The trigger utc time.</meta>
+            <meta attribute="description">The trigger utc time.</meta>
+            <meta attribute="view-localtime">true</meta>
+            <column name="TRIGGERTIME_UTC" not-null="false" />
+        </property>
+
+        <property name="fileimportTime" type="TimestampType" column="FILEIMPORTTIME_UTC">
+            <meta attribute="timestamp">true</meta>
+            <meta attribute="utc-description">populated with the current UTC date and time when a file is imported.</meta>
+            <meta attribute="description">which is populated with the current UTC date and time when a file is imported.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="downloadSMH" column="DOWNLOADSMH">
+            <meta attribute="unitType">service meter hours</meta>
+            <meta attribute="description">The service hours at which this log was downloaded.</meta>
+            <type name="quantity">
+                <param name="unitType">service meter hours</param>
+            </type>
+        </property>
+
+        <property name="resetSMH" column="RESETSMH">
+            <meta attribute="unitType">service meter hours</meta>
+            <meta attribute="description">The service hours at which this log was reset.</meta>
+            <type name="quantity">
+                <param name="unitType">service meter hours</param>
+            </type>
+        </property>
+
+        <property name="startSMH" column="STARTSMH">
+            <meta attribute="unitType">service meter hours</meta>
+            <meta attribute="description">The service hours at which this data starts.</meta>
+            <type name="quantity">
+                <param name="unitType">service meter hours</param>
+            </type>
+        </property>
+
+        <property name="endSMH" column="ENDSMH">
+            <meta attribute="unitType">service meter hours</meta>
+            <meta attribute="description">The service hours at which this data ends.</meta>
+            <type name="quantity">
+                <param name="unitType">service meter hours</param>
+            </type>
+        </property>
+
+        <property name="newSampleCount" column="NEW_SAMPLE_COUNT" type="int">
+            <meta attribute="unitType">unitless</meta>
+            <meta attribute="alias">DATACOUNT</meta>
+        </property>
+
+        <property name="totalSampleCount" column="TOTAL_SAMPLE_COUNT" type="int">
+            <meta attribute="unitType">unitless</meta>
+        </property>
+
+        <property name="distinctMeasureCount" column="DISTINCT_MEASURE_COUNT" type="int">
+            <meta attribute="unitType">unitless</meta>
+        </property>
+
+        <bag name="continuousSamples" inverse="true" lazy="true">
+            <key column="HEALTH_LOG_OID" on-delete="cascade" />
+            <one-to-many class="minestar.health.api.frame.ContinousSamples" />
+        </bag>
+
+        <bag name="cumulativeSamples" inverse="true" lazy="true">
+            <key column="HEALTH_LOG_OID" on-delete="cascade" />
+            <one-to-many class="minestar.health.api.frame.CumulativeSamples" />
+        </bag>
+
+        <bag name="datalogSamples" inverse="true" lazy="true">
+            <key column="HEALTH_LOG_OID" on-delete="cascade" />
+            <one-to-many class="minestar.health.api.frame.DatalogSamples" />
+        </bag>
+
+        <bag name="polledSamples" inverse="true" lazy="true">
+            <key column="HEALTH_LOG_OID" on-delete="cascade" />
+            <one-to-many class="minestar.health.api.frame.PolledSamples" />
+        </bag>
+
+        <bag name="snapshotSamples" inverse="true" lazy="true">
+            <key column="HEALTH_LOG_OID" on-delete="cascade" />
+            <one-to-many class="minestar.health.api.frame.SnapshotSamples" />
+        </bag>
+
+        <bag name="trendSamples" inverse="true" lazy="true">
+            <key column="HEALTH_LOG_OID" on-delete="cascade" />
+            <one-to-many class="minestar.health.api.frame.TrendSamples" />
+        </bag>
+
+        <property name="configVersion" type="java.lang.String" column="CONFIG_VERSION" length="16">
+        	<meta attribute="description">Configuration file version number</meta>
+        </property>
+        <property name="configPartNum" type="java.lang.String" column="CONFIG_PART_NUM" length="16">
+        	<meta attribute="description">Configuration file part number</meta>
+        </property>
+        <property name="softwareVersion" type="java.lang.String" column="SOFTWARE_VERSION" length="16">
+        	<meta attribute="description">Software version</meta>
+        </property>
+        <property name="sourceCodePartNum" type="java.lang.String" column="SOURCE_CODE_PART_NUM" length="16">
+        	<meta attribute="description">Source code part number</meta>
+        </property>
+        <property name="hardwarePartNum" type="java.lang.String" column="HARDWARE_PART_NUM" length="20">
+        	<meta attribute="description">Hardware part number</meta>
+        </property>
+        <property name="hardwareVersion" type="java.lang.String" column="HARDWARE_VERSION" length="16">
+        	<meta attribute="description">Hardware version</meta>
+        </property>
+    </class>
+</hibernate-mapping>

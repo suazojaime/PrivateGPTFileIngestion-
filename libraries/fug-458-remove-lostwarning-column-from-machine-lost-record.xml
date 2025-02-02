@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="03d79067-2abe-4f84-98fc-6bcac02f6f6c" author="MineStar" context="Underground/Underground_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored DropColumn for LOST_WARNING of table MACHINE_LOST_RECORD as column does not exist." onFail="MARK_RAN">
+            <columnExists tableName="MACHINE_LOST_RECORD" columnName="LOST_WARNING"/>
+        </preConditions>
+        <comment>FUG-458: DropColumn MACHINE_LOST_RECORD.LOST_WARNING</comment>
+        <dropColumn columnName="LOST_WARNING" tableName="MACHINE_LOST_RECORD"/>
+        <rollback>
+            <addColumn tableName="MACHINE_LOST_RECORD">
+                <column name="LOST_WARNING" type="VARCHAR(255)" remarks="The warning information that was sent by the Command for Underground system when the machine became lost."/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

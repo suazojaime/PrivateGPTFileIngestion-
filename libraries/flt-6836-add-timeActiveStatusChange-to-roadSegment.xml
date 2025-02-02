@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Copyright (c) 2018, Caterpillar, Brisbane Australia. All rights reserved. -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="95d9c209-b02d-4f80-9779-57dc66ffda72" author="MineStar" failOnError="false">
+        <preConditions
+                onFailMessage="Ignored AddColumn for TIMEACTIVESTATUSCHANGE_UTC to table ROADSEGMENT as table does not exist or column already exists."
+                onFail="MARK_RAN">
+            <tableExists tableName="ROADSEGMENT"/>
+            <not>
+                <columnExists tableName="ROADSEGMENT" columnName="TIMEACTIVESTATUSCHANGE_UTC"/>
+            </not>
+        </preConditions>
+        <comment>FLT-6836: AddColumn ROADSEGMENT.TIMEACTIVESTATUSCHANGE_UTC</comment>
+        <addColumn tableName="ROADSEGMENT">
+            <column name="TIMEACTIVESTATUSCHANGE_UTC" type="DATETIME2"
+                    remarks="The time when this road segment change its active status."/>
+        </addColumn>
+        <sql>update ROADSEGMENT set TIMEACTIVESTATUSCHANGE_UTC=CURRENT_TIMESTAMP;</sql>
+        <addNotNullConstraint columnName="TIMEACTIVESTATUSCHANGE_UTC" tableName="ROADSEGMENT" columnDataType="DATETIME2"/>
+        <rollback>
+            <dropColumn tableName="ROADSEGMENT" columnName="TIMEACTIVESTATUSCHANGE_UTC"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

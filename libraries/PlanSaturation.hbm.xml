@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!-- Copyright (c) 2021 Caterpillar -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field" default-lazy="false" schema="pitmodel">
+
+    <class name="minestar.pitlink.domain.pitmodel.PlanSaturation"
+           table="PLAN_SATURATION"
+           discriminator-value="PlanSaturation">
+
+        <meta attribute="view-include">true</meta>
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+
+        <meta attribute="description">The saturation for each dynamic plan.</meta>
+
+        <cache usage="read-write" region="model" />
+
+        <id name="OID" type="long" column="OID">
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+
+        <property name="planOID" type="long" column="PLAN_OID" not-null="true" unique="true">
+            <meta attribute="description">The plan OID for saturation value.</meta>
+        </property>
+
+        <property name="saturationLevel" type="double" column="SATURATION_LEVEL" not-null="true">
+            <meta attribute="description">The saturation value measured by the truck.</meta>
+        </property>
+
+        <property name="saturationLevelTimestamp" type="minestar.platform.persistence.HibernateLongTimestamp" column="SATURATION_LEVEL_TS_UTC">
+            <meta attribute="utc-description">The utc time when the saturation event occurred.</meta>
+            <meta attribute="description">The time when the saturation event occurred.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="latestWateredTimestamp" type="minestar.platform.persistence.HibernateLongTimestamp" column="LATEST_WATERED_TS_UTC">
+            <meta attribute="utc-description">The utc time when the latest watering event occurred.</meta>
+            <meta attribute="description">The time when the latest watering event occurred.</meta>
+            <meta attribute="view-localtime">true</meta>
+        </property>
+
+        <property name="currentSaturationReason"
+                  type="minestar.pitlink.service.surfacesaturation.CurrentSaturationReason$UserType"
+                  column="SATURATION_REASON"
+                  not-null="true">
+            <meta attribute="description">A numerical representation of the state.</meta>
+        </property>
+
+        <property name="saturationSource"
+                  type="minestar.pitlink.service.surfacesaturation.SaturationSource$UserType"
+                  column="SATURATION_SOURCE"
+                  not-null="true">
+            <meta attribute="description">The type of the source of the saturation update.</meta>
+        </property>
+
+        <property name="sourceOID"
+                  type="long"
+                  column="SOURCE_OID"
+                  not-null="true">
+            <meta attribute="description">The oid of the source of the saturation update.</meta>
+        </property>
+    </class>
+
+</hibernate-mapping>

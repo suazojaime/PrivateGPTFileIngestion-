@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext /dbchangelog-ext-3.1.xsd">
+    <changeSet id="63e8d8ee-68a7-41f4-995f-1e5431deadf4" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored CreateTable for LINK_SYSTEM_ENTITY_REFERENCES as table already exists." onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="LINK_SYSTEM_ENTITY_REFERENCES"/>
+            </not>
+        </preConditions>
+        <comment>MO-11935: CreateTable LINK_SYSTEM_ENTITY_REFERENCES</comment>
+        <createTable tablespace="MW_ENT" remarks="Linking SystemEntityReferences" tableName="LINK_SYSTEM_ENTITY_REFERENCES">
+            <column name="EXTERNALSYSTEMENTITYREFERENCE" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MINESTARSYSTEMENTITYREFERENCE" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="EXTERNALSYSTEMENTITYREFERENCE" constraintName="LINK_SYSTEM_ENTITY_REFERENC_PK" tablespace="MW_IDXENT" tableName="LINK_SYSTEM_ENTITY_REFERENCES"/>
+        <modifySql dbms="mssql,h2,postgresql" applyToRollback="true">
+            <regExpReplace replace="( USING INDEX)? (ON|TABLESPACE) MW_[A-Z]+" with=""/>
+        </modifySql>
+    </changeSet>
+    <changeSet id="51a0498a-6822-4922-b979-c34384f95ba7" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for LINK_SYSTEM_ENTITY_REFEREN_FK1 to table LINK_SYSTEM_ENTITY_REFERENCES as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="LINK_SYSTEM_ENTITY_REFERENCES" columnName="EXTERNALSYSTEMENTITYREFERENCE"/>
+            <columnExists tableName="SYSTEM_ENTITY_REFERENCE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="LINK_SYSTEM_ENTITY_REFERENCES" foreignKeyName="LINK_SYSTEM_ENTITY_REFEREN_FK1"/>
+            </not>
+        </preConditions>
+        <comment>MO-11935: AddForeignKeyConstraint LINK_SYSTEM_ENTITY_REFEREN_FK1 to LINK_SYSTEM_ENTITY_REFERENCES (EXTERNALSYSTEMENTITYREFERENCE)</comment>
+        <sql>DELETE FROM LINK_SYSTEM_ENTITY_REFERENCES WHERE EXTERNALSYSTEMENTITYREFERENCE IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SYSTEM_ENTITY_REFERENCE WHERE SYSTEM_ENTITY_REFERENCE.OID = LINK_SYSTEM_ENTITY_REFERENCES.EXTERNALSYSTEMENTITYREFERENCE)</sql>
+        <addForeignKeyConstraint baseTableName="LINK_SYSTEM_ENTITY_REFERENCES" baseColumnNames="EXTERNALSYSTEMENTITYREFERENCE" constraintName="LINK_SYSTEM_ENTITY_REFEREN_FK1" referencedTableName="SYSTEM_ENTITY_REFERENCE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="LINK_SYSTEM_ENTITY_REFERENCES" constraintName="LINK_SYSTEM_ENTITY_REFEREN_FK1"/>
+        </rollback>
+    </changeSet>
+    <changeSet id="5b3602a5-2c80-4779-bb7a-70cbdaa8545c" author="MineStar" context="Production/Production_Management" failOnError="false">
+        <preConditions onFailMessage="Ignored AddForeignKeyConstraint for LINK_SYSTEM_ENTITY_REFEREN_FK2 to table LINK_SYSTEM_ENTITY_REFERENCES as (1) the source or referenced column does not exist, or (2) the foreignKey already exists." onFail="MARK_RAN">
+            <columnExists tableName="LINK_SYSTEM_ENTITY_REFERENCES" columnName="MINESTARSYSTEMENTITYREFERENCE"/>
+            <columnExists tableName="SYSTEM_ENTITY_REFERENCE" columnName="OID"/>
+            <not>
+                <foreignKeyConstraintExists foreignKeyTableName="LINK_SYSTEM_ENTITY_REFERENCES" foreignKeyName="LINK_SYSTEM_ENTITY_REFEREN_FK2"/>
+            </not>
+        </preConditions>
+        <comment>MO-11935: AddForeignKeyConstraint LINK_SYSTEM_ENTITY_REFEREN_FK2 to LINK_SYSTEM_ENTITY_REFERENCES (MINESTARSYSTEMENTITYREFERENCE)</comment>
+        <sql>DELETE FROM LINK_SYSTEM_ENTITY_REFERENCES WHERE MINESTARSYSTEMENTITYREFERENCE IS NOT NULL AND NOT EXISTS (SELECT 'x' FROM SYSTEM_ENTITY_REFERENCE WHERE SYSTEM_ENTITY_REFERENCE.OID = LINK_SYSTEM_ENTITY_REFERENCES.MINESTARSYSTEMENTITYREFERENCE)</sql>
+        <addForeignKeyConstraint baseTableName="LINK_SYSTEM_ENTITY_REFERENCES" baseColumnNames="MINESTARSYSTEMENTITYREFERENCE" constraintName="LINK_SYSTEM_ENTITY_REFEREN_FK2" referencedTableName="SYSTEM_ENTITY_REFERENCE" referencedColumnNames="OID" onDelete="NO ACTION"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="LINK_SYSTEM_ENTITY_REFERENCES" constraintName="LINK_SYSTEM_ENTITY_REFEREN_FK2"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

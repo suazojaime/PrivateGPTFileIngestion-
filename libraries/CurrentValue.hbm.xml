@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="minestar.mine.domain.material" schema="historical">
+
+    <class name="minestar.mine.domain.material.AbstractCurrentValue"
+           table="CURRENT_VALUE"
+           discriminator-value="AbstractCurrentValue">
+
+        <meta attribute="table">
+            tablespace=MW_ENT
+        </meta>
+        <meta attribute="primary-key">
+            tablespace=MW_IDXENT
+        </meta>
+        <meta attribute="description">A current value</meta>
+
+        <id
+                name="OID"
+                type="java.lang.Long"
+                column="OID"
+                >
+            <generator class="com.mincom.env.base.persistence.IDGenerator"/>
+        </id>
+        <discriminator not-null="true" column="VALUE_DESCRIMINATOR"/>
+
+        <property
+                name="gradeValue"
+                column="GRADE_VALUE"
+                type="java.lang.Double"
+                not-null="true">
+        </property>
+        <property
+                name="gradeValueUnitType"
+                type="java.lang.String"
+                column="GRADE_VAL_UNIT_TYPE"
+                length="254"
+                not-null="false">
+            <meta attribute="description">The unit type of grade value</meta>
+        </property>
+        <!-- This property will be copied from the grade table -->
+        <property
+                name="gradeValueUnitName"
+                type="java.lang.String"
+                column="GRADE_VAL_UNIT_NAME"
+                length="254"
+                not-null="false">
+            <meta attribute="description">The unit name of grade value</meta>
+        </property>
+        <property
+                name="weighting"
+                type="minestar.mine.domain.material.WeightingMethodEnumUserType"
+                column="WEIGHTING"
+                length="255"
+                not-null="true">
+            <meta attribute="description">The calculation method used for this current value is it MASS | VOLUME | etc</meta>
+        </property>
+        <property
+                name="weightingQuantity"
+                type="java.lang.Double"
+                column="WEIGHT_QTY"
+                not-null="true">
+        </property>
+        <property
+                name="gradeQuantity"
+                type="java.lang.Double"
+                column="GRADE_QTY"
+                not-null="true">
+        </property>
+        <property
+                name="currentValueType"
+                type="minestar.mine.domain.material.CurrentValueTypeEnumUserType"
+                column="CURRENT_VALUE_TYPE"
+                length="255"
+                not-null="false">
+            <meta attribute="description">The type of current value CONTROL | INSTANT | SHIFT</meta>
+        </property>
+
+        <many-to-one
+                class="minestar.mine.domain.material.BlendInformationRecord"
+                name="blendInformationRecord"
+                column="BLEND_INFORMATION_RECORD_OID"
+                not-null="true"/>
+
+
+        <subclass name="minestar.mine.domain.material.MaterialCurrentValue" discriminator-value="MaterialCurrentValue">
+            <property name="materialOid"
+                      type="java.lang.Long"
+                      column="REFERENCE_OID"
+                      not-null="true"
+                      >
+            </property>
+            <property name="materialName"
+                      type="java.lang.String"
+                      column="NAME"
+                      length="1016"
+                      not-null="true"
+                      >
+
+            </property>
+        </subclass>
+        <subclass name="minestar.mine.domain.material.ContinuousGradeCurrentValue" discriminator-value="ContinuousGradeCurrentValue">
+            <property name="gradeOid"
+                      type="java.lang.Long"
+                      column="REFERENCE_OID"
+                      not-null="true"
+                    >
+            </property>
+            <property name="gradeName"
+                      type="java.lang.String"
+                      column="NAME"
+                      length="1016"
+                      not-null="true"
+                    >
+
+            </property>
+
+        </subclass>
+        <subclass name="minestar.mine.domain.material.DiscreteGradeCurrentValue" discriminator-value="DiscreteGradeCurrentValue">
+            <property name="gradeOid"
+                      type="java.lang.Long"
+                      column="REFERENCE_OID"
+                      not-null="true"
+                    >
+            </property>
+            <property name="gradeName"
+                      type="java.lang.String"
+                      column="NAME"
+                      length="1016"
+                      not-null="true"
+                    >
+
+            </property>
+            <property name="valueDescription"
+                      type="java.lang.String"
+                      column="VALUE_DESCRIPTION"
+                      length="1016"
+                      not-null="false"
+                    >
+
+            </property>
+
+        </subclass>
+
+    </class>
+</hibernate-mapping>

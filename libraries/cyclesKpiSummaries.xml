@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+<!DOCTYPE kpiSummaries SYSTEM "../kpisummaries.dtd">
+
+        <!-- Do NOT remove the custom tags as they are insertion points -->
+
+<kpiSummaries context="cycle" tablePrefix="CYCLE_">
+    <sourceClass name="aux" className="minestar.production.domain.cycle.AuxiliaryCycle" />
+    <sourceClass name="auxmobile" className="minestar.production.domain.cycle.AuxMobileCycle" />
+    <sourceClass name="drill" className="minestar.production.domain.cycle.DrillCycle" />
+    <sourceClass name="prod" className="minestar.production.domain.cycle.ProductionCycle" />
+    <sourceClass name="loader" className="minestar.production.domain.cycle.LoaderCycle" />
+    <sourceClass name="truck" className="minestar.production.domain.cycle.TruckCycle" />
+    <sourceClass name="loadHaulDump" className="minestar.production.domain.cycle.LoadHaulDumpCycle"/>
+    <sourceClass name="selfloader" className="minestar.production.domain.cycle.SelfLoaderCycle" inherit="false" />
+    <!-- custom sourceClass -->
+
+    <!-- Calendar Dimension -->
+    <dimension name="calendar" context="d" type="date" keyProperty="shiftStartTime">
+<!-- Standard attributes always available for free:
+        <dimensionAttribute name="shiftStartTime" expr="internal"/>
+        <dimensionAttribute name="shiftEndTime" expr="internal"/>
+-->
+        <dimensionAttribute name="year" expr="d.year" desc="The year that the calendar period is contained in"/>
+        <dimensionAttribute name="halfyear" expr="d.halfYear" desc="The half of the year that the calendar period is contained in"/>
+        <dimensionAttribute name="quarter" expr="d.quarter" desc="The quarter that the calendar period is contained in"/>
+        <dimensionAttribute name="month" expr="d.month" desc="The month that the calendar period is contained in"/>
+        <dimensionAttribute name="week" expr="d.week" desc="The week that the calendar period is contained in"/>
+        <dimensionAttribute name="day" expr="d.day" desc="The day of the calendar period"/>
+        <dimensionAttribute name="name" expr="d.name" desc="The name of the calendar period"/>
+        <dimensionAttribute name="shiftType" expr="d.shiftType" desc="The type of the shift, eg Day, Night"/>
+        <dimensionAttribute name="crewId" expr="d.crewId" desc="The crew that was assigned to the calendar period"/>
+        <!-- custom dimensionAttribute -->
+    </dimension>
+
+    <!-- Crew Dimension -->
+    <dimension name="crew" context="c" type="date" keyProperty="shiftStartTime">
+        <dimensionAttribute name="crewId" expr="c.crewId" desc="The name of the crew"/>
+        <!-- custom dimensionAttribute -->
+    </dimension>
+
+    <!-- Machine Dimension -->
+    <dimension name="machine" context="m" modelChangeManager="mineFleetService:machines">
+        <dimensionAttribute name="name" expr="m.name" type="java.lang.String" desc="The name of the machine"/>
+        <dimensionAttribute name="machineOID" expr="m.OID" type="java.lang.Long" desc="For Dynamic shovel productivity kpi" />
+        <dimensionAttribute name="classOID" expr="m.machineClassRef.OID" type="java.lang.Long" desc="For Dynamic fuel burn rate kpi"/>
+        <dimensionAttribute name="className" expr="m.machineClassRef.name" desc="The class of the machine, eg CAT893"/>
+        <dimensionAttribute name="categoryName" expr="m.machineClass.classCategoryRef.name" desc="The category name of the machine, eg Truck Classes"/>
+        <dimensionAttribute name="isVimsEnabled" expr="kpy.isVimsCapable(m.entity)" type="java.lang.Boolean" desc="Whether the machine is VIMS capable"/>
+        <dimensionAttribute name="tkphQm" expr="kpy.tkphQm(m.entity)" type="java.lang.Double" />
+        <dimensionAttribute name="fleetNames" expr="kpy.fleetNames(m.entity)" type="java.lang.String" />
+        <!-- custom dimensionAttribute -->
+        <hierarchy name="std">
+            <dimensionAttributeRef name="name" desc=""/>
+            <dimensionAttributeRef name="className" desc=""/>
+            <dimensionAttributeRef name="categoryName" desc=""/>
+        </hierarchy>
+    </dimension>
+
+    <dimension name="destination" context="l" modelChangeManager="mineLayoutService:locations">
+        <dimensionAttribute name="name" expr="l.name" desc="The name of the destination"/>
+        <!-- custom dimensionAttribute -->
+    </dimension>
+
+    <!-- Block Dimension -->
+    <dimension name="block" context="b" modelChangeManager="materialManagementService:gradeBlocks">
+        <dimensionAttribute name="hierarchy" expr="b.hierarchy" desc="The full hierarchy name of the block"/>
+        <dimensionAttribute name="name" expr="b.name" desc="The name of the block"/>
+        <dimensionAttribute name="isStockpile" expr="b.stockpile" type="java.lang.Boolean" desc="Whether this block is a stockpile"/>
+        <dimensionAttribute name="material" expr="b.material.name if b.material else None" desc="The name of the block's material; empty if unknown"/>
+        <dimensionAttribute name="materialGroupLevel1" expr="kpiUtil.findMaterialGroupNameForMaterial(b.material.entity, 1)" viewAlias="groupLevelReport" desc="The material group of the block"/>
+        <dimensionAttribute name="gradeBlockOid" expr="b.OID" type="java.lang.Long" desc="The unique identifier for the grade block"/>
+        <!-- custom dimensionAttribute -->
+    </dimension>
+
+    <!-- Material Dimension -->
+    <dimension name="material" context="m" modelChangeManager="materialManagementService:materials">
+        <dimensionAttribute name="name" expr="m.name" desc="The name of the material"/>
+        <dimensionAttribute name="groupLevel1" expr="kpiUtil.findMaterialGroupNameForMaterial(m.entity, 1)" viewAlias="groupLevelReport" desc="The group level of the material"/>
+        <dimensionAttribute name="bankDensity" expr="kpiUtil.getBankDensity(m.entity)" type="java.lang.Double"/>
+        <dimensionAttribute name="looseDensity" expr="kpiUtil.getLooseDensity(m.entity)" type="java.lang.Double"/>
+        <!-- custom dimensionAttribute -->
+    </dimension>
+
+    <!-- Blend Dimension -->
+    <dimension name="blend" context="b" modelChangeManager="materialManagementService:blends">
+        <dimensionAttribute name="name" expr="b.name" desc="The name of the blend"/>
+        <!-- custom dimensionAttribute -->
+    </dimension>
+
+    <!-- Person Dimension-->
+    <dimension name="person" context="p" modelChangeManager="personnelService:personnel">
+        <dimensionAttribute name="name" expr="p.name" desc=""/>
+        <!-- custom dimensionAttribute -->
+    </dimension>
+
+    <!-- JobCode Dimension -->
+    <dimension name="jobCode" context="j" modelChangeManager="fleetProductionService:jobCodes">
+        <dimensionAttribute name="name" expr="j.name" desc="The name of the Job Code that was used for the cycle."/>
+        <dimensionAttribute name="description" expr="j.description" desc="The description of the Job Code that was used for the cycle."/>
+        <!-- custom dimensionAttribute -->
+    </dimension>
+
+    <!-- custom dimension -->
+
+    <!-- LoadFactor Lookup Table -->
+    <lookup name="loadFactor">
+        <!-- custom index -->
+        <column name="factor" type="java.lang.Float" missingValue="1.0" />
+        <!-- custom column -->
+    </lookup>
+
+    <!-- custom lookup -->
+
+    <!-- Facts -->
+    <fact name="main">
+	    <index columns="endtime_UTC, primaryMachine"/>
+        <index columns="endtime_UTC, cycletype"/>
+        <!-- custom index -->
+
+        <dimensionRef name="calendar" dimension="calendar" desc="calendar period"/>
+        <dimensionRef name="primaryMachine" dimension="machine" desc="primary machine"/>
+        <dimensionRef name="secondaryMachine" dimension="machine" desc="secondary machine"/>
+        <dimensionRef if="prod" name="sourceDestination" source="sourceLocation" dimension="destination" keyIfSourceMissing="sourceLocationName" desc="source destination"/>
+        <dimensionRef if="prod" name="sinkDestination" source="endSinkLocation" dimension="destination" keyIfSourceMissing="endSinkLocationName" desc="sink destination"/>
+        <dimensionRef if="prod" name="loaderMaterial" dimension="material" desc="loader material"/>
+        <dimensionRef if="prod" name="sourceBlock" dimension="block" desc="source block"/>
+        <dimensionRef if="truck" name="sinkBlock" source="endSinkBlock" dimension="block" desc="sink block"/>
+        <dimensionRef if="truck" name="activeBlend" dimension="blend" desc="active blend at processor"/>
+        <dimensionRef name="primaryOperator" dimension="person" keyIfSourceMissing="primaryOperatorName" desc="primary operator"/>
+        <dimensionRef name="secondaryOperator" dimension="person" keyIfSourceMissing="secondaryOperatorName" desc="secondary operator"/>
+        <dimensionRef name="crew" dimension="crew" desc="crew"/>
+        <dimensionRef name="jobCode" dimension="jobCode" desc="job code"/>
+        <!-- custom dimensionRef -->
+
+        <!-- Lookup Tables -->
+        <lookupRef if="prod" name="loadFactor" lookup="loadFactor" expr="">
+            <!-- custom parameter -->
+        </lookupRef>
+
+        <!-- custom lookupRef -->
+
+        <!-- Details -->
+        <detail name="cycleType" expr="cycle.sourceType" desc="The type of the cycle, eg Truckcycle, Loadercycle"/>
+        <detail name="startTime" expr="cycle.startTime" type="minestar.platform.persistence.HibernateUTC$TimestampType" desc="The start time of the cycle"/>
+        <detail name="endTime"  expr="cycle.endTime" type="minestar.platform.persistence.HibernateUTC$TimestampType" desc="The end time of the cycle"/>
+        <detail if="prod" name="autonomous" expr="cycle.autonomous" type="java.lang.Boolean" desc="A flag that indicates if the primary machine was autonomous when the cycle was written"/>
+        <detail if="prod" name="rehandle" expr="cycle.rehandle" type="java.lang.Boolean" desc="A flag that indicates if the material came from a rehandle source"/>
+        <detail if="truck" name="previousSinkDestination" expr="cycle.previousCycle.endSinkLocationName if cycle.previousCycle else None" desc="The sink destination name that the primary machine dumped at in it's previous cycle"/>
+        <detail if="prod" name="previousSecondaryMachine" expr="cycle.previousCycle.secondaryMachineName if cycle.previousCycle else None" desc="The name of the secondary machine that the primary machine used in it's previous cycle"/>
+        <detail if="truck" name="endProcessorName" expr="cycle.endProcessorName" desc="The name of the processor at the dump location"/>
+        <detail if="prod" name="loadingStartTime"  expr='cycle.activities.getStartTimeByActivity("Loading")' type="minestar.platform.persistence.HibernateUTC$TimestampType" desc="The start time of the loading activity for the cycle"/>
+        <detail if="prod" name="loadingEndTime" expr='cycle.activities.getEndTimeByActivity("Loading")' type="minestar.platform.persistence.HibernateUTC$TimestampType" desc="The end time of the loading activity for the cycle"/>
+        <detail if="truck" name="queuingStartTime" expr='cycle.activities.getStartTimeByActivity("Queuing.At.Source")' type="minestar.platform.persistence.HibernateUTC$TimestampType" desc="The start time of the queuing at source activity for the cycle"/>
+        <detail if="truck" name="spottingStartTime" expr='cycle.activities.getStartTimeByActivity("Spotting.At.Source")' type="minestar.platform.persistence.HibernateUTC$TimestampType" desc="The start time of the spotting at source activity for the cycle"/>
+        <detail if="truck" name="dumpingStartTime"  expr='cycle.activities.getStartTimeByActivity("Dumping")' type="minestar.platform.persistence.HibernateUTC$TimestampType" desc="The start time of the dumping activity for the cycle"/>
+        <detail if="loadHaulDump" name="dumpingStartTime"  expr='cycle.activities.getStartTimeByActivity("Dumping")' type="minestar.platform.persistence.HibernateUTC$TimestampType" desc="The start time of the dumping activity for the cycle"/>
+        <detail if="loadHaulDump" name="spill" expr="cycle.spillCycle" type="java.lang.Boolean" desc="A flag that indicates if the cycle was a spill cleanup cycle"/>
+        <detail name="creationMode" expr="cycle.creationMode" type="java.lang.Integer" desc="How the cycle was created"/>
+        <detail if="drill" name="gpsAccuracy" expr="cycle.gpsAccuracy" type="java.lang.Integer" desc=""/>
+        <detail if="drill" name="blastActual" expr="cycle.hole.blastActual if cycle.hole else None" desc=""/>
+        <detail if="drill" name="blastDesign" expr="cycle.hole.blastDesign if cycle.hole else None" desc=""/>
+        <detail if="drill" name="patternActual" expr="cycle.hole.patternActual if cycle.hole else None" desc=""/>
+        <detail if="drill" name="patternDesign" expr="cycle.hole.patternDesign if cycle.hole else None" desc=""/>
+        <detail if="drill" name="redrill" expr="cycle.hole.holeType == 3 if cycle.hole else False" type="java.lang.Boolean" />
+        <detail name="endTimeMs"  expr="cycle.endTime.getTime()" type="java.lang.Long" desc="The end time of the cycle as epoch time"/>
+
+        <!-- custom detail -->
+
+        <!-- Measure Categories -->
+        <measureCategory name="activity" desc="Measures relating to cycle activities"/>
+        <measureCategory name="delay" desc="Measures relating to cycle delays"/>
+        <measureCategory name="dipper" desc="Measures relating to cycle dippers"/>
+        <measureCategory name="drill hole" desc="Measures relating to drill cycle holes"/>
+        <measureCategory name="fuel" desc="Measures relating to cycle fuel"/>
+        <measureCategory name="grade" desc="Measures relating to cycle grade calculations"/>
+        <measureCategory name="payload" desc="Measures relating to cycle payloads"/>
+        <measureCategory name="road" desc="Measures relating to cycle road information"/>
+        <measureCategory name="time" desc="Measures relating to cycle times and different KPI times"/>
+        <measureCategory name="misc" desc="Miscellaneous Measures"/>
+        <!-- custom measureCategory -->
+
+        <!-- Measures -->
+        <!-- underground disables timeBucket.xml so leave this here - for dependency reasons, this needs to be before the timeBucket.xml insertion point-->
+        <measure if="truck" name="waitForDumpDuration" expr="cycle.activities.waitForDumpDuration" unitType="duration" category="activity"  desc="The duration of the wait for dump activity for truck cycles" insert="custom activity"/>
+
+        <!-- custom topMeasure -->
+        <measure if="prod" name="loadFactorFactor" expr="loadFactor.factor" unitType="ratio" category="misc" desc="The loadfactor that was applied to the dry payload"/>
+        <measure name="timeElapsedToCycleStartTime" expr="cycle.duration(calendar.shiftStartTime, cycle.startTime)" unitType="duration" category="time" desc="The time elapsed since the start of the shift until the start time of the cycle."/>
+        <measure name="timeElapsedToCycleEndTime" expr="cycle.duration(calendar.shiftStartTime, cycle.endTime)" unitType="duration" category="time" desc="The time elapsed since the start of the shift until the end time of the cycle."/>
+        <measure name="timeElapsedToDumping" expr="cycle.duration(calendar.shiftStartTime, main.dumpingStartTime)" unitType="duration" category="time" desc="The time elapsed since the start of the shift until the dumping activity."/>
+        <measure name="timeLeftDumpingToShiftEnd" expr="cycle.duration(main.dumpingStartTime, calendar.shiftEndTime)" unitType="duration" category="time" desc="The time left untill the end of the shift from the dumping activity."/>
+        <measure name="timeElapsedToLoading" expr="cycle.duration(calendar.shiftStartTime, main.loadingStartTime)" unitType="duration" category="time" desc="The time elapsed since the start of the shift until the loading activity."/>
+        <measure name="timeLeftLoadingToShiftEnd" expr="cycle.duration(main.loadingStartTime, calendar.shiftEndTime)" unitType="duration" category="time" desc="The time left until the end of the shift from the loading activity."/>
+        <measure name="cycleDuration" expr="cycle.duration(cycle.startTime, cycle.endTime)" unitType="duration" category="time" desc="The duration of the cycle."/>
+        <measure name="completedCycleCount" expr="main.ic == main.tc and main.creationMode != 6" unitType="unitless" />
+        <measure name="completedCycleDuration" expr="cycle.duration(cycle.startTime, cycle.endTime) * main.completedCycleCount" unitType="duration" category="time" desc="The duration of a completed cycle."/>
+        <!-- Fuel measures -->
+        <measure if="truck" name="fuelUsed" expr="cycle.fuelUsed" unitType="liquid volume" category="fuel" desc="The total fuel used for the cycle."/>
+        <measure name="estimatedFuelUsed" expr="cycle.estimatedFuelUsed" unitType="liquid volume" category="fuel" desc="The estimated fuel used for the cycle."/>
+
+        <!-- Time Breakdown measures. These have been removed to standard/timeBreakdown.xml. -->
+        <!-- custom activity -->
+
+        <!-- custom timeBucket -->
+
+        <!-- custom timeBucket head -->
+
+        <!-- custom time -->
+        
+        <!-- Payload -->
+        <measure if="prod" name="payload" expr="cycle.payload" unitType="mass" category="payload" desc="The payload from the on board systems."/>
+        <measure if="prod" name="payloadDry" expr='main.payload * main.loadFactorFactor' unitType="mass" category="payload" desc="The payload from the on board systems multiplied by the loadfactor."/>
+        <measure if="prod" name="payloadNominal" expr="cycle.nominalPayload" unitType="mass" category="payload" desc="The nominal payload of the truck involved in the cycle."/>
+        <measure if="prod" name="payloadNominalDry" expr='main.payloadNominal * main.loadFactorFactor' unitType="mass" category="payload" desc="The nominal payload of the truck involved in the cycle multiplied by the loadfactor."/>
+        <measure if="prod" name="loadingCount" expr="cycle.test(cycle.isZero(main.payloadNominal),0,1)" unitType="unitless" category="payload" desc="The count of the payloads."/>
+        <measure if="prod" name="payloadReporting" expr="main.payloadNominalDry" unitType="mass" category="payload" desc="The payload used by realtimeKpis and reporting."/>
+        <measure if="prod" name="payloadReportingCC" expr="main.payloadDry * main.completedCycleCount" unitType="mass" category="payload" desc="The payload used by realtimeKpis and reporting."/>
+        <measure if="prod" name="volumeBCMNominalDry" expr="main.payloadNominalDry / loaderMaterial.bankDensity if loaderMaterial.bankDensity else 0" unitType="volume" category="payload" desc="calculated BCM"/>
+        <measure if="prod" name="compPayloadReporting" expr="main.payloadNominalDry * main.completedCycleCount" unitType="mass" category="payload" desc="The payload for a completed cycle used by realtimeKpis."/>
+
+        <!-- Road measures -->
+        <measure if="truck" name="loadedSlopeDistance" expr="cycle.loadedSlopeDistance" unitType="length" category="road" desc="The slope distance that was travelled loaded."/>
+        <measure if="truck" name="emptySlopeDistance" expr="cycle.emptySlopeDistance" unitType="length" category="road" desc="The slope distance that was travelled empty."/>
+        <measure if="truck" name="loadedEfhDistance" expr="cycle.loadedEfhDistance" unitType="length" category="road" desc="The EFH distance that was travelled loaded."/>
+        <measure if="truck" name="emptyEfhDistance" expr="cycle.emptyEfhDistance" unitType="length" category="road" desc="The EFH distance that was travelled empty."/>
+        <measure if="truck" name="emptyFallHeight" expr="cycle.roads.emptyFallHeight" unitType="depth" category="road" desc="The total fall height of all road segments in the cycle while empty"/>
+        <measure if="truck" name="emptyRiseHeight" expr="cycle.roads.emptyRiseHeight" unitType="depth" category="road" desc="The total rise height of all road segments in the cycle while empty."/>
+        <measure if="truck" name="emptySlopeLength" expr="cycle.roads.emptySlopeLength" unitType="length" category="road" desc="The total slope distance of all road segments in the cycle while empty."/>
+        <measure if="truck" name="emptyPlanLength" expr="cycle.roads.emptyPlanLength" unitType="length" category="road" desc="The total horizontal distance of all road segments in the cycle while empty."/>
+        <measure if="truck" name="emptyEfhLength" expr="cycle.roads.emptyEfhLength" unitType="length" category="road" desc="The total EFH distance of all road segments in the cycle while empty."/>
+        <measure if="truck" name="emptyTravelDuration" expr="cycle.roads.emptyTravelTime" unitType="duration" category="road" desc=""/>
+        <measure if="truck" name="emptyExpectedTravelDuration" expr="cycle.roads.emptyExpectedTravelDuration" unitType="duration" category="road" desc=""/>
+        <measure if="truck" name="emptyTargetTravelDuration" expr="cycle.roads.emptyTargetTravelDuration" unitType="duration" category="road" desc=""/>
+        <measure if="truck" name="fullFallHeight" expr="cycle.roads.fullFallHeight" unitType="depth" category="road" desc="The total fall height of all road segments in the cycle while full."/>
+        <measure if="truck" name="fullRiseHeight" expr="cycle.roads.fullRiseHeight" unitType="depth" category="road" desc="The total rise height of all road segments in the cycle while full."/>
+        <measure if="truck" name="fullSlopeLength" expr="cycle.roads.fullSlopeLength" unitType="length" category="road" desc="The total slope distance of all road segments in the cycle while full"/>
+        <measure if="truck" name="fullPlanLength" expr="cycle.roads.fullPlanLength" unitType="length" category="road" desc="The total horizontal distance of all road segments in the cycle while full."/>
+        <measure if="truck" name="fullEfhLength" expr="cycle.roads.fullEfhLength" unitType="length" category="road" desc="The total EFH distance of all road segments in the cycle while full"/>
+        <measure if="truck" name="fullTravelDuration" expr="cycle.roads.fullTravelTime" unitType="duration" category="road" desc=""/>
+        <measure if="truck" name="fullExpectedTravelDuration" expr="cycle.roads.fullExpectedTravelDuration" unitType="duration" category="road" desc=""/>
+        <measure if="truck" name="fullTargetTravelDuration" expr="cycle.roads.fullTargetTravelDuration" unitType="duration" category="road" desc=""/>
+        <measure if="truck" name="vimsEmptySlopeDistance" expr="cycle.vimsEmptySlopeDistance" unitType="length" category="road" desc="The slope distance that was travelled empty as measured by VIMS."/>
+        <measure if="truck" name="vimsLoadedSlopeDistance" expr="cycle.vimsLoadedSlopeDistance" unitType="length" category="road" desc="The slope distance that was travelled loaded as measured by VIMS."/>
+        <measure if="truck" name="queueAtSinkDuration" expr="cycle.activities.queuingAtSinkDuration" unitType="duration" category="time" desc="The duration of the queuing at sink activity time for truck cycles."/>
+
+        <!-- Road measures additional fields -->
+        <measure if="truck" name="totalSlopeLength" expr="main.emptySlopeLength + main.fullSlopeLength" unitType="length" category="road" desc="The total slope distance of all road segments in the cycle."/>
+        <measure if="truck" name="totalEfhLength" expr="main.emptyEfhLength + main.fullEfhLength" unitType="length" category="road" desc="The total EFH distance of all road segments in the cycle."/>        
+        <measure if="truck" name="tmph" expr="kpy.tkph(primaryMachine.tkphQm, main.totalSlopeLength, main.cycleDuration)"
+                 unitType="mass speed" category="road" desc="The Tom Miles Per Hour (or equivalent in other units) for the cycle."/>
+        <measure if="truck" name="tkphMassDistanceFront" expr="kpy.calcTkphMassDistanceFront(cycle.primaryMachineClass, main.payloadReporting, main.emptySlopeLength, main.fullSlopeLength, main.vimsEmptySlopeDistance, main.vimsLoadedSlopeDistance, main.cycleDuration) if main.creationMode != 3 else 0"
+                 unitType="mass distance" category="road" desc="for the tkphMassDistance realtimeKpi"/>
+        <measure if="truck" name="tkphMassDistanceRear" expr="kpy.calcTkphMassDistanceRear(cycle.primaryMachineClass, main.payloadReporting, main.emptySlopeLength, main.fullSlopeLength, main.vimsEmptySlopeDistance, main.vimsLoadedSlopeDistance, main.cycleDuration) if main.creationMode != 3 else 0"
+                 unitType="mass distance" category="road" desc="for the tkphMassDistance realtimeKpi"/>
+
+        <!-- Loader measures -->
+        <measure if="loader" name="truckQueueAtSourceDuration" expr="cycle.associatedCycle.activities.queuingAtSourceDuration" unitType="duration" category="time" desc="The duration of the queuing at source activity time for truck cycles."/>
+        <measure if="loader" name="truckQueueDurCmplCycle" expr="cycle.associatedCycle.activities.queuingAtSourceDuration * main.completedCycleCount" unitType="duration" category="time" desc="The duration of the queuing at source activity time for truck cycles."/>
+        <measure if="loader" name="assocPayloadNominal" expr="cycle.associatedCycle.nominalPayload" unitType="mass" category="payload" desc="The nominal payload of the loaders associated truck cycle."/>
+        <measure if="loader" name="assocPayloadNominalDry" expr='main.assocPayloadNominal * main.loadFactorFactor' unitType="mass" category="payload" desc="The nominal payload of the loaders associated truck cycle multiplied by the loadfactor."/>
+        <measure if="loader" name="sourceBlockRemainingMass" expr="cycle.sourceBlock.remainingMass" unitType="mass" desc="The remaining mass in the source block"/>
+        <measure if="loader" name="hangTimeDurCompleted" expr="cycle.activities.hangTimeDuration * main.completedCycleCount" unitType="duration" category="activity" desc='The duration of the "Hang.Time" activity for loader cycles' insert="custom activity"/>
+
+        <!-- Drill measures -->
+        <measure if="drill" name="depthActual" expr="main.completedCycleCount * cycle.hole.depthActual if cycle.hole else 0" unitType="length" category="drill hole" desc="The depth of the hole drilled for drill cycles."/>
+        <measure if="drill" name="depthDesign" expr="cycle.hole.depthDesign if cycle.hole else 0" unitType="length" category="drill hole" />
+        <measure if="drill" name="breakingGroundDuration" expr="main.completedCycleCount * cycle.hole.breakingGroundDuration if cycle.hole else 0" unitType="duration" category="drill hole" desc="The breakingGroundDuration of the hole drilled for drill cycles"/>
+        <measure if="drill" name="holeEastingActual" expr="cycle.holePosition.eastingActual if cycle.holePosition else 0" unitType="length" category="drill hole" />
+        <measure if="drill" name="holeNorthingActual" expr="cycle.holePosition.northingActual if cycle.holePosition else 0" unitType="length" category="drill hole" />
+        <measure if="drill" name="holeEastingDesign" expr="cycle.holePosition.eastingDesign if cycle.holePosition else 0" unitType="length" category="drill hole" />
+        <measure if="drill" name="holeNorthingDesign" expr="cycle.holePosition.northingDesign if cycle.holePosition else 0" unitType="length" category="drill hole" />
+        <measure if="drill" name="horizontalError" expr="cycle.holePosition.accuracyHorizontal if cycle.holePosition else 0" unitType="length" category="drill hole" />
+        <measure if="drill" name="verticalError" expr="cycle.holePosition.accuracyVertical if cycle.holePosition else 0" unitType="length" />
+        <measure if="drill" name="blastability" expr="cycle.bi" unitType="ratio" />
+
+        <!-- Grade measures -->
+        <!-- custom grade -->
+
+        <!-- Dipper measures -->
+        <measure if="prod" name="dipperCount" expr="cycle.dipperCount" unitType="unitless" category="dipper" />
+        <measure if="prod" name="dipperAverageSwingTime" expr="cycle.dipperAverageSwingTime" unitType="duration" category="dipper" />
+        <!-- custom dipper -->
+
+        <!-- Misc measures -->
+        <measure if="truck" name="freeDestPercent" expr="cycle.freeDestPercent" unitType="ratio" category="misc"
+                desc="The percentage ratio of the number of source destinations available for assignment to the total number of source destinations."/>
+        <measure if="truck" name="freeGrpDestPercent" expr="cycle.freeGrpDestPercent" unitType="ratio" category="misc"
+                desc="The percentage ratio of the number of source destinations available for assignment to the total number of source destinations in the assignment group."/>
+        <!-- custom measure -->
+    </fact>
+    <!-- custom fact -->
+
+    <!-- Calculated members for KPIs -->
+    <!-- custom calculatedMember -->
+
+    <!-- Summary Table -->
+    <!-- Production grouped into different calendar periods -->
+    <summary name="calendarFigures"  fact="main"
+             desc="This summary is by calendar period and machine.">
+        <dimensionRef name="calendar" dimension="calendar" desc="calendar period">
+            <dimensionAttributeRef name="name" desc="The name of the calendar period"/>
+            <dimensionAttributeRef name="day" desc="The day of the calendar period"/>
+            <dimensionAttributeRef name="month" desc="The month that the calendar period is contained in"/>
+            <dimensionAttributeRef name="quarter" desc="The quarter that the calendar period is contained in"/>
+            <dimensionAttributeRef name="year" desc="The year that the calendar period is contained in"/>
+            <dimensionAttributeRef name="shiftStartTime_utc" desc="The start time of the calendar period"/>
+            <dimensionAttributeRef name="shiftEndTime_utc" desc="The end time of the calendar period"/>            
+        </dimensionRef>
+        <dimensionRef name="primaryMachine" dimension="machine" desc="primary machine">
+            <dimensionAttributeRef name="name" desc="The name of the primary machine"/>
+            <dimensionAttributeRef name="className" desc="The class of the primary machine, eg CAT893"/>
+            <dimensionAttributeRef name="categoryName" desc="The name of the primary machine"/>
+        </dimensionRef>
+        <!-- custom dimensionRef -->
+        <detailRef name="rehandle" desc=""/>
+        <!-- custom detailRef -->
+        <measureRef name="payloadNominal" measure="payloadNominal" stat="sum" desc='The nominal payload of the truck involved in the cycle multiplied by the loadfactor.'/>
+        <measureRef name="availableTime" stat="sum" desc=""/>
+        <measureRef name="totalTime" stat="sum" desc="The duration of available time plus down time"/>
+        <!-- custom measureRef -->
+    </summary>
+
+    <!-- custom summary -->
+
+    <!-- custom realtimeKpi -->
+
+</kpiSummaries>
