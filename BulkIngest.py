@@ -12,7 +12,7 @@ for library in files:
     print('=================')
     print(f'Ingesting {library} file number {counter} of {totalFiles}')    
     with open('libraries/'+library, 'rb') as file:
-            upload_file = {'file': (library, file, 'application/xml')}
+            upload_file = {'file': (library, file)}
             response = requests.post(url, files=upload_file)
 
             print(response.status_code)
