@@ -1,3 +1,0 @@
-CLASS=AlarmGroup OPERATION=Delete;
-CLASS=AlarmType OPERATION=Delete;
-CLASS=Alarm OPERATION=Delete;

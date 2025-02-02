@@ -1,3 +1,0 @@
-log=%_PATH%\consistent_export.log
-file=%_PATH%\consistent_export.dmp
-consistent=y

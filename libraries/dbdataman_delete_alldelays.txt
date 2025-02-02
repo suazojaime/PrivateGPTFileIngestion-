@@ -1,3 +1,0 @@
-CLASS=DelayGroup OPERATION=Delete;
-CLASS=DelayClass OPERATION=Delete;
-CLASS=Delay OPERATION=Delete;

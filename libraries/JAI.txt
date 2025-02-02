@@ -1,7 +1,0 @@
-====================================================================
-Sun Microsystems, Inc. Binary Code License Agreement
-====================================================================
-
-https://download.java.net/media/jai/builds/release/1_1_3/LICENSE-jai.txt
-
-

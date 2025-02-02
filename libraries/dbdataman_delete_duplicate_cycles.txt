@@ -1,4 +1,0 @@
-CLASS=AuxMobileCycle OPERATION=Delete WHERE="cycle_oid in (select cycle_oid from temp_cycle) and rownum < 10000";
-CLASS=LoaderCycle OPERATION=Delete WHERE="cycle_oid in (select cycle_oid from temp_cycle) and rownum < 10000";
-CLASS=TruckCycle OPERATION=Delete WHERE="cycle_oid in (select cycle_oid from temp_cycle) and rownum < 10000";
-CLASS=SelfLoaderCycle OPERATION=Delete WHERE="cycle_oid in (select cycle_oid from temp_cycle) and rownum < 10000";

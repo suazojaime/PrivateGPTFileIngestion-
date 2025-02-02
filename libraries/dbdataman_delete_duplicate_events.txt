@@ -1,5 +1,0 @@
-CLASS=ProductionEvent OPERATION=Delete WHERE="event_oid in (select temp_oid from temp_event_oids) and rownum < 1000000";
-CLASS=AssignmentEvent OPERATION=Delete WHERE="event_oid in (select temp_oid from temp_event_oids) and rownum < 1000000";
-CLASS=AdministrationEvent OPERATION=Delete WHERE="event_oid in (select temp_oid from temp_event_oids) and rownum < 1000000";
-CLASS=HealthEvent OPERATION=Delete WHERE="event_oid in (select temp_oid from temp_event_oids) and rownum < 1000000";
-CLASS=NotificationEvent OPERATION=Delete WHERE="event_oid in (select temp_oid from temp_event_oids) and rownum < 1000000";

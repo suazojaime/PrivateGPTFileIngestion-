@@ -1,1 +1,0 @@
-See http://mnw2k8r2-wiki.ap.cat.com:8090/display/DEV/Creating+changesets+for+MineStar+database+schema+changes

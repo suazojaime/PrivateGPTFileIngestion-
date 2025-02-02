@@ -1,4 +1,0 @@
-These migration scripts are only used when migrating from a pre-4.1 system.  Any migrations required
-for a post-4.1 system should be made using a Liquibase ChangeLog.
-
-See http://mnw2k8r2-wiki.ap.cat.com:8090/display/DEV/Creating+changesets+for+MineStar+database+schema+changes

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<logging>
-    <level>PRODUCTION_LOGGING.properties</level>
-    <location>logs/geoserver.log</location>
-    <stdOutLogging>true</stdOutLogging>
-</logging>
